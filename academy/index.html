@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teachy — a free 1:1 tutor for everyone</title>
+  <meta name="description" content="Teachy is a free learning platform. A 1:1 tutor on your Mac — the next generation of Khan Academy. Learn by doing, not by watching." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Cinematic intro → interactive demo -->
+  <div id="intro" class="intro" aria-hidden="false">
+    <div class="intro-stage" id="intro-stage">
+
+      <div class="intro-panel intro-flood" id="panel-flood">
+        <div class="flood-stack" id="flood-stack" aria-hidden="true"></div>
+        <div class="flood-veil">
+          <p class="flood-kicker" id="flood-kicker">Sound familiar?</p>
+          <p class="type-line flood-type" id="flood-type" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="intro-panel intro-yt" id="panel-yt" hidden>
+        <div class="yt-chrome" id="yt-chrome">
+          <div class="yt-player">
+            <div class="yt-thumb">
+              <img src="yt-thumb.png" alt="" class="yt-thumb-img" />
+              <div class="yt-play"></div>
+              <p class="yt-caption">Watch me build this for 47 minutes…</p>
+            </div>
+            <div class="yt-progress"><div class="yt-progress-fill"></div></div>
+            <div class="yt-meta">
+              <div class="yt-avatar"></div>
+              <div>
+                <strong>Same tutorial. Different guy. Again.</strong>
+                <span>12M views · “just vibe with me bro”</span>
+              </div>
+            </div>
+          </div>
+          <div class="yt-cross" id="yt-cross" aria-hidden="true"></div>
+        </div>
+        <p class="type-line yt-problem-type" id="yt-type"></p>
+      </div>
+
+      <div class="intro-panel intro-manifesto" id="panel-manifesto" hidden>
+        <div class="manifesto-type" id="manifesto-type" aria-live="polite"></div>
+      </div>
+
+      <div class="intro-panel intro-name" id="panel-name" hidden>
+        <p class="type-line introducing-type" id="introducing-type"></p>
+        <div class="bam-wrap" id="bam-wrap" hidden>
+          <div class="bam-flash" id="bam-flash"></div>
+          <div class="intro-clicky-mark bam-mark" aria-hidden="true"></div>
+          <h1 class="brand-reveal bam-title" id="bam-title">Teachy</h1>
+          <p class="brand-sub bam-sub" id="bam-sub">a free 1:1 tutor for everyone</p>
+        </div>
+      </div>
+
+      <!-- Interactive IRL-style demo (fake browser) -->
+      <div class="intro-panel intro-demo" id="panel-demo" hidden>
+        <div class="demo-shell">
+          <div class="demo-browser" id="demo-browser">
+            <div class="demo-chrome">
+              <div class="demo-dots"><i></i><i></i><i></i></div>
+              <div class="demo-url">
+                <span class="demo-lock" aria-hidden="true"></span>
+                <span id="demo-url-text">github.com/new</span>
+              </div>
+            </div>
+
+            <div class="demo-page" id="demo-page">
+              <!-- Step 1: repo home -->
+              <div class="demo-view is-active" data-view="home" id="demo-view-home">
+                <header class="gh-top">
+                  <span class="gh-logo">Octo</span>
+                  <nav class="gh-nav"><span>Pull requests</span><span>Issues</span></nav>
+                  <button type="button" class="gh-new" id="demo-btn-new" data-demo-target="new">
+                    New <em>▾</em>
+                  </button>
+                </header>
+                <div class="gh-home-body">
+                  <h2>Your repositories</h2>
+                  <p class="gh-muted">Nothing here yet — let’s make one.</p>
+                  <ul class="gh-empty-list">
+                    <li></li><li></li><li></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Step 2: new repo form -->
+              <div class="demo-view" data-view="form" id="demo-view-form" hidden>
+                <div class="gh-form">
+                  <h2>Create a new repository</h2>
+                  <label class="gh-field">
+                    <span>Repository name</span>
+                    <input
+                      id="demo-repo-name"
+                      type="text"
+                      placeholder="hello-teachy"
+                      autocomplete="off"
+                      spellcheck="false"
+                      data-demo-target="name"
+                    />
+                  </label>
+                  <label class="gh-field">
+                    <span>Description <em>(optional)</em></span>
+                    <input type="text" placeholder="my first repo" disabled tabindex="-1" />
+                  </label>
+                  <div class="gh-visibility">
+                    <label><input type="radio" checked disabled /> Public</label>
+                    <label><input type="radio" disabled /> Private</label>
+                  </div>
+                  <button type="button" class="gh-create" id="demo-btn-create" data-demo-target="create" disabled>
+                    Create repository
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 3: success -->
+              <div class="demo-view" data-view="done" id="demo-view-done" hidden>
+                <div class="gh-done">
+                  <div class="gh-check" aria-hidden="true">✓</div>
+                  <h2 id="demo-done-title">hello-teachy</h2>
+                  <p>Created. Empty repo — ready for your first commit.</p>
+                  <div class="gh-code-block">
+                    <code>git clone https://github.com/you/hello-teachy.git</code>
+                  </div>
+                </div>
+              </div>
+
+              <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
+
+              <!-- Teachy lives beside the cursor — same as the real app -->
+              <div class="demo-clicky" id="demo-clicky" hidden>
+                <div class="demo-speech" id="demo-speech" aria-live="polite"></div>
+                <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-hud">
+            <span class="demo-phase" id="demo-phase">Your turn</span>
+            <button type="button" class="text-btn" id="skip-demo">Skip demo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="intro-skip-all text-btn" id="skip-intro">Skip intro</button>
+  </div>
+
+  <div id="clicky-guide" class="clicky-guide" hidden aria-live="polite">
+    <div class="clicky-bubble" id="clicky-bubble"></div>
+    <div class="clicky-cursor" aria-hidden="true"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark"></span>
+        Teachy
+      </a>
+      <nav class="nav">
+        <a href="#mission">Mission</a>
+        <a href="#paths">Learn</a>
+        <a class="nav-cta" href="https://www.heyclicky.com/" target="_blank" rel="noopener" data-tour="nav-download">Get Teachy</a>
+      </nav>
+      <button type="button" class="ghost-btn" id="replay-intro">Replay</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap" data-tour="hero">
+      <p class="eyebrow">Free for everyone</p>
+      <h1>Teachy</h1>
+      <p class="lede">
+        A 1:1 tutor for everyone.<br />
+        The next generation of Khan Academy.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://www.heyclicky.com/" target="_blank" rel="noopener" data-tour="cta-get">Get Teachy free</a>
+        <a class="btn btn-secondary" href="#start">Start with First Win</a>
+      </div>
+    </section>
+
+    <section class="flagship wrap" id="start" data-tour="flagship">
+      <p class="flagship-kicker">Start here · 10 minutes</p>
+      <h2>First Win with AI</h2>
+      <p class="flagship-lede">
+        Open an AI. Ask for one tiny thing. See it run.
+        Feel the Teachy loop before the full path.
+      </p>
+      <ol class="flagship-beats">
+        <li>Open your AI</li>
+        <li>Ask for one tiny thing</li>
+        <li>See it run</li>
+      </ol>
+      <p class="flagship-next">Then: <a href="#flagship">Use AI to Code</a> — the legendary full path.</p>
+      <div class="flagship-actions">
+        <a class="btn btn-primary" href="https://www.heyclicky.com/" target="_blank" rel="noopener">Get Teachy · First Win</a>
+        <button type="button" class="btn btn-secondary" id="try-demo">Try the 30s demo</button>
+      </div>
+    </section>
+
+    <section class="flagship wrap flagship-secondary" id="flagship">
+      <p class="flagship-kicker">Flagship path · ~45 min</p>
+      <h2>Use AI to Code</h2>
+      <p class="flagship-lede">
+        From a plain-language idea to something that actually runs —
+        prompt, build, fix, save. Taught 1:1 on your Mac.
+      </p>
+      <ol class="flagship-beats">
+        <li>Open your AI</li>
+        <li>Ask for something tiny</li>
+        <li>See it run</li>
+        <li>Change it · verify · save</li>
+      </ol>
+      <div class="flagship-actions">
+        <a class="btn btn-primary" href="https://www.heyclicky.com/" target="_blank" rel="noopener">Get Teachy · start this path</a>
+      </div>
+    </section>
+
+    <section class="mission wrap" id="mission" data-tour="mission">
+      <p class="mission-label">Our mission</p>
+      <h2>A world where anyone can learn anything — with a tutor who stays with them.</h2>
+      <p class="mission-body">
+        Teachy is a free learning platform. Not a course marketplace. Not another video feed.
+        A personal tutor on your Mac that points, waits while you practice, and remembers
+        what you’re working on — so help stays specific to your day.
+      </p>
+      <ul class="mission-points">
+        <li>
+          <strong>Free by design</strong>
+          <span>Built like a nonprofit school, not a subscription funnel.</span>
+        </li>
+        <li>
+          <strong>1:1, not 1:many</strong>
+          <span>You act first. Teachy coaches beside your cursor.</span>
+        </li>
+        <li>
+          <strong>Open curriculum</strong>
+          <span>Learning paths anyone can start — on the real tools you use.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="trust wrap" id="trust" data-tour="trust">
+      <p class="mission-label">Trust</p>
+      <h2>Free. Private by default. No subscription funnel.</h2>
+      <p class="mission-body">
+        Screen and voice go to your Teachy proxy only for the turn you’re in,
+        so your tutor can see what you’re doing. Course memory stays on your Mac.
+        We don’t sell your screen.
+      </p>
+    </section>
+
+    <section class="paths wrap" id="paths" data-tour="paths">
+      <div class="section-head">
+        <h2>Learning paths</h2>
+        <p class="section-note">Free inside the Teachy app.</p>
+      </div>
+      <div id="course-wall" class="path-grid" aria-live="polite">
+        <div class="empty">Loading…</div>
+      </div>
+    </section>
+
+    <section class="closing wrap">
+      <div class="closing-card">
+        <h2>School, reinvented.</h2>
+        <p>Download Teachy free. Your tutor is waiting on your screen.</p>
+        <a class="btn btn-primary" href="https://www.heyclicky.com/" target="_blank" rel="noopener">Get Teachy free</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <span class="footer-name">Teachy</span>
+        <span class="footer-tag">A free 1:1 learning platform</span>
+      </div>
+      <div class="footer-links">
+        <a href="#mission">Mission</a>
+        <a href="https://www.heyclicky.com/" target="_blank" rel="noopener">Download</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
