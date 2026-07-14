@@ -10,6 +10,14 @@ python3 -m http.server 8765
 # http://localhost:8765/?intro=1
 ```
 
+## Live site
+
+Published from this folder via GitHub Pages:
+
+**https://vedsoni-dev.github.io/teachy/**
+
+Workflow: `.github/workflows/pages.yml` (deploys on pushes that touch `academy/`).
+
 ## Experience
 
 1. Tutorial flood → crossed-out YouTube → manifesto → **BAM Teachy**

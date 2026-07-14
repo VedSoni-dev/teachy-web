@@ -3,7 +3,7 @@
   "tagline": "A free 1:1 tutor for everyone — the next generation of Khan Academy.",
   "flagshipCourseID": "ai-to-code",
   "onrampCourseID": "ai-first-win",
-  "websiteURL": "https://raw.githack.com/farzaa/clicky/main/academy/index.html",
+  "websiteURL": "https://vedsoni-dev.github.io/teachy/",
   "courses": [
     {
       "id": "ai-first-win",
@@ -14,7 +14,7 @@
       "estimatedMinutes": 10,
       "goalCount": 3,
       "trackTitle": "Build with AI",
-      "installURL": "https://raw.githubusercontent.com/farzaa/clicky/main/courses/ai-first-win.json",
+      "installURL": "https://raw.githubusercontent.com/VedSoni-dev/teachy/main/courses/ai-first-win.json",
       "hasVideoParts": false,
       "shipsWithApp": true,
       "featured": true,
@@ -29,7 +29,7 @@
       "estimatedMinutes": 45,
       "goalCount": 8,
       "trackTitle": "Build with AI",
-      "installURL": "https://raw.githubusercontent.com/farzaa/clicky/main/courses/ai-to-code.json",
+      "installURL": "https://raw.githubusercontent.com/VedSoni-dev/teachy/main/courses/ai-to-code.json",
       "hasVideoParts": false,
       "shipsWithApp": true,
       "featured": true,
@@ -44,7 +44,7 @@
       "estimatedMinutes": 25,
       "goalCount": 6,
       "trackTitle": "Git & GitHub",
-      "installURL": "https://raw.githubusercontent.com/farzaa/clicky/main/courses/github-basics.json",
+      "installURL": "https://raw.githubusercontent.com/VedSoni-dev/teachy/main/courses/github-basics.json",
       "hasVideoParts": false,
       "shipsWithApp": true,
       "blurb": "Stop being scared of GitHub. Browse repos, issues, and PRs on your real Mac."
@@ -86,7 +86,7 @@
       "estimatedMinutes": 40,
       "goalCount": 6,
       "trackTitle": "Create & Ship",
-      "installURL": "https://raw.githubusercontent.com/farzaa/clicky/main/courses/youtube-basics.json",
+      "installURL": "https://raw.githubusercontent.com/VedSoni-dev/teachy/main/courses/youtube-basics.json",
       "hasVideoParts": false,
       "shipsWithApp": true,
       "blurb": "Practice on the real YouTube UI."
