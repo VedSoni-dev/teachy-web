@@ -12,11 +12,15 @@ python3 -m http.server 8765
 
 ## Live site
 
-Published from this folder via GitHub Pages:
-
 **https://vedsoni-dev.github.io/teachy/**
 
-Workflow: `.github/workflows/pages.yml` (deploys on pushes that touch `academy/`).
+Published from the `gh-pages` branch (static files — no GitHub Actions / no paid plan needed).
+
+```bash
+./scripts/publish-academy.sh
+```
+
+That copies `academy/` to `gh-pages` and force-pushes. Edit files under `academy/` on `main` first, commit, then run the script.
 
 ## Experience
 
