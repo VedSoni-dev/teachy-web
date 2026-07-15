@@ -589,10 +589,10 @@
   var freeLearningBtn = document.getElementById("free-learning");
   if (freeLearningBtn) {
     freeLearningBtn.addEventListener("click", function (event) {
-      var target = document.getElementById("courses");
-      if (target) {
+      var href = freeLearningBtn.getAttribute("href");
+      if (href) {
         event.preventDefault();
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.location.href = href;
       }
     });
   }

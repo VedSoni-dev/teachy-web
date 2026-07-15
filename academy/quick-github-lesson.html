@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Free lesson: your first GitHub repo — Teachy</title>
+  <meta name="description" content="A free 5-minute hands-on lesson: create a GitHub repo, add a file, commit, and push — taught by Teachy like a real 1:1 tutor." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .lesson-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .lesson-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .lesson-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lesson-brand .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .lesson-brand-name { font-weight: 600; letter-spacing: -0.02em; }
+    .lesson-brand-tag { font-size: 11px; color: var(--ink-soft); }
+
+    .lesson-actions { display: flex; align-items: center; gap: 12px; }
+
+    .lesson-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(320px, 420px) 1fr;
+      gap: 28px;
+      padding: 28px 24px;
+      max-width: 1160px;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .lesson-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lesson-step {
+      display: flex;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .lesson-step.active {
+      border-color: rgba(51, 128, 255, 0.35);
+      background: var(--accent-soft);
+    }
+
+    .lesson-step.done {
+      opacity: 0.65;
+    }
+
+    .lesson-step-num {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--ink-soft);
+    }
+
+    .lesson-step.active .lesson-step-num {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .lesson-step.done .lesson-step-num {
+      background: var(--green);
+      color: #04130a;
+    }
+
+    .lesson-step-body h3 {
+      margin: 0 0 3px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .lesson-step-body p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+    }
+
+    .lesson-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .lesson-progress {
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .lesson-progress > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+
+    .lesson-restart {
+      border: none;
+      background: transparent;
+      color: var(--ink-soft);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+
+    .lesson-restart:hover { background: rgba(255, 255, 255, 0.08); color: var(--ink); }
+
+    .lesson-footnote {
+      text-align: center;
+      font-size: 12px;
+      color: var(--ink-soft);
+      padding: 0 24px 24px;
+    }
+
+    .lesson-footnote a { color: var(--accent); }
+
+    @media (max-width: 860px) {
+      .lesson-main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="lesson-page">
+    <header class="lesson-topbar">
+      <div class="lesson-brand">
+        <span class="brand-mark">T</span>
+        <span>
+          <span class="lesson-brand-name">Teachy</span><br />
+          <span class="lesson-brand-tag">Free lesson · ~5 min</span>
+        </span>
+      </div>
+      <div class="lesson-actions">
+        <button type="button" class="lesson-restart" id="lesson-restart">Start over</button>
+        <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">Get Teachy</a>
+      </div>
+    </header>
+
+    <main class="lesson-main">
+      <aside class="lesson-steps" id="lesson-steps">
+        <div class="lesson-step" data-step="1">
+          <span class="lesson-step-num">1</span>
+          <div class="lesson-step-body">
+            <h3>Create the repo</h3>
+            <p>Click <strong>New</strong> on GitHub and name it <code>hello-teachy</code>.</p>
+          </div>
+        </div>
+        <div class="lesson-step" data-step="2">
+          <span class="lesson-step-num">2</span>
+          <div class="lesson-step-body">
+            <h3>Add a README</h3>
+            <p>Create a file called <code>README.md</code> with a one-line description.</p>
+          </div>
+        </div>
+        <div class="lesson-step" data-step="3">
+          <span class="lesson-step-num">3</span>
+          <div class="lesson-step-body">
+            <h3>Commit it</h3>
+            <p>Save your change with a short commit message — that’s a snapshot.</p>
+          </div>
+        </div>
+        <div class="lesson-step" data-step="4">
+          <span class="lesson-step-num">4</span>
+          <div class="lesson-step-body">
+            <h3>Push to GitHub</h3>
+            <p>Send your commit up. Your repo is now live on the web.</p>
+          </div>
+        </div>
+      </aside>
+
+      <section class="lesson-stage">
+        <div class="lesson-progress"><span id="lesson-progress-bar"></span></div>
+
+        <div class="demo-shell">
+          <div class="demo-browser" id="demo-browser">
+            <div class="demo-chrome">
+              <div class="demo-dots"><i></i><i></i><i></i></div>
+              <div class="demo-url">
+                <span class="demo-lock" aria-hidden="true"></span>
+                <span id="demo-url-text">github.com</span>
+              </div>
+            </div>
+
+            <div class="demo-page" id="demo-page">
+              <!-- Step 1: repo home -->
+              <div class="demo-view is-active" data-view="home" id="demo-view-home">
+                <header class="gh-top">
+                  <span class="gh-logo">Octo</span>
+                  <nav class="gh-nav"><span>Pull requests</span><span>Issues</span></nav>
+                  <button type="button" class="gh-new" id="demo-btn-new" data-demo-target="new">
+                    New <em>▾</em>
+                  </button>
+                </header>
+                <div class="gh-home-body">
+                  <h2>Your repositories</h2>
+                  <p class="gh-muted">Nothing here yet — let’s make one.</p>
+                  <ul class="gh-empty-list">
+                    <li></li><li></li><li></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Step 1b: new repo form -->
+              <div class="demo-view" data-view="form" id="demo-view-form" hidden>
+                <div class="gh-form">
+                  <h2>Create a new repository</h2>
+                  <label class="gh-field">
+                    <span>Repository name</span>
+                    <input
+                      id="demo-repo-name"
+                      type="text"
+                      placeholder="hello-teachy"
+                      autocomplete="off"
+                      spellcheck="false"
+                      data-demo-target="name"
+                    />
+                  </label>
+                  <div class="gh-visibility">
+                    <label><input type="radio" checked disabled /> Public</label>
+                    <label><input type="radio" disabled /> Private</label>
+                  </div>
+                  <button type="button" class="gh-create" id="demo-btn-create" data-demo-target="create" disabled>
+                    Create repository
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 2 & 3: file editor -->
+              <div class="demo-view" data-view="editor" id="demo-view-editor" hidden>
+                <header class="gh-top">
+                  <span class="gh-logo">Octo</span>
+                  <nav class="gh-nav"><span>you / hello-teachy</span></nav>
+                </header>
+                <div class="gh-form">
+                  <h2>Add a file</h2>
+                  <label class="gh-field">
+                    <span>File name</span>
+                    <input
+                      id="demo-file-name"
+                      type="text"
+                      value="README.md"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                  </label>
+                  <label class="gh-field">
+                    <span>Contents</span>
+                    <textarea id="demo-file-body" rows="3" spellcheck="false"
+                      style="font:inherit;font-size:14px;font-weight:500;padding:10px 12px;border:1px solid rgba(0,0,0,0.14);border-radius:8px;resize:vertical;"># hello-teachy
+My first repo, made with Teachy.</textarea>
+                  </label>
+                  <label class="gh-field">
+                    <span>Commit message</span>
+                    <input
+                      id="demo-commit-msg"
+                      type="text"
+                      value="Add README"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                  </label>
+                  <button type="button" class="gh-create" id="demo-btn-commit" data-demo-target="commit">
+                    Commit new file
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 4: push to GitHub -->
+              <div class="demo-view" data-view="push" id="demo-view-push" hidden>
+                <header class="gh-top">
+                  <span class="gh-logo">Octo</span>
+                  <nav class="gh-nav"><span>you / hello-teachy</span></nav>
+                </header>
+                <div class="gh-form">
+                  <h2>Push your commit</h2>
+                  <p class="gh-muted">One command sends everything to GitHub.</p>
+                  <div class="gh-code-block">
+                    <code id="demo-push-cmd">git push -u origin main</code>
+                  </div>
+                  <button type="button" class="gh-create" id="demo-btn-push" data-demo-target="push" style="margin-top:18px;">
+                    Run push
+                  </button>
+                </div>
+              </div>
+
+              <!-- Done -->
+              <div class="demo-view" data-view="done" id="demo-view-done" hidden>
+                <div class="gh-done">
+                  <div class="gh-check" aria-hidden="true">✓</div>
+                  <h2 id="demo-done-title">hello-teachy</h2>
+                  <p>Live on GitHub. You created a repo, committed a file, and pushed.</p>
+                  <div class="gh-code-block">
+                    <code id="demo-done-url">github.com/you/hello-teachy</code>
+                  </div>
+                </div>
+              </div>
+
+              <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
+
+              <div class="demo-clicky" id="demo-clicky" hidden>
+                <div class="demo-speech" id="demo-speech" aria-live="polite"></div>
+                <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-hud">
+            <span class="demo-phase" id="demo-phase">Let’s go</span>
+            <button type="button" class="text-btn" id="skip-lesson">Skip lesson</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <p class="lesson-footnote">
+      This is a pretend browser — but the steps are exactly what you’d do for real.
+      <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">Want Teachy to coach you live? Get the app →</a>
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var aborted = false;
+      var waitCleanup = null;
+
+      var demoPhase = document.getElementById("demo-phase");
+      var demoPage = document.getElementById("demo-page");
+      var demoClicky = document.getElementById("demo-clicky");
+      var demoSpeech = document.getElementById("demo-speech");
+      var demoCursor = document.getElementById("demo-cursor");
+      var demoChalk = document.getElementById("demo-chalk");
+      var demoUrlText = document.getElementById("demo-url-text");
+      var demoViewHome = document.getElementById("demo-view-home");
+      var demoViewForm = document.getElementById("demo-view-form");
+      var demoViewEditor = document.getElementById("demo-view-editor");
+      var demoViewPush = document.getElementById("demo-view-push");
+      var demoViewDone = document.getElementById("demo-view-done");
+      var demoBtnNew = document.getElementById("demo-btn-new");
+      var demoBtnCreate = document.getElementById("demo-btn-create");
+      var demoRepoName = document.getElementById("demo-repo-name");
+      var demoBtnCommit = document.getElementById("demo-btn-commit");
+      var demoBtnPush = document.getElementById("demo-btn-push");
+      var demoDoneTitle = document.getElementById("demo-done-title");
+      var demoDoneUrl = document.getElementById("demo-done-url");
+      var progressBar = document.getElementById("lesson-progress-bar");
+      var stepEls = Array.prototype.slice.call(document.querySelectorAll(".lesson-step"));
+
+      function wait(ms) {
+        return new Promise(function (resolve) {
+          var started = Date.now();
+          var id = setInterval(function () {
+            if (aborted || Date.now() - started >= ms) {
+              clearInterval(id);
+              resolve();
+            }
+          }, 40);
+        });
+      }
+
+      async function typewrite(el, text, msPerChar) {
+        if (!el) return;
+        var speed = msPerChar || 26;
+        el.innerHTML = "";
+        var textNode = document.createTextNode("");
+        var caret = document.createElement("span");
+        caret.className = "caret";
+        el.appendChild(textNode);
+        el.appendChild(caret);
+        for (var i = 0; i < text.length; i++) {
+          if (aborted) return;
+          textNode.textContent += text.charAt(i);
+          var ch = text.charAt(i);
+          var pause = speed;
+          if (ch === "." || ch === "—" || ch === ",") pause = speed * 7;
+          if (ch === "g") pause = speed * 2.2;
+          await wait(pause);
+        }
+        await wait(280);
+        if (!aborted && caret.parentNode) caret.remove();
+      }
+
+      function setPhase(text, mode) {
+        if (!demoPhase) return;
+        demoPhase.textContent = text;
+        demoPhase.classList.toggle("is-wait", mode === "wait");
+        demoPhase.classList.toggle("is-done", mode === "done");
+      }
+
+      function showView(view) {
+        [demoViewHome, demoViewForm, demoViewEditor, demoViewPush, demoViewDone].forEach(function (el) {
+          if (!el) return;
+          el.hidden = el !== view;
+        });
+      }
+
+      function clearHighlights() {
+        [demoBtnNew, demoBtnCreate, demoRepoName, demoBtnCommit, demoBtnPush].forEach(function (el) {
+          if (el) el.classList.remove("is-hot");
+        });
+        if (demoChalk) demoChalk.classList.remove("is-on");
+      }
+
+      function showClicky() {
+        if (demoClicky) demoClicky.hidden = false;
+      }
+
+      function placeClicky(left, top, flip) {
+        if (!demoClicky) return;
+        showClicky();
+        demoClicky.style.left = Math.round(left) + "px";
+        demoClicky.style.top = Math.round(top) + "px";
+        demoClicky.classList.toggle("is-flipped", !!flip);
+      }
+
+      function pointAt(el) {
+        if (!demoPage || !el) return;
+        var pageRect = demoPage.getBoundingClientRect();
+        var targetRect = el.getBoundingClientRect();
+        var nearRightEdge = targetRect.left - pageRect.left > pageRect.width * 0.55;
+        var left = targetRect.left - pageRect.left + (nearRightEdge ? -8 : targetRect.width + 10);
+        var top = targetRect.top - pageRect.top + Math.max(0, targetRect.height * 0.15);
+        placeClicky(left, top, nearRightEdge);
+
+        if (demoChalk) {
+          var pad = 6;
+          demoChalk.style.left = Math.round(targetRect.left - pageRect.left - pad) + "px";
+          demoChalk.style.top = Math.round(targetRect.top - pageRect.top - pad) + "px";
+          demoChalk.style.width = Math.round(targetRect.width + pad * 2) + "px";
+          demoChalk.style.height = Math.round(targetRect.height + pad * 2) + "px";
+          demoChalk.classList.add("is-on");
+        }
+        el.classList.add("is-hot");
+      }
+
+      async function teachySays(text) {
+        showClicky();
+        if (demoSpeech) {
+          demoSpeech.classList.add("is-on");
+          await typewrite(demoSpeech, text, 22);
+        }
+      }
+
+      function cancelWait() {
+        if (typeof waitCleanup === "function") {
+          waitCleanup();
+          waitCleanup = null;
+        }
+      }
+
+      function waitForUser(register) {
+        return new Promise(function (resolve) {
+          if (aborted) {
+            resolve(null);
+            return;
+          }
+          cancelWait();
+          var settled = false;
+          function done(value) {
+            if (settled) return;
+            settled = true;
+            cancelWait();
+            resolve(value);
+          }
+          waitCleanup = register(done);
+          var poll = setInterval(function () {
+            if (aborted) {
+              clearInterval(poll);
+              done(null);
+            }
+          }, 80);
+          var prev = waitCleanup;
+          waitCleanup = function () {
+            clearInterval(poll);
+            if (typeof prev === "function") prev();
+          };
+        });
+      }
+
+      function setStep(n, state) {
+        stepEls.forEach(function (el) {
+          var num = parseInt(el.getAttribute("data-step"), 10);
+          el.classList.toggle("active", num === n && state !== "done");
+          el.classList.toggle("done", num < n || (num === n && state === "done"));
+        });
+        if (progressBar) {
+          progressBar.style.width = ((n - (state === "done" ? 0 : 1)) / stepEls.length * 100) + "%";
+        }
+      }
+
+      function resetAll() {
+        cancelWait();
+        clearHighlights();
+        if (demoClicky) {
+          demoClicky.hidden = true;
+          demoClicky.style.left = "48px";
+          demoClicky.style.top = "120px";
+          demoClicky.classList.remove("is-flipped");
+        }
+        if (demoSpeech) {
+          demoSpeech.classList.remove("is-on");
+          demoSpeech.textContent = "";
+        }
+        if (demoCursor) demoCursor.classList.remove("is-click");
+        if (demoRepoName) {
+          demoRepoName.value = "";
+          demoRepoName.blur();
+        }
+        if (demoBtnCreate) demoBtnCreate.disabled = true;
+        if (demoUrlText) demoUrlText.textContent = "github.com";
+        if (demoDoneTitle) demoDoneTitle.textContent = "hello-teachy";
+        if (demoDoneUrl) demoDoneUrl.textContent = "github.com/you/hello-teachy";
+        showView(demoViewHome);
+        setPhase("Let’s go", "");
+        setStep(1, "todo");
+      }
+
+      async function runLesson() {
+        aborted = false;
+        resetAll();
+        if (aborted) return;
+
+        setStep(1, "todo");
+        await teachySays("hey — this is a pretend browser. i’ll teach you like i do for real. goal: your first GitHub repo.");
+        if (aborted) return;
+        await wait(450);
+
+        // Step 1: create repo
+        setStep(1, "active");
+        if (demoUrlText) demoUrlText.textContent = "github.com";
+        showView(demoViewHome);
+        await teachySays("click New — top right.");
+        if (aborted) return;
+        pointAt(demoBtnNew);
+        setPhase("Your turn", "wait");
+
+        await waitForUser(function (done) {
+          function onClick(event) {
+            event.preventDefault();
+            if (demoCursor) {
+              demoCursor.classList.add("is-click");
+              setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
+            }
+            done(true);
+          }
+          demoBtnNew.addEventListener("click", onClick);
+          return function () { demoBtnNew.removeEventListener("click", onClick); };
+        });
+        if (aborted) return;
+
+        clearHighlights();
+        setPhase("Nice", "");
+        await teachySays("good — you acted. that’s the loop.");
+        if (aborted) return;
+        await wait(350);
+
+        showView(demoViewForm);
+        if (demoUrlText) demoUrlText.textContent = "github.com/new";
+        await teachySays("name it hello-teachy — then press return.");
+        if (aborted) return;
+        pointAt(demoRepoName);
+        if (demoRepoName) demoRepoName.focus();
+        setPhase("Your turn", "wait");
+
+        var repoName = await waitForUser(function (done) {
+          var typingTimer = null;
+          function current() { return (demoRepoName && demoRepoName.value.trim()) || ""; }
+          function sync() {
+            if (demoBtnCreate) demoBtnCreate.disabled = current().length < 2;
+          }
+          function onInput() {
+            sync();
+            clearTimeout(typingTimer);
+            if (current().length >= 2) {
+              typingTimer = setTimeout(function () { done(current()); }, 900);
+            }
+          }
+          function onKey(event) {
+            if (event.key === "Enter" && current().length >= 2) {
+              clearTimeout(typingTimer);
+              done(current());
+            }
+          }
+          demoRepoName.addEventListener("input", onInput);
+          demoRepoName.addEventListener("keydown", onKey);
+          sync();
+          return function () {
+            clearTimeout(typingTimer);
+            demoRepoName.removeEventListener("input", onInput);
+            demoRepoName.removeEventListener("keydown", onKey);
+          };
+        });
+        if (aborted) return;
+
+        repoName = (repoName || "hello-teachy").replace(/\s+/g, "-");
+        if (demoRepoName) demoRepoName.value = repoName;
+        if (demoBtnCreate) demoBtnCreate.disabled = false;
+        clearHighlights();
+
+        await teachySays("perfect. hit Create repository.");
+        if (aborted) return;
+        pointAt(demoBtnCreate);
+        setPhase("Your turn", "wait");
+
+        await waitForUser(function (done) {
+          function onClick(event) {
+            event.preventDefault();
+            if (demoBtnCreate && demoBtnCreate.disabled) return;
+            if (demoCursor) {
+              demoCursor.classList.add("is-click");
+              setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
+            }
+            done(true);
+          }
+          demoBtnCreate.addEventListener("click", onClick);
+          return function () { demoBtnCreate.removeEventListener("click", onClick); };
+        });
+        if (aborted) return;
+
+        clearHighlights();
+        if (demoDoneTitle) demoDoneTitle.textContent = repoName;
+        if (demoDoneUrl) demoDoneUrl.textContent = "github.com/you/" + repoName;
+        setStep(1, "done");
+        setPhase("Checked ✓", "done");
+        await teachySays("repo created. now let’s put something in it.");
+        if (aborted) return;
+        await wait(450);
+
+        // Step 2: add README
+        setStep(2, "active");
+        showView(demoViewEditor);
+        if (demoUrlText) demoUrlText.textContent = "github.com/you/" + repoName + "/new/main";
+        await teachySays("we’ll add a README.md — the welcome page of every repo. the text is already there; hit Commit new file.");
+        if (aborted) return;
+        pointAt(demoBtnCommit);
+        setPhase("Your turn", "wait");
+
+        await waitForUser(function (done) {
+          function onClick(event) {
+            event.preventDefault();
+            if (demoCursor) {
+              demoCursor.classList.add("is-click");
+              setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
+            }
+            done(true);
+          }
+          demoBtnCommit.addEventListener("click", onClick);
+          return function () { demoBtnCommit.removeEventListener("click", onClick); };
+        });
+        if (aborted) return;
+
+        clearHighlights();
+        setStep(2, "done");
+        setStep(3, "active");
+        setPhase("Saved ✓", "done");
+        await teachySays("that commit is a snapshot of your repo right now. Git remembers it forever.");
+        if (aborted) return;
+        await wait(450);
+
+        // Step 3/4: push
+        setStep(3, "done");
+        setStep(4, "active");
+        showView(demoViewPush);
+        if (demoUrlText) demoUrlText.textContent = "github.com/you/" + repoName;
+        await teachySays("last step: push. that command sends your commit to GitHub so it’s live on the web. click Run push.");
+        if (aborted) return;
+        pointAt(demoBtnPush);
+        setPhase("Your turn", "wait");
+
+        await waitForUser(function (done) {
+          function onClick(event) {
+            event.preventDefault();
+            if (demoCursor) {
+              demoCursor.classList.add("is-click");
+              setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
+            }
+            done(true);
+          }
+          demoBtnPush.addEventListener("click", onClick);
+          return function () { demoBtnPush.removeEventListener("click", onClick); };
+        });
+        if (aborted) return;
+
+        clearHighlights();
+        showView(demoViewDone);
+        if (demoUrlText) demoUrlText.textContent = "github.com/you/" + repoName;
+        setStep(4, "done");
+        setPhase("You did it ✓", "done");
+        await teachySays("done. you created a repo, committed a file, and pushed. that’s real Git — and i coached you the whole way.");
+      }
+
+      var skipBtn = document.getElementById("skip-lesson");
+      if (skipBtn) {
+        skipBtn.addEventListener("click", function () {
+          aborted = true;
+          showView(demoViewDone);
+          if (demoUrlText) demoUrlText.textContent = "github.com/you/hello-teachy";
+          setPhase("Done ✓", "done");
+          setStep(4, "done");
+        });
+      }
+
+      var restartBtn = document.getElementById("lesson-restart");
+      if (restartBtn) {
+        restartBtn.addEventListener("click", function () {
+          runLesson();
+        });
+      }
+
+      runLesson();
+    })();
+  </script>
+</body>
+</html>
