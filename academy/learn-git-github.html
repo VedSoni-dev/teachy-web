@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learn Git &amp; GitHub — Teachy Whiteboard Lesson</title>
+  <meta name="description" content="A visual, beginner-friendly lesson on Git, GitHub, repositories, commits, and how version control works. Free interactive whiteboard from Teachy." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --surface-raised: #1c2a4a;
+      --accent: #3380ff;
+      --accent-soft: rgba(51, 128, 255, 0.15);
+      --ink: #e8e8e8;
+      --ink-soft: #8892a4;
+      --ink-dim: #5a6478;
+      --line: rgba(255, 255, 255, 0.08);
+      --green: #51cf66;
+      --green-soft: rgba(81, 207, 102, 0.15);
+      --yellow: #ffd43b;
+      --yellow-soft: rgba(255, 212, 59, 0.15);
+      --red: #ff6b6b;
+      --purple: #cc5de8;
+      --purple-soft: rgba(204, 93, 232, 0.15);
+      --radius: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      line-height: 1.5;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top bar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .brand-title { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+    .brand-sub { font-size: 11px; color: var(--ink-soft); }
+
+    .topbar-actions { display: flex; align-items: center; gap: 12px; }
+
+    .btn {
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: var(--font);
+    }
+
+    .btn-ghost { background: transparent; color: var(--ink-soft); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); color: var(--ink); }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: #2970d9; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Main layout */
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Sidebar - lesson steps */
+    .sidebar {
+      width: 380px;
+      min-width: 380px;
+      background: var(--surface);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sidebar-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .sidebar-subtitle {
+      font-size: 11px;
+      color: var(--ink-soft);
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 3px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+
+    /* Step list */
+    .step-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .step-list::-webkit-scrollbar { width: 4px; }
+    .step-list::-webkit-scrollbar-track { background: transparent; }
+    .step-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    .step-card {
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+      border: 1px solid transparent;
+    }
+
+    .step-card:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .step-card.active {
+      background: var(--accent-soft);
+      border-color: rgba(51, 128, 255, 0.3);
+    }
+
+    .step-card.completed {
+      opacity: 0.6;
+    }
+
+    .step-number {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .step-card.completed .step-number { color: var(--green); }
+
+    .step-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .step-card-desc {
+      font-size: 11px;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    /* Content area - whiteboard */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .lesson-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .lesson-step-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .lesson-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .lesson-nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .canvas-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+      pointer-events: none;
+    }
+
+    #wb-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+
+    /* Bottom bar with explanation text */
+    .explanation-bar {
+      padding: 16px 24px;
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      max-height: 160px;
+      overflow-y: auto;
+    }
+
+    .explanation-bar::-webkit-scrollbar { width: 4px; }
+    .explanation-bar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    .explanation-text {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+
+    .explanation-text strong { color: var(--ink); font-weight: 600; }
+    .explanation-text code {
+      background: rgba(255,255,255,0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: "SF Mono", Menlo, monospace;
+      color: var(--accent);
+    }
+
+    .explanation-text .highlight-green { color: var(--green); font-weight: 600; }
+    .explanation-text .highlight-blue { color: var(--accent); font-weight: 600; }
+    .explanation-text .highlight-yellow { color: var(--yellow); font-weight: 600; }
+    .explanation-text .highlight-purple { color: var(--purple); font-weight: 600; }
+
+    /* Keyboard hint */
+    .kb-hint {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      color: var(--ink-dim);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 11px;
+      pointer-events: none;
+      z-index: 50;
+      border: 1px solid var(--line);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .kb-hint.visible { opacity: 1; }
+    .kb-hint kbd {
+      background: rgba(255,255,255,0.08);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-family: inherit;
+      font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-icon">T</div>
+      <div>
+        <div class="brand-title">Teachy Lesson</div>
+        <div class="brand-sub">Git &amp; GitHub — from zero</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" onclick="window.location='whiteboard.html'">Open blank whiteboard</button>
+      <button class="btn btn-ghost" onclick="window.location='index.html'">Academy</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">Git &amp; GitHub Fundamentals</div>
+        <div class="sidebar-subtitle">8 steps · 10 min</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 12.5%"></div>
+        </div>
+      </div>
+
+      <div class="step-list" id="step-list"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-step-label" id="step-label">Step 1 of 8</div>
+          <div class="lesson-title" id="lesson-title">What is version control?</div>
+        </div>
+        <div class="lesson-nav">
+          <button class="btn btn-ghost" id="prev-btn" onclick="prevStep()">← Back</button>
+          <button class="btn btn-primary" id="next-btn" onclick="nextStep()">Next →</button>
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="wb-canvas"></canvas>
+      </div>
+
+      <div class="explanation-bar" id="explanation-bar">
+        <div class="explanation-text" id="explanation-text"></div>
+      </div>
+
+      <div class="kb-hint" id="kb-hint">
+        <kbd>←</kbd> <kbd>→</kbd> navigate steps · <kbd>Space</kbd> next
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =============================================
+    // Lesson data
+    // =============================================
+    const lessons = [
+      {
+        title: "What is version control?",
+        explanation: `<strong>Version control</strong> is a system that records changes to files over time so you can recall specific versions later. Think of it like Google Docs' version history, but for any file on your computer — code, documents, images, anything.
+
+Instead of saving files as <code>document_v2_FINAL_FINAL.docx</code>, version control lets you save a <strong>timeline of changes</strong> (called a <em>history</em>) and go back to any point whenever you want.`,
+        draw: drawVersionControl
+      },
+      {
+        title: "What is Git?",
+        explanation: `<strong class="highlight-green">Git</strong> is the most popular version control tool. It runs <em>on your computer</em> — no internet needed. When you "use Git," you're telling Git to track changes to your files.
+
+Git saves snapshots called <strong class="highlight-blue">commits</strong>. Each commit is a frozen moment in time — a checkpoint you can always return to. Commits form a <strong>chain</strong>: each one points to the one before it, creating a timeline.`,
+        draw: drawWhatIsGit
+      },
+      {
+        title: "What is a repository?",
+        explanation: `A <strong class="highlight-purple">repository</strong> (or "repo") is a folder that Git is watching. It's where your project lives — and inside it, Git secretly keeps a <code>.git/</code> folder that stores the entire history of every change.
+
+Think of it like a normal project folder, but with a <strong>time machine built in</strong>. You can see every change ever made, who made it, and when.`,
+        draw: drawRepository
+      },
+      {
+        title: "Commits: the building blocks",
+        explanation: `A <strong class="highlight-blue">commit</strong> is a snapshot of your project at a specific moment. Every commit has:
+
+• A <strong>unique ID</strong> (like <code>a1b2c3d</code>)<br>
+• A <strong>message</strong> describing what changed<br>
+• A pointer to the <strong>previous commit</strong><br>
+• The author's <strong>name and timestamp</strong>
+
+Commits are like beads on a string — each one links to the one before it, forming your project's complete story.`,
+        draw: drawCommits
+      },
+      {
+        title: "Branches: parallel timelines",
+        explanation: `A <strong class="highlight-yellow">branch</strong> is a parallel version of your project. You can work on new features in a branch without affecting the main code.
+
+When you're done, you <strong>merge</strong> the branch back into the main line. This is how teams work on the same project without stepping on each other's toes — everyone has their own branch until they're ready.`,
+        draw: drawBranches
+      },
+      {
+        title: "Push, Pull, and the remote",
+        explanation: `Your repo lives on <em>your computer</em>. But what if you want to share it? You <strong class="highlight-green">push</strong> your commits to a <em>remote</em> — a copy of your repo hosted on a server.
+
+When someone else makes changes, you <strong class="highlight-blue">pull</strong> those commits down to your machine. It's like syncing a shared document — push to share, pull to receive.`,
+        draw: drawPushPull
+      },
+      {
+        title: "What is GitHub?",
+        explanation: `<strong>GitHub</strong> is a <em>website</em> that hosts your Git repositories online. It's not Git itself — Git is the tool, GitHub is where you store and share repos.
+
+GitHub adds things Git doesn't have: <strong>pull requests</strong> (proposing changes), <strong>issues</strong> (bug tracking), <strong>wiki</strong>, <strong>actions</strong> (automation), and a web interface to browse code. Think of Git as the engine and GitHub as the garage.`,
+        draw: drawGitHub
+      },
+      {
+        title: "The workflow: start to finish",
+        explanation: `Here's the typical Git + GitHub workflow:<br><br>
+<strong>1.</strong> <code>git clone</code> — download a repo from GitHub<br>
+<strong>2.</strong> <code>git checkout -b feature</code> — create a new branch<br>
+<strong>3.</strong> Edit your files<br>
+<strong>4.</strong> <code>git add .</code> — stage your changes<br>
+<strong>5.</strong> <code>git commit -m "description"</code> — save a snapshot<br>
+<strong>6.</strong> <code>git push</code> — upload to GitHub<br>
+<strong>7.</strong> Open a <strong>pull request</strong> → someone reviews → <strong>merge</strong> 🎉`,
+        draw: drawWorkflow
+      }
+    ];
+
+    let currentStep = 0;
+    const canvas = document.getElementById('wb-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // =============================================
+    // Canvas setup
+    // =============================================
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      const rect = wrap.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      renderCurrentLesson();
+    }
+
+    function clearCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      return rect;
+    }
+
+    // =============================================
+    // Drawing helpers
+    // =============================================
+    function drawRoundedRect(x, y, w, h, r, fill, stroke, lineWidth) {
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, r);
+      if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+      if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lineWidth || 1; ctx.stroke(); }
+    }
+
+    function drawCircle(cx, cy, r, fill, stroke, lineWidth) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+      if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lineWidth || 1; ctx.stroke(); }
+    }
+
+    function drawArrow(x1, y1, x2, y2, color, lineWidth) {
+      const headLen = 10;
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth || 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+      ctx.stroke();
+    }
+
+    function drawDashedLine(x1, y1, x2, y2, color, lineWidth) {
+      ctx.beginPath();
+      ctx.setLineDash([6, 4]);
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth || 1;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawText(text, x, y, options = {}) {
+      const size = options.size || 14;
+      const weight = options.weight || '500';
+      const color = options.color || '#e8e8e8';
+      const align = options.align || 'center';
+      ctx.font = `${weight} ${size}px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif`;
+      ctx.fillStyle = color;
+      ctx.textAlign = align;
+      ctx.textBaseline = options.baseline || 'middle';
+      ctx.fillText(text, x, y);
+    }
+
+    function drawLabel(text, x, y, bgColor, textColor) {
+      const size = 11;
+      ctx.font = `600 ${size}px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif`;
+      const metrics = ctx.measureText(text);
+      const padding = 8;
+      const w = metrics.width + padding * 2;
+      const h = size + padding * 2;
+      drawRoundedRect(x - w / 2, y - h / 2, w, h, 6, bgColor || 'rgba(51,128,255,0.15)', bgColor || 'rgba(51,128,255,0.3)', 1);
+      drawText(text, x, y, { size: size, weight: '600', color: textColor || '#3380ff' });
+    }
+
+    function drawBox(x, y, w, h, label, color) {
+      drawRoundedRect(x, y, w, h, 8, 'rgba(255,255,255,0.04)', color || 'rgba(255,255,255,0.15)', 1);
+      if (label) {
+        drawText(label, x + w / 2, y + h / 2, { size: 12, weight: '500', color: color || '#e8e8e8' });
+      }
+    }
+
+    // =============================================
+    // Lesson drawings
+    // =============================================
+    function drawVersionControl() {
+      const rect = clearCanvas();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+
+      // Title
+      drawText("Saving without version control", cx, 50, { size: 18, weight: '700', color: '#e8e8e8' });
+
+      // Bad way - file copies
+      const badY = 110;
+      drawLabel("The old way", cx, badY, 'rgba(255,107,107,0.15)', '#ff6b6b');
+
+      const files = [
+        { name: "report.docx", x: cx - 220, color: '#ff6b6b' },
+        { name: "report_v2.docx", x: cx - 90, color: '#ff6b6b' },
+        { name: "report_v2_FIXED.docx", x: cx + 40, color: '#ff6b6b' },
+        { name: "report_FINAL.docx", x: cx + 170, color: '#ff6b6b' },
+      ];
+
+      files.forEach((f, i) => {
+        drawRoundedRect(f.x, badY + 20, 110, 40, 6, 'rgba(255,107,107,0.08)', 'rgba(255,107,107,0.3)', 1);
+        drawText(f.name, f.x + 55, badY + 40, { size: 9, weight: '500', color: '#ff6b6b' });
+      });
+
+      drawText("Confusing, cluttered, no history", cx, badY + 80, { size: 11, color: '#8892a4' });
+
+      // Arrow down
+      drawArrow(cx, badY + 100, cx, badY + 140, 'rgba(255,255,255,0.2)', 1);
+
+      // Good way - timeline
+      const goodY = badY + 160;
+      drawLabel("With version control", cx, goodY, 'rgba(81,207,102,0.15)', '#51cf66');
+
+      // Single file with timeline
+      drawRoundedRect(cx - 180, goodY + 20, 360, 40, 6, 'rgba(81,207,102,0.08)', 'rgba(81,207,102,0.3)', 1);
+      drawText("report.docx", cx, goodY + 40, { size: 12, weight: '600', color: '#51cf66' });
+
+      // Timeline dots
+      const dotY = goodY + 80;
+      const dotSpacing = 60;
+      const dotStartX = cx - 120;
+      for (let i = 0; i < 4; i++) {
+        const dx = dotStartX + i * dotSpacing;
+        drawCircle(dx, dotY, 8, 'rgba(51,128,255,0.2)', '#3380ff', 2);
+        drawText(`v${i + 1}`, dx, dotY, { size: 8, weight: '600', color: '#3380ff' });
+        if (i < 3) {
+          ctx.beginPath();
+          ctx.moveTo(dx + 10, dotY);
+          ctx.lineTo(dx + dotSpacing - 10, dotY);
+          ctx.strokeStyle = 'rgba(51,128,255,0.4)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+      }
+
+      drawText("One file, full timeline, go back to any point", cx, goodY + 110, { size: 11, color: '#8892a4' });
+
+      // Bottom insight
+      drawRoundedRect(cx - 160, goodY + 140, 320, 36, 8, 'rgba(51,128,255,0.08)', 'rgba(51,128,255,0.2)', 1);
+      drawText("This is what Git does for you", cx, goodY + 158, { size: 12, weight: '600', color: '#3380ff' });
+    }
+
+    function drawWhatIsGit() {
+      const rect = clearCanvas();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+
+      drawText("Git tracks changes as a chain of snapshots", cx, 40, { size: 18, weight: '700' });
+
+      // Commits as linked boxes
+      const commitY = 120;
+      const commitW = 90;
+      const commitH = 50;
+      const gap = 30;
+      const commits = [
+        { msg: "Initial", color: '#3380ff' },
+        { msg: "Add header", color: '#3380ff' },
+        { msg: "Fix typo", color: '#3380ff' },
+        { msg: "Add logo", color: '#3380ff' },
+      ];
+
+      const totalW = commits.length * commitW + (commits.length - 1) * gap;
+      const startX = cx - totalW / 2;
+
+      commits.forEach((c, i) => {
+        const x = startX + i * (commitW + gap);
+        drawRoundedRect(x, commitY, commitW, commitH, 6, 'rgba(51,128,255,0.1)', 'rgba(51,128,255,0.4)', 1.5);
+        drawText(c.msg, x + commitW / 2, commitY + 18, { size: 9, weight: '600', color: '#3380ff' });
+        drawText(`a${(i * 7 + 3).toString(16)}b${i}c`, x + commitW / 2, commitY + 35, { size: 8, color: '#5a6478' });
+        if (i < commits.length - 1) {
+          drawArrow(x + commitW + 4, commitY + commitH / 2, x + commitW + gap - 4, commitY + commitH / 2, 'rgba(51,128,255,0.4)', 1.5);
+        }
+      });
+
+      // Timeline arrow
+      drawArrow(startX - 40, commitY + commitH + 25, startX + totalW + 40, commitY + commitH + 25, 'rgba(255,255,255,0.15)', 1);
+      drawText("time →", startX + totalW + 60, commitY + commitH + 25, { size: 10, color: '#5a6478', align: 'left' });
+
+      // Key insight box
+      const insightY = commitY + commitH + 70;
+      drawRoundedRect(cx - 200, insightY, 400, 70, 10, 'rgba(51,128,255,0.06)', 'rgba(51,128,255,0.15)', 1);
+      drawText("Each commit points to the one before it", cx, insightY + 18, { size: 12, weight: '600', color: '#3380ff' });
+      drawText("Go back to any point in your project's history", cx, insightY + 38, { size: 11, color: '#8892a4' });
+      drawText("Git is free, fast, and runs on your computer", cx, insightY + 55, { size: 11, color: '#8892a4' });
+    }
+
+    function drawRepository() {
+      const rect = clearCanvas();
+      const cx = rect.width / 2;
+
+      drawText("A repository = your project folder + Git history", cx, 40, { size: 18, weight: '700' });
+
+      // Folder visualization
+      const folderX = cx - 180;
+      const folderY = 80;
+      const folderW = 180;
+      const folderH = 240;
+
+      // Folder background
+      drawRoundedRect(folderX, folderY, folderW, folderH, 10, 'rgba(255,255,255,0.04)', 'rgba(255,255,255,0.12)', 1);
+
+      // Folder tab
+      drawRoundedRect(folderX, folderY - 12, 70, 16, [6, 6, 0, 0], 'rgba(255,255,255,0.06)', 'rgba(255,255,255,0.12)', 1);
+      drawText("my-project/", folderX + 35, folderY - 4, { size: 9, weight: '600', color: '#8892a4' });
+
+      // Files inside folder
+      const fileItems = [
+        { name: "index.html", y: folderY + 20 },
+        { name: "styles.css", y: folderY + 50 },
+        { name: "app.js", y: folderY + 80 },
+      ];
+
+      fileItems.forEach(f => {
+        drawRoundedRect(folderX + 15, f.y, folderW - 30, 24, 4, 'rgba(255,255,255,0.04)', 'rgba(255,255,255,0.08)', 1);
+        drawText(f.name, folderX + 90, f.y + 12, { size: 10, color: '#e8e8e8' });
+      });
+
+      // .git folder (highlighted)
+      const gitFolderY = folderY + 130;
+      drawRoundedRect(folderX + 15, gitFolderY, folderW - 30, 90, 8, 'rgba(51,128,255,0.08)', 'rgba(51,128,255,0.3)', 1.5);
+      drawText(".git/", folderX + 90, gitFolderY + 16, { size: 10, weight: '600', color: '#3380ff' });
+      drawText("history", folderX + 90, gitFolderY + 38, { size: 9, color: '#5a6478' });
+      drawText("branches", folderX + 90, gitFolderY + 54, { size: 9, color: '#5a6478' });
+      drawText("config", folderX + 90, gitFolderY + 70, { size: 9, color: '#5a6478' });
+
+      // Arrow from .git to explanation
+      const arrowStartX = folderX + folderW + 10;
+      const arrowEndX = cx + 40;
+      const arrowY = gitFolderY + 45;
+      drawArrow(arrowStartX, arrowY, arrowEndX, arrowY, 'rgba(51,128,255,0.4)', 1.5);
+
+      // Explanation on right side
+      const rightX = cx + 60;
+      drawText("The .git folder is the", rightX + 80, arrowY - 30, { size: 12, weight: '600', color: '#3380ff', align: 'center' });
+      drawText("brain of your repo", rightX + 80, arrowY - 14, { size: 12, weight: '600', color: '#3380ff', align: 'center' });
+
+      const details = [
+        "Stores every commit ever made",
+        "Tracks which files changed",
+        "Remembers branches & tags",
+        "You never edit .git directly",
+      ];
+
+      details.forEach((d, i) => {
+        drawText("•  " + d, rightX, arrowY + 30 + i * 22, { size: 11, color: '#8892a4', align: 'left' });
+      });
+    }
+
+    function drawCommits() {
+      const rect = clearCanvas();
+      const cx = rect.width / 2;
+
+      drawText("Anatomy of a commit", cx, 40, { size: 18, weight: '700' });
+
+      // Single commit box - large
+      const boxW = 300;
+      const boxH = 180;
+      const boxX = cx - boxW / 2;
+      const boxY = 80;
+
+      drawRoundedRect(boxX, boxY, boxW, boxH, 12, 'rgba(51,128,255,0.06)', 'rgba(51,128,255,0.3)', 2);
+      drawText("commit", boxX + 20, boxY + 22, { size: 14, weight: '700', color: '#3380ff', align: 'left' });
+
+      const fields = [
+        { label: "id:", value: "a1b2c3d4e5f6", color: '#51cf66' },
+        { label: "author:", value: "Ved Soni", color: '#e8e8e8' },
+        { label: "date:", value: "2026-07-14 22:30", color: '#e8e8e8' },
+        { label: "message:", value: "Add login form", color: '#ffd43b' },
+        { label: "parent:", value: "f7e8d9c0b1a2", color: '#cc5de8' },
+      ];
+
+      fields.forEach((f, i) => {
+        const fy = boxY + 50 + i * 24;
+        drawText(f.label, boxX + 25, fy, { size: 11, weight: '600', color: '#5a6478', align: 'left' });
+        drawText(f.value, boxX + 100, fy, { size: 11, weight: '500', color: f.color, align: 'left' });
+      });
+
+      // Arrow to previous commit
+      const prevBoxY = boxY + boxH + 50;
+      drawArrow(cx, boxY + boxH + 5, cx, prevBoxY - 5, 'rgba(255,255,255,0.2)', 1.5);
+      drawText("points to parent", cx + 12, (boxY + boxH + prevBoxY) / 2, { size: 9, color: '#5a6478', align: 'left' });
+
+      drawRoundedRect(cx - 60, prevBoxY, 120, 40, 8, 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.1)', 1);
+      drawText("previous", cx, prevBoxY + 20, { size: 10, color: '#5a6478' });
+
+      // Callouts on the right
+      const callX = cx + 200;
+      const callouts = [
+        { text: "Unique hash — always different", y: boxY + 50, color: '#51cf66' },
+        { text: "Human-readable description", y: boxY + 122, color: '#ffd43b' },
+        { text: "Links to parent — forms the chain", y: boxY + 146, color: '#cc5de8' },
+      ];
+
+      callouts.forEach(c => {
+        drawDashedLine(cx + boxW / 2 + 5, c.y, callX - 10, c.y, 'rgba(255,255,255,0.1)', 1);
+        drawText(c.text, callX, c.y, { size: 10, weight: '500', color: c.color, align: 'left' });
+      });
+    }
+
+    function drawBranches() {
+      const rect = clearCanvas();
+      const cx = rect.width / 2;
+
+      drawText("Branches = parallel timelines", cx, 40, { size: 18, weight: '700' });
+
+      // Main branch
+      const mainY = 130;
+      const mainColor = '#3380ff';
+      const branchColor = '#ffd43b';
+
+      drawLabel("main", 80, mainY, 'rgba(51,128,255,0.15)', '#3380ff');
+
+      const commits = [
+        { x: 150, label: "A" },
+        { x: 240, label: "B" },
+        { x: 330, label: "C" },
+        { x: 420, label: "D" },
+        { x: 510, label: "E" },
+        { x: 600, label: "F" },
+      ];
+
+      // Draw main line
+      ctx.beginPath();
+      ctx.moveTo(150, mainY);
+      ctx.lineTo(600, mainY);
+      ctx.strokeStyle = 'rgba(51,128,255,0.4)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Draw main commits
+      commits.forEach(c => {
+        drawCircle(c.x, mainY, 14, 'rgba(51,128,255,0.2)', mainColor, 2);
+        drawText(c.label, c.x, mainY, { size: 10, weight: '700', color: mainColor });
+      });
+
+      // Feature branch
+      const branchY = mainY + 80;
+      drawLabel("feature/login", 80, branchY, 'rgba(255,212,59,0.15)', '#ffd43b');
+
+      // Branch line
+      ctx.beginPath();
+      ctx.moveTo(330, mainY);
+      ctx.quadraticCurveTo(330, branchY, 390, branchY);
+      ctx.strokeStyle = 'rgba(255,212,59,0.4)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      ctx.moveTo(390, branchY);
+      ctx.lineTo(540, branchY);
+      ctx.strokeStyle = 'rgba(255,212,59,0.4)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Feature commits
+      const featureCommits = [
+        { x: 390, label: "X" },
+        { x: 470, label: "Y" },
+      ];
+
+      featureCommits.forEach(c => {
+        drawCircle(c.x, branchY, 14, 'rgba(255,212,59,0.2)', branchColor, 2);
+        drawText(c.label, c.x, branchY, { size: 10, weight: '700', color: branchColor });
+      });
+
+      // Merge line back
+      ctx.beginPath();
+      ctx.moveTo(540, branchY);
+      ctx.quadraticCurveTo(600, branchY, 600, mainY + 14);
+      ctx.strokeStyle = 'rgba(81,207,102,0.5)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      drawCircle(600, mainY, 16, 'rgba(81,207,102,0.15)', '#51cf66', 2);
+      drawText("F", 600, mainY, { size: 10, weight: '700', color: '#51cf66' });
+
+      // Merge label
+      drawText("merge", 620, branchY - 20, { size: 9, weight: '600', color: '#51cf66' });
+
+      // Explanation at bottom
+      const bottomY = branchY + 70;
+      drawRoundedRect(cx - 240, bottomY, 480, 60, 10, 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.08)', 1);
+      drawText("Branch off → work independently → merge back", cx, bottomY + 18, { size: 12, weight: '600', color: '#e8e8e8' });
+      drawText("Teams work on features without blocking each other", cx, bottomY + 40, { size: 11, color: '#8892a4' });
+    }
+
+    function drawPushPull() {
+      const rect = clearCanvas();
+      const cx = rect.width / 2;
+
+      drawText("Push & Pull: sharing code", cx, 40, { size: 18, weight: '700' });
+
+      // Your computer
+      const localX = cx - 220;
+      const localY = 100;
+      drawRoundedRect(localX, localY, 160, 200, 12, 'rgba(51,128,255,0.06)', 'rgba(51,128,255,0.2)', 1.5);
+      drawText("Your Computer", localX + 80, localY + 20, { size: 12, weight: '700', color: '#3380ff' });
+
+      // Local repo
+      drawRoundedRect(localX + 15, localY + 45, 130, 36, 6, 'rgba(255,255,255,0.04)', 'rgba(255,255,255,0.1)', 1);
+      drawText("Local Repo", localX + 80, localY + 63, { size: 10, weight: '500', color: '#e8e8e8' });
+
+      // Local files
+      drawText("📁 my-project/", localX + 80, localY + 100, { size: 10, color: '#8892a4' });
+      drawText("📝 index.html", localX + 80, localY + 120, { size: 9, color: '#5a6478' });
+      drawText("📝 styles.css", localX + 80, localY + 138, { size: 9, color: '#5a6478' });
+
+      // Remote server (GitHub)
+      const remoteX = cx + 60;
+      drawRoundedRect(remoteX, localY, 180, 200, 12, 'rgba(81,207,102,0.06)', 'rgba(81,207,102,0.2)', 1.5);
+      drawText("GitHub.com", remoteX + 90, localY + 20, { size: 12, weight: '700', color: '#51cf66' });
+
+      drawRoundedRect(remoteX + 15, localY + 45, 150, 36, 6, 'rgba(255,255,255,0.04)', 'rgba(255,255,255,0.1)', 1);
+      drawText("Remote Repo", remoteX + 90, localY + 63, { size: 10, weight: '500', color: '#e8e8e8' });
+
+      drawText("☁️ Code hosted online", remoteX + 90, localY + 105, { size: 10, color: '#8892a4' });
+      drawText("👀 Anyone can view (if public)", remoteX + 90, localY + 125, { size: 10, color: '#8892a4' });
+      drawText("🔀 Pull requests", remoteX + 90, localY + 145, { size: 10, color: '#8892a4' });
+      drawText("📊 Actions & CI", remoteX + 90, localY + 165, { size: 10, color: '#8892a4' });
+
+      // Push arrow (top)
+      const pushY = localY + 80;
+      drawArrow(localX + 165, pushY, remoteX - 5, pushY, '#51cf66', 2);
+      drawText("git push", cx, pushY - 12, { size: 11, weight: '600', color: '#51cf66' });
+
+      // Pull arrow (bottom)
+      const pullY = localY + 140;
+      drawArrow(remoteX - 5, pullY, localX + 165, pullY, '#3380ff', 2);
+      drawText("git pull", cx, pullY + 16, { size: 11, weight: '600', color: '#3380ff' });
+
+      // Bottom note
+      const bottomY = localY + 220;
+      drawRoundedRect(cx - 200, bottomY, 400, 36, 8, 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.08)', 1);
+      drawText("Internet required only for push & pull", cx, bottomY + 18, { size: 11, color: '#8892a4' });
+    }
+
+    function drawGitHub() {
+      const rect = clearCanvas();
+      const cx = rect.width / 2;
+
+      drawText("Git is the tool — GitHub is the place", cx, 40, { size: 18, weight: '700' });
+
+      // Git box (left)
+      const gitX = cx - 250;
+      const boxW = 200;
+      const boxH = 220;
+      drawRoundedRect(gitX, 80, boxW, boxH, 12, 'rgba(51,128,255,0.06)', 'rgba(51,128,255,0.2)', 2);
+      drawText("Git", gitX + boxW / 2, 105, { size: 20, weight: '800', color: '#3380ff' });
+      drawLabel("command-line tool", gitX + boxW / 2, 135, 'rgba(51,128,255,0.15)', '#3380ff');
+
+      const gitFeatures = [
+        "✓  Tracks changes",
+        "✓  Creates commits",
+        "✓  Manages branches",
+        "✓  Merges code",
+        "✓  Runs locally",
+      ];
+
+      gitFeatures.forEach((f, i) => {
+        drawText(f, gitX + boxW / 2, 170 + i * 22, { size: 11, color: '#e8e8e8' });
+      });
+
+      // GitHub box (right)
+      const ghX = cx + 50;
+      drawRoundedRect(ghX, 80, boxW, boxH, 12, 'rgba(81,207,102,0.06)', 'rgba(81,207,102,0.2)', 2);
+      drawText("GitHub", ghX + boxW / 2, 105, { size: 20, weight: '800', color: '#51cf66' });
+      drawLabel("website + platform", ghX + boxW / 2, 135, 'rgba(81,207,102,0.15)', '#51cf66');
+
+      const ghFeatures = [
+        "✓  Hosts repos online",
+        "✓  Pull requests",
+        "✓  Issues & bugs",
+        "✓  Actions (CI/CD)",
+        "✓  Team collaboration",
+      ];
+
+      ghFeatures.forEach((f, i) => {
+        drawText(f, ghX + boxW / 2, 170 + i * 22, { size: 11, color: '#e8e8e8' });
+      });
+
+      // Connection line
+      drawDashedLine(gitX + boxW + 5, 190, ghX - 5, 190, 'rgba(255,255,255,0.15)', 1);
+      drawText("connects via", cx, 180, { size: 9, color: '#5a6478' });
+      drawText("git push / pull", cx, 200, { size: 10, weight: '600', color: '#ffd43b' });
+
+      // Bottom insight
+      const bottomY = 320;
+      drawRoundedRect(cx - 220, bottomY, 440, 50, 10, 'rgba(255,212,59,0.06)', 'rgba(255,212,59,0.15)', 1);
+      drawText("You can use Git without GitHub, but you", cx, bottomY + 15, { size: 12, weight: '500', color: '#ffd43b' });
+      drawText("can't use GitHub without Git", cx, bottomY + 35, { size: 12, weight: '500', color: '#ffd43b' });
+    }
+
+    function drawWorkflow() {
+      const rect = clearCanvas();
+      const cx = rect.width / 2;
+
+      drawText("The Git + GitHub workflow", cx, 30, { size: 18, weight: '700' });
+
+      const steps = [
+        { num: "1", cmd: "git clone", desc: "Download repo from GitHub", color: '#3380ff' },
+        { num: "2", cmd: "git checkout -b feature", desc: "Create a new branch", color: '#ffd43b' },
+        { num: "3", cmd: "edit files", desc: "Make your changes", color: '#e8e8e8' },
+        { num: "4", cmd: "git add .", desc: "Stage your changes", color: '#cc5de8' },
+        { num: "5", cmd: "git commit -m \"...\"", desc: "Save a snapshot", color: '#3380ff' },
+        { num: "6", cmd: "git push", desc: "Upload to GitHub", color: '#51cf66' },
+        { num: "7", cmd: "pull request → merge", desc: "Review & combine", color: '#51cf66' },
+      ];
+
+      const stepW = 220;
+      const stepH = 44;
+      const startY = 70;
+      const leftCol = cx - 140;
+      const rightCol = cx + 100;
+
+      steps.forEach((s, i) => {
+        const col = i < 4 ? leftCol : rightCol;
+        const row = i < 4 ? i : i - 4;
+        const y = startY + row * (stepH + 14);
+        const x = col;
+
+        // Step number circle
+        drawCircle(x - 20, y + stepH / 2, 14, s.color + '22', s.color, 1.5);
+        drawText(s.num, x - 20, y + stepH / 2, { size: 10, weight: '700', color: s.color });
+
+        // Step content
+        drawRoundedRect(x, y, stepW, stepH, 6, 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.08)', 1);
+        drawText(s.cmd, x + stepW / 2, y + 16, { size: 11, weight: '600', color: s.color, align: 'center' });
+        drawText(s.desc, x + stepW / 2, y + 33, { size: 9, color: '#8892a4', align: 'center' });
+
+        // Arrow to next
+        if (i < 6) {
+          const nextI = i + 1;
+          const nextCol = nextI < 4 ? leftCol : rightCol;
+          const nextRow = nextI < 4 ? nextI : nextI - 4;
+          const nextY = startY + nextRow * (stepH + 14);
+
+          if (nextCol === col) {
+            drawArrow(x + stepW / 2, y + stepH + 2, x + stepW / 2, nextY - 2, 'rgba(255,255,255,0.12)', 1);
+          }
+        }
+      });
+
+      // Arrow from step 4 to step 5 (cross columns)
+      const s4Y = startY + 3 * (stepH + 14) + stepH;
+      const s5Y = startY;
+      drawArrow(leftCol + stepW / 2, s4Y + 2, leftCol + stepW / 2, s4Y + 18, 'rgba(255,255,255,0.12)', 1);
+      drawDashedLine(leftCol + stepW / 2, s4Y + 18, rightCol + stepW / 2, s5Y - 2, 'rgba(255,255,255,0.12)', 1);
+
+      // Celebration
+      const celebY = startY + 3 * (stepH + 14) + stepH + 40;
+      drawRoundedRect(cx - 100, celebY, 200, 40, 10, 'rgba(81,207,102,0.1)', 'rgba(81,207,102,0.3)', 1.5);
+      drawText("Code merged! 🎉", cx, celebY + 20, { size: 13, weight: '700', color: '#51cf66' });
+
+      // Key commands at bottom
+      const cmdY = celebY + 65;
+      const cmds = [
+        { cmd: "git status", desc: "see what changed" },
+        { cmd: "git log", desc: "see commit history" },
+        { cmd: "git diff", desc: "see exact changes" },
+        { cmd: "git stash", desc: "temporarily save work" },
+      ];
+
+      cmds.forEach((c, i) => {
+        const x = cx - 240 + i * 130;
+        drawRoundedRect(x, cmdY, 120, 40, 6, 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.08)', 1);
+        drawText(c.cmd, x + 60, cmdY + 14, { size: 9, weight: '600', color: '#3380ff' });
+        drawText(c.desc, x + 60, cmdY + 30, { size: 8, color: '#5a6478' });
+      });
+    }
+
+    // =============================================
+    // Navigation
+    // =============================================
+    function renderCurrentLesson() {
+      const lesson = lessons[currentStep];
+
+      document.getElementById('step-label').textContent = `Step ${currentStep + 1} of ${lessons.length}`;
+      document.getElementById('lesson-title').textContent = lesson.title;
+      document.getElementById('explanation-text').innerHTML = lesson.explanation;
+      document.getElementById('progress-fill').style.width = `${((currentStep + 1) / lessons.length) * 100}%`;
+
+      // Update buttons
+      document.getElementById('prev-btn').disabled = currentStep === 0;
+      document.getElementById('next-btn').textContent = currentStep === lessons.length - 1 ? 'Finish ✓' : 'Next →';
+
+      // Update step list
+      const stepList = document.getElementById('step-list');
+      stepList.innerHTML = '';
+      lessons.forEach((l, i) => {
+        const card = document.createElement('div');
+        card.className = `step-card${i === currentStep ? ' active' : ''}${i < currentStep ? ' completed' : ''}`;
+        card.innerHTML = `
+          <div class="step-number">${i < currentStep ? '✓ Done' : `Step ${i + 1}`}</div>
+          <div class="step-card-title">${l.title}</div>
+        `;
+        card.addEventListener('click', () => { currentStep = i; renderCurrentLesson(); });
+        stepList.appendChild(card);
+      });
+
+      // Scroll active step into view
+      const activeCard = stepList.querySelector('.active');
+      if (activeCard) activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Draw on canvas
+      if (lesson.draw) lesson.draw();
+    }
+
+    function nextStep() {
+      if (currentStep < lessons.length - 1) {
+        currentStep++;
+        renderCurrentLesson();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderCurrentLesson();
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextStep(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prevStep(); }
+    });
+
+    // Show keyboard hint
+    setTimeout(() => {
+      const hint = document.getElementById('kb-hint');
+      hint.classList.add('visible');
+      setTimeout(() => hint.classList.remove('visible'), 4000);
+    }, 1000);
+
+    // Init
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    renderCurrentLesson();
+  </script>
+</body>
+</html>
