@@ -3,7 +3,6 @@
 
   var INTRO_STORAGE_KEY = "teachyIntroSeen_v1";
 
-  var registry = null;
   var tourTimer = null;
   var introAborted = false;
   var demoWaitingCleanup = null;
@@ -30,7 +29,6 @@
   var tryDemoBtn = document.getElementById("try-demo");
   var clickyGuide = document.getElementById("clicky-guide");
   var clickyBubble = document.getElementById("clicky-bubble");
-  var wallEl = document.getElementById("course-wall");
 
   var demoPhase = document.getElementById("demo-phase");
   var demoPage = document.getElementById("demo-page");
@@ -561,10 +559,11 @@
     if (action === "download") {
       var opened = window.open(href, targetElement.getAttribute("target") || "_blank");
       if (!opened) window.location.href = href;
-    } else if (action === "learn") {
-      window.location.href = "learn-git-github.html";
-    } else if (action === "course") {
-      window.location.href = href || "learn-git-github.html";
+    } else if (action === "explain") {
+      var explainTarget = document.getElementById("courses");
+      if (explainTarget) {
+        explainTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   }
 
@@ -622,73 +621,6 @@
     );
   }
 
-  function escapeHtml(text) {
-    return String(text)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-
-  function renderWall() {
-    if (!wallEl) return;
-    if (!registry) {
-      wallEl.innerHTML =
-        '<div class="empty">Couldn’t load paths. Serve this folder over HTTP.</div>';
-      return;
-    }
-
-    var courses = (registry.courses || []).slice(0, 1);
-
-    if (!courses.length) {
-      wallEl.innerHTML = '<div class="empty">No paths yet.</div>';
-      return;
-    }
-
-    wallEl.innerHTML = courses
-      .map(function (course) {
-        var minutes = course.estimatedMinutes
-          ? course.estimatedMinutes + " min"
-          : "";
-        return (
-          '<article class="path-card is-featured" data-clicky data-action="course" data-href="learn-git-github.html">' +
-          '<div class="path-featured-tag">Free</div>' +
-          '<div class="author">' +
-          escapeHtml(course.trackTitle || "Teachy") +
-          (minutes ? " · " + escapeHtml(minutes) : "") +
-          "</div>" +
-          "<h3>" +
-          escapeHtml(course.title) +
-          "</h3>" +
-          '<p class="sub">' +
-          escapeHtml(course.subtitle) +
-          "</p>" +
-          '<p class="blurb">' +
-          escapeHtml(course.blurb) +
-          "</p>" +
-          '<span class="suggestion-badge">Free lesson</span>' +
-          "</article>"
-        );
-      })
-      .join("");
-  }
-
-  function loadRegistry() {
-    fetch("registry.json", { cache: "no-store" })
-      .then(function (response) {
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        return response.json();
-      })
-      .then(function (data) {
-        registry = data;
-        renderWall();
-      })
-      .catch(function () {
-        registry = null;
-        renderWall();
-      });
-  }
-
   function beginReplay(demoOnly) {
     if (tourTimer) clearTimeout(tourTimer);
     if (clickyGuide) clickyGuide.hidden = true;
@@ -710,8 +642,6 @@
       beginReplay(true);
     });
   }
-
-  loadRegistry();
 
   var seen = false;
   try {
