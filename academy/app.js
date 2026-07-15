@@ -28,7 +28,6 @@
   var replayIntroBtn = document.getElementById("replay-intro");
   var tryDemoBtn = document.getElementById("try-demo");
   var clickyGuide = document.getElementById("clicky-guide");
-  var clickyBubble = document.getElementById("clicky-bubble");
 
   var demoPhase = document.getElementById("demo-phase");
   var demoPage = document.getElementById("demo-page");
@@ -412,6 +411,7 @@
   async function runIntro(options) {
     options = options || {};
     introAborted = false;
+    stopLandingCursor();
     resetDemo();
     buildFloodStack();
     if (bamWrap) {
@@ -528,97 +528,53 @@
       introEl.setAttribute("aria-hidden", "true");
     }
     document.body.classList.remove("intro-active");
-    armLandingClicky();
+    startLandingCursor();
   }
 
   function skipIntro() {
     finishIntro(true);
   }
 
-  var clickyHandled = false;
-  var landingClickyArmed = false;
+  var landingCursorActive = false;
+  var pointerX = 0;
+  var pointerY = 0;
+  var clickyX = 0;
+  var clickyY = 0;
 
-  function placeClickyAt(x, y) {
-    if (!clickyGuide) return;
-    clickyGuide.hidden = false;
+  function onPointerMove(event) {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+  }
+
+  function followPointerLoop() {
+    if (!landingCursorActive || !clickyGuide) return;
+    // Ease toward the real cursor so Teachy trails slightly, like the app.
+    clickyX += (pointerX - clickyX) * 0.22;
+    clickyY += (pointerY - clickyY) * 0.22;
     clickyGuide.style.transform =
-      "translate(" + Math.round(x) + "px, " + Math.round(y) + "px)";
+      "translate(" + Math.round(clickyX - 3) + "px, " + Math.round(clickyY - 2) + "px)";
+    requestAnimationFrame(followPointerLoop);
   }
 
-  function clickySay(text) {
-    if (!clickyBubble) return;
-    clickyBubble.textContent = text;
-    clickyBubble.classList.remove("is-on");
-    void clickyBubble.offsetWidth;
-    clickyBubble.classList.add("is-on");
+  // On the landing, Teachy is just the cursor — it follows the visitor's mouse
+  // like it does in the real app, instead of clicking buttons for them.
+  function startLandingCursor() {
+    if (!clickyGuide || landingCursorActive) return;
+    landingCursorActive = true;
+    pointerX = clickyX = window.innerWidth / 2;
+    pointerY = clickyY = window.innerHeight / 2;
+    clickyGuide.hidden = false;
+    clickyGuide.classList.remove("is-left");
+    document.body.classList.add("landing-cursor");
+    window.addEventListener("mousemove", onPointerMove);
+    requestAnimationFrame(followPointerLoop);
   }
 
-  function performClickyAction(action, targetElement) {
-    var href =
-      targetElement.getAttribute("href") || targetElement.getAttribute("data-href") || "";
-    if (action === "download") {
-      var opened = window.open(href, targetElement.getAttribute("target") || "_blank");
-      if (!opened) window.location.href = href;
-    } else if (action === "explain") {
-      var explainTarget = document.getElementById("courses");
-      if (explainTarget) {
-        explainTarget.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-  }
-
-  // After the intro, Teachy stays on the landing and physically clicks any
-  // button the visitor taps — instead of walking them through a guided tour.
-  function armLandingClicky() {
-    if (!clickyGuide || landingClickyArmed) return;
-    landingClickyArmed = true;
-
-    var getButton = document.getElementById("get-teachy");
-    if (getButton) {
-      var restRect = getButton.getBoundingClientRect();
-      placeClickyAt(restRect.left - 36, restRect.top + restRect.height / 2 - 11);
-    } else {
-      placeClickyAt(40, 140);
-    }
-    clickySay("i’m teachy — tap a button and i’ll click it for you.");
-
-    document.addEventListener(
-      "click",
-      function (event) {
-        var targetElement = event.target.closest
-          ? event.target.closest("[data-clicky]")
-          : null;
-        if (!targetElement) return;
-        if (clickyHandled) return;
-
-        event.preventDefault();
-        clickyHandled = true;
-
-        var action = targetElement.getAttribute("data-action");
-        var targetRect = targetElement.getBoundingClientRect();
-        var nearRightEdge = targetRect.left > window.innerWidth * 0.55;
-        var x = nearRightEdge ? targetRect.right + 10 : targetRect.left - 36;
-        var y = targetRect.top + targetRect.height / 2 - 11;
-
-        clickyGuide.classList.toggle("is-left", nearRightEdge);
-        placeClickyAt(x, y);
-
-        setTimeout(function () {
-          targetElement.classList.add("is-clicked");
-          var clickyCursor = clickyGuide.querySelector(".clicky-cursor");
-          if (clickyCursor) clickyCursor.classList.add("is-click");
-          clickySay("on it.");
-
-          setTimeout(function () {
-            if (clickyCursor) clickyCursor.classList.remove("is-click");
-            targetElement.classList.remove("is-clicked");
-            performClickyAction(action, targetElement);
-            clickyHandled = false;
-          }, 340);
-        }, 480);
-      },
-      true
-    );
+  function stopLandingCursor() {
+    landingCursorActive = false;
+    document.body.classList.remove("landing-cursor");
+    window.removeEventListener("mousemove", onPointerMove);
+    if (clickyGuide) clickyGuide.hidden = true;
   }
 
   function beginReplay(demoOnly) {
@@ -643,6 +599,14 @@
     });
   }
 
+  var freeLearningBtn = document.getElementById("free-learning");
+  if (freeLearningBtn) {
+    freeLearningBtn.addEventListener("click", function () {
+      var target = document.getElementById("courses");
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
   var seen = false;
   try {
     seen = localStorage.getItem(INTRO_STORAGE_KEY) === "1";
@@ -658,7 +622,7 @@
       introEl.setAttribute("aria-hidden", "true");
     }
     document.body.classList.remove("intro-active");
-    armLandingClicky();
+    startLandingCursor();
   } else {
     document.body.classList.add("intro-active");
     setTimeout(function () {

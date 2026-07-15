@@ -1312,14 +1312,19 @@ a:hover {
 
 /* —— Clicky guide —— */
 
-.clicky-guide {
+ .clicky-guide {
   position: fixed;
   z-index: 90;
   pointer-events: none;
   left: 0;
   top: 0;
   transform: translate(-100px, -100px);
-  transition: transform 0.85s var(--ease);
+  transition: none;
+}
+
+body.landing-cursor,
+body.landing-cursor * {
+  cursor: none;
 }
 
 .clicky-cursor {
