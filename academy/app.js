@@ -10,19 +10,15 @@
   var introEl = document.getElementById("intro");
   var introStage = document.getElementById("intro-stage");
   var panelFlood = document.getElementById("panel-flood");
-  var panelYt = document.getElementById("panel-yt");
   var panelManifesto = document.getElementById("panel-manifesto");
   var panelName = document.getElementById("panel-name");
   var panelDemo = document.getElementById("panel-demo");
   var floodStack = document.getElementById("flood-stack");
   var floodKicker = document.getElementById("flood-kicker");
   var floodType = document.getElementById("flood-type");
-  var ytType = document.getElementById("yt-type");
   var manifestoType = document.getElementById("manifesto-type");
   var introducingType = document.getElementById("introducing-type");
   var bamWrap = document.getElementById("bam-wrap");
-  var ytCross = document.getElementById("yt-cross");
-  var ytChrome = document.getElementById("yt-chrome");
   var skipIntroBtn = document.getElementById("skip-intro");
   var skipDemoBtn = document.getElementById("skip-demo");
   var replayIntroBtn = document.getElementById("replay-intro");
@@ -75,7 +71,7 @@
   }
 
   function showPanel(panel) {
-    [panelFlood, panelYt, panelManifesto, panelName, panelDemo].forEach(function (el) {
+    [panelFlood, panelManifesto, panelName, panelDemo].forEach(function (el) {
       if (!el) return;
       el.hidden = el !== panel;
       if (el === panel) {
@@ -420,11 +416,8 @@
     }
     if (floodKicker) floodKicker.classList.remove("is-on");
     if (floodType) floodType.textContent = "";
-    if (ytType) ytType.textContent = "";
     if (manifestoType) manifestoType.innerHTML = "";
     if (introducingType) introducingType.textContent = "";
-    if (ytCross) ytCross.classList.remove("is-on");
-    if (ytChrome) ytChrome.classList.remove("is-struck");
     if (introStage) introStage.classList.remove("is-shake");
 
     document.body.classList.add("intro-active");
@@ -437,31 +430,18 @@
       showPanel(panelFlood);
       if (floodKicker) floodKicker.classList.remove("is-on");
       if (floodType) floodType.textContent = "";
-      await waitOrAbort(280);
+      await waitOrAbort(220);
       if (introAborted) return finishIntro(false);
       if (floodKicker) floodKicker.classList.add("is-on");
-      await waitOrAbort(350);
+      await waitOrAbort(280);
       if (introAborted) return finishIntro(false);
       await typewrite(floodType, "When you try to learn anything…", 30);
       if (introAborted) return finishIntro(false);
-      await waitOrAbort(550);
+      await waitOrAbort(450);
       if (introAborted) return finishIntro(false);
       await typewrite(floodType, "You get this.", 36);
       if (introAborted) return finishIntro(false);
-      await waitOrAbort(900);
-      if (introAborted) return finishIntro(false);
-
-      showPanel(panelYt);
-      await waitOrAbort(1100);
-      if (introAborted) return finishIntro(false);
-      await typewrite(ytType, "You watch. You still can’t do it.", 34);
-      if (introAborted) return finishIntro(false);
-      await waitOrAbort(700);
-      if (introAborted) return finishIntro(false);
-
-      if (ytCross) ytCross.classList.add("is-on");
-      if (ytChrome) ytChrome.classList.add("is-struck");
-      await waitOrAbort(900);
+      await waitOrAbort(650);
       if (introAborted) return finishIntro(false);
 
       showPanel(panelManifesto);
@@ -478,18 +458,18 @@
         if (manifestoType) manifestoType.appendChild(manifestoLine);
         await typewrite(manifestoLine, manifestoLines[manifestoIndex], 34);
         if (introAborted) return finishIntro(false);
-        await waitOrAbort(550);
+        await waitOrAbort(420);
       }
       if (introAborted) return finishIntro(false);
-      await waitOrAbort(700);
+      await waitOrAbort(550);
       if (introAborted) return finishIntro(false);
 
       showPanel(panelName);
-      await waitOrAbort(350);
+      await waitOrAbort(300);
       if (introAborted) return finishIntro(false);
       await typewrite(introducingType, "introducinggg…", 75);
       if (introAborted) return finishIntro(false);
-      await waitOrAbort(450);
+      await waitOrAbort(380);
       if (introAborted) return finishIntro(false);
 
       if (bamWrap) {
@@ -542,6 +522,10 @@
   var clickyY = 0;
 
   function onPointerMove(event) {
+    if (!document.body.classList.contains("has-mouse")) {
+      document.body.classList.add("has-mouse");
+      document.body.classList.add("landing-cursor");
+    }
     pointerX = event.clientX;
     pointerY = event.clientY;
   }
@@ -558,6 +542,7 @@
 
   // On the landing, Teachy is just the cursor — it follows the visitor's mouse
   // like it does in the real app, instead of clicking buttons for them.
+  // Only hide the native cursor when a real mouse is present (touch fallback).
   function startLandingCursor() {
     if (!clickyGuide || landingCursorActive) return;
     landingCursorActive = true;
@@ -565,7 +550,9 @@
     pointerY = clickyY = window.innerHeight / 2;
     clickyGuide.hidden = false;
     clickyGuide.classList.remove("is-left");
-    document.body.classList.add("landing-cursor");
+    if (document.body.classList.contains("has-mouse")) {
+      document.body.classList.add("landing-cursor");
+    }
     window.addEventListener("mousemove", onPointerMove);
     requestAnimationFrame(followPointerLoop);
   }
@@ -601,9 +588,12 @@
 
   var freeLearningBtn = document.getElementById("free-learning");
   if (freeLearningBtn) {
-    freeLearningBtn.addEventListener("click", function () {
+    freeLearningBtn.addEventListener("click", function (event) {
       var target = document.getElementById("courses");
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target) {
+        event.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
   }
 

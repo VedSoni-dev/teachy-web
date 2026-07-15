@@ -20,28 +20,6 @@
         </div>
       </div>
 
-      <div class="intro-panel intro-yt" id="panel-yt" hidden>
-        <div class="yt-chrome" id="yt-chrome">
-          <div class="yt-player">
-            <div class="yt-thumb">
-              <img src="yt-thumb.png" alt="" class="yt-thumb-img" />
-              <div class="yt-play"></div>
-              <p class="yt-caption">Watch me build this for 47 minutes…</p>
-            </div>
-            <div class="yt-progress"><div class="yt-progress-fill"></div></div>
-            <div class="yt-meta">
-              <div class="yt-avatar"></div>
-              <div>
-                <strong>Same tutorial. Different guy. Again.</strong>
-                <span>12M views · “just vibe with me bro”</span>
-              </div>
-            </div>
-          </div>
-          <div class="yt-cross" id="yt-cross" aria-hidden="true"></div>
-        </div>
-        <p class="type-line yt-problem-type" id="yt-type"></p>
-      </div>
-
       <div class="intro-panel intro-manifesto" id="panel-manifesto" hidden>
         <div class="manifesto-type" id="manifesto-type" aria-live="polite"></div>
       </div>
@@ -145,7 +123,7 @@
         </div>
       </div>
     </div>
-    <button type="button" class="intro-skip-all text-btn" id="skip-intro">Skip intro</button>
+    <button type="button" class="intro-skip-all" id="skip-intro">Skip intro</button>
   </div>
 
   <div id="clicky-guide" class="clicky-guide" hidden aria-hidden="true">
@@ -183,10 +161,11 @@
   Get Teachy
 </a>
 
-<button type="button" class="btn btn-secondary" id="free-learning">
+<a class="btn btn-secondary" id="free-learning" href="learn-git-github.html">
   Free Learning
-</button>
+</a>
       </div>
+      <p class="hero-reassure">Free · macOS 14+ · No account, no signup</p>
       <p class="hero-hint" id="hero-hint">That blue cursor? That’s Teachy — it follows yours.</p>
     </section>
 
@@ -217,6 +196,17 @@
           <p>Your work stays on your Mac, so help stays specific to what you’re building that day.</p>
         </li>
       </ol>
+
+      <div class="teach-example">
+        <p class="teach-example-kicker">Here’s what a session actually looks like</p>
+        <div class="teach-example-chat" aria-hidden="true">
+          <p class="say teachy"><span class="who">Teachy</span>Click the green “New” button — top right.</p>
+          <p class="say you"><span class="who">You</span><em>clicks it</em></p>
+          <p class="say teachy"><span class="who">Teachy</span>Now type <code>hello-teachy</code> and hit return.</p>
+          <p class="say teachy"><span class="who">Teachy</span>Checked. Repository created. Next: push your first commit.</p>
+        </div>
+        <a class="btn btn-secondary teach-example-cta" href="learn-git-github.html">Try a free lesson</a>
+      </div>
     </section>
   </main>
 
