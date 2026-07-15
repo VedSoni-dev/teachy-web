@@ -155,23 +155,22 @@
 
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="logo" href="index.html">
+      <a class="logo" href="#top">
         <span class="logo-mark"></span>
         Teachy
       </a>
       <nav class="nav">
-        <a href="#mission">Mission</a>
-        <a href="#paths">Learn</a>
-        <a href="learn-git-github.html">Git Lesson</a>
-        <a href="whiteboard.html">Whiteboard</a>
-        <a class="nav-cta" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener" data-tour="nav-download">Get Teachy</a>
+        <a class="nav-cta" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener" data-clicky data-action="download">Get Teachy</a>
       </nav>
       <button type="button" class="ghost-btn" id="replay-intro">Replay</button>
     </div>
   </header>
 
   <main>
-    <section class="hero wrap" data-tour="hero">
+    <section class="hero wrap" id="top">
+      <div class="hero-teachy" aria-hidden="true">
+        <span class="hero-teachy-mark"></span>
+      </div>
       <p class="eyebrow">Free • Open Source (MIT)</p>
 
 <h1>Teachy</h1>
@@ -181,102 +180,24 @@
   Learn by doing with guided, hands-on lessons on your Mac.
 </p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener" data-tour="cta-get">
-  Download Teachy
+        <a class="btn btn-primary" id="get-teachy" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener" data-clicky data-action="download">
+  Get Teachy
 </a>
 
-<a class="btn btn-secondary" href="#start">
-  Start Your First Lesson
-</a>
+<button type="button" class="btn btn-secondary" id="free-learning" data-clicky data-action="learn">
+  Free Learning
+</button>
       </div>
+      <p class="hero-hint" id="hero-hint">I’m Teachy — tap a button and I’ll click it for you.</p>
     </section>
 
-    <section class="flagship wrap" id="start" data-tour="flagship">
-      <p class="flagship-kicker">Start here · 10 minutes</p>
-      <h2>First Win with AI</h2>
-      <p class="flagship-lede">
-        Open an AI. Ask for one tiny thing. See it run.
-        Feel the Teachy loop before the full path.
-      </p>
-      <ol class="flagship-beats">
-        <li>Open your AI</li>
-        <li>Ask for one tiny thing</li>
-        <li>See it run</li>
-      </ol>
-      <p class="flagship-next">Then: <a href="#flagship">Use AI to Code</a> — the legendary full path.</p>
-      <div class="flagship-actions">
-        <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">Get Teachy · First Win</a>
-        <button type="button" class="btn btn-secondary" id="try-demo">Try the 30s demo</button>
-      </div>
-    </section>
-
-    <section class="flagship wrap flagship-secondary" id="flagship">
-      <p class="flagship-kicker">Flagship path · ~45 min</p>
-      <h2>Use AI to Code</h2>
-      <p class="flagship-lede">
-        From a plain-language idea to something that actually runs —
-        prompt, build, fix, save. Taught 1:1 on your Mac.
-      </p>
-      <ol class="flagship-beats">
-        <li>Open your AI</li>
-        <li>Ask for something tiny</li>
-        <li>See it run</li>
-        <li>Change it · verify · save</li>
-      </ol>
-      <div class="flagship-actions">
-        <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">Get Teachy · start this path</a>
-      </div>
-    </section>
-
-    <section class="mission wrap" id="mission" data-tour="mission">
-      <p class="mission-label">Our mission</p>
-      <h2>A world where anyone can learn anything — with a tutor who stays with them.</h2>
-      <p class="mission-body">
-        Teachy is a free learning platform. Not a course marketplace. Not another video feed.
-        A personal tutor on your Mac that points, waits while you practice, and remembers
-        what you’re working on — so help stays specific to your day.
-      </p>
-      <ul class="mission-points">
-        <li>
-          <strong>Free by design</strong>
-          <span>Built like a nonprofit school, not a subscription funnel.</span>
-        </li>
-        <li>
-          <strong>1:1, not 1:many</strong>
-          <span>You act first. Teachy coaches beside your cursor.</span>
-        </li>
-        <li>
-          <strong>Open curriculum</strong>
-          <span>Learning paths anyone can start — on the real tools you use.</span>
-        </li>
-      </ul>
-    </section>
-
-    <section class="trust wrap" id="trust" data-tour="trust">
-      <p class="mission-label">Trust</p>
-      <h2>Free. Private by default. No subscription funnel.</h2>
-      <p class="mission-body">
-        Screen and voice go to your Teachy proxy only for the turn you’re in,
-        so your tutor can see what you’re doing. Course memory stays on your Mac.
-        We don’t sell your screen.
-      </p>
-    </section>
-
-    <section class="paths wrap" id="paths" data-tour="paths">
+    <section class="paths wrap" id="courses">
       <div class="section-head">
-        <h2>Learning paths</h2>
-        <p class="section-note">Free inside the Teachy app.</p>
+        <h2>Free learning</h2>
+        <p class="section-note">One course for now — more soon.</p>
       </div>
       <div id="course-wall" class="path-grid" aria-live="polite">
         <div class="empty">Loading…</div>
-      </div>
-    </section>
-
-    <section class="closing wrap">
-      <div class="closing-card">
-        <h2>School, reinvented.</h2>
-        <p>Download Teachy free. Your tutor is waiting on your screen.</p>
-        <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">Get Teachy free</a>
       </div>
     </section>
   </main>
@@ -284,12 +205,12 @@
   <footer class="site-footer">
     <div class="wrap footer-inner">
       <div class="footer-brand">
+        <span class="footer-mark logo-mark" aria-hidden="true"></span>
         <span class="footer-name">Teachy</span>
         <span class="footer-tag">A free 1:1 learning platform</span>
       </div>
       <div class="footer-links">
-        <a href="#mission">Mission</a>
-        <a href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">Download</a>
+        <a href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener" data-clicky data-action="download">Get Teachy</a>
       </div>
     </div>
   </footer>

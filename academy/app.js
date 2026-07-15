@@ -530,50 +530,24 @@
       introEl.setAttribute("aria-hidden", "true");
     }
     document.body.classList.remove("intro-active");
-    startClickyTour();
+    armLandingClicky();
   }
 
   function skipIntro() {
     finishIntro(true);
   }
 
-  var tourSteps = [
-    {
-      target: "[data-tour='flagship']",
-      text: "start here — use ai to code. our legendary first path.",
-      align: "right",
-    },
-    {
-      target: "[data-tour='mission']",
-      text: "i’m teachy — a free 1:1 tutor for everyone.",
-      align: "right",
-    },
-    {
-      target: "[data-tour='cta-get']",
-      text: "get me free — open Learn and hit Use AI to Code.",
-      align: "right",
-    },
-  ];
+  var clickyHandled = false;
+  var landingClickyArmed = false;
 
-  function clearTourGlow() {
-    Array.prototype.forEach.call(document.querySelectorAll(".tour-glow"), function (el) {
-      el.classList.remove("tour-glow");
-    });
-  }
-
-  function moveClickyTo(el, align) {
-    if (!clickyGuide || !el) return;
-    var rect = el.getBoundingClientRect();
-    var x = rect.left + Math.min(48, rect.width * 0.15);
-    var y = rect.top + Math.min(36, rect.height * 0.2);
-    if (align === "left") x = rect.right - 24;
+  function placeClickyAt(x, y) {
+    if (!clickyGuide) return;
     clickyGuide.hidden = false;
-    clickyGuide.classList.toggle("is-left", align === "left");
     clickyGuide.style.transform =
       "translate(" + Math.round(x) + "px, " + Math.round(y) + "px)";
   }
 
-  function say(text) {
+  function clickySay(text) {
     if (!clickyBubble) return;
     clickyBubble.textContent = text;
     clickyBubble.classList.remove("is-on");
@@ -581,48 +555,71 @@
     clickyBubble.classList.add("is-on");
   }
 
-  function startClickyTour() {
-    if (tourTimer) clearTimeout(tourTimer);
-    clearTourGlow();
-    if (!clickyGuide) return;
-
-    var index = 0;
-
-    function step() {
-      if (index >= tourSteps.length) {
-        say("see you on your Mac.");
-        tourTimer = setTimeout(function () {
-          clickyBubble.classList.remove("is-on");
-          setTimeout(function () {
-            clickyGuide.hidden = true;
-            clearTourGlow();
-          }, 600);
-        }, 2800);
-        return;
-      }
-
-      var item = tourSteps[index];
-      var el = document.querySelector(item.target);
-      clearTourGlow();
-      if (el) {
-        el.classList.add("tour-glow");
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-        setTimeout(function () {
-          moveClickyTo(el, item.align);
-          say(item.text);
-        }, 350);
-      } else {
-        say(item.text);
-      }
-
-      index += 1;
-      tourTimer = setTimeout(step, 4000);
+  function performClickyAction(action, targetElement) {
+    var href =
+      targetElement.getAttribute("href") || targetElement.getAttribute("data-href") || "";
+    if (action === "download") {
+      var opened = window.open(href, targetElement.getAttribute("target") || "_blank");
+      if (!opened) window.location.href = href;
+    } else if (action === "learn") {
+      window.location.href = "learn-git-github.html";
+    } else if (action === "course") {
+      window.location.href = href || "learn-git-github.html";
     }
+  }
 
-    clickyGuide.hidden = false;
-    clickyGuide.style.transform = "translate(40px, 120px)";
-    say("you felt the loop. one more thing…");
-    tourTimer = setTimeout(step, 900);
+  // After the intro, Teachy stays on the landing and physically clicks any
+  // button the visitor taps — instead of walking them through a guided tour.
+  function armLandingClicky() {
+    if (!clickyGuide || landingClickyArmed) return;
+    landingClickyArmed = true;
+
+    var getButton = document.getElementById("get-teachy");
+    if (getButton) {
+      var restRect = getButton.getBoundingClientRect();
+      placeClickyAt(restRect.left - 36, restRect.top + restRect.height / 2 - 11);
+    } else {
+      placeClickyAt(40, 140);
+    }
+    clickySay("i’m teachy — tap a button and i’ll click it for you.");
+
+    document.addEventListener(
+      "click",
+      function (event) {
+        var targetElement = event.target.closest
+          ? event.target.closest("[data-clicky]")
+          : null;
+        if (!targetElement) return;
+        if (clickyHandled) return;
+
+        event.preventDefault();
+        clickyHandled = true;
+
+        var action = targetElement.getAttribute("data-action");
+        var targetRect = targetElement.getBoundingClientRect();
+        var nearRightEdge = targetRect.left > window.innerWidth * 0.55;
+        var x = nearRightEdge ? targetRect.right + 10 : targetRect.left - 36;
+        var y = targetRect.top + targetRect.height / 2 - 11;
+
+        clickyGuide.classList.toggle("is-left", nearRightEdge);
+        placeClickyAt(x, y);
+
+        setTimeout(function () {
+          targetElement.classList.add("is-clicked");
+          var clickyCursor = clickyGuide.querySelector(".clicky-cursor");
+          if (clickyCursor) clickyCursor.classList.add("is-click");
+          clickySay("on it.");
+
+          setTimeout(function () {
+            if (clickyCursor) clickyCursor.classList.remove("is-click");
+            targetElement.classList.remove("is-clicked");
+            performClickyAction(action, targetElement);
+            clickyHandled = false;
+          }, 340);
+        }, 480);
+      },
+      true
+    );
   }
 
   function escapeHtml(text) {
@@ -641,7 +638,7 @@
       return;
     }
 
-    var courses = (registry.courses || []).slice(0, 6);
+    var courses = (registry.courses || []).slice(0, 1);
 
     if (!courses.length) {
       wallEl.innerHTML = '<div class="empty">No paths yet.</div>';
@@ -653,12 +650,9 @@
         var minutes = course.estimatedMinutes
           ? course.estimatedMinutes + " min"
           : "";
-        var isFeatured = course.featured || course.id === "ai-to-code";
         return (
-          '<article class="path-card' +
-          (isFeatured ? " is-featured" : "") +
-          '">' +
-          (isFeatured ? '<div class="path-featured-tag">Flagship</div>' : "") +
+          '<article class="path-card is-featured" data-clicky data-action="course" data-href="learn-git-github.html">' +
+          '<div class="path-featured-tag">Free</div>' +
           '<div class="author">' +
           escapeHtml(course.trackTitle || "Teachy") +
           (minutes ? " · " + escapeHtml(minutes) : "") +
@@ -672,9 +666,7 @@
           '<p class="blurb">' +
           escapeHtml(course.blurb) +
           "</p>" +
-          '<span class="suggestion-badge">' +
-          (course.shipsWithApp ? "In Teachy" : "Coming soon") +
-          "</span>" +
+          '<span class="suggestion-badge">Free lesson</span>' +
           "</article>"
         );
       })
@@ -699,7 +691,6 @@
 
   function beginReplay(demoOnly) {
     if (tourTimer) clearTimeout(tourTimer);
-    clearTourGlow();
     if (clickyGuide) clickyGuide.hidden = true;
     try {
       localStorage.removeItem(INTRO_STORAGE_KEY);
@@ -737,6 +728,7 @@
       introEl.setAttribute("aria-hidden", "true");
     }
     document.body.classList.remove("intro-active");
+    armLandingClicky();
   } else {
     document.body.classList.add("intro-active");
     setTimeout(function () {
