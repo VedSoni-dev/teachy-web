@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Free lesson: your first GitHub repo — Teachy</title>
-  <meta name="description" content="A free 5-minute hands-on lesson: create a GitHub repo, add a file, commit, and push — taught by Teachy like a real 1:1 tutor." />
+  <title>Free lesson: edit your first video — Teachy</title>
+  <meta name="description" content="A free 5-minute hands-on lesson: trim a clip, add text and music, then export — taught by Teachy like a real 1:1 tutor." />
   <link rel="stylesheet" href="styles.css" />
   <style>
     .lesson-page {
@@ -51,10 +51,10 @@
     .lesson-main {
       flex: 1;
       display: grid;
-      grid-template-columns: minmax(320px, 420px) 1fr;
-      gap: 28px;
-      padding: 28px 24px;
-      max-width: 1160px;
+      grid-template-columns: 300px 1fr;
+      gap: 24px;
+      padding: 24px;
+      max-width: 1280px;
       width: 100%;
       margin: 0 auto;
       box-sizing: border-box;
@@ -64,6 +64,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      align-self: start;
     }
 
     .lesson-step {
@@ -81,9 +82,7 @@
       background: var(--accent-soft);
     }
 
-    .lesson-step.done {
-      opacity: 0.65;
-    }
+    .lesson-step.done { opacity: 0.65; }
 
     .lesson-step-num {
       flex-shrink: 0;
@@ -98,15 +97,8 @@
       color: var(--ink-soft);
     }
 
-    .lesson-step.active .lesson-step-num {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .lesson-step.done .lesson-step-num {
-      background: var(--green);
-      color: #04130a;
-    }
+    .lesson-step.active .lesson-step-num { background: var(--accent); color: #fff; }
+    .lesson-step.done .lesson-step-num { background: var(--green); color: #04130a; }
 
     .lesson-step-body h3 {
       margin: 0 0 3px;
@@ -125,7 +117,7 @@
     .lesson-stage {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
       min-width: 0;
     }
 
@@ -164,13 +156,247 @@
       color: var(--ink-soft);
       padding: 0 24px 24px;
     }
-
     .lesson-footnote a { color: var(--accent); }
 
+    /* —— Bigger fake in-browser editor —— */
+    .demo-shell {
+      display: grid;
+      gap: 14px;
+    }
+
+    .demo-browser.editor {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 40px 100px rgba(0, 0, 0, 0.5);
+      background: #0f1115;
+      color: #e8eaed;
+    }
+
+    .demo-chrome.editor {
+      background: #1b1e25;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .demo-url.editor {
+      background: #0f1115;
+      color: #8a93a3;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .demo-page.editor {
+      min-height: 460px;
+      background: #0f1115;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding: 16px;
+      gap: 14px;
+    }
+
+    /* preview */
+    .ve-preview {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background:
+        radial-gradient(120% 120% at 30% 20%, #3a2a5e 0%, #1a1430 45%, #0c0a18 100%);
+      display: grid;
+      place-items: center;
+      min-height: 300px;
+    }
+
+    .ve-preview-frame {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .ve-clip-film {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .ve-film-cell {
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+    }
+
+    .ve-playhead {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: var(--clicky);
+      box-shadow: 0 0 10px rgba(51, 128, 255, 0.8);
+      left: 18%;
+      transition: left 0.4s ease;
+    }
+
+    .ve-caption {
+      position: relative;
+      z-index: 3;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      padding: 8px 16px;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      text-align: center;
+    }
+    .ve-caption.is-on { opacity: 1; transform: none; }
+
+    .ve-music-note {
+      position: absolute;
+      z-index: 3;
+      left: 14px;
+      bottom: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(51, 128, 255, 0.85);
+      padding: 6px 12px;
+      border-radius: 999px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .ve-music-note.is-on { opacity: 1; transform: none; }
+
+    /* timeline */
+    .ve-timeline {
+      background: #15181f;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .ve-track-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8a93a3;
+      margin-bottom: 4px;
+    }
+
+    .ve-clip {
+      position: relative;
+      height: 38px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #2d3a52, #1d2738);
+      border: 1px solid rgba(51, 128, 255, 0.35);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #c7d2e8;
+      overflow: hidden;
+      transition: width 0.45s var(--ease);
+    }
+
+    .ve-clip.video { background: linear-gradient(180deg, #34406b, #232c4a); }
+    .ve-clip.text { background: linear-gradient(180deg, #3a2c54, #2a2040); border-color: rgba(173,127,255,0.4); color: #e3d6ff; }
+    .ve-clip.audio { background: linear-gradient(180deg, #1f4a3a, #163b2e); border-color: rgba(81,207,102,0.4); color: #c9f3d8; }
+
+    .ve-clip .ve-trim {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 14px;
+      background: rgba(51, 128, 255, 0.5);
+      cursor: ew-resize;
+    }
+
+    .ve-toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ve-btn {
+      border: 0;
+      background: #232a3a;
+      color: #e8eaed;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s, background 0.2s;
+    }
+
+    .ve-btn.primary { background: var(--accent); color: #fff; }
+
+    .ve-btn.is-hot {
+      box-shadow: 0 0 0 3px rgba(51, 128, 255, 0.45);
+      animation: demoPulse 1.2s ease-in-out infinite;
+    }
+
+    .ve-export {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 40px 12px;
+      text-align: center;
+    }
+
+    .ve-export h2 { margin: 0; font-size: 22px; letter-spacing: -0.03em; }
+    .ve-export p { margin: 0; color: #8a93a3; font-size: 14px; }
+
+    .ve-progress-bar {
+      width: 260px;
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+    .ve-progress-bar > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--accent);
+      transition: width 0.3s linear;
+    }
+
+    .ve-done-check {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .ve-done-url {
+      display: inline-block;
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .demo-hud.editor {
+      margin-top: 2px;
+    }
+
     @media (max-width: 860px) {
-      .lesson-main {
-        grid-template-columns: 1fr;
-      }
+      .lesson-main { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -195,29 +421,29 @@
         <div class="lesson-step" data-step="1">
           <span class="lesson-step-num">1</span>
           <div class="lesson-step-body">
-            <h3>Create the repo</h3>
-            <p>Click <strong>New</strong> on GitHub and name it <code>hello-teachy</code>.</p>
+            <h3>Trim the clip</h3>
+            <p>Drag the right edge of your video to cut it down to the good part.</p>
           </div>
         </div>
         <div class="lesson-step" data-step="2">
           <span class="lesson-step-num">2</span>
           <div class="lesson-step-body">
-            <h3>Add a README</h3>
-            <p>Create a file called <code>README.md</code> with a one-line description.</p>
+            <h3>Add a title</h3>
+            <p>Drop a text layer over the start — “My First Video”.</p>
           </div>
         </div>
         <div class="lesson-step" data-step="3">
           <span class="lesson-step-num">3</span>
           <div class="lesson-step-body">
-            <h3>Commit it</h3>
-            <p>Save your change with a short commit message — that’s a snapshot.</p>
+            <h3>Add music</h3>
+            <p>Lay a music track under the whole thing.</p>
           </div>
         </div>
         <div class="lesson-step" data-step="4">
           <span class="lesson-step-num">4</span>
           <div class="lesson-step-body">
-            <h3>Push to GitHub</h3>
-            <p>Send your commit up. Your repo is now live on the web.</p>
+            <h3>Export</h3>
+            <p>Render it out. Your video is ready to share.</p>
           </div>
         </div>
       </aside>
@@ -226,126 +452,58 @@
         <div class="lesson-progress"><span id="lesson-progress-bar"></span></div>
 
         <div class="demo-shell">
-          <div class="demo-browser" id="demo-browser">
-            <div class="demo-chrome">
+          <div class="demo-browser editor" id="demo-browser">
+            <div class="demo-chrome editor">
               <div class="demo-dots"><i></i><i></i><i></i></div>
-              <div class="demo-url">
+              <div class="demo-url editor">
                 <span class="demo-lock" aria-hidden="true"></span>
-                <span id="demo-url-text">github.com</span>
+                <span id="demo-url-text">teachy.studio/edit</span>
               </div>
             </div>
 
-            <div class="demo-page" id="demo-page">
-              <!-- Step 1: repo home -->
-              <div class="demo-view is-active" data-view="home" id="demo-view-home">
-                <header class="gh-top">
-                  <span class="gh-logo">Octo</span>
-                  <nav class="gh-nav"><span>Pull requests</span><span>Issues</span></nav>
-                  <button type="button" class="gh-new" id="demo-btn-new" data-demo-target="new">
-                    New <em>▾</em>
-                  </button>
-                </header>
-                <div class="gh-home-body">
-                  <h2>Your repositories</h2>
-                  <p class="gh-muted">Nothing here yet — let’s make one.</p>
-                  <ul class="gh-empty-list">
-                    <li></li><li></li><li></li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Step 1b: new repo form -->
-              <div class="demo-view" data-view="form" id="demo-view-form" hidden>
-                <div class="gh-form">
-                  <h2>Create a new repository</h2>
-                  <label class="gh-field">
-                    <span>Repository name</span>
-                    <input
-                      id="demo-repo-name"
-                      type="text"
-                      placeholder="hello-teachy"
-                      autocomplete="off"
-                      spellcheck="false"
-                      data-demo-target="name"
-                    />
-                  </label>
-                  <div class="gh-visibility">
-                    <label><input type="radio" checked disabled /> Public</label>
-                    <label><input type="radio" disabled /> Private</label>
+            <div class="demo-page editor" id="demo-page">
+              <!-- Steps 1–3: editor -->
+              <div class="demo-view is-active" data-view="editor" id="demo-view-editor">
+                <div class="ve-preview">
+                  <div class="ve-preview-frame">
+                    <div class="ve-clip-film">
+                      <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
+                      <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
+                      <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
+                    </div>
                   </div>
-                  <button type="button" class="gh-create" id="demo-btn-create" data-demo-target="create" disabled>
-                    Create repository
-                  </button>
+                  <div class="ve-playhead" id="ve-playhead"></div>
+                  <div class="ve-caption" id="ve-caption">My First Video</div>
+                  <div class="ve-music-note" id="ve-music-note">♪ music on</div>
                 </div>
-              </div>
 
-              <!-- Step 2 & 3: file editor -->
-              <div class="demo-view" data-view="editor" id="demo-view-editor" hidden>
-                <header class="gh-top">
-                  <span class="gh-logo">Octo</span>
-                  <nav class="gh-nav"><span>you / hello-teachy</span></nav>
-                </header>
-                <div class="gh-form">
-                  <h2>Add a file</h2>
-                  <label class="gh-field">
-                    <span>File name</span>
-                    <input
-                      id="demo-file-name"
-                      type="text"
-                      value="README.md"
-                      autocomplete="off"
-                      spellcheck="false"
-                    />
-                  </label>
-                  <label class="gh-field">
-                    <span>Contents</span>
-                    <textarea id="demo-file-body" rows="3" spellcheck="false"
-                      style="font:inherit;font-size:14px;font-weight:500;padding:10px 12px;border:1px solid rgba(0,0,0,0.14);border-radius:8px;resize:vertical;"># hello-teachy
-My first repo, made with Teachy.</textarea>
-                  </label>
-                  <label class="gh-field">
-                    <span>Commit message</span>
-                    <input
-                      id="demo-commit-msg"
-                      type="text"
-                      value="Add README"
-                      autocomplete="off"
-                      spellcheck="false"
-                    />
-                  </label>
-                  <button type="button" class="gh-create" id="demo-btn-commit" data-demo-target="commit">
-                    Commit new file
-                  </button>
-                </div>
-              </div>
-
-              <!-- Step 4: push to GitHub -->
-              <div class="demo-view" data-view="push" id="demo-view-push" hidden>
-                <header class="gh-top">
-                  <span class="gh-logo">Octo</span>
-                  <nav class="gh-nav"><span>you / hello-teachy</span></nav>
-                </header>
-                <div class="gh-form">
-                  <h2>Push your commit</h2>
-                  <p class="gh-muted">One command sends everything to GitHub.</p>
-                  <div class="gh-code-block">
-                    <code id="demo-push-cmd">git push -u origin main</code>
+                <div class="ve-timeline">
+                  <div>
+                    <div class="ve-track-label">Video</div>
+                    <div class="ve-clip video" id="ve-video-clip" style="width: 100%;">
+                      beach-clip.mp4
+                      <span class="ve-trim" id="ve-trim"></span>
+                    </div>
                   </div>
-                  <button type="button" class="gh-create" id="demo-btn-push" data-demo-target="push" style="margin-top:18px;">
-                    Run push
-                  </button>
+                  <div id="ve-text-row" hidden>
+                    <div class="ve-track-label">Text</div>
+                    <div class="ve-clip text" style="width: 34%;">My First Video</div>
+                  </div>
+                  <div id="ve-audio-row" hidden>
+                    <div class="ve-track-label">Audio</div>
+                    <div class="ve-clip audio" style="width: 100%;">Lo-fi beat.mp3</div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Done -->
-              <div class="demo-view" data-view="done" id="demo-view-done" hidden>
-                <div class="gh-done">
-                  <div class="gh-check" aria-hidden="true">✓</div>
-                  <h2 id="demo-done-title">hello-teachy</h2>
-                  <p>Live on GitHub. You created a repo, committed a file, and pushed.</p>
-                  <div class="gh-code-block">
-                    <code id="demo-done-url">github.com/you/hello-teachy</code>
-                  </div>
+              <!-- Step 4: export -->
+              <div class="demo-view" data-view="export" id="demo-view-export" hidden>
+                <div class="ve-export">
+                  <div class="ve-done-check" id="ve-export-check" hidden>✓</div>
+                  <h2 id="ve-export-title">Export your video</h2>
+                  <p id="ve-export-sub">One click renders the whole timeline.</p>
+                  <div class="ve-progress-bar" id="ve-export-bar-wrap" hidden><span id="ve-export-bar"></span></div>
+                  <div class="ve-done-url" id="ve-done-url" hidden>teachy.studio/share/my-first-video</div>
                 </div>
               </div>
 
@@ -358,7 +516,7 @@ My first repo, made with Teachy.</textarea>
             </div>
           </div>
 
-          <div class="demo-hud">
+          <div class="demo-hud editor">
             <span class="demo-phase" id="demo-phase">Let’s go</span>
             <button type="button" class="text-btn" id="skip-lesson">Skip lesson</button>
           </div>
@@ -367,7 +525,7 @@ My first repo, made with Teachy.</textarea>
     </main>
 
     <p class="lesson-footnote">
-      This is a pretend browser — but the steps are exactly what you’d do for real.
+      This is a pretend editor in your browser — but the steps are exactly what you’d do in any video app.
       <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">Want Teachy to coach you live? Get the app →</a>
     </p>
   </div>
@@ -386,18 +544,21 @@ My first repo, made with Teachy.</textarea>
       var demoCursor = document.getElementById("demo-cursor");
       var demoChalk = document.getElementById("demo-chalk");
       var demoUrlText = document.getElementById("demo-url-text");
-      var demoViewHome = document.getElementById("demo-view-home");
-      var demoViewForm = document.getElementById("demo-view-form");
       var demoViewEditor = document.getElementById("demo-view-editor");
-      var demoViewPush = document.getElementById("demo-view-push");
-      var demoViewDone = document.getElementById("demo-view-done");
-      var demoBtnNew = document.getElementById("demo-btn-new");
-      var demoBtnCreate = document.getElementById("demo-btn-create");
-      var demoRepoName = document.getElementById("demo-repo-name");
-      var demoBtnCommit = document.getElementById("demo-btn-commit");
-      var demoBtnPush = document.getElementById("demo-btn-push");
-      var demoDoneTitle = document.getElementById("demo-done-title");
-      var demoDoneUrl = document.getElementById("demo-done-url");
+      var demoViewExport = document.getElementById("demo-view-export");
+      var veVideoClip = document.getElementById("ve-video-clip");
+      var veTrim = document.getElementById("ve-trim");
+      var veTextRow = document.getElementById("ve-text-row");
+      var veAudioRow = document.getElementById("ve-audio-row");
+      var veCaption = document.getElementById("ve-caption");
+      var veMusicNote = document.getElementById("ve-music-note");
+      var vePlayhead = document.getElementById("ve-playhead");
+      var veExportCheck = document.getElementById("ve-export-check");
+      var veExportTitle = document.getElementById("ve-export-title");
+      var veExportSub = document.getElementById("ve-export-sub");
+      var veExportBarWrap = document.getElementById("ve-export-bar-wrap");
+      var veExportBar = document.getElementById("ve-export-bar");
+      var veDoneUrl = document.getElementById("ve-done-url");
       var progressBar = document.getElementById("lesson-progress-bar");
       var stepEls = Array.prototype.slice.call(document.querySelectorAll(".lesson-step"));
 
@@ -443,14 +604,14 @@ My first repo, made with Teachy.</textarea>
       }
 
       function showView(view) {
-        [demoViewHome, demoViewForm, demoViewEditor, demoViewPush, demoViewDone].forEach(function (el) {
+        [demoViewEditor, demoViewExport].forEach(function (el) {
           if (!el) return;
           el.hidden = el !== view;
         });
       }
 
       function clearHighlights() {
-        [demoBtnNew, demoBtnCreate, demoRepoName, demoBtnCommit, demoBtnPush].forEach(function (el) {
+        [veTrim, veVideoClip].forEach(function (el) {
           if (el) el.classList.remove("is-hot");
         });
         if (demoChalk) demoChalk.classList.remove("is-on");
@@ -557,15 +718,20 @@ My first repo, made with Teachy.</textarea>
           demoSpeech.textContent = "";
         }
         if (demoCursor) demoCursor.classList.remove("is-click");
-        if (demoRepoName) {
-          demoRepoName.value = "";
-          demoRepoName.blur();
-        }
-        if (demoBtnCreate) demoBtnCreate.disabled = true;
-        if (demoUrlText) demoUrlText.textContent = "github.com";
-        if (demoDoneTitle) demoDoneTitle.textContent = "hello-teachy";
-        if (demoDoneUrl) demoDoneUrl.textContent = "github.com/you/hello-teachy";
-        showView(demoViewHome);
+        if (demoUrlText) demoUrlText.textContent = "teachy.studio/edit";
+        if (veVideoClip) veVideoClip.style.width = "100%";
+        if (veTextRow) veTextRow.hidden = true;
+        if (veAudioRow) veAudioRow.hidden = true;
+        if (veCaption) veCaption.classList.remove("is-on");
+        if (veMusicNote) veMusicNote.classList.remove("is-on");
+        if (vePlayhead) vePlayhead.style.left = "18%";
+        if (veExportCheck) veExportCheck.hidden = true;
+        if (veExportBarWrap) veExportBarWrap.hidden = true;
+        if (veExportBar) veExportBar.style.width = "0";
+        if (veDoneUrl) veDoneUrl.hidden = true;
+        if (veExportTitle) veExportTitle.textContent = "Export your video";
+        if (veExportSub) veExportSub.textContent = "One click renders the whole timeline.";
+        showView(demoViewEditor);
         setPhase("Let’s go", "");
         setStep(1, "todo");
       }
@@ -576,150 +742,79 @@ My first repo, made with Teachy.</textarea>
         if (aborted) return;
 
         setStep(1, "todo");
-        await teachySays("hey — this is a pretend browser. i’ll teach you like i do for real. goal: your first GitHub repo.");
+        await teachySays("hey — this is a pretend video editor in your browser. i’ll teach you like i do for real. goal: make a short video.");
         if (aborted) return;
         await wait(450);
 
-        // Step 1: create repo
+        // Step 1: trim
         setStep(1, "active");
-        if (demoUrlText) demoUrlText.textContent = "github.com";
-        showView(demoViewHome);
-        await teachySays("click New — top right.");
+        if (vePlayhead) vePlayhead.style.left = "18%";
+        await teachySays("grab the right edge of the clip and drag left to trim the boring bit.");
         if (aborted) return;
-        pointAt(demoBtnNew);
+        pointAt(veTrim);
         setPhase("Your turn", "wait");
 
         await waitForUser(function (done) {
-          function onClick(event) {
+          function onDown(event) {
             event.preventDefault();
             if (demoCursor) {
               demoCursor.classList.add("is-click");
               setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
             }
+            if (veVideoClip) veVideoClip.style.width = "62%";
+            if (vePlayhead) vePlayhead.style.left = "62%";
             done(true);
           }
-          demoBtnNew.addEventListener("click", onClick);
-          return function () { demoBtnNew.removeEventListener("click", onClick); };
+          veTrim.addEventListener("mousedown", onDown);
+          return function () { veTrim.removeEventListener("mousedown", onDown); };
         });
         if (aborted) return;
 
         clearHighlights();
         setPhase("Nice", "");
-        await teachySays("good — you acted. that’s the loop.");
+        await teachySays("trimmed. the clip is now 6 seconds of the good part.");
         if (aborted) return;
-        await wait(350);
+        await wait(400);
 
-        showView(demoViewForm);
-        if (demoUrlText) demoUrlText.textContent = "github.com/new";
-        await teachySays("name it hello-teachy — then press return.");
-        if (aborted) return;
-        pointAt(demoRepoName);
-        if (demoRepoName) demoRepoName.focus();
-        setPhase("Your turn", "wait");
-
-        var repoName = await waitForUser(function (done) {
-          var typingTimer = null;
-          function current() { return (demoRepoName && demoRepoName.value.trim()) || ""; }
-          function sync() {
-            if (demoBtnCreate) demoBtnCreate.disabled = current().length < 2;
-          }
-          function onInput() {
-            sync();
-            clearTimeout(typingTimer);
-            if (current().length >= 2) {
-              typingTimer = setTimeout(function () { done(current()); }, 900);
-            }
-          }
-          function onKey(event) {
-            if (event.key === "Enter" && current().length >= 2) {
-              clearTimeout(typingTimer);
-              done(current());
-            }
-          }
-          demoRepoName.addEventListener("input", onInput);
-          demoRepoName.addEventListener("keydown", onKey);
-          sync();
-          return function () {
-            clearTimeout(typingTimer);
-            demoRepoName.removeEventListener("input", onInput);
-            demoRepoName.removeEventListener("keydown", onKey);
-          };
-        });
-        if (aborted) return;
-
-        repoName = (repoName || "hello-teachy").replace(/\s+/g, "-");
-        if (demoRepoName) demoRepoName.value = repoName;
-        if (demoBtnCreate) demoBtnCreate.disabled = false;
-        clearHighlights();
-
-        await teachySays("perfect. hit Create repository.");
-        if (aborted) return;
-        pointAt(demoBtnCreate);
-        setPhase("Your turn", "wait");
-
-        await waitForUser(function (done) {
-          function onClick(event) {
-            event.preventDefault();
-            if (demoBtnCreate && demoBtnCreate.disabled) return;
-            if (demoCursor) {
-              demoCursor.classList.add("is-click");
-              setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
-            }
-            done(true);
-          }
-          demoBtnCreate.addEventListener("click", onClick);
-          return function () { demoBtnCreate.removeEventListener("click", onClick); };
-        });
-        if (aborted) return;
-
-        clearHighlights();
-        if (demoDoneTitle) demoDoneTitle.textContent = repoName;
-        if (demoDoneUrl) demoDoneUrl.textContent = "github.com/you/" + repoName;
+        // Step 2: title
         setStep(1, "done");
-        setPhase("Checked ✓", "done");
-        await teachySays("repo created. now let’s put something in it.");
-        if (aborted) return;
-        await wait(450);
-
-        // Step 2: add README
         setStep(2, "active");
-        showView(demoViewEditor);
-        if (demoUrlText) demoUrlText.textContent = "github.com/you/" + repoName + "/new/main";
-        await teachySays("we’ll add a README.md — the welcome page of every repo. the text is already there; hit Commit new file.");
+        if (veTextRow) veTextRow.hidden = false;
+        await teachySays("now a title. we added a text layer — see it on the Text track? it shows at the start.");
         if (aborted) return;
-        pointAt(demoBtnCommit);
-        setPhase("Your turn", "wait");
-
-        await waitForUser(function (done) {
-          function onClick(event) {
-            event.preventDefault();
-            if (demoCursor) {
-              demoCursor.classList.add("is-click");
-              setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
-            }
-            done(true);
-          }
-          demoBtnCommit.addEventListener("click", onClick);
-          return function () { demoBtnCommit.removeEventListener("click", onClick); };
-        });
+        pointAt(veTextRow.querySelector(".ve-clip"));
+        setPhase("Checked ✓", "done");
+        if (veCaption) {
+          setTimeout(function () { if (veCaption) veCaption.classList.add("is-on"); }, 200);
+        }
+        await wait(700);
+        await teachySays("“My First Video” fades in over the clip. that’s a title.");
         if (aborted) return;
+        await wait(400);
 
-        clearHighlights();
+        // Step 3: music
         setStep(2, "done");
         setStep(3, "active");
-        setPhase("Saved ✓", "done");
-        await teachySays("that commit is a snapshot of your repo right now. Git remembers it forever.");
+        if (veAudioRow) veAudioRow.hidden = false;
+        await teachySays("last layer: music. we dropped a beat under the whole thing.");
         if (aborted) return;
-        await wait(450);
+        pointAt(veAudioRow.querySelector(".ve-clip"));
+        setPhase("Checked ✓", "done");
+        if (veMusicNote) {
+          setTimeout(function () { if (veMusicNote) veMusicNote.classList.add("is-on"); }, 200);
+        }
+        await wait(700);
+        await teachySays("title, clip, music — your timeline is full. time to export.");
+        if (aborted) return;
+        await wait(400);
 
-        // Step 3/4: push
+        // Step 4: export
         setStep(3, "done");
         setStep(4, "active");
-        showView(demoViewPush);
-        if (demoUrlText) demoUrlText.textContent = "github.com/you/" + repoName;
-        await teachySays("last step: push. that command sends your commit to GitHub so it’s live on the web. click Run push.");
+        showView(demoViewExport);
+        if (demoUrlText) demoUrlText.textContent = "teachy.studio/export";
+        await teachySays("hit Export — the editor renders everything into one video file.");
         if (aborted) return;
-        pointAt(demoBtnPush);
         setPhase("Your turn", "wait");
 
         await waitForUser(function (done) {
@@ -731,25 +826,43 @@ My first repo, made with Teachy.</textarea>
             }
             done(true);
           }
-          demoBtnPush.addEventListener("click", onClick);
-          return function () { demoBtnPush.removeEventListener("click", onClick); };
+          veExportTitle.addEventListener("click", onClick);
+          return function () { veExportTitle.removeEventListener("click", onClick); };
         });
         if (aborted) return;
 
-        clearHighlights();
-        showView(demoViewDone);
-        if (demoUrlText) demoUrlText.textContent = "github.com/you/" + repoName;
+        if (veExportBarWrap) veExportBarWrap.hidden = false;
+        if (veExportTitle) veExportTitle.textContent = "Rendering…";
+        if (veExportSub) veExportSub.textContent = "Bringing your timeline together.";
+        for (var p = 0; p <= 100; p += 25) {
+          if (aborted) return;
+          if (veExportBar) veExportBar.style.width = p + "%";
+          await wait(260);
+        }
+        if (veExportCheck) veExportCheck.hidden = false;
+        if (veExportTitle) veExportTitle.textContent = "Done!";
+        if (veExportSub) veExportSub.textContent = "Your video is ready to share.";
+        if (veDoneUrl) veDoneUrl.hidden = false;
         setStep(4, "done");
         setPhase("You did it ✓", "done");
-        await teachySays("done. you created a repo, committed a file, and pushed. that’s real Git — and i coached you the whole way.");
+        await teachySays("that’s a full video: trimmed, titled, scored, exported. you did it — and i coached you the whole way.");
       }
 
       var skipBtn = document.getElementById("skip-lesson");
       if (skipBtn) {
         skipBtn.addEventListener("click", function () {
           aborted = true;
-          showView(demoViewDone);
-          if (demoUrlText) demoUrlText.textContent = "github.com/you/hello-teachy";
+          if (veTextRow) veTextRow.hidden = false;
+          if (veAudioRow) veAudioRow.hidden = false;
+          if (veCaption) veCaption.classList.add("is-on");
+          if (veMusicNote) veMusicNote.classList.add("is-on");
+          if (veVideoClip) veVideoClip.style.width = "62%";
+          showView(demoViewExport);
+          if (veExportCheck) veExportCheck.hidden = false;
+          if (veExportTitle) veExportTitle.textContent = "Done!";
+          if (veExportSub) veExportSub.textContent = "Your video is ready to share.";
+          if (veDoneUrl) veDoneUrl.hidden = false;
+          if (demoUrlText) demoUrlText.textContent = "teachy.studio/share/my-first-video";
           setPhase("Done ✓", "done");
           setStep(4, "done");
         });
