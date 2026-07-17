@@ -60,6 +60,10 @@ body.intro-active {
   overflow: hidden;
 }
 
+main {
+  position: relative;
+}
+
 a {
   color: var(--accent);
   text-decoration: none;
@@ -392,6 +396,29 @@ a:hover {
   max-width: 560px;
   font-size: 17px;
   color: var(--ink-soft);
+}
+
+/* —— Floating tool logos —— */
+
+.floating-logos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.float-logo {
+  position: absolute;
+  color: var(--ink);
+  opacity: 0.04;
+  animation: float-drift var(--dur, 8s) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes float-drift {
+  0%   { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(var(--drift, 10px)) rotate(3deg); }
 }
 
 /* —— Hero —— */
