@@ -1,6 +1,6 @@
 # Teachy (website)
 
-Free 1:1 learning platform — next-gen Khan Academy. Silent by design.
+Company site for **Teachy** (free personal 1:1 tutor) and **Teachy Enterprise** (bespoke AI + employee AI fluency).
 
 ## Local preview
 
@@ -24,12 +24,17 @@ That copies `academy/` to `gh-pages` and force-pushes. Edit files under `academy
 
 ## Experience
 
-1. Tutorial flood → crossed-out YouTube → manifesto → **BAM Teachy**
+1. Tutorial flood → manifesto → **BAM Teachy**
 2. Interactive demo browser — tutor coaches beside the cursor
-3. Landing: mission + **flagship Use AI to Code** + paths + download
+3. Landing: dual product (Teachy + Enterprise), AI fluency market, how it works, contact
+
+## Products
+
+| Product | CTA |
+|---------|-----|
+| **Teachy** | Free download + free browser lesson |
+| **Teachy Enterprise** | [`enterprise.html`](enterprise.html) + `mailto:enterprise@teachy.app` |
 
 ## World platform plan
 
-See [`TEACHY_PLAN.md`](TEACHY_PLAN.md).
-
-Flagship path: [`../courses/ai-to-code.json`](../courses/ai-to-code.json) — also bundled first in the Mac app Learn catalog.
+See [`TEACHY_PLAN.md`](TEACHY_PLAN.md) and [`../docs/TEACHY.md`](../docs/TEACHY.md).
