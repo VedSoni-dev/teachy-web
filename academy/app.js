@@ -620,26 +620,99 @@
     }, 200);
   }
 
-  // Chat bubble scroll animation
-  var chatRows = document.querySelectorAll(".chat-row");
-  if (chatRows.length) {
+  // Chat bubble scroll-triggered typing animation
+  (function initChatAnimation() {
+    var chatSurface = document.querySelector(".chat-surface");
+    if (!chatSurface) return;
+
+    var rows = chatSurface.querySelectorAll(".chat-row");
+    var typing = chatSurface.querySelector(".chat-typing");
+    if (!rows.length || !typing) return;
+
+    var typingDelay = 900;
+    var messageDelay = 700;
+    var pauseAfterAll = 2200;
+    var animationRunning = false;
+    var timeouts = [];
+
+    function clearAllTimeouts() {
+      timeouts.forEach(function (id) { clearTimeout(id); });
+      timeouts = [];
+    }
+
+    function schedule(fn, delay) {
+      timeouts.push(setTimeout(fn, delay));
+    }
+
+    function resetAll() {
+      clearAllTimeouts();
+      animationRunning = false;
+      rows.forEach(function (row) {
+        row.classList.remove("is-visible");
+      });
+      typing.classList.remove("is-visible");
+      typing.classList.remove("is-hidden");
+    }
+
+    function playSequence() {
+      if (animationRunning) return;
+      animationRunning = true;
+
+      var i = 0;
+      var elapsed = 0;
+
+      function showNext() {
+        if (i >= rows.length) {
+          schedule(function () {
+            resetAll();
+            schedule(playSequence, 500);
+          }, pauseAfterAll);
+          return;
+        }
+
+        var row = rows[i];
+        var isLeft = row.classList.contains("chat-left");
+        i++;
+
+        if (isLeft) {
+          // Position typing indicator next to where message will appear
+          row.parentNode.insertBefore(typing, row);
+          typing.classList.remove("is-hidden");
+          typing.classList.add("is-visible");
+
+          schedule(function () {
+            typing.classList.remove("is-visible");
+            typing.classList.add("is-hidden");
+
+            schedule(function () {
+              row.classList.add("is-visible");
+              schedule(showNext, messageDelay);
+            }, 180);
+          }, typingDelay);
+        } else {
+          // User message — just appear
+          schedule(function () {
+            row.classList.add("is-visible");
+            schedule(showNext, messageDelay);
+          }, 200);
+        }
+      }
+
+      showNext();
+    }
+
     var chatObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            var rows = entry.target.querySelectorAll(".chat-row");
-            rows.forEach(function (row, i) {
-              setTimeout(function () {
-                row.classList.add("is-visible");
-              }, i * 350);
-            });
+          if (entry.isIntersecting && !animationRunning) {
+            playSequence();
             chatObserver.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.3 }
     );
-    var chatSurface = document.querySelector(".chat-surface");
-    if (chatSurface) chatObserver.observe(chatSurface);
-  }
+
+    chatObserver.observe(chatSurface);
+  })();
 })();
