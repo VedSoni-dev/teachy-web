@@ -619,4 +619,27 @@
       runIntro({ demoOnly: false });
     }, 200);
   }
+
+  // Chat bubble scroll animation
+  var chatRows = document.querySelectorAll(".chat-row");
+  if (chatRows.length) {
+    var chatObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var rows = entry.target.querySelectorAll(".chat-row");
+            rows.forEach(function (row, i) {
+              setTimeout(function () {
+                row.classList.add("is-visible");
+              }, i * 350);
+            });
+            chatObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    var chatSurface = document.querySelector(".chat-surface");
+    if (chatSurface) chatObserver.observe(chatSurface);
+  }
 })();
