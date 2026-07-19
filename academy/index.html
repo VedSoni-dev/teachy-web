@@ -11,9 +11,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="hey-page">
   <!-- Cinematic intro → interactive demo -->
   <div id="intro" class="intro" aria-hidden="false">
     <div class="intro-stage" id="intro-stage">
@@ -136,134 +137,205 @@
     <div class="wrap header-inner">
       <a class="logo" href="#top">
         <span class="logo-mark"></span>
-        Teachy
+        teachy
       </a>
       <nav class="nav">
-        <a href="#product">Product</a>
-        <a href="enterprise.html">Enterprise</a>
-        <a href="#how">How it works</a>
+        <a href="#product">pricing</a>
+        <a href="enterprise.html">enterprise</a>
+        <a href="#faq">faq</a>
         <a class="nav-github" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" aria-label="Star Teachy on GitHub, open source">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          <span>Open source</span>
+          <span>open source</span>
           <span class="nav-github-star" aria-hidden="true">★</span>
         </a>
         <a class="nav-cta" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">
-          <span>Get Teachy</span>
+          <span>get teachy</span>
         </a>
       </nav>
-      <button type="button" class="ghost-btn" id="replay-intro">Replay</button>
+      <button type="button" class="ghost-btn" id="replay-intro">replay</button>
     </div>
   </header>
 
   <main>
-    <section class="hero wrap" id="top">
-      <h1 class="hero-title">
-        Learn anything<br />
-        <span class="hero-title-accent">by actually doing it.</span>
-      </h1>
-
-      <p class="lede">
-        Teachy is the simplest interface to learn. A 1:1 tutor on your Mac that sits next to you and
-        teaches AI tools, software, and how to do real work: websites, code, Claude, ChatGPT,
-        and whatever you're trying to figure out.
-      </p>
-
-      <div class="hero-actions">
-        <a class="btn btn-primary" id="get-teachy" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">
-          <span class="btn-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.83.94-2.19 1.66-3.32 1.57a3.78 3.78 0 0 1 1.12-2.9C13.9 2.09 15.32 1.5 16.36 1.43zM20.5 17.02c-.55 1.27-.82 1.84-1.53 2.96-.99 1.57-2.39 3.52-4.12 3.53-1.54.02-1.94-.99-4.03-.98-2.09.01-2.53 1-4.07.97-1.73-.02-3.05-1.79-4.04-3.35C-.36 16.4-.9 11.4 1.05 8.62 2.34 6.77 4.14 5.68 6.05 5.68c1.94 0 3.16 1.06 4.77 1.06 1.56 0 2.51-1.06 4.77-1.06 1.7 0 3.5.92 4.79 2.51-4.2 2.3-3.51 8.28.12 8.83z"/></svg>
-          </span>
-          <span class="btn-label">Get Teachy free</span>
-        </a>
-        <a class="btn btn-secondary" href="enterprise.html">
-          <span class="btn-label">Teachy Enterprise</span>
-          <span class="btn-arrow" aria-hidden="true">→</span>
-        </a>
+    <!-- —— Hero: scattered mac windows + centered wordmark —— -->
+    <section class="hey-hero" id="top">
+      <div class="hey-scatter" aria-hidden="true">
+        <div class="hey-mini hey-mini-editor">
+          <div class="hey-mini-bar"><i></i><i></i><i></i><span>app.tsx</span></div>
+          <div class="hey-mini-body"><b style="width:72%"></b><b style="width:54%"></b><b style="width:83%"></b><b style="width:38%"></b></div>
+        </div>
+        <div class="hey-mini hey-mini-chat">
+          <div class="hey-mini-bar"><i></i><i></i><i></i><span>teachy</span></div>
+          <div class="hey-mini-body"><em class="hey-mini-bubble-blue">how do i…</em><em class="hey-mini-bubble-orange">on it!</em></div>
+        </div>
+        <div class="hey-mini hey-mini-terminal">
+          <div class="hey-mini-bar"><i></i><i></i><i></i><span>terminal</span></div>
+          <div class="hey-mini-body hey-mini-dark"><b style="width:64%"></b><b style="width:42%"></b><b style="width:76%"></b></div>
+        </div>
+        <div class="hey-mini hey-mini-form">
+          <div class="hey-mini-bar"><i></i><i></i><i></i><span>github.com/new</span></div>
+          <div class="hey-mini-body"><b style="width:88%"></b><b style="width:88%"></b><u></u></div>
+        </div>
+        <div class="hey-mini hey-mini-note">learn by doing ✏️</div>
+        <div class="hey-mini hey-mini-editor2">
+          <div class="hey-mini-bar"><i></i><i></i><i></i><span>figma</span></div>
+          <div class="hey-mini-body hey-mini-swatches"><b></b><b></b><b></b><b></b></div>
+        </div>
+        <div class="hey-mini hey-mini-claude">
+          <div class="hey-mini-bar"><i></i><i></i><i></i><span>claude</span></div>
+          <div class="hey-mini-body"><b style="width:80%"></b><b style="width:66%"></b><b style="width:47%"></b></div>
+        </div>
+        <span class="hey-doodle hey-doodle-1">✳</span>
+        <span class="hey-doodle hey-doodle-2">⌘</span>
+        <span class="hey-doodle hey-doodle-3">✦</span>
       </div>
 
-      <div class="hero-collage-wrap">
-        <div class="hero-collage" aria-hidden="true">
-          <div class="hero-collage-side">
-            <div class="tilt-frame" style="--tilt: -9deg"><img src="thumbs/1.png" alt="" /></div>
-            <div class="tilt-frame tilt-r" style="--tilt: 5deg"><img src="thumbs/2.png" alt="" /></div>
+      <div class="hey-hero-center">
+        <h1 class="hey-wordmark">teachy</h1>
+        <p class="hey-tagline">a 1:1 tutor that lives on your mac</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="get-teachy" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">
+            <span class="btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.83.94-2.19 1.66-3.32 1.57a3.78 3.78 0 0 1 1.12-2.9C13.9 2.09 15.32 1.5 16.36 1.43zM20.5 17.02c-.55 1.27-.82 1.84-1.53 2.96-.99 1.57-2.39 3.52-4.12 3.53-1.54.02-1.94-.99-4.03-.98-2.09.01-2.53 1-4.07.97-1.73-.02-3.05-1.79-4.04-3.35C-.36 16.4-.9 11.4 1.05 8.62 2.34 6.77 4.14 5.68 6.05 5.68c1.94 0 3.16 1.06 4.77 1.06 1.56 0 2.51-1.06 4.77-1.06 1.7 0 3.5.92 4.79 2.51-4.2 2.3-3.51 8.28.12 8.83z"/></svg>
+            </span>
+            <span class="btn-label">download for mac</span>
+          </a>
+          <a class="btn btn-secondary" id="free-learning" href="quick-github-lesson.html">
+            <span class="btn-label">try a free lesson</span>
+          </a>
+        </div>
+        <p class="hey-fineprint">free · open source · macOS 14+ · no account needed</p>
+      </div>
+
+      <div class="hey-hero-media">
+        <div class="window-frame-outer">
+        <div class="window-frame">
+          <div class="window-bar">
+            <div class="window-lights">
+              <span class="window-light" style="background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), #ff5f57 60%); border-color: #e0443e"></span>
+              <span class="window-light" style="background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), #febc2e 60%); border-color: #d89e24"></span>
+              <span class="window-light" style="background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), #28c840 60%); border-color: #aab29"></span>
+            </div>
+            <span class="window-title">VS Code</span>
           </div>
-          <div class="hero-collage-main">
-            <div class="tilt-frame" style="--tilt: -2deg"><img src="thumbs/3.png" alt="" /></div>
+          <div class="window-content">
+            <div class="window-sidebar">
+              <div class="sidebar-item active">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+              </div>
+              <div class="sidebar-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+              </div>
+              <div class="sidebar-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+              </div>
+            </div>
+            <div class="window-editor">
+              <div class="editor-tabs">
+                <span class="editor-tab active">App.tsx</span>
+                <span class="editor-tab">index.tsx</span>
+              </div>
+              <div class="editor-code">
+                <div class="code-line"><span class="ln">1</span><span class="kw">import</span> <span class="fn">React</span> <span class="kw">from</span> <span class="str">'react'</span>;</div>
+                <div class="code-line"><span class="ln">2</span><span class="kw">import</span> <span class="fn">./App.css'</span>;</div>
+                <div class="code-line"><span class="ln">3</span></div>
+                <div class="code-line"><span class="ln">4</span><span class="kw">function</span> <span class="fn">App</span>() {</div>
+                <div class="code-line"><span class="ln">5</span>  <span class="kw">return</span> (</div>
+                <div class="code-line highlight"><span class="ln">6</span>    &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="str">"App"</span>&gt;</div>
+                <div class="code-line highlight"><span class="ln">7</span>      &lt;<span class="tag">h1</span>&gt;Hello Teachy!&lt;/<span class="tag">h1</span>&gt;</div>
+                <div class="code-line highlight"><span class="ln">8</span>    &lt;/<span class="tag">div</span>&gt;</div>
+                <div class="code-line"><span class="ln">9</span>  );</div>
+                <div class="code-line"><span class="ln">10</span>}</div>
+              </div>
+            </div>
           </div>
-          <div class="hero-collage-side">
-            <div class="tilt-frame tilt-r" style="--tilt: 8deg"><img src="thumbs/4.png" alt="" /></div>
-            <div class="tilt-frame" style="--tilt: -5deg"><img src="thumbs/5.png" alt="" /></div>
+          <div class="window-teachy-cursor" aria-hidden="true">
+            <div class="teachy-speech">click here to add your homepage component</div>
           </div>
         </div>
-        <div class="collage-x-overlay" id="collage-x">
-          <svg class="collage-x-svg" viewBox="0 0 200 200" fill="none">
-            <line x1="20" y1="20" x2="180" y2="180" stroke="#ff3b30" stroke-width="8" stroke-linecap="round" class="x-line x-line-1"/>
-            <line x1="180" y1="20" x2="20" y2="180" stroke="#ff3b30" stroke-width="8" stroke-linecap="round" class="x-line x-line-2"/>
-          </svg>
-          <span class="collage-x-text">this is not how you learn</span>
         </div>
       </div>
 
-      <ul class="hero-stats" aria-label="What you get">
-        <li><strong>Learn how to use</strong><span>any tool, app, or skill</span></li>
-        <li><strong>Learn how to do</strong><span>ship real outcomes</span></li>
-        <li><strong>Beside you</strong><span>points, checks, remembers</span></li>
-        <li><strong>Enterprise</strong><span>teach your whole team</span></li>
-      </ul>
-
-      <p class="hero-hint" id="hero-hint">The blue cursor is Teachy. It follows yours.</p>
+      <p class="hero-hint" id="hero-hint">the blue cursor is teachy. it follows yours.</p>
     </section>
 
-    <!-- Feature rows: how to use / how to do / beside you -->
-    <section class="feature wrap" id="fluency">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>What Teachy teaches</span>
-        <h2>How to use this. How to do that.</h2>
-        <p class="section-note">
-          Learning isn't watching a video. It's using the real tool, doing the real work, and having someone
-          coach you live on your machine.
-        </p>
+    <div class="hey-dots" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span><span class="hey-dot-play">▸</span>
+    </div>
+
+    <!-- —— Feature rows —— -->
+    <section class="hey-features wrap" id="fluency">
+      <article class="hey-feature">
+        <div class="hey-feature-copy">
+          <span class="hey-label-bubble">teachy</span>
+          <h2>finally learn the thing</h2>
+          <p>hold <kbd>ctrl</kbd> + <kbd>option</kbd> and just ask, out loud. teachy answers in plain speech and walks you through the real app — no tutorial tab, no pausing a video every ten seconds.</p>
+        </div>
+        <div class="hey-feature-media">
+          <div class="hey-window">
+            <div class="hey-window-bar"><i></i><i></i><i></i><span>anything on your mac</span></div>
+            <div class="hey-window-body hey-window-chatdemo">
+              <span class="hey-demo-bubble hey-demo-blue">how do i put this website online?</span>
+              <span class="hey-demo-bubble hey-demo-orange">easy. open your terminal — i'll walk you through the deploy.</span>
+              <span class="hey-demo-wave"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="hey-dots hey-dots-tight" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span>
       </div>
 
-      <div class="feature-row">
-        <div class="feature-media">
-          <div class="tilt-frame" style="--tilt: -3deg"><img src="thumbs/2.png" alt="" /></div>
+      <article class="hey-feature hey-feature-reverse">
+        <div class="hey-feature-copy">
+          <span class="hey-label-bubble">use your screen as context</span>
+          <h2>it sees what you see</h2>
+          <p>teachy looks at exactly what's on your screen, points at the right button with its little blue cursor, and checks the outcome before it moves on. real skills, verified — not "video watched."</p>
         </div>
-        <div class="feature-copy">
-          <span class="pill-tag"><span class="pill-tag-dot"></span>01 · learn any tool</span>
-          <h3>Claude, ChatGPT, GitHub, VS Code, Figma, whatever you need.</h3>
-          <p>Practice on the real UI, not a demo reel. Teachy coaches you through the actual app while it's open on your screen.</p>
+        <div class="hey-feature-media">
+          <div class="hey-window">
+            <div class="hey-window-bar"><i></i><i></i><i></i><span>github.com/new</span></div>
+            <div class="hey-window-body hey-window-formdemo">
+              <b class="hey-form-line" style="width:40%"></b>
+              <u class="hey-form-field"></u>
+              <b class="hey-form-line" style="width:56%"></b>
+              <u class="hey-form-field"></u>
+              <span class="hey-form-btn">create repository</span>
+              <span class="hey-point-cursor"><span class="hey-point-speech">click here — this makes it public</span></span>
+            </div>
+          </div>
         </div>
+      </article>
+
+      <div class="hey-dots hey-dots-tight" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span>
       </div>
 
-      <div class="feature-row reverse">
-        <div class="feature-media">
-          <div class="tilt-frame tilt-r" style="--tilt: 3deg"><img src="thumbs/4.png" alt="" /></div>
+      <article class="hey-feature">
+        <div class="hey-feature-copy">
+          <span class="hey-label-bubble">stuck? just say it</span>
+          <h2>"do it for me"</h2>
+          <p>when you're truly stuck, teachy takes the wheel — opens the browser, runs the terminal, clicks the thing — then hands control back and makes sure you could do it yourself next time.</p>
         </div>
-        <div class="feature-copy">
-          <span class="pill-tag"><span class="pill-tag-dot"></span>02 · learn by doing the work</span>
-          <h3>Make a website. Write code. Ship a workflow.</h3>
-          <p>Outcomes you can open and show someone, not a certificate that says you watched something.</p>
+        <div class="hey-feature-media">
+          <div class="hey-window">
+            <div class="hey-window-bar"><i></i><i></i><i></i><span>terminal</span></div>
+            <div class="hey-window-body hey-window-termdemo">
+              <code><span class="hey-term-prompt">~ %</span> git init</code>
+              <code><span class="hey-term-prompt">~ %</span> git add . && git commit -m "first!"</code>
+              <code><span class="hey-term-prompt">~ %</span> git push origin main</code>
+              <code class="hey-term-ok">✓ verified: your repo is live</code>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div class="feature-row">
-        <div class="feature-media">
-          <div class="tilt-frame" style="--tilt: -4deg"><img src="thumbs/6.png" alt="" /></div>
-        </div>
-        <div class="feature-copy">
-          <span class="pill-tag"><span class="pill-tag-dot"></span>03 · like someone beside you</span>
-          <h3>Points, talks like a human, checks your screen.</h3>
-          <p>Teachy remembers what you already know, so it stops explaining things you've got and coaches you on what's actually new.</p>
-        </div>
-      </div>
+      </article>
     </section>
 
-    <!-- Chat demo -->
+    <!-- —— Chat demo —— -->
     <section class="chat-demo wrap">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>See it in action</span>
-        <h2>Like texting a friend who knows everything.</h2>
+      <div class="hey-section-head">
+        <h2>like texting a friend who knows everything</h2>
       </div>
       <div class="chat-surface" aria-label="Texting animation">
         <div class="chat-row chat-right chat-blue">
@@ -329,220 +401,169 @@
       </div>
     </section>
 
-    <!-- WindowFrame demo -->
-    <section class="window-demo wrap">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>Real lesson</span>
-        <h2>Not a video. Your actual screen.</h2>
+    <!-- —— Manifesto letter —— -->
+    <section class="hey-letter-band">
+      <div class="hey-cascade hey-cascade-left" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       </div>
-      <div class="window-frame-outer">
-      <div class="window-frame">
-        <div class="window-bar">
-          <div class="window-lights">
-            <span class="window-light" style="background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), #ff5f57 60%); border-color: #e0443e"></span>
-            <span class="window-light" style="background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), #febc2e 60%); border-color: #d89e24"></span>
-            <span class="window-light" style="background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), #28c840 60%); border-color: #aab29"></span>
-          </div>
-          <span class="window-title">VS Code</span>
-        </div>
-        <div class="window-content">
-          <div class="window-sidebar">
-            <div class="sidebar-item active">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
-            </div>
-            <div class="sidebar-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
-            </div>
-            <div class="sidebar-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-            </div>
-          </div>
-          <div class="window-editor">
-            <div class="editor-tabs">
-              <span class="editor-tab active">App.tsx</span>
-              <span class="editor-tab">index.tsx</span>
-            </div>
-            <div class="editor-code">
-              <div class="code-line"><span class="ln">1</span><span class="kw">import</span> <span class="fn">React</span> <span class="kw">from</span> <span class="str">'react'</span>;</div>
-              <div class="code-line"><span class="ln">2</span><span class="kw">import</span> <span class="fn">./App.css'</span>;</div>
-              <div class="code-line"><span class="ln">3</span></div>
-              <div class="code-line"><span class="ln">4</span><span class="kw">function</span> <span class="fn">App</span>() {</div>
-              <div class="code-line"><span class="ln">5</span>  <span class="kw">return</span> (</div>
-              <div class="code-line highlight"><span class="ln">6</span>    &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="str">"App"</span>&gt;</div>
-              <div class="code-line highlight"><span class="ln">7</span>      &lt;<span class="tag">h1</span>&gt;Hello Teachy!&lt;/<span class="tag">h1</span>&gt;</div>
-              <div class="code-line highlight"><span class="ln">8</span>    &lt;/<span class="tag">div</span>&gt;</div>
-              <div class="code-line"><span class="ln">9</span>  );</div>
-              <div class="code-line"><span class="ln">10</span>}</div>
-            </div>
-          </div>
-        </div>
-        <div class="window-teachy-cursor" aria-hidden="true">
-          <div class="teachy-speech">click here to add your homepage component</div>
-        </div>
+      <div class="hey-letter">
+        <p>we all know how to watch tutorials. very few of us know how to actually make things.</p>
+        <p>that's not a you problem. videos can't see your screen, can't point at the right button, and can't tell when you're stuck.</p>
+        <p>teachy can. it sits beside your cursor and <mark>coaches you through the real work</mark> until the thing is actually made.</p>
+        <p>it's free, it's open source, and it remembers what you already know. come make something.</p>
+        <p class="hey-signature">— ved, maker of teachy</p>
       </div>
+      <div class="hey-cascade hey-cascade-right" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       </div>
     </section>
 
-    <!-- Dual product -->
-    <section class="sky-band">
-      <div class="wrap products" id="product">
-        <div class="section-head">
-          <span class="pill-tag"><span class="pill-tag-dot"></span>Two products, one engine</span>
-          <h2>Teachy for you. Teachy Enterprise for your team.</h2>
-          <p class="section-note">
-            Not a catalog of videos you never finish. Real paths: learn a tool, do the work,
-            get coached on your screen until you can do it alone.
-          </p>
+    <!-- —— Outcomes wall —— -->
+    <section class="hey-wall">
+      <div class="hey-marquee" aria-hidden="true">
+        <div class="hey-marquee-track">
+          <span>learn by actually doing it · learn by actually doing it · learn by actually doing it · learn by actually doing it · </span>
+          <span>learn by actually doing it · learn by actually doing it · learn by actually doing it · learn by actually doing it · </span>
         </div>
+      </div>
+      <div class="hey-section-head">
+        <h2>real things, actually made</h2>
+        <p>what learning with teachy looks like in week one.</p>
+      </div>
+      <div class="hey-wall-grid wrap">
+        <article class="hey-card hey-tint-blue"><span class="hey-card-tag">day 1</span><p>put my first website on the internet. an actual url. my url.</p></article>
+        <article class="hey-card hey-tint-pink"><span class="hey-card-tag">day 2</span><p>opened my first pull request without googling "what is a pull request"</p></article>
+        <article class="hey-card hey-tint-yellow"><span class="hey-card-tag">day 3</span><p>finally understand what git actually does. it pointed at every button.</p></article>
+        <article class="hey-card hey-tint-green"><span class="hey-card-tag">day 4</span><p>built a claude workflow that drafts my weekly report</p></article>
+        <article class="hey-card hey-tint-purple"><span class="hey-card-tag">day 5</span><p>wrote a python script that renamed 400 files. by hand that's a saturday.</p></article>
+        <article class="hey-card hey-tint-blue"><span class="hey-card-tag">day 6</span><p>made a figma mockup without watching a single video</p></article>
+        <article class="hey-card hey-tint-yellow"><span class="hey-card-tag">week 2</span><p>my terminal doesn't scare me anymore</p></article>
+        <article class="hey-card hey-tint-pink"><span class="hey-card-tag">week 2</span><p>automated the spreadsheet i've hated for two years</p></article>
+        <article class="hey-card hey-tint-green"><span class="hey-card-tag">week 3</span><p>taught my mom to use chatgpt. teachy taught me first.</p></article>
+      </div>
+      <p class="hey-wall-cta">
+        <a href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">free and open source. <strong>get teachy →</strong></a>
+      </p>
+    </section>
 
-        <div class="product-grid">
-          <article class="product-card">
-            <header>
-              <span class="product-tag">Personal</span>
-              <h3>Teachy</h3>
-              <p class="product-price">Free</p>
-            </header>
-            <p class="product-lede">
-              <strong>The simplest way to learn anything.</strong> Learn AI tools, software, coding,
-              and how to actually build things: websites, workflows, whatever you're working on.
-            </p>
-            <ul class="product-list">
-              <li>Learn any tool and any skill</li>
-              <li>Sits next to you, points, talks, checks</li>
-              <li>Paths: AI, software, code, and more</li>
-              <li>No account required to start</li>
-              <li>Open source · macOS 14+</li>
+    <!-- —— Pricing sky band —— -->
+    <section class="hey-sky" id="product">
+      <div class="wrap">
+        <div class="hey-sky-head">
+          <h2>teachy, your way</h2>
+          <p>free for people. bespoke for teams.</p>
+        </div>
+        <div class="hey-price-grid">
+          <article class="hey-price-card">
+            <span class="hey-price-tag">personal</span>
+            <h3>free</h3>
+            <p class="hey-price-amount">$0</p>
+            <p class="hey-price-note">everything. actually everything.</p>
+            <ul>
+              <li>voice tutor on any app or tool</li>
+              <li>courses with real, verified outcomes</li>
+              <li>"do it for me" when you're stuck</li>
+              <li>remembers what you know</li>
+              <li>open source · no account needed</li>
             </ul>
-            <div class="product-actions">
-              <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">
-                <span class="btn-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.83.94-2.19 1.66-3.32 1.57a3.78 3.78 0 0 1 1.12-2.9C13.9 2.09 15.32 1.5 16.36 1.43zM20.5 17.02c-.55 1.27-.82 1.84-1.53 2.96-.99 1.57-2.39 3.52-4.12 3.53-1.54.02-1.94-.99-4.03-.98-2.09.01-2.53 1-4.07.97-1.73-.02-3.05-1.79-4.04-3.35C-.36 16.4-.9 11.4 1.05 8.62 2.34 6.77 4.14 5.68 6.05 5.68c1.94 0 3.16 1.06 4.77 1.06 1.56 0 2.51-1.06 4.77-1.06 1.7 0 3.5.92 4.79 2.51-4.2 2.3-3.51 8.28.12 8.83z"/></svg>
-                </span>
-                <span class="btn-label">Download Teachy</span>
-              </a>
-              <a class="btn btn-secondary" id="free-learning" href="quick-github-lesson.html">
-                <span class="btn-label">Try a free lesson</span>
-              </a>
-            </div>
+            <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">
+              <span class="btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.83.94-2.19 1.66-3.32 1.57a3.78 3.78 0 0 1 1.12-2.9C13.9 2.09 15.32 1.5 16.36 1.43zM20.5 17.02c-.55 1.27-.82 1.84-1.53 2.96-.99 1.57-2.39 3.52-4.12 3.53-1.54.02-1.94-.99-4.03-.98-2.09.01-2.53 1-4.07.97-1.73-.02-3.05-1.79-4.04-3.35C-.36 16.4-.9 11.4 1.05 8.62 2.34 6.77 4.14 5.68 6.05 5.68c1.94 0 3.16 1.06 4.77 1.06 1.56 0 2.51-1.06 4.77-1.06 1.7 0 3.5.92 4.79 2.51-4.2 2.3-3.51 8.28.12 8.83z"/></svg>
+              </span>
+              <span class="btn-label">download teachy</span>
+            </a>
           </article>
 
-          <article class="product-card product-card-enterprise">
-            <header>
-              <span class="product-tag product-tag-ent">Enterprise</span>
-              <h3>Teachy Enterprise</h3>
-              <p class="product-price">Bespoke</p>
-            </header>
-            <p class="product-lede">
-              Bespoke AI and a 1:1 teaching layer for your company,
-              so every employee can use the tools and workflows you actually rely on.
-            </p>
-            <ul class="product-list">
-              <li>Custom learning paths for your org</li>
-              <li>Train on your stack, SOPs, and internal tools</li>
+          <article class="hey-price-card hey-price-card-ent">
+            <span class="hey-price-tag hey-price-tag-ent">enterprise</span>
+            <h3>teachy enterprise</h3>
+            <p class="hey-price-amount">bespoke</p>
+            <p class="hey-price-note">teach your whole company.</p>
+            <ul>
+              <li>custom learning paths for your org</li>
+              <li>trained on your stack, SOPs, internal tools</li>
               <li>1:1 coaching at scale, not slide decks</li>
-              <li>Bespoke AI systems + integration support</li>
-              <li>Verified skills, not "watched training"</li>
+              <li>bespoke AI systems + integration</li>
+              <li>verified skills, not "watched training"</li>
             </ul>
-            <div class="product-actions">
-              <a class="btn btn-primary btn-enterprise" href="enterprise.html#pilot">
-                <span class="btn-label">Talk to us</span>
-                <span class="btn-arrow" aria-hidden="true">→</span>
-              </a>
-              <a class="btn btn-secondary" href="enterprise.html">
-                <span class="btn-label">See what's included</span>
-              </a>
-            </div>
+            <a class="btn btn-secondary" href="enterprise.html">
+              <span class="btn-label">see what's included</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
           </article>
+        </div>
+
+        <div class="hey-terminal">
+          <p><span class="hey-term-prompt">~ %</span> teachy enterprise --pilot</p>
+          <p class="hey-terminal-copy">we build custom curriculum around the tools your team actually uses.</p>
+          <a class="hey-terminal-btn" href="enterprise.html#pilot">reach out ↗</a>
         </div>
       </div>
     </section>
 
-    <section class="how wrap" id="how">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>How it works</span>
-        <h2>Four steps. That's the whole loop.</h2>
-        <p class="section-note">Same engine for individuals and enterprises. Learn anything by doing.</p>
-      </div>
-      <ol class="teach-steps">
-        <li>
-          <span class="teach-num">1</span>
-          <h3>Teachy points</h3>
-          <p>It shows exactly where to look and what to do, on the real screen, beside the cursor.</p>
-        </li>
-        <li>
-          <span class="teach-num">2</span>
-          <h3>You do it</h3>
-          <p>The learner acts first. Practice on ChatGPT, code, GitHub, your internal tools, anything. Not a demo video.</p>
-        </li>
-        <li>
-          <span class="teach-num">3</span>
-          <h3>Teachy checks</h3>
-          <p>It looks at the screen, confirms the outcome, and only then advances. Real skills, verified.</p>
-        </li>
-        <li>
-          <span class="teach-num">4</span>
-          <h3>It remembers</h3>
-          <p>Progress, confusions, and wins stay with the learner, so coaching gets more personal over time.</p>
-        </li>
-      </ol>
-    </section>
-
-    <!-- FAQ -->
-    <section class="faq wrap">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>Questions</span>
-        <h2>Frequently asked questions</h2>
-        <p class="section-note">What to know about Teachy, privacy, and getting started.</p>
+    <!-- —— FAQ —— -->
+    <section class="faq wrap" id="faq">
+      <div class="hey-section-head">
+        <h2>frequently asked questions</h2>
+        <p>what to know about teachy, privacy, and getting started.</p>
       </div>
       <div class="faq-list">
-        <details class="faq-item">
-          <summary>What is Teachy?</summary>
-          <p>A free menu-bar app for Mac. It watches your screen, sits next to your cursor, and coaches you 1:1 through AI tools, software, code, and real work on your own machine.</p>
+        <details class="faq-item" open>
+          <summary>what is teachy?</summary>
+          <p>a free menu-bar app for mac. it watches your screen, sits next to your cursor, and coaches you 1:1 through AI tools, software, code, and real work on your own machine.</p>
         </details>
         <details class="faq-item">
-          <summary>Is it free?</summary>
-          <p>Yes. Teachy for individuals is free, open source, and doesn't require an account to start. Teachy Enterprise is a separate, bespoke offering for companies.</p>
+          <summary>is it free?</summary>
+          <p>yes. teachy for individuals is free, open source, and doesn't require an account to start. teachy enterprise is a separate, bespoke offering for companies.</p>
         </details>
         <details class="faq-item">
-          <summary>Is my screen being watched all the time?</summary>
-          <p>No. Teachy only looks at your screen during an active coaching session or push-to-talk moment. All API calls route through the Teachy proxy; no keys or screen data are baked into the app itself.</p>
+          <summary>is my screen being watched all the time?</summary>
+          <p>no. teachy only looks at your screen during an active coaching session or push-to-talk moment. all API calls route through the teachy proxy; no keys or screen data are baked into the app itself.</p>
         </details>
         <details class="faq-item">
-          <summary>What can Teachy actually teach me?</summary>
-          <p>Anything you can do on your Mac. AI tools like Claude and ChatGPT, software like VS Code and Figma, how to build a website, write code, ship a workflow, and more.</p>
+          <summary>what can teachy actually teach me?</summary>
+          <p>anything you can do on your mac. AI tools like claude and chatgpt, software like VS Code and figma, how to build a website, write code, ship a workflow, and more.</p>
         </details>
         <details class="faq-item">
-          <summary>Which Mac do I need?</summary>
-          <p>macOS 14.2 or later, for the screen-capture APIs Teachy relies on to see what you're doing.</p>
+          <summary>which mac do i need?</summary>
+          <p>macOS 14.2 or later, for the screen-capture APIs teachy relies on to see what you're doing.</p>
         </details>
         <details class="faq-item">
-          <summary>What's the difference between Teachy and Teachy Enterprise?</summary>
-          <p>Teachy is free and built for individuals. Teachy Enterprise adds bespoke AI systems plus custom curriculum built around your company's tools, SOPs, and roles, priced per engagement.</p>
+          <summary>what's the difference between teachy and teachy enterprise?</summary>
+          <p>teachy is free and built for individuals. teachy enterprise adds bespoke AI systems plus custom curriculum built around your company's tools, SOPs, and roles, priced per engagement.</p>
         </details>
       </div>
     </section>
 
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <div class="footer-brand">
-        <span class="footer-mark logo-mark" aria-hidden="true"></span>
-        <span class="footer-name">Teachy</span>
-        <span class="footer-tag">The simplest way to learn anything.</span>
+  <footer class="hey-footer">
+    <div class="wrap hey-footer-cols">
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">product</span>
+        <a href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">download</a>
+        <a href="quick-github-lesson.html">free lesson</a>
+        <a href="#product">pricing</a>
       </div>
-      <div class="footer-links">
-        <a href="#product">Product</a>
-        <a href="enterprise.html">Enterprise</a>
-        <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">Download</a>
-        <a href="mailto:enterprise@teachy.app?subject=Teachy%20Enterprise">Contact</a>
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">open source</span>
+        <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">github</a>
+        <a href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">report a bug</a>
+        <a href="https://github.com/VedSoni-dev/teachy/releases" target="_blank" rel="noopener">releases</a>
+      </div>
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">contact</span>
+        <a href="enterprise.html">enterprise</a>
+        <a href="mailto:enterprise@teachy.app?subject=Teachy%20Enterprise">email us</a>
+      </div>
+      <div class="hey-footer-col hey-footer-disclaimer">
+        <span class="hey-footer-head">privacy</span>
+        <p>teachy only sees your screen when you press the hotkey. screenshots go through your own proxy — never stored, never sold.</p>
       </div>
     </div>
-    <p class="footer-wordmark wrap" aria-hidden="true">
-      Teachy
-      <span class="footer-wordmark-mark"></span>
-    </p>
+    <div class="hey-pixel-band" aria-hidden="true">
+      <span class="hey-pixel">teachy</span>
+    </div>
   </footer>
 
   <script src="app.js" defer></script>
