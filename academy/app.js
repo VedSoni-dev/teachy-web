@@ -1,6 +1,16 @@
 (function () {
   "use strict";
 
+  // Easter egg for the curious who open the console.
+  try {
+    console.log(
+      "%c ▶ REC %c teachy %c\n\nyou opened the console. of course you did.\nteachy would've pointed at it for you.\n\nit's open source — come poke around:\nhttps://github.com/VedSoni-dev/teachy\n",
+      "background:#ff2d43;color:#fff;font-weight:700;padding:2px 6px;border-radius:4px 0 0 4px;font-family:monospace;",
+      "background:#3380ff;color:#fff;font-weight:700;padding:2px 8px;border-radius:0 4px 4px 0;",
+      "color:#6b6478;font-size:12px;"
+    );
+  } catch (e) {}
+
   var INTRO_STORAGE_KEY = "teachyIntroSeen_v1";
 
   var tourTimer = null;

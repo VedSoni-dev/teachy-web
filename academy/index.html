@@ -133,6 +133,9 @@
     <div class="clicky-cursor" aria-hidden="true"></div>
   </div>
 
+  <!-- VHS film grain + scanline wash over the whole page -->
+  <div class="hey-grain" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="logo" href="#top">
@@ -191,8 +194,8 @@
       </div>
 
       <div class="hey-hero-center">
-        <h1 class="hey-wordmark">teachy</h1>
-        <p class="hey-tagline">a 1:1 tutor that lives on your mac</p>
+        <h1 class="hey-wordmark" data-text="teachy">teachy</h1>
+        <p class="hey-tagline">a 1:1 tutor that lives on your mac <span class="hey-tagline-wink">(and actually watches)</span></p>
         <div class="hero-actions">
           <a class="btn btn-primary" id="get-teachy" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">
             <span class="btn-icon" aria-hidden="true">
@@ -209,8 +212,8 @@
 
       <div class="hey-hero-media">
         <div class="hey-frame">
-          <div class="hey-window hey-scene-window" aria-label="Animated demo: designing a poster with teachy">
-            <div class="hey-window-bar"><i></i><i></i><i></i><span>figma — poster · never opened this before</span></div>
+          <div class="hey-window hey-scene-window hey-rec-window" aria-label="Animated demo: designing a poster with teachy">
+            <div class="hey-window-bar"><i></i><i></i><i></i><span>figma — poster · never opened this before</span><span class="hey-rec" aria-hidden="true"><i class="hey-rec-dot"></i>rec<b class="hey-tc"></b></span></div>
             <div class="hey-window-body hey-studio">
               <div class="hey-studio-rail" aria-hidden="true">
                 <b class="is-active"></b><b></b><b></b><b></b><b></b>
@@ -239,6 +242,13 @@
         <span class="hey-bubble hb-3" aria-hidden="true"></span>
         <span class="hey-bubble hb-4" aria-hidden="true"></span>
         <span class="hey-bubble hb-5" aria-hidden="true"></span>
+        <div class="hey-stamp" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <defs><path id="hey-stamp-path" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"></path></defs>
+            <text><textPath href="#hey-stamp-path">★ learn by doing ★ not by watching ★ </textPath></text>
+          </svg>
+          <span class="hey-stamp-mid">▶</span>
+        </div>
       </div>
 
       <p class="hero-hint" id="hero-hint">the blue cursor is teachy. it follows yours.</p>
@@ -258,8 +268,8 @@
         </div>
         <div class="hey-feature-media">
           <div class="hey-frame">
-            <div class="hey-window">
-              <div class="hey-window-bar"><i></i><i></i><i></i><span>chatgpt · you're holding ctrl + option</span></div>
+            <div class="hey-window hey-rec-window">
+              <div class="hey-window-bar"><i></i><i></i><i></i><span>chatgpt · you're holding ctrl + option</span><span class="hey-rec" aria-hidden="true"><i class="hey-rec-dot"></i>rec<b class="hey-tc"></b></span></div>
               <div class="hey-window-body hey-window-chatdemo">
                 <span class="hey-demo-bubble hey-demo-blue">is this a good prompt? "write me a caption"</span>
                 <span class="hey-demo-typing"><b></b><b></b><b></b></span>
@@ -283,8 +293,8 @@
         </div>
         <div class="hey-feature-media">
           <div class="hey-frame">
-            <div class="hey-window">
-              <div class="hey-window-bar"><i></i><i></i><i></i><span>the spreadsheet you've been avoiding</span></div>
+            <div class="hey-window hey-rec-window">
+              <div class="hey-window-bar"><i></i><i></i><i></i><span>the spreadsheet you've been avoiding</span><span class="hey-rec" aria-hidden="true"><i class="hey-rec-dot"></i>rec<b class="hey-tc"></b></span></div>
               <div class="hey-window-body hey-window-sheetdemo">
                 <div class="hey-sheet">
                   <div class="hey-sheet-row hey-sheet-head"><span></span><span>A</span><span>B</span><span>C</span></div>
@@ -313,8 +323,8 @@
         </div>
         <div class="hey-feature-media">
           <div class="hey-frame">
-            <div class="hey-window">
-              <div class="hey-window-bar"><i></i><i></i><i></i><span>teachy · what you know</span></div>
+            <div class="hey-window hey-rec-window">
+              <div class="hey-window-bar"><i></i><i></i><i></i><span>teachy · what you know</span><span class="hey-rec" aria-hidden="true"><i class="hey-rec-dot"></i>rec<b class="hey-tc"></b></span></div>
               <div class="hey-window-body hey-window-skilldemo">
                 <div class="hey-skill"><span class="hey-skill-name">git basics</span><span class="hey-skill-bar"><b class="hey-skill-fill-1"></b></span><span class="hey-skill-check hey-check-1">✓</span></div>
                 <div class="hey-skill"><span class="hey-skill-name">the terminal</span><span class="hey-skill-bar"><b class="hey-skill-fill-2"></b></span><span class="hey-skill-check hey-check-2">✓</span></div>
@@ -597,7 +607,7 @@
       </div>
     </div>
     <div class="hey-pixel-band" aria-hidden="true">
-      <span class="hey-pixel">teachy</span>
+      <span class="hey-pixel" data-text="teachy">teachy</span>
     </div>
   </footer>
 
