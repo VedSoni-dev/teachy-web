@@ -3904,3 +3904,726 @@ body.hey-page {
     font-size: 32px;
   }
 }
+
+/* ============================================================
+   HEY REDESIGN v2 — light intro, transparent chat surface,
+   sky-grass framed feature demos with video-like CSS timelines,
+   and extra depth/motion (3d hover, bobbing, neobrutal hovers)
+   ============================================================ */
+
+/* —— Intro, rebuilt light to match the site —— */
+
+.hey-page .intro {
+  background: #fbfbfd;
+  color: var(--ink);
+}
+
+.hey-page .intro-skip-all {
+  color: var(--ink);
+  background: rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+}
+
+.hey-page .intro-skip-all:hover {
+  background: rgba(15, 23, 42, 0.12);
+}
+
+/* the veil behind the typed intro lines now melts into the page color
+   instead of sitting on the old navy — "same color as the background" */
+.hey-page .flood-veil {
+  background: radial-gradient(ellipse at center, rgba(251, 251, 253, 0.5), rgba(251, 251, 253, 0.97) 72%);
+  color: var(--ink);
+}
+
+.hey-page .flood-veil .type-line,
+.hey-page .flood-veil .flood-type {
+  color: var(--ink);
+  text-shadow: none;
+}
+
+.hey-page .flood-kicker {
+  color: var(--ink-soft);
+}
+
+.hey-page .type-line .caret {
+  background: rgba(27, 26, 46, 0.85);
+}
+
+.hey-page .manifesto-type {
+  color: var(--ink);
+}
+
+.hey-page .introducing-type {
+  color: rgba(27, 26, 46, 0.45);
+}
+
+.hey-page .brand-sub {
+  color: var(--ink-soft);
+}
+
+.hey-page .bam-flash {
+  background: radial-gradient(circle, rgba(51, 128, 255, 0.35), transparent 55%);
+}
+
+.hey-page .flood-card-big {
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+}
+
+.hey-page .demo-browser {
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.07),
+    0 30px 80px rgba(15, 23, 42, 0.22);
+}
+
+.hey-page .demo-phase {
+  color: rgba(27, 26, 46, 0.45);
+}
+
+.hey-page .demo-phase.is-wait {
+  color: #2f6fed;
+}
+
+.hey-page .demo-phase.is-done {
+  color: #2f9e57;
+}
+
+/* —— Chat surface: bubbles sit straight on the page now —— */
+
+.hey-page .chat-surface {
+  background: transparent;
+  padding: 12px 24px;
+  min-height: 500px;
+}
+
+.hey-page .chat-tail-mask {
+  background: #fbfbfd;
+}
+
+/* —— Sky-grass frame, reused from the hero window —— */
+
+.hey-frame {
+  border-radius: 24px;
+  padding: 13px;
+  background-image: url("sky-grass-border.jpg");
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    0 24px 60px -18px rgba(0, 0, 0, 0.4),
+    0 6px 18px -8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s ease;
+}
+
+.hey-frame:hover {
+  transform: perspective(1100px) rotateX(1.6deg) rotateY(-2deg) translateY(-5px);
+  box-shadow:
+    0 34px 70px -20px rgba(0, 0, 0, 0.45),
+    0 8px 22px -8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.hey-frame .hey-window {
+  border-radius: 14px;
+}
+
+/* ============================================================
+   HERO SCENE — "someone builds their first website" as a
+   16s looping CSS timeline, meant to read like a demo video
+   ============================================================ */
+
+.hey-scene {
+  height: 340px;
+  padding: 0;
+  overflow: hidden;
+  background: #fbfbfd;
+}
+
+.hey-site {
+  height: 100%;
+  padding: 18px 26px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hey-site-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: hey-scene-nav 16s var(--ease) infinite;
+}
+
+.hey-site-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: #3380ff;
+}
+
+.hey-site-link {
+  width: 44px;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.14);
+}
+
+.hey-site-deploy {
+  margin-left: auto;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: #1b1a2e;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  animation: hey-scene-deploy 16s ease infinite;
+}
+
+.hey-site-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 34px;
+}
+
+.hey-site-title {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #1b1a2e;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: hey-scene-type 16s steps(12, end) infinite;
+}
+
+.hey-site-sub {
+  font-size: 16px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  animation: hey-scene-type2 16s steps(24, end) infinite;
+}
+
+.hey-site-cta {
+  margin-top: 6px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #eaf3ff 0%, #cfe3ff 30%, #9dc2f5 70%, #7ea9ea 100%);
+  border: 1px solid rgba(90, 140, 220, 0.55);
+  box-shadow: 0 8px 18px -8px rgba(70, 110, 200, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.95);
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  animation: hey-scene-pop 16s var(--ease) infinite;
+  animation-delay: 0s;
+  transform-origin: bottom left;
+}
+
+.hey-site-cards {
+  display: flex;
+  gap: 14px;
+  margin-top: auto;
+  padding-bottom: 4px;
+}
+
+.hey-site-cards u {
+  flex: 1;
+  height: 64px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #fff;
+  box-shadow: 0 8px 18px -12px rgba(15, 23, 42, 0.25);
+  text-decoration: none;
+}
+
+.hey-site-cards u:nth-child(1) { animation: hey-scene-card1 16s var(--ease) infinite; }
+.hey-site-cards u:nth-child(2) { animation: hey-scene-card2 16s var(--ease) infinite; }
+.hey-site-cards u:nth-child(3) { animation: hey-scene-card3 16s var(--ease) infinite; }
+
+.hey-scene-cursor {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #3380ff;
+  clip-path: polygon(12% 8%, 92% 48%, 12% 92%);
+  filter: drop-shadow(0 6px 14px rgba(51, 128, 255, 0.55));
+  animation: hey-scene-cursor 16s var(--ease) infinite;
+}
+
+.hey-scene-speech {
+  position: absolute;
+  max-width: 250px;
+  background: #3380ff;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 9px 13px;
+  border-radius: 13px 13px 13px 4px;
+  box-shadow: 0 12px 28px rgba(51, 128, 255, 0.4);
+  opacity: 0;
+}
+
+.hey-scene-speech-1 {
+  left: 40%;
+  top: 22%;
+  animation: hey-scene-speech1 16s ease infinite;
+}
+
+.hey-scene-speech-2 {
+  right: 6%;
+  top: 26%;
+  border-radius: 13px 13px 4px 13px;
+  animation: hey-scene-speech2 16s ease infinite;
+}
+
+.hey-scene-toast {
+  position: absolute;
+  left: 50%;
+  bottom: 34%;
+  transform: translateX(-50%) translateY(10px) scale(0.9);
+  background: #1b1a2e;
+  color: #7ef0a5;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.4);
+  opacity: 0;
+  animation: hey-scene-toast 16s var(--ease) infinite;
+}
+
+/* a soft white blink hides the loop cut, like a video restarting */
+.hey-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fbfbfd;
+  opacity: 0;
+  pointer-events: none;
+  animation: hey-scene-blink 16s linear infinite;
+}
+
+@keyframes hey-scene-nav {
+  0% { opacity: 0; transform: translateY(-14px); }
+  4%, 96% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; }
+}
+
+@keyframes hey-scene-type {
+  0%, 8% { width: 0; }
+  22%, 100% { width: 12ch; }
+}
+
+@keyframes hey-scene-type2 {
+  0%, 26% { width: 0; }
+  40%, 100% { width: 39ch; }
+}
+
+@keyframes hey-scene-pop {
+  0%, 42% { opacity: 0; transform: translateY(10px) scale(0.7); }
+  46%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes hey-scene-card1 {
+  0%, 48% { opacity: 0; transform: translateY(16px); }
+  52%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hey-scene-card2 {
+  0%, 51% { opacity: 0; transform: translateY(16px); }
+  55%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hey-scene-card3 {
+  0%, 54% { opacity: 0; transform: translateY(16px); }
+  58%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hey-scene-cursor {
+  0%   { left: 30%; top: 60%; }
+  8%   { left: 24%; top: 34%; }
+  24%  { left: 30%; top: 40%; }
+  38%  { left: 26%; top: 52%; }
+  46%  { left: 22%; top: 62%; transform: scale(1); }
+  48%  { transform: scale(0.8); }
+  50%  { transform: scale(1); }
+  58%  { left: 78%; top: 30%; }
+  66%  { left: 88%; top: 12%; transform: scale(1); }
+  68%  { transform: scale(0.8); }
+  70%  { transform: scale(1); }
+  84%  { left: 74%; top: 66%; }
+  100% { left: 30%; top: 60%; }
+}
+
+@keyframes hey-scene-deploy {
+  0%, 62% { box-shadow: 0 0 0 0 rgba(51, 128, 255, 0); }
+  64% { box-shadow: 0 0 0 6px rgba(51, 128, 255, 0.35); }
+  67% { transform: scale(0.94); box-shadow: 0 0 0 3px rgba(51, 128, 255, 0.45); }
+  70%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(51, 128, 255, 0); }
+}
+
+@keyframes hey-scene-speech1 {
+  0%, 6% { opacity: 0; transform: translateY(8px) scale(0.92); }
+  10%, 30% { opacity: 1; transform: none; }
+  34%, 100% { opacity: 0; transform: translateY(-6px) scale(0.95); }
+}
+
+@keyframes hey-scene-speech2 {
+  0%, 54% { opacity: 0; transform: translateY(8px) scale(0.92); }
+  58%, 72% { opacity: 1; transform: none; }
+  76%, 100% { opacity: 0; transform: translateY(-6px) scale(0.95); }
+}
+
+@keyframes hey-scene-toast {
+  0%, 72% { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.9); }
+  76%, 93% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  97%, 100% { opacity: 0; transform: translateX(-50%) translateY(-6px) scale(0.95); }
+}
+
+@keyframes hey-scene-blink {
+  0%, 97.5% { opacity: 0; }
+  99% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ============================================================
+   FEATURE DEMOS — looping timelines so each window feels
+   like a short screen recording
+   ============================================================ */
+
+/* voice chat demo, 10s loop */
+
+.hey-window-chatdemo .hey-demo-blue {
+  animation: hey-chat-msg1 10s var(--ease) infinite;
+  transform-origin: bottom right;
+}
+
+.hey-demo-typing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  padding: 12px 16px;
+  border-radius: 18px;
+  border-bottom-left-radius: 6px;
+  background: linear-gradient(180deg, #fff3e6 0%, #f6c79a 100%);
+  border: 1px solid rgba(220, 160, 110, 0.55);
+  animation: hey-chat-typing 10s ease infinite;
+}
+
+.hey-demo-typing b {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(120, 80, 40, 0.55);
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+
+.hey-demo-typing b:nth-child(2) { animation-delay: 0.18s; }
+.hey-demo-typing b:nth-child(3) { animation-delay: 0.36s; }
+
+.hey-window-chatdemo .hey-demo-orange {
+  animation: hey-chat-msg2 10s var(--ease) infinite;
+  transform-origin: bottom left;
+}
+
+@keyframes hey-chat-msg1 {
+  0%, 4% { opacity: 0; transform: translateY(12px) scale(0.7); }
+  8%, 94% { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; transform: translateY(-4px) scale(0.96); }
+}
+
+@keyframes hey-chat-typing {
+  0%, 12% { opacity: 0; transform: translateY(8px) scale(0.8); }
+  16%, 30% { opacity: 1; transform: none; }
+  33%, 100% { opacity: 0; transform: scale(0.9); position: absolute; visibility: hidden; }
+}
+
+@keyframes hey-chat-msg2 {
+  0%, 34% { opacity: 0; transform: translateY(12px) scale(0.7); }
+  38%, 94% { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; transform: translateY(-4px) scale(0.96); }
+}
+
+/* the typing bubble needs to stop taking space once it's gone */
+.hey-demo-typing {
+  transform-origin: bottom left;
+}
+
+/* screen-pointing demo, 12s loop */
+
+.hey-form-field-fill {
+  background-image: linear-gradient(#dce9ff, #dce9ff);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  animation: hey-form-fill 12s ease infinite;
+}
+
+.hey-window-formdemo .hey-point-cursor {
+  left: auto;
+  bottom: auto;
+  animation: hey-form-cursor 12s var(--ease) infinite;
+}
+
+.hey-window-formdemo .hey-point-speech {
+  animation: hey-form-speech 12s ease infinite;
+  opacity: 0;
+}
+
+.hey-form-chalk {
+  position: absolute;
+  left: 18px;
+  bottom: 44px;
+  width: 172px;
+  height: 44px;
+  border: 2px solid rgba(51, 128, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 0 0 4px rgba(51, 128, 255, 0.12);
+  opacity: 0;
+  animation: hey-form-chalk 12s ease infinite;
+}
+
+.hey-window-formdemo .hey-form-btn {
+  animation: hey-form-btn 12s ease infinite;
+}
+
+@keyframes hey-form-fill {
+  0%, 8% { background-size: 0% 100%; }
+  26%, 100% { background-size: 82% 100%; }
+}
+
+@keyframes hey-form-cursor {
+  0%   { left: 70%; top: 18%; }
+  10%  { left: 46%; top: 26%; }
+  30%  { left: 52%; top: 30%; }
+  46%  { left: 30%; top: 70%; transform: rotate(-12deg) scale(1); }
+  55%  { left: 24%; top: 76%; }
+  60%  { transform: rotate(-12deg) scale(0.82); }
+  64%  { transform: rotate(-12deg) scale(1); }
+  86%  { left: 60%; top: 62%; }
+  100% { left: 70%; top: 18%; }
+}
+
+@keyframes hey-form-speech {
+  0%, 34% { opacity: 0; transform: translateY(6px); }
+  40%, 74% { opacity: 1; transform: none; }
+  80%, 100% { opacity: 0; }
+}
+
+@keyframes hey-form-chalk {
+  0%, 42% { opacity: 0; }
+  48%, 72% { opacity: 1; }
+  78%, 100% { opacity: 0; }
+}
+
+@keyframes hey-form-btn {
+  0%, 58% { transform: scale(1); filter: brightness(1); }
+  61% { transform: scale(0.95); filter: brightness(0.9); }
+  64%, 100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* learner-model demo, 11s loop */
+
+.hey-window-skilldemo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+.hey-skill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hey-skill-name {
+  width: 108px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #2a2d35;
+}
+
+.hey-skill-bar {
+  flex: 1;
+  height: 12px;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+.hey-skill-bar b {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #7ea9ea, #3380ff);
+  width: 0;
+}
+
+.hey-skill-fill-1 { animation: hey-skill1 11s var(--ease) infinite; }
+.hey-skill-fill-2 { animation: hey-skill2 11s var(--ease) infinite; }
+.hey-skill-fill-3 { animation: hey-skill3 11s var(--ease) infinite; }
+.hey-skill-fill-4 { animation: hey-skill4 11s var(--ease) infinite; }
+
+.hey-skill-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e8f8ee;
+  color: #2f9e57;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.hey-check-1 { animation: hey-check 11s ease infinite; animation-delay: 0s; }
+.hey-check-2 { animation: hey-check2 11s ease infinite; }
+.hey-check-3 { animation: hey-check3 11s ease infinite; }
+
+.hey-skill-chip,
+.hey-review-chip {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2f6fed;
+  background: rgba(47, 111, 237, 0.1);
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.hey-skill-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  animation: hey-skill-footer 11s ease infinite;
+}
+
+.hey-streak {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1b1a2e;
+}
+
+@keyframes hey-skill1 {
+  0%, 6% { width: 0; } 22%, 100% { width: 92%; }
+}
+
+@keyframes hey-skill2 {
+  0%, 14% { width: 0; } 32%, 100% { width: 76%; }
+}
+
+@keyframes hey-skill3 {
+  0%, 24% { width: 0; } 44%, 100% { width: 58%; }
+}
+
+@keyframes hey-skill4 {
+  0%, 36% { width: 0; } 54%, 100% { width: 22%; }
+}
+
+@keyframes hey-check {
+  0%, 20% { opacity: 0; transform: scale(0.4); }
+  25%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes hey-check2 {
+  0%, 30% { opacity: 0; transform: scale(0.4); }
+  35%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes hey-check3 {
+  0%, 42% { opacity: 0; transform: scale(0.4); }
+  47%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes hey-skill-footer {
+  0%, 52% { opacity: 0; transform: translateY(8px); }
+  60%, 100% { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   DEPTH & MOTION EXTRAS
+   ============================================================ */
+
+/* hero scatter windows gently bob, like they're floating */
+
+.hey-mini {
+  animation: hey-bob 7s ease-in-out infinite;
+}
+
+.hey-mini-chat     { animation-delay: -1.2s; }
+.hey-mini-terminal { animation-delay: -2.4s; }
+.hey-mini-form     { animation-delay: -3.6s; }
+.hey-mini-note     { animation-delay: -4.2s; }
+.hey-mini-editor2  { animation-delay: -5.1s; }
+.hey-mini-claude   { animation-delay: -6s; }
+
+@keyframes hey-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
+
+/* neobrutal hover on the outcomes wall */
+
+.hey-card {
+  transition: transform 0.18s var(--ease), box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.hey-card:hover {
+  transform: translate(-3px, -3px) rotate(-0.4deg);
+  border-color: rgba(27, 26, 46, 0.4);
+  box-shadow: 7px 7px 0 rgba(27, 26, 46, 0.14);
+}
+
+/* the letter leans like a pinned note and straightens on hover */
+
+.hey-letter {
+  transform: rotate(-0.7deg);
+  transition: transform 0.3s var(--ease);
+}
+
+.hey-letter:hover {
+  transform: rotate(0deg);
+}
+
+/* glassy hover lift for pricing cards */
+
+.hey-price-card {
+  transition: transform 0.25s var(--ease), box-shadow 0.25s ease;
+}
+
+.hey-price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 80px -30px rgba(15, 30, 60, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hey-scene *,
+  .hey-scene::after,
+  .hey-window-chatdemo *,
+  .hey-window-formdemo *,
+  .hey-window-skilldemo *,
+  .hey-mini,
+  .hey-marquee-track {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .hey-scene {
+    height: 280px;
+  }
+
+  .hey-site-title {
+    font-size: 26px;
+  }
+
+  .hey-site-sub {
+    font-size: 13px;
+  }
+}
