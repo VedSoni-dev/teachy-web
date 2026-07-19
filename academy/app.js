@@ -620,99 +620,89 @@
     }, 200);
   }
 
-  // Chat bubble scroll-triggered typing animation
+  // Chat texting animation — remake of the reference AnimatedChat loop:
+  // for each message, show a typing bubble (colored like the upcoming message),
+  // then reveal the message; after the last one, hold and restart forever.
   (function initChatAnimation() {
     var chatSurface = document.querySelector(".chat-surface");
     if (!chatSurface) return;
 
-    var rows = chatSurface.querySelectorAll(".chat-row");
+    var rows = Array.prototype.slice.call(chatSurface.querySelectorAll(".chat-row"));
     var typing = chatSurface.querySelector(".chat-typing");
     if (!rows.length || !typing) return;
 
-    var typingDelay = 900;
-    var messageDelay = 700;
-    var pauseAfterAll = 2200;
-    var animationRunning = false;
-    var timeouts = [];
+    var typingAppearDelay = 500;   // wait before the typing bubble pops in
+    var messageRevealDelay = 1700; // total time per message (typing hides, message shows)
+    var restartHoldDelay = 2600;   // pause on the finished conversation before looping
+    var animationStarted = false;
 
-    function clearAllTimeouts() {
-      timeouts.forEach(function (id) { clearTimeout(id); });
-      timeouts = [];
+    // Style the shared typing bubble like the message that is about to arrive
+    function matchTypingToRow(row) {
+      typing.classList.remove("chat-left", "chat-right", "chat-blue", "chat-orange");
+      typing.classList.add(
+        row.classList.contains("chat-right") ? "chat-right" : "chat-left",
+        row.classList.contains("chat-blue") ? "chat-blue" : "chat-orange"
+      );
+      row.parentNode.insertBefore(typing, row);
     }
 
-    function schedule(fn, delay) {
-      timeouts.push(setTimeout(fn, delay));
+    function hideTyping() {
+      typing.classList.remove("is-shown");
     }
 
-    function resetAll() {
-      clearAllTimeouts();
-      animationRunning = false;
+    function resetConversation() {
       rows.forEach(function (row) {
-        row.classList.remove("is-visible");
+        row.classList.remove("is-shown");
       });
-      typing.classList.remove("is-visible");
-      typing.classList.remove("is-hidden");
+      hideTyping();
     }
 
-    function playSequence() {
-      if (animationRunning) return;
-      animationRunning = true;
-
-      var i = 0;
-      var elapsed = 0;
-
-      function showNext() {
-        if (i >= rows.length) {
-          schedule(function () {
-            resetAll();
-            schedule(playSequence, 500);
-          }, pauseAfterAll);
-          return;
-        }
-
-        var row = rows[i];
-        var isLeft = row.classList.contains("chat-left");
-        i++;
-
-        if (isLeft) {
-          // Position typing indicator next to where message will appear
-          row.parentNode.insertBefore(typing, row);
-          typing.classList.remove("is-hidden");
-          typing.classList.add("is-visible");
-
-          schedule(function () {
-            typing.classList.remove("is-visible");
-            typing.classList.add("is-hidden");
-
-            schedule(function () {
-              row.classList.add("is-visible");
-              schedule(showNext, messageDelay);
-            }, 180);
-          }, typingDelay);
-        } else {
-          // User message — just appear
-          schedule(function () {
-            row.classList.add("is-visible");
-            schedule(showNext, messageDelay);
-          }, 200);
-        }
+    function showMessage(index) {
+      if (index >= rows.length) {
+        setTimeout(function () {
+          resetConversation();
+          setTimeout(function () { showMessage(0); }, 400);
+        }, restartHoldDelay);
+        return;
       }
 
-      showNext();
+      var row = rows[index];
+
+      setTimeout(function () {
+        matchTypingToRow(row);
+        typing.classList.add("is-shown");
+      }, typingAppearDelay);
+
+      setTimeout(function () {
+        hideTyping();
+        row.classList.add("is-shown");
+        showMessage(index + 1);
+      }, messageRevealDelay);
     }
 
-    var chatObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && !animationRunning) {
-            playSequence();
-            chatObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
+    function startLoop() {
+      if (animationStarted) return;
+      animationStarted = true;
+      showMessage(0);
+    }
 
-    chatObserver.observe(chatSurface);
+    // Start as soon as any part of the surface scrolls into view; the old 30%
+    // threshold could never be reached on short viewports, so the demo never played.
+    if ("IntersectionObserver" in window) {
+      var chatObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              startLoop();
+              chatObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      chatObserver.observe(chatSurface);
+    } else {
+      startLoop();
+    }
   })();
 })();
