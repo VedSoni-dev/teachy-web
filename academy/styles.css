@@ -4627,3 +4627,570 @@ body.hey-page {
     font-size: 13px;
   }
 }
+
+/* ============================================================
+   HEY REDESIGN v3 — maximalist Frutiger Aero pass
+   diversified demos (design studio, spreadsheet, AI prompting),
+   capability strip, glossy bubbles, aurora background
+   ============================================================ */
+
+/* —— Richer, glossier page background (aurora mesh, fixed) —— */
+
+body.hey-page {
+  background:
+    radial-gradient(58% 46% at 12% -4%, rgba(126, 214, 255, 0.42), transparent 62%),
+    radial-gradient(52% 40% at 90% 6%, rgba(168, 246, 176, 0.38), transparent 60%),
+    radial-gradient(60% 46% at 82% 92%, rgba(198, 176, 255, 0.34), transparent 62%),
+    radial-gradient(50% 40% at 8% 88%, rgba(255, 206, 150, 0.28), transparent 60%),
+    #eef8ff;
+  background-attachment: fixed;
+}
+
+.hey-page .intro {
+  background:
+    radial-gradient(60% 50% at 15% 0%, rgba(126, 214, 255, 0.4), transparent 62%),
+    radial-gradient(55% 45% at 85% 100%, rgba(198, 176, 255, 0.32), transparent 62%),
+    #eef8ff;
+}
+
+/* header a touch glassier for the aero look */
+.hey-page .site-header {
+  background: rgba(240, 249, 255, 0.72);
+}
+
+/* —— Glossy floating bubbles —— */
+
+.hey-bubble {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4) 30%,
+      rgba(150, 205, 255, 0.28) 58%, rgba(120, 180, 255, 0.05) 100%);
+  box-shadow:
+    inset 0 0 14px rgba(255, 255, 255, 0.6),
+    inset 0 -6px 12px rgba(120, 180, 255, 0.25),
+    0 10px 24px rgba(80, 140, 220, 0.18);
+  pointer-events: none;
+}
+
+.hey-bubble::after {
+  content: "";
+  position: absolute;
+  left: 22%;
+  top: 16%;
+  width: 26%;
+  height: 20%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  filter: blur(1px);
+}
+
+.hey-hero-media .hey-frame { position: relative; z-index: 1; }
+
+.hb-1 { width: 74px; height: 74px; left: -34px; top: 12%;  animation: hey-float-a 9s ease-in-out infinite; }
+.hb-2 { width: 46px; height: 46px; right: -22px; top: 26%; animation: hey-float-b 11s ease-in-out infinite; }
+.hb-3 { width: 30px; height: 30px; left: 8%; bottom: -18px; animation: hey-float-a 7.5s ease-in-out infinite; }
+.hb-4 { width: 58px; height: 58px; right: 12%; bottom: -30px; animation: hey-float-b 10s ease-in-out infinite; }
+.hb-5 { width: 22px; height: 22px; left: 46%; top: -16px; animation: hey-float-a 8.5s ease-in-out infinite; }
+
+@keyframes hey-float-a {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(6px, -16px); }
+}
+
+@keyframes hey-float-b {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-8px, -20px); }
+}
+
+/* —— Glossier aqua buttons & pills (Aqua-style highlight) —— */
+
+.hey-page .btn::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.15) 46%, rgba(255, 255, 255, 0) 100%);
+}
+
+.hey-page .btn-primary {
+  background: linear-gradient(180deg, #f0f7ff 0%, #cfe3ff 28%, #93bdf5 66%, #6fa0ea 100%);
+}
+
+.hey-label-bubble,
+.hey-price-tag,
+.hey-card-tag {
+  position: relative;
+  overflow: hidden;
+}
+
+.hey-label-bubble::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 3px;
+  height: 42%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+/* ============================================================
+   HERO — DESIGN STUDIO SCENE (16s loop, "design a poster")
+   ============================================================ */
+
+.hey-studio {
+  height: 340px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  background:
+    linear-gradient(180deg, #f7fafd, #eef2f7);
+}
+
+.hey-studio-rail {
+  width: 46px;
+  flex: none;
+  background: #22242e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+}
+
+.hey-studio-rail b {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.hey-studio-rail b.is-active {
+  background: #3380ff;
+  box-shadow: 0 0 0 3px rgba(51, 128, 255, 0.3);
+}
+
+.hey-studio-canvas {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  background:
+    repeating-conic-gradient(#eef1f5 0% 25%, #e6eaef 0% 50%) 0 0 / 22px 22px;
+}
+
+.hey-poster {
+  position: relative;
+  width: 156px;
+  height: 214px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 18px 40px -14px rgba(15, 23, 42, 0.5);
+}
+
+.hey-poster-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, #ffcf6b 0%, #ff6fae 52%, #8f6bff 100%);
+  opacity: 0;
+  animation: hey-poster-bg 16s ease infinite;
+}
+
+.hey-poster-blob {
+  position: absolute;
+  right: -26px;
+  top: -26px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.1) 60%);
+  opacity: 0;
+  transform: scale(0.4);
+  animation: hey-poster-blob 16s var(--ease) infinite;
+}
+
+.hey-poster-title {
+  position: absolute;
+  left: 16px;
+  top: 60px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: scale(0.5);
+  transform-origin: left top;
+  animation: hey-poster-title 16s var(--ease) infinite;
+}
+
+.hey-poster-tag {
+  position: absolute;
+  left: 16px;
+  bottom: 22px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.28);
+  padding: 4px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  animation: hey-poster-tag 16s ease infinite;
+}
+
+.hey-poster-sticker {
+  position: absolute;
+  right: 14px;
+  bottom: 60px;
+  font-size: 30px;
+  color: #fff8c9;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  opacity: 0;
+  transform: scale(0.2) rotate(-30deg);
+  animation: hey-poster-sticker 16s var(--ease) infinite;
+}
+
+.hey-studio-layers {
+  width: 88px;
+  flex: none;
+  background: #f4f6f9;
+  border-left: 1px solid rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 16px 12px;
+}
+
+.hey-studio-layers b {
+  height: 14px;
+  border-radius: 5px;
+  background: rgba(15, 23, 42, 0.12);
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.hey-studio-layers b:nth-child(1) { animation: hey-layer 16s ease infinite; animation-delay: 0s; }
+.hey-studio-layers b:nth-child(2) { animation: hey-layer 16s ease infinite; animation-delay: 0.4s; }
+.hey-studio-layers b:nth-child(3) { animation: hey-layer 16s ease infinite; animation-delay: 0.8s; }
+
+.hey-studio-speech-1 { left: 30%; top: 20%; animation: hey-scene-speech1 16s ease infinite; }
+.hey-studio-speech-2 { right: 8%; top: 24%; border-radius: 13px 13px 4px 13px; animation: hey-scene-speech2 16s ease infinite; }
+
+.hey-studio-cursor { animation-name: hey-studio-cursor; }
+
+.hey-studio-toast { animation-name: hey-studio-toast; }
+
+.hey-studio::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #f7fafd;
+  opacity: 0;
+  pointer-events: none;
+  animation: hey-scene-blink 16s linear infinite;
+}
+
+@keyframes hey-poster-bg {
+  0%, 8% { opacity: 0; }
+  14%, 100% { opacity: 1; }
+}
+
+@keyframes hey-poster-blob {
+  0%, 18% { opacity: 0; transform: scale(0.4); }
+  24% { opacity: 1; transform: scale(1.08); }
+  28%, 100% { opacity: 0.85; transform: scale(1); }
+}
+
+@keyframes hey-poster-title {
+  0%, 28% { opacity: 0; transform: scale(0.5); }
+  33% { opacity: 1; transform: scale(1); }
+  44% { transform: scale(1); }
+  50% { transform: scale(1.22); }
+  54%, 100% { opacity: 1; transform: scale(1.22); }
+}
+
+@keyframes hey-poster-tag {
+  0%, 54% { opacity: 0; transform: translateY(6px); }
+  60%, 100% { opacity: 1; transform: none; }
+}
+
+@keyframes hey-poster-sticker {
+  0%, 60% { opacity: 0; transform: scale(0.2) rotate(-30deg); }
+  66% { opacity: 1; transform: scale(1.2) rotate(6deg); }
+  70%, 100% { opacity: 1; transform: scale(1) rotate(-4deg); }
+}
+
+@keyframes hey-layer {
+  0%, 30% { opacity: 0; transform: translateX(10px); }
+  40%, 100% { opacity: 1; transform: none; }
+}
+
+@keyframes hey-studio-cursor {
+  0%   { left: 12%; top: 30%; }
+  8%   { left: 9%;  top: 46%; transform: scale(1); }
+  10%  { transform: scale(0.8); }
+  12%  { transform: scale(1); }
+  24%  { left: 44%; top: 56%; }
+  34%  { left: 40%; top: 34%; }
+  46%  { left: 58%; top: 24%; transform: scale(1); }
+  50%  { transform: scale(0.8); }
+  52%  { transform: scale(1); }
+  62%  { left: 62%; top: 60%; transform: scale(1); }
+  64%  { transform: scale(0.8); }
+  66%  { transform: scale(1); }
+  84%  { left: 40%; top: 72%; }
+  100% { left: 12%; top: 30%; }
+}
+
+@keyframes hey-studio-toast {
+  0%, 72% { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.9); }
+  76%, 93% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  97%, 100% { opacity: 0; transform: translateX(-50%) translateY(-6px) scale(0.95); }
+}
+
+/* ============================================================
+   FEATURE 2 — SPREADSHEET DEMO (12s loop, "which formula?")
+   ============================================================ */
+
+.hey-window-sheetdemo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+
+.hey-sheet {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 14px;
+  color: #2a2d35;
+  background: #fff;
+}
+
+.hey-sheet-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr;
+}
+
+.hey-sheet-row > span {
+  padding: 11px 12px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  border-right: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.hey-sheet-row > span:last-child { border-right: 0; }
+.hey-sheet-row:last-child > span { border-bottom: 0; }
+
+.hey-sheet-head > span,
+.hey-sheet-row > span:first-child {
+  background: #f1f4f8;
+  color: #7c8291;
+  font-weight: 600;
+  text-align: center;
+}
+
+.hey-sheet-total > span {
+  background: #fffaea;
+  font-weight: 700;
+}
+
+.hey-sheet-total {
+  background: #fffaea;
+}
+
+.hey-sheet-cell {
+  position: relative;
+  padding: 0 !important;
+}
+
+.hey-sheet-formula,
+.hey-sheet-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.hey-sheet-formula {
+  color: #2f6fed;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: hey-sheet-type 12s steps(11, end) infinite, hey-sheet-formula-hide 12s ease infinite;
+}
+
+.hey-sheet-result {
+  color: #1b1a2e;
+  font-weight: 700;
+  opacity: 0;
+  animation: hey-sheet-result 12s ease infinite;
+}
+
+.hey-sheet-chalk {
+  position: absolute;
+  right: 24px;
+  bottom: 26px;
+  width: 118px;
+  height: 42px;
+  border: 2px solid rgba(51, 128, 255, 0.85);
+  border-radius: 9px;
+  box-shadow: 0 0 0 4px rgba(51, 128, 255, 0.12);
+  opacity: 0;
+  animation: hey-sheet-chalk 12s ease infinite;
+}
+
+.hey-window-sheetdemo .hey-point-cursor {
+  left: auto;
+  bottom: auto;
+  animation: hey-sheet-cursor 12s var(--ease) infinite;
+}
+
+.hey-window-sheetdemo .hey-point-speech {
+  opacity: 0;
+  animation: hey-form-speech 12s ease infinite;
+}
+
+@keyframes hey-sheet-type {
+  0%, 16% { width: 0; }
+  36%, 100% { width: 11ch; }
+}
+
+@keyframes hey-sheet-formula-hide {
+  0%, 48% { opacity: 1; }
+  52%, 100% { opacity: 0; }
+}
+
+@keyframes hey-sheet-result {
+  0%, 50% { opacity: 0; transform: scale(0.9); }
+  56%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes hey-sheet-chalk {
+  0%, 40% { opacity: 0; }
+  46%, 82% { opacity: 1; }
+  88%, 100% { opacity: 0; }
+}
+
+@keyframes hey-sheet-cursor {
+  0%   { right: 10%; top: 14%; }
+  12%  { right: 16%; top: 62%; transform: rotate(-12deg) scale(1); }
+  22%  { right: 20%; top: 66%; }
+  28%  { transform: rotate(-12deg) scale(0.82); }
+  32%  { transform: rotate(-12deg) scale(1); }
+  70%  { right: 16%; top: 62%; }
+  86%  { right: 44%; top: 30%; }
+  100% { right: 10%; top: 14%; }
+}
+
+/* ============================================================
+   CAPABILITY STRIP — glossy app chips marquee
+   ============================================================ */
+
+.hey-apps {
+  padding: 46px 0 30px;
+  text-align: center;
+}
+
+.hey-apps-marquee {
+  display: flex;
+  gap: 14px;
+  margin: 30px 0 22px;
+  overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.hey-apps-track {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 14px;
+  padding-right: 14px;
+  animation: hey-apps-scroll 34s linear infinite;
+}
+
+@keyframes hey-apps-scroll {
+  to { transform: translateX(-100%); }
+}
+
+.hey-app-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  background: linear-gradient(180deg, #ffffff 0%, #eef4fb 55%, #dde7f2 100%);
+  border: 1px solid rgba(120, 150, 190, 0.35);
+  box-shadow:
+    0 8px 18px -10px rgba(60, 100, 170, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.95),
+    inset 0 -8px 14px rgba(170, 195, 225, 0.35);
+}
+
+.hey-app-chip::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 3px;
+  height: 44%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.hey-app-chip b {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.ac-claude  { background: #d97757; }
+.ac-gpt     { background: #10a37f; }
+.ac-figma   { background: linear-gradient(135deg, #f24e1e, #a259ff); }
+.ac-excel   { background: #217346; }
+.ac-code    { background: #23a9f2; }
+.ac-music   { background: linear-gradient(135deg, #ff8c42, #ff5c7d); }
+.ac-git     { background: #1b1a2e; }
+.ac-notion  { background: #111; }
+.ac-term    { background: #333; }
+.ac-canva   { background: linear-gradient(135deg, #00c4cc, #7d2ae8); }
+.ac-blender { background: #ea7600; }
+.ac-photo   { background: #31a8ff; }
+
+.hey-apps-foot {
+  margin: 0;
+  font-size: 16.5px;
+  color: var(--ink-soft);
+}
+
+.hey-apps-foot strong { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hey-studio *, .hey-studio::after,
+  .hey-window-sheetdemo *,
+  .hey-apps-track,
+  .hey-bubble {
+    animation: none !important;
+  }
+  .hey-poster-bg, .hey-poster-title, .hey-poster-tag,
+  .hey-poster-blob, .hey-poster-sticker,
+  .hey-studio-layers b, .hey-sheet-result { opacity: 1; }
+  .hey-sheet-formula { width: 11ch; }
+}
+
+@media (max-width: 640px) {
+  .hey-studio { height: 300px; }
+  .hey-studio-layers { display: none; }
+  .hey-app-chip { font-size: 14px; padding: 10px 16px; }
+}

@@ -209,30 +209,36 @@
 
       <div class="hey-hero-media">
         <div class="hey-frame">
-          <div class="hey-window hey-scene-window" aria-label="Animated demo: building a real website with teachy">
-            <div class="hey-window-bar"><i></i><i></i><i></i><span>sam.site — your first website</span></div>
-            <div class="hey-window-body hey-scene">
-              <div class="hey-site">
-                <div class="hey-site-nav">
-                  <b class="hey-site-logo"></b>
-                  <b class="hey-site-link"></b>
-                  <b class="hey-site-link"></b>
-                  <span class="hey-site-deploy">deploy</span>
-                </div>
-                <div class="hey-site-hero">
-                  <span class="hey-site-title">hi, i'm sam.</span>
-                  <span class="hey-site-sub">i had no idea how to make this yesterday</span>
-                  <span class="hey-site-cta">say hello</span>
-                </div>
-                <div class="hey-site-cards"><u></u><u></u><u></u></div>
+          <div class="hey-window hey-scene-window" aria-label="Animated demo: designing a poster with teachy">
+            <div class="hey-window-bar"><i></i><i></i><i></i><span>figma — poster · never opened this before</span></div>
+            <div class="hey-window-body hey-studio">
+              <div class="hey-studio-rail" aria-hidden="true">
+                <b class="is-active"></b><b></b><b></b><b></b><b></b>
               </div>
-              <div class="hey-scene-speech hey-scene-speech-1">type your name here — this is your headline</div>
-              <div class="hey-scene-speech hey-scene-speech-2">looking good. now hit deploy, top right</div>
-              <div class="hey-scene-toast">✓ you're live on the internet</div>
-              <div class="hey-scene-cursor" aria-hidden="true"></div>
+              <div class="hey-studio-canvas">
+                <div class="hey-poster">
+                  <span class="hey-poster-bg" aria-hidden="true"></span>
+                  <span class="hey-poster-blob" aria-hidden="true"></span>
+                  <span class="hey-poster-title">SUMMER<br>JAM</span>
+                  <span class="hey-poster-tag">fri · 8pm · the rooftop</span>
+                  <span class="hey-poster-sticker" aria-hidden="true">✺</span>
+                </div>
+              </div>
+              <div class="hey-studio-layers" aria-hidden="true">
+                <b></b><b></b><b></b>
+              </div>
+              <div class="hey-scene-speech hey-studio-speech-1">drop a shape here for the background</div>
+              <div class="hey-scene-speech hey-studio-speech-2">bigger title — grab a corner and pull</div>
+              <div class="hey-scene-toast hey-studio-toast">✓ you designed that</div>
+              <div class="hey-scene-cursor hey-studio-cursor" aria-hidden="true"></div>
             </div>
           </div>
         </div>
+        <span class="hey-bubble hb-1" aria-hidden="true"></span>
+        <span class="hey-bubble hb-2" aria-hidden="true"></span>
+        <span class="hey-bubble hb-3" aria-hidden="true"></span>
+        <span class="hey-bubble hb-4" aria-hidden="true"></span>
+        <span class="hey-bubble hb-5" aria-hidden="true"></span>
       </div>
 
       <p class="hero-hint" id="hero-hint">the blue cursor is teachy. it follows yours.</p>
@@ -253,11 +259,11 @@
         <div class="hey-feature-media">
           <div class="hey-frame">
             <div class="hey-window">
-              <div class="hey-window-bar"><i></i><i></i><i></i><span>anything on your mac</span></div>
+              <div class="hey-window-bar"><i></i><i></i><i></i><span>chatgpt · you're holding ctrl + option</span></div>
               <div class="hey-window-body hey-window-chatdemo">
-                <span class="hey-demo-bubble hey-demo-blue">how do i put this website online?</span>
+                <span class="hey-demo-bubble hey-demo-blue">is this a good prompt? "write me a caption"</span>
                 <span class="hey-demo-typing"><b></b><b></b><b></b></span>
-                <span class="hey-demo-bubble hey-demo-orange">easy. open your terminal — i'll walk you through the deploy.</span>
+                <span class="hey-demo-bubble hey-demo-orange">almost! tell it who it's for and the vibe. want me to rewrite it with you?</span>
                 <span class="hey-demo-wave"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
               </div>
             </div>
@@ -278,15 +284,17 @@
         <div class="hey-feature-media">
           <div class="hey-frame">
             <div class="hey-window">
-              <div class="hey-window-bar"><i></i><i></i><i></i><span>github.com/new</span></div>
-              <div class="hey-window-body hey-window-formdemo">
-                <b class="hey-form-line" style="width:40%"></b>
-                <u class="hey-form-field hey-form-field-fill"></u>
-                <b class="hey-form-line" style="width:56%"></b>
-                <u class="hey-form-field"></u>
-                <span class="hey-form-btn">create repository</span>
-                <span class="hey-form-chalk" aria-hidden="true"></span>
-                <span class="hey-point-cursor"><span class="hey-point-speech">click here — this makes it public</span></span>
+              <div class="hey-window-bar"><i></i><i></i><i></i><span>the spreadsheet you've been avoiding</span></div>
+              <div class="hey-window-body hey-window-sheetdemo">
+                <div class="hey-sheet">
+                  <div class="hey-sheet-row hey-sheet-head"><span></span><span>A</span><span>B</span><span>C</span></div>
+                  <div class="hey-sheet-row"><span>1</span><span>mon</span><span>420</span><span></span></div>
+                  <div class="hey-sheet-row"><span>2</span><span>tue</span><span>168</span><span></span></div>
+                  <div class="hey-sheet-row"><span>3</span><span>wed</span><span>295</span><span></span></div>
+                  <div class="hey-sheet-row hey-sheet-total"><span>4</span><span>total</span><span class="hey-sheet-cell"><span class="hey-sheet-formula">=SUM(B1:B3)</span><span class="hey-sheet-result">883</span></span><span></span></div>
+                </div>
+                <span class="hey-sheet-chalk" aria-hidden="true"></span>
+                <span class="hey-point-cursor"><span class="hey-point-speech">this cell — type =SUM( and drag down</span></span>
               </div>
             </div>
           </div>
@@ -320,6 +328,45 @@
       </article>
     </section>
 
+    <!-- —— Capability strip: the breadth of what teachy coaches —— -->
+    <section class="hey-apps">
+      <div class="hey-section-head">
+        <h2>one tutor. everything on your mac.</h2>
+        <p>not a course catalog. teachy coaches you inside the real app — whichever one you just opened.</p>
+      </div>
+      <div class="hey-apps-marquee" aria-hidden="true">
+        <div class="hey-apps-track">
+          <span class="hey-app-chip"><b class="ac-claude"></b>claude</span>
+          <span class="hey-app-chip"><b class="ac-gpt"></b>chatgpt</span>
+          <span class="hey-app-chip"><b class="ac-figma"></b>figma</span>
+          <span class="hey-app-chip"><b class="ac-excel"></b>excel &amp; sheets</span>
+          <span class="hey-app-chip"><b class="ac-code"></b>vs code</span>
+          <span class="hey-app-chip"><b class="ac-music"></b>garageband</span>
+          <span class="hey-app-chip"><b class="ac-git"></b>github</span>
+          <span class="hey-app-chip"><b class="ac-notion"></b>notion</span>
+          <span class="hey-app-chip"><b class="ac-term"></b>the terminal</span>
+          <span class="hey-app-chip"><b class="ac-canva"></b>canva</span>
+          <span class="hey-app-chip"><b class="ac-blender"></b>blender</span>
+          <span class="hey-app-chip"><b class="ac-photo"></b>photoshop</span>
+        </div>
+        <div class="hey-apps-track" aria-hidden="true">
+          <span class="hey-app-chip"><b class="ac-claude"></b>claude</span>
+          <span class="hey-app-chip"><b class="ac-gpt"></b>chatgpt</span>
+          <span class="hey-app-chip"><b class="ac-figma"></b>figma</span>
+          <span class="hey-app-chip"><b class="ac-excel"></b>excel &amp; sheets</span>
+          <span class="hey-app-chip"><b class="ac-code"></b>vs code</span>
+          <span class="hey-app-chip"><b class="ac-music"></b>garageband</span>
+          <span class="hey-app-chip"><b class="ac-git"></b>github</span>
+          <span class="hey-app-chip"><b class="ac-notion"></b>notion</span>
+          <span class="hey-app-chip"><b class="ac-term"></b>the terminal</span>
+          <span class="hey-app-chip"><b class="ac-canva"></b>canva</span>
+          <span class="hey-app-chip"><b class="ac-blender"></b>blender</span>
+          <span class="hey-app-chip"><b class="ac-photo"></b>photoshop</span>
+        </div>
+      </div>
+      <p class="hey-apps-foot">…and whatever you open next. <strong>teachy figures it out live.</strong></p>
+    </section>
+
     <!-- —— Chat demo —— -->
     <section class="chat-demo wrap">
       <div class="hey-section-head">
@@ -332,7 +379,7 @@
             <span class="chat-tail-mask" aria-hidden="true"></span>
             <div class="chat-bubble-body">
               <span class="chat-sheen" aria-hidden="true"></span>
-              <p>how do i make a website with react</p>
+              <p>how do i cut the background out of this photo</p>
             </div>
           </div>
         </div>
@@ -342,7 +389,7 @@
             <span class="chat-tail-mask" aria-hidden="true"></span>
             <div class="chat-bubble-body">
               <span class="chat-sheen" aria-hidden="true"></span>
-              <p>on it! let's open VS Code and scaffold a new project.</p>
+              <p>on it — open it in Preview. i'll point at the exact tool.</p>
             </div>
           </div>
         </div>
@@ -352,7 +399,7 @@
             <span class="chat-tail-mask" aria-hidden="true"></span>
             <div class="chat-bubble-body">
               <span class="chat-sheen" aria-hidden="true"></span>
-              <p>i can see your screen. click "Create React App" in the terminal.</p>
+              <p>i can see it. click the little wand icon, top-right.</p>
             </div>
           </div>
         </div>
@@ -362,7 +409,7 @@
             <span class="chat-tail-mask" aria-hidden="true"></span>
             <div class="chat-bubble-body">
               <span class="chat-sheen" aria-hidden="true"></span>
-              <p>done, what next?</p>
+              <p>ohh got it. done!</p>
             </div>
           </div>
         </div>
@@ -372,7 +419,7 @@
             <span class="chat-tail-mask" aria-hidden="true"></span>
             <div class="chat-bubble-body">
               <span class="chat-sheen" aria-hidden="true"></span>
-              <p>nice. now let's add a homepage. i'll point you to the right file.</p>
+              <p>clean cut. want me to drop it into that poster next?</p>
             </div>
           </div>
         </div>
