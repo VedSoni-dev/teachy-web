@@ -3,355 +3,280 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Teachy Enterprise: Teach your whole company</title>
-  <meta name="description" content="Bespoke AI systems plus Teachy's 1:1 teaching software. Make every employee skilled on the tools and workflows your company actually uses." />
-  <meta property="og:title" content="Teachy Enterprise: Teach your whole company" />
-  <meta property="og:description" content="Bespoke AI plus verified employee teaching. Not another LMS." />
+  <title>Teachy for Teams: make your whole company AI-fluent</title>
+  <meta name="description" content="Teachy makes your employees genuinely AI-fluent — recommending the right tool for the work in front of them, keeping sensitive data out of the wrong places, and teaching your internal software from day one." />
+  <meta property="og:title" content="Teachy for Teams: make your whole company AI-fluent" />
+  <meta property="og:description" content="AI fluency for your whole team. The right tool for each task, data kept where it belongs, and your internal software taught from day one." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="enterprise-page">
+<body class="hey-page ent-page">
+  <!-- VHS film grain, dialed down for the serious page -->
+  <div class="hey-grain" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="logo" href="index.html">
         <span class="logo-mark"></span>
-        Teachy
+        teachy
       </a>
       <nav class="nav">
-        <a href="index.html#product">Product</a>
-        <a href="enterprise.html" aria-current="page">Enterprise</a>
-        <a href="index.html#how">How it works</a>
-        <a class="nav-github" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" aria-label="Star Teachy on GitHub, open source">
+        <a href="index.html">personal</a>
+        <a href="enterprise.html" aria-current="page">for teams</a>
+        <a href="#security">security</a>
+        <a class="nav-github" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" aria-label="Teachy on GitHub">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          <span>Open source</span>
+          <span>open source</span>
           <span class="nav-github-star" aria-hidden="true">★</span>
         </a>
-        <a class="nav-cta" href="#pilot">
-          <span>Book a pilot</span>
-        </a>
+        <a class="nav-cta" href="#pilot"><span>book a pilot</span></a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero wrap hero-enterprise" id="top">
-      <span class="hero-badge">
-        <span class="hero-badge-dot" aria-hidden="true"></span>
-        Teachy Enterprise
-      </span>
-
-      <h1 class="hero-title">
-        Teach your<br />
-        <span class="hero-title-accent">whole company.</span>
-      </h1>
-
-      <p class="lede">
-        Companies buy AI seats. Almost no one teaches people to use them well.
-        Teachy Enterprise deploys <strong>bespoke AI</strong> and a <strong>1:1 teaching layer</strong>
-        so your team learns by doing on real tools, with skills verified, not "module completed."
-      </p>
-
-      <div class="hero-actions">
-        <a
-          class="btn btn-primary"
-          href="mailto:enterprise@teachy.app?subject=Teachy%20Enterprise%20pilot&body=Hi%20Teachy%20team%2C%0A%0ACompany%3A%20%0ATeam%20size%3A%20%0ARoles%20to%20train%3A%20%0AAI%20tools%20in%20use%3A%20%0ATimeline%3A%20%0A"
-        >
-          <span class="btn-label">Talk to us about a pilot</span>
-          <span class="btn-arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="btn btn-secondary" href="index.html">
-          <span class="btn-label">See personal Teachy</span>
-        </a>
+    <!-- —— Hero —— -->
+    <section class="hey-hero ent-hero" id="top">
+      <div class="hey-hero-center">
+        <span class="hey-eyebrow"><i class="hey-eyebrow-dot"></i>teachy for teams</span>
+        <h1 class="hey-ent-title">make your whole team<br /><span class="hl">actually ai-fluent</span></h1>
+        <p class="hey-tagline">you bought the seats. almost no one uses them well. teachy sits beside every employee and coaches them through real work — the right tool, the right way, on your stack.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#pilot">
+            <span class="btn-label">book a pilot</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn-secondary" href="index.html">
+            <span class="btn-label">see personal teachy</span>
+          </a>
+        </div>
       </div>
 
-      <ul class="hero-stats" aria-label="Enterprise outcomes">
-        <li><strong>Bespoke AI</strong><span>built for your work</span></li>
-        <li><strong>1:1 coaching</strong><span>on real screens</span></li>
-        <li><strong>Custom paths</strong><span>by role &amp; SOP</span></li>
-        <li><strong>Verified skills</strong><span>not video watch time</span></li>
+      <div class="hey-hero-media">
+        <div class="hey-frame">
+          <div class="hey-window">
+            <div class="hey-window-bar"><i></i><i></i><i></i><span>gmail · drafting a renewal email</span></div>
+            <div class="hey-window-body hey-ent-demo hey-ent-recommend">
+              <div class="hey-ent-doc">
+                <span class="hey-ent-doc-head">re: Q3 renewal — Acme Corp</span>
+                <b style="width:84%"></b><b style="width:66%"></b><b style="width:90%"></b><b style="width:52%"></b><b style="width:74%"></b>
+              </div>
+              <div class="hey-ent-suggest">
+                <span class="hey-ent-suggest-head">◆ teachy · for this, reach for <span class="hey-ent-tool"><b class="ac-claude"></b>claude</span></span>
+                <span class="hey-ent-suggest-body">"draft a warm renewal email to Acme. reference their Q2 usage, keep it under 150 words, end with a call CTA."</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="hey-ent-stats" aria-label="What teams get">
+        <li><strong>right tool</strong><span>for the task in front of them</span></li>
+        <li><strong>data stays put</strong><span>blocked from the wrong places</span></li>
+        <li><strong>your software</strong><span>taught from day one</span></li>
+        <li><strong>verified fluency</strong><span>not seat licenses</span></li>
       </ul>
     </section>
 
-    <!-- Enterprise deep dive -->
-    <section class="enterprise wrap" id="enterprise">
-      <div class="enterprise-shell">
-        <div class="section-head enterprise-head">
-          <span class="pill-tag"><span class="pill-tag-dot"></span>Teachy Enterprise</span>
-          <h2>Teach the whole company, not just the ones who figure it out.</h2>
-          <p class="section-note">
-            We don't sell another LMS. We deploy bespoke AI systems and Teachy's teaching software
-            so your people learn the tools and workflows that matter to <em>your</em> business.
-          </p>
-        </div>
+    <div class="hey-dots" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span>
+    </div>
 
-        <div class="enterprise-grid">
-          <article class="ent-feature">
-            <h3>Bespoke AI</h3>
-            <p>
-              Custom AI setups for your org: assistants, workflows, and integrations designed
-              around how you actually work, not a generic chatbot seat.
-            </p>
-          </article>
-          <article class="ent-feature">
-            <h3>Employee teaching layer</h3>
-            <p>
-              Teachy coaches employees 1:1 on the real screen: AI tools, your stack, internal software,
-              and the SOPs you care about. Verified outcomes, not "completed module" checkboxes.
-            </p>
-          </article>
-          <article class="ent-feature">
-            <h3>Custom curriculum</h3>
-            <p>
-              Paths built for sales, ops, eng, support, leadership. Role-based learning with
-              teach-backs and durable outcomes your L&amp;D team can trust.
-            </p>
-          </article>
-          <article class="ent-feature">
-            <h3>Rollout &amp; support</h3>
-            <p>
-              From pilot cohort to company-wide launch: onboarding, admin guidance, and iteration
-              based on what people actually struggle with.
-            </p>
-          </article>
+    <!-- —— Feature rows —— -->
+    <section class="hey-features wrap">
+      <article class="hey-feature">
+        <div class="hey-feature-copy">
+          <span class="hey-label-bubble">the right tool, the right moment</span>
+          <h2>it knows what they're doing</h2>
+          <p>teachy watches the actual work in front of each person and points them to the best tool for it — Claude for the contract, a formula for the sheet, your internal bot for anything sensitive — with a prompt that actually works. no more "which AI do I even open?"</p>
         </div>
+        <div class="hey-feature-media">
+          <div class="hey-frame">
+            <div class="hey-window">
+              <div class="hey-window-bar"><i></i><i></i><i></i><span>onboarding · new hire, week one</span></div>
+              <div class="hey-window-body hey-ent-demo hey-ent-onboard">
+                <div class="hey-ent-app-head"><b></b>acme portal · internal tool</div>
+                <ul class="hey-ent-steps">
+                  <li><b></b>find the deal in the pipeline</li>
+                  <li><b></b>log the call notes in the right field</li>
+                  <li><b></b>trigger the finance approval flow</li>
+                </ul>
+                <span class="hey-point-cursor"><span class="hey-point-speech">this button files it for finance — click here</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
 
-        <div class="enterprise-who">
-          <h3>Built for teams that need results</h3>
-          <ul>
-            <li>Companies rolling out ChatGPT, Claude, Copilot, or internal AI</li>
-            <li>Orgs where "AI training" has been videos no one finishes</li>
-            <li>Leaders who want verified skills, not seat licenses alone</li>
-            <li>Teams building custom tools that employees still need to learn</li>
-          </ul>
+      <div class="hey-dots hey-dots-tight" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span>
+      </div>
+
+      <article class="hey-feature hey-feature-reverse">
+        <div class="hey-feature-copy">
+          <span class="hey-label-bubble">your data, where it belongs</span>
+          <h2>it won't let them leak it</h2>
+          <p>teachy is customized to your policies and your internal software. the moment someone tries to paste customer data, source code, or anything sensitive into a public model, it steps in — and routes them to your internal assistant instead. safe by default, without a compliance lecture.</p>
+        </div>
+        <div class="hey-feature-media">
+          <div class="hey-frame">
+            <div class="hey-window">
+              <div class="hey-window-bar"><i></i><i></i><i></i><span>chatgpt · public model</span></div>
+              <div class="hey-window-body hey-ent-demo hey-ent-guard">
+                <div class="hey-ent-paste">pasting: <em>full customer list · SSNs · card #s</em></div>
+                <div class="hey-ent-block">
+                  <span class="hey-ent-block-icon" aria-hidden="true">⚠</span>
+                  <span>hold on — that's customer PII. keep it off public models. route it to your <b>internal assistant</b> instead.</span>
+                </div>
+                <div class="hey-ent-safe">✓ handled by Acme internal assistant — safely</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="hey-dots hey-dots-tight" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span>
+      </div>
+
+      <article class="hey-feature">
+        <div class="hey-feature-copy">
+          <span class="hey-label-bubble">learns your company</span>
+          <h2>it teaches your stack</h2>
+          <p>teachy learns your workflows and your custom, internal software — the tools no course on earth covers — and coaches new hires through them step by step. day one becomes productive instead of a month of "who do I ask about this?"</p>
+        </div>
+        <div class="hey-feature-media">
+          <div class="hey-frame">
+            <div class="hey-window">
+              <div class="hey-window-bar"><i></i><i></i><i></i><span>teachy · team fluency</span></div>
+              <div class="hey-window-body hey-window-skilldemo">
+                <div class="hey-skill"><span class="hey-skill-name">sales · claude</span><span class="hey-skill-bar"><b class="hey-skill-fill-1"></b></span><span class="hey-skill-check hey-check-1">✓</span></div>
+                <div class="hey-skill"><span class="hey-skill-name">ops · sheets ai</span><span class="hey-skill-bar"><b class="hey-skill-fill-2"></b></span><span class="hey-skill-check hey-check-2">✓</span></div>
+                <div class="hey-skill"><span class="hey-skill-name">support · bot</span><span class="hey-skill-bar"><b class="hey-skill-fill-3"></b></span><span class="hey-skill-check hey-check-3">✓</span></div>
+                <div class="hey-skill"><span class="hey-skill-name">new hires</span><span class="hey-skill-bar"><b class="hey-skill-fill-4"></b></span><span class="hey-skill-chip">onboarding</span></div>
+                <div class="hey-skill-footer"><span class="hey-streak">82% active weekly</span><span class="hey-review-chip">verified fluency, not seat count</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- —— Security / trust band —— -->
+    <section class="hey-ent-trust wrap" id="security">
+      <div class="hey-section-head">
+        <h2>safe was the whole point</h2>
+        <p>the fastest way to make a team AI-fluent is also the fastest way to leak data — unless the tutor is the one holding the line.</p>
+      </div>
+      <div class="hey-ent-trust-grid">
+        <article class="hey-ent-trust-card">
+          <span class="hey-ent-trust-icon" aria-hidden="true">🔒</span>
+          <h3>data stays yours</h3>
+          <p>screen context is only read during a coaching moment and routes through your own proxy. nothing is stored or sold. sensitive work never touches a public model.</p>
+        </article>
+        <article class="hey-ent-trust-card">
+          <span class="hey-ent-trust-icon" aria-hidden="true">🚧</span>
+          <h3>guardrails you set</h3>
+          <p>define what's sensitive and where it's allowed to go. teachy blocks the wrong paste in the moment and redirects people to the approved tool — no policy PDF required.</p>
+        </article>
+        <article class="hey-ent-trust-card">
+          <span class="hey-ent-trust-icon" aria-hidden="true">🧩</span>
+          <h3>fits your stack</h3>
+          <p>trained on your internal software, SOPs, and the exact AI tools you've licensed — so the coaching matches how your company actually works.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- —— Pilot flow —— -->
+    <section class="hey-ent-steps-band wrap">
+      <div class="hey-section-head">
+        <h2>four weeks to proof</h2>
+        <p>start with one team. measure real fluency. expand what works.</p>
+      </div>
+      <div class="hey-ent-flow">
+        <div class="hey-ent-step">
+          <b>1</b>
+          <h3>map</h3>
+          <p>the roles, the daily work, the tools, and the data rules that can't be crossed.</p>
+        </div>
+        <div class="hey-ent-step">
+          <b>2</b>
+          <h3>tune</h3>
+          <p>teachy learns your internal software and guardrails; we build paths for a pilot cohort.</p>
+        </div>
+        <div class="hey-ent-step">
+          <b>3</b>
+          <h3>coach</h3>
+          <p>employees learn by doing on their real machines. we iterate on where they get stuck.</p>
+        </div>
+        <div class="hey-ent-step">
+          <b>4</b>
+          <h3>prove</h3>
+          <p>verified fluency per person and a clear rollout plan for the rest of the company.</p>
         </div>
       </div>
     </section>
 
-    <section class="wall wrap">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>The problem</span>
-        <h2>You licensed the AI. Usage is still a mess.</h2>
-        <p class="section-note">
-          Seat counts go up. Actual skill does not. Training is a PDF, a webinar, and hope.
-        </p>
-      </div>
-      <div class="wall-grid">
-        <article class="wall-card">
-          <h3>Licenses ≠ literacy</h3>
-          <p>ChatGPT, Claude, Copilot, internal bots. People open them, type a vague prompt, shrug, and go back to the old way.</p>
-        </article>
-        <article class="wall-card">
-          <h3>LMS doesn't transfer</h3>
-          <p>Slide decks and video modules don't match your policies, your data rules, or the messy desktop where work actually happens.</p>
-        </article>
-        <article class="wall-card">
-          <h3>No proof of skill</h3>
-          <p>"Completed training" means they clicked Next. Leadership still can't answer: can this team actually use AI on the job?</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="sky-band">
-      <div class="wrap products" id="offer">
-        <div class="section-head">
-          <span class="pill-tag"><span class="pill-tag-dot"></span>What we deliver</span>
-          <h2>Bespoke AI + Teachy for your people.</h2>
-          <p class="section-note">
-            Two layers. One outcome: employees who can do real work with AI on your stack.
-          </p>
+    <!-- —— Final CTA —— -->
+    <section class="hey-sky" id="pilot">
+      <div class="wrap">
+        <div class="hey-sky-head">
+          <h2>start with a pilot cohort</h2>
+          <p>tell us your team, your tools, and what "fluent" should mean. we'll come back with a concrete plan.</p>
         </div>
-
-        <div class="product-grid">
-          <article class="product-card">
-            <header>
-              <span class="product-tag product-tag-ent">Layer 1</span>
-              <h3>Bespoke AI</h3>
-            </header>
-            <p class="product-lede">
-              We help design and stand up the AI systems your org needs. Not a generic chatbot seat.
-            </p>
-            <ul class="product-list">
-              <li>Workflow-specific assistants and prompts</li>
-              <li>Integration with tools you already use</li>
-              <li>Guardrails aligned with your policies</li>
-              <li>Role-based patterns (sales, ops, eng, support)</li>
+        <div class="hey-price-grid" style="grid-template-columns: minmax(0, 640px); justify-content: center;">
+          <article class="hey-price-card hey-price-card-ent">
+            <span class="hey-price-tag hey-price-tag-ent">book a pilot</span>
+            <h3>teachy for teams</h3>
+            <p class="hey-price-note">bespoke — scoped to your cohort, tools, and data rules.</p>
+            <ul>
+              <li>recommends the right tool for each person's daily work</li>
+              <li>blocks sensitive data from leaving where it should</li>
+              <li>teaches your internal software, day-one onboarding included</li>
+              <li>verified fluency you can show leadership</li>
             </ul>
-          </article>
-          <article class="product-card product-card-enterprise">
-            <header>
-              <span class="product-tag product-tag-ent">Layer 2</span>
-              <h3>Teaching software</h3>
-            </header>
-            <p class="product-lede">
-              Teachy coaches employees 1:1 on the real screen until the skill sticks. Point, act, check, remember.
-            </p>
-            <ul class="product-list">
-              <li>Practice on real apps and internal software</li>
-              <li>Custom curriculum for your SOPs</li>
-              <li>Vision-style verification of outcomes</li>
-              <li>Teach-backs so understanding sticks</li>
-            </ul>
+            <a class="btn btn-primary" href="mailto:enterprise@teachy.app?subject=Teachy%20for%20Teams%20pilot&body=Hi%20Teachy%20team%2C%0A%0ACompany%3A%20%0ATeam%20size%3A%20%0ARoles%20to%20train%3A%20%0AAI%20tools%20in%20use%3A%20%0AInternal%20tools%20to%20teach%3A%20%0AData%20rules%20that%20matter%3A%20%0ATimeline%3A%20%0A">
+              <span class="btn-label">email enterprise</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
           </article>
         </div>
-      </div>
-    </section>
-
-    <section class="vs wrap">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>Compare</span>
-        <h2>Not another training portal.</h2>
-      </div>
-      <div class="vs-grid">
-        <article class="vs-card vs-bad">
-          <header>
-            <span class="vs-tag">Typical "AI training"</span>
-            <h3>Watch &amp; click Next</h3>
-          </header>
-          <ul>
-            <li>Generic content for every role</li>
-            <li>No check they can do the work</li>
-            <li>Forgotten by next week</li>
-            <li>Doesn't touch your internal tools</li>
-          </ul>
-        </article>
-        <article class="vs-card vs-good">
-          <header>
-            <span class="vs-tag">Teachy Enterprise</span>
-            <h3>Do it, guided</h3>
-          </header>
-          <ul>
-            <li>Paths built for your company</li>
-            <li>Skills verified on real screens</li>
-            <li>Muscle memory on the job</li>
-            <li>Bespoke AI + coaching together</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="how wrap" id="how">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>How a pilot works</span>
-        <h2>Four weeks to proof.</h2>
-        <p class="section-note">Start small. Measure skill. Expand what works.</p>
-      </div>
-      <ol class="teach-steps pilot-steps">
-        <li>
-          <span class="teach-num">1</span>
-          <h3>Discover</h3>
-          <p>Roles, tools, SOPs, risk. We map where AI should change the work and where it shouldn't.</p>
-        </li>
-        <li>
-          <span class="teach-num">2</span>
-          <h3>Build</h3>
-          <p>Bespoke AI setup + Teachy paths for a pilot cohort (one team or function).</p>
-        </li>
-        <li>
-          <span class="teach-num">3</span>
-          <h3>Coach</h3>
-          <p>Employees learn by doing on their real machines. We iterate on stuck points.</p>
-        </li>
-        <li>
-          <span class="teach-num">4</span>
-          <h3>Prove</h3>
-          <p>Verified outcomes, teach-backs, and a clear rollout plan for the rest of the company.</p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="who wrap">
-      <div class="enterprise-shell wrap-inner">
-        <div class="section-head enterprise-head">
-          <span class="pill-tag"><span class="pill-tag-dot"></span>Fit</span>
-          <h2>Who this is for</h2>
-        </div>
-        <div class="enterprise-who">
-          <ul>
-            <li>Companies rolling out ChatGPT, Claude, Copilot, or internal AI</li>
-            <li>L&amp;D / People / Ops leaders tired of unused licenses</li>
-            <li>Teams with custom tools employees still need to learn</li>
-            <li>Leaders who need proof of skill, not completion certificates</li>
-            <li>Orgs that want AI <em>and</em> a teaching system, not just a seat count</li>
-            <li>Pilot-ready teams of ~10-100 to start</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="pricing-note wrap">
-      <div class="section-head">
-        <span class="pill-tag"><span class="pill-tag-dot"></span>Engagement</span>
-        <h2>Bespoke by design.</h2>
-        <p class="section-note">
-          Pricing depends on cohort size, depth of custom AI, and how many paths we build.
-          Most companies start with a fixed-scope pilot, then expand.
-        </p>
-      </div>
-      <div class="pricing-grid">
-        <article class="pricing-card">
-          <h3>Pilot</h3>
-          <p class="pricing-meta">~4 weeks, one team</p>
-          <p>Discovery, custom path(s), bespoke AI setup for the use case, coaching, proof pack for leadership.</p>
-        </article>
-        <article class="pricing-card pricing-card-featured">
-          <h3>Rollout</h3>
-          <p class="pricing-meta">Multi-team, ongoing</p>
-          <p>More roles and SOPs, admin guidance, iteration on stuck skills, company-wide learning program.</p>
-        </article>
-        <article class="pricing-card">
-          <h3>Partner</h3>
-          <p class="pricing-meta">Strategic</p>
-          <p>Deep bespoke AI systems plus continuous curriculum as your tools and policies evolve.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="final-cta wrap" id="pilot">
-      <div class="final-cta-card final-cta-ent final-cta-full">
-        <p class="pill-tag light">Next step</p>
-        <h2>Start with a pilot cohort.</h2>
-        <p>
-          Tell us your company, team size, tools in use, and what "skilled" should mean for you.
-          We'll reply with a concrete pilot plan.
-        </p>
-        <div class="hero-actions">
-          <a
-            class="btn btn-primary"
-            href="mailto:enterprise@teachy.app?subject=Teachy%20Enterprise%20pilot&body=Hi%20Teachy%20team%2C%0A%0ACompany%3A%20%0ATeam%20size%3A%20%0ARoles%20to%20train%3A%20%0AAI%20tools%20in%20use%3A%20%0AWhat%20success%20looks%20like%3A%20%0ATimeline%3A%20%0A"
-          >
-            <span class="btn-label">Email Enterprise</span>
-            <span class="btn-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="btn btn-secondary" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">
-            <span class="btn-label">See the open product</span>
-          </a>
-        </div>
-        <p class="contact-note">enterprise@teachy.app</p>
+        <p class="hey-apps-foot" style="margin-top:22px;color:rgba(255,255,255,.94);">or reach us directly — <strong style="color:#fff;">enterprise@teachy.app</strong></p>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <div class="footer-brand">
-        <span class="footer-mark logo-mark" aria-hidden="true"></span>
-        <span class="footer-name">Teachy Enterprise</span>
-        <span class="footer-tag">Bespoke AI + teaching for skilled teams.</span>
+  <footer class="hey-footer">
+    <div class="wrap hey-footer-cols">
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">teachy</span>
+        <a href="index.html">personal</a>
+        <a href="enterprise.html">for teams</a>
+        <a href="index.html#product">pricing</a>
       </div>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="index.html#product">Personal Teachy</a>
-        <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
-        <a href="mailto:enterprise@teachy.app">Contact</a>
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">teams</span>
+        <a href="#security">security</a>
+        <a href="#pilot">book a pilot</a>
+        <a href="mailto:enterprise@teachy.app">email us</a>
+      </div>
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">open source</span>
+        <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">github</a>
+        <a href="https://github.com/VedSoni-dev/teachy/releases" target="_blank" rel="noopener">releases</a>
+      </div>
+      <div class="hey-footer-col hey-footer-disclaimer">
+        <span class="hey-footer-head">the short version</span>
+        <p>bespoke AI fluency for your whole team, coached on the real work — with your data kept exactly where it belongs.</p>
       </div>
     </div>
-    <p class="footer-wordmark wrap" aria-hidden="true">
-      Teachy
-      <span class="footer-wordmark-mark"></span>
-    </p>
+    <div class="hey-pixel-band" aria-hidden="true">
+      <span class="hey-pixel" data-text="teachy">teachy</span>
+    </div>
   </footer>
 </body>
 </html>
