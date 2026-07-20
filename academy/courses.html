@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teachy Courses — free course store</title>
+  <meta name="description" content="Browse and install free Teachy courses. Click Install in Teachy and the course lands directly in your app — one click, like osu! beatmaps." />
+  <meta property="og:title" content="Teachy Courses — free course store" />
+  <meta property="og:description" content="Browse free courses built for Teachy. Click Install and they land straight in your app." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── Page-level layout ── */
+
+    .courses-page-wrap {
+      width: min(1080px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    /* ── Don't-have-Teachy banner ── */
+
+    .teachy-download-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--surface);
+      border: 2px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 14px 20px;
+      margin: 24px auto 0;
+      width: min(1080px, calc(100% - 48px));
+      box-shadow: var(--shadow-card);
+    }
+
+    .teachy-download-banner p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    .teachy-download-banner p strong {
+      color: var(--ink);
+    }
+
+    .teachy-download-banner-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--ink);
+      color: #fff9ee;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s var(--ease), transform 0.15s var(--ease);
+      flex-shrink: 0;
+    }
+
+    .teachy-download-banner-link:hover {
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .teachy-download-banner-apple-icon {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── Page hero ── */
+
+    .courses-hero {
+      padding: 56px 0 40px;
+      text-align: center;
+    }
+
+    .courses-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+
+    .courses-hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: eyebrowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes eyebrowPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .courses-hero h1 {
+      margin: 0 auto 16px;
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--ink);
+      max-width: 720px;
+    }
+
+    .courses-hero p {
+      margin: 0 auto;
+      max-width: 540px;
+      font-size: clamp(15px, 1.6vw, 18px);
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+
+    .courses-hero .hl {
+      color: var(--accent);
+    }
+
+    /* ── Status bar (loading / error) ── */
+
+    .courses-status {
+      padding: 64px 0;
+      text-align: center;
+    }
+
+    .courses-status-spinner {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--line);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .courses-status p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+    }
+
+    .courses-status-error-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0 0 8px;
+    }
+
+    .courses-status-retry-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--accent);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .courses-status-retry-link:hover {
+      opacity: 0.75;
+    }
+
+    /* ── Course grid ── */
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding-bottom: 64px;
+    }
+
+    /* ── Individual course card ── */
+
+    .course-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 22px 20px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s var(--ease), box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Featured card gets an accent border tint */
+    .course-card-featured {
+      border-color: rgba(47, 111, 237, 0.35);
+      background: linear-gradient(160deg, var(--accent-soft) 0%, transparent 36%), var(--surface);
+    }
+
+    /* Ships-with-app card gets a subtle green tint */
+    .course-card-bundled {
+      border-color: rgba(143, 209, 138, 0.55);
+      background: linear-gradient(160deg, var(--green-bg) 0%, transparent 40%), var(--surface);
+    }
+
+    /* Coming soon card looks muted */
+    .course-card-coming-soon {
+      opacity: 0.72;
+    }
+
+    /* ── Card header row: track chip + featured badge ── */
+
+    .course-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .course-track-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(27, 26, 46, 0.06);
+      color: var(--ink-soft);
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .course-bundled-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: var(--radius-pill);
+      background: var(--green-bg);
+      border: 1px solid var(--green);
+      color: #2a7a25;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .course-bundled-badge-check {
+      font-size: 10px;
+    }
+
+    /* ── Card body ── */
+
+    .course-card-title {
+      margin: 0 0 4px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1.15;
+    }
+
+    .course-card-subtitle {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .course-card-blurb {
+      margin: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    /* ── Meta chips row: time + steps ── */
+
+    .course-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .course-meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .course-meta-chip-icon {
+      font-style: normal;
+      font-size: 11px;
+    }
+
+    /* ── Author row ── */
+
+    .course-card-author {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+
+    .course-author-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--clicky);
+      clip-path: polygon(12% 8%, 92% 48%, 12% 92%);
+      flex-shrink: 0;
+    }
+
+    .course-author-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    /* ── Card footer: action area ── */
+
+    .course-card-actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .course-install-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 11px 18px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid;
+      transition: transform 0.15s var(--ease), box-shadow 0.15s ease;
+    }
+
+    .course-install-button:hover {
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+
+    .course-install-button-primary {
+      background: linear-gradient(180deg, #eaf3ff 0%, #cfe3ff 30%, #9dc2f5 70%, #7ea9ea 100%);
+      border-color: rgba(90, 140, 220, 0.55);
+      color: #0f172a;
+      box-shadow:
+        0 8px 18px -5px rgba(70, 110, 200, 0.4),
+        0 2px 5px rgba(0, 0, 0, 0.1),
+        inset 0 2px 2px rgba(255, 255, 255, 0.9);
+    }
+
+    .course-install-button-primary:hover {
+      box-shadow:
+        0 12px 24px -5px rgba(70, 110, 200, 0.5),
+        0 3px 6px rgba(0, 0, 0, 0.12),
+        inset 0 2px 2px rgba(255, 255, 255, 0.9);
+    }
+
+    .course-install-button-disabled {
+      background: rgba(27, 26, 46, 0.05);
+      border-color: var(--line);
+      color: var(--ink-soft);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .course-install-button-disabled:hover {
+      transform: none;
+    }
+
+    /* Row of secondary actions below the install button */
+    .course-secondary-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .course-copy-url-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+      font-family: var(--font);
+    }
+
+    .course-copy-url-button:hover {
+      background: rgba(27, 26, 46, 0.05);
+      border-color: var(--ink-soft);
+      color: var(--ink);
+    }
+
+    .course-copy-url-button.copied {
+      border-color: var(--green);
+      color: #2a7a25;
+      background: var(--green-bg);
+    }
+
+    /* "Nothing happened?" micro-link under the install button */
+    .course-deeplink-fallback {
+      font-size: 11px;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    .course-deeplink-fallback a {
+      color: var(--ink-soft);
+      text-decoration: underline;
+    }
+
+    .course-deeplink-fallback a:hover {
+      color: var(--ink);
+    }
+
+    /* Bundled-course "already in your app" note */
+    .course-bundled-note {
+      font-size: 12px;
+      color: #2a7a25;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* ── Newsletter section ── */
+
+    .courses-newsletter {
+      border-top: 1px solid var(--line);
+      padding: 56px 0 72px;
+      text-align: center;
+    }
+
+    .courses-newsletter h2 {
+      margin: 0 0 8px;
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .courses-newsletter p {
+      margin: 0 0 28px;
+      font-size: 15px;
+      color: var(--ink-soft);
+    }
+
+    .courses-newsletter-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .courses-newsletter-input {
+      flex: 1;
+      min-width: 200px;
+      height: 44px;
+      padding: 0 16px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--line);
+      background: var(--surface);
+      font-size: 15px;
+      font-family: var(--font);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .courses-newsletter-input::placeholder {
+      color: var(--ink-soft);
+      opacity: 0.7;
+    }
+
+    .courses-newsletter-input:focus {
+      border-color: var(--accent);
+    }
+
+    .courses-newsletter-submit {
+      height: 44px;
+      padding: 0 22px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: var(--ink);
+      color: #fff9ee;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, transform 0.15s var(--ease);
+    }
+
+    .courses-newsletter-submit:hover {
+      background: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .courses-newsletter-disclaimer {
+      margin: 14px 0 0;
+      font-size: 12px;
+      color: var(--ink-soft);
+      opacity: 0.8;
+    }
+
+    /* ── Section header for the grid ── */
+
+    .courses-grid-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .courses-grid-header h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .courses-count-label {
+      font-size: 13px;
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    /* ── Responsive ── */
+
+    @media (max-width: 640px) {
+      .teachy-download-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .courses-hero {
+        padding: 40px 0 28px;
+      }
+
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .courses-newsletter-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .courses-newsletter-input,
+      .courses-newsletter-submit {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="hey-page">
+  <!-- VHS film grain overlay matching the rest of the site -->
+  <div class="hey-grain" aria-hidden="true"></div>
+
+  <!-- ── Site header (matches enterprise.html pattern) ── -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark"></span>
+        teachy
+      </a>
+      <nav class="nav">
+        <a href="index.html">personal</a>
+        <a href="courses.html" aria-current="page">courses</a>
+        <a href="enterprise.html">for teams</a>
+        <a class="nav-cta" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">
+          <span>get teachy</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── "Don't have Teachy" banner ── -->
+  <aside class="teachy-download-banner" aria-label="Download Teachy">
+    <p>
+      <strong>New here?</strong> You need the Teachy app to install courses.
+      First open: right-click the .dmg, choose Open (community build — no Apple notarization required).
+    </p>
+    <a
+      class="teachy-download-banner-link"
+      href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg"
+      target="_blank"
+      rel="noopener"
+    >
+      <svg class="teachy-download-banner-apple-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.83.94-2.19 1.66-3.32 1.57a3.78 3.78 0 0 1 1.12-2.9C13.9 2.09 15.32 1.5 16.36 1.43zM20.5 17.02c-.55 1.27-.82 1.84-1.53 2.96-.99 1.57-2.39 3.52-4.12 3.53-1.54.02-1.94-.99-4.03-.98-2.09.01-2.53 1-4.07.97-1.73-.02-3.05-1.79-4.04-3.35C-.36 16.4-.9 11.4 1.05 8.62 2.34 6.77 4.14 5.68 6.05 5.68c1.94 0 3.16 1.06 4.77 1.06 1.56 0 2.51-1.06 4.77-1.06 1.7 0 3.5.92 4.79 2.51-4.2 2.3-3.51 8.28.12 8.83z"/>
+      </svg>
+      Get Teachy free — macOS
+    </a>
+  </aside>
+
+  <main>
+    <!-- ── Page hero ── -->
+    <section class="courses-hero courses-page-wrap">
+      <div class="courses-hero-eyebrow">
+        <span class="courses-hero-eyebrow-dot"></span>
+        Teachy Academy
+      </div>
+      <h1>free courses, <span class="hl">one-click installs</span></h1>
+      <p>
+        Browse courses below. Hit Install in Teachy — the course lands in the app,
+        ready to run. Like osu! but for learning to build things.
+      </p>
+    </section>
+
+    <!-- ── Loading / error state (hidden once loaded) ── -->
+    <div id="courses-status-region" class="courses-status courses-page-wrap">
+      <div id="loading-spinner" class="courses-status-spinner" role="status" aria-label="Loading courses"></div>
+      <p id="loading-label">Loading courses…</p>
+    </div>
+
+    <!-- ── Course grid (populated by JS) ── -->
+    <section id="courses-grid-section" class="courses-page-wrap" hidden>
+      <div class="courses-grid-header">
+        <h2>all courses</h2>
+        <span class="courses-count-label" id="courses-count-label"></span>
+      </div>
+      <div class="courses-grid" id="courses-grid" role="list" aria-label="Available courses">
+        <!-- Cards injected here by renderCourseCards() -->
+      </div>
+    </section>
+
+    <!-- ── Newsletter signup ── -->
+    <section class="courses-newsletter courses-page-wrap">
+      <h2>Get new courses in your inbox</h2>
+      <p>New paths drop regularly — ship code, build AI tools, get fluent in the real stuff.</p>
+
+      <!--
+        EMAIL CAPTURE — Buttondown integration
+        Replace TEACHY_NEWSLETTER_SLUG with the real Buttondown username (free tier account).
+        Until replaced, form submissions will 404 harmlessly — no data is lost, just not captured.
+        Buttondown embed-subscribe accepts a plain POST with `email` in the body and a hidden
+        `tag` field is optional for list segmentation (e.g. "courses-page").
+        Sign up at: https://buttondown.com
+      -->
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/TEACHY_NEWSLETTER_SLUG"
+        method="post"
+        target="_blank"
+        rel="noopener"
+        class="courses-newsletter-form"
+        aria-label="Subscribe for new course announcements"
+      >
+        <input type="hidden" name="tag" value="courses-page" />
+        <label for="newsletter-email" class="visually-hidden">Email address</label>
+        <input
+          id="newsletter-email"
+          class="courses-newsletter-input"
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+          autocomplete="email"
+          spellcheck="false"
+        />
+        <button type="submit" class="courses-newsletter-submit">Subscribe</button>
+      </form>
+
+      <p class="courses-newsletter-disclaimer">
+        No spam. Unsubscribe any time. Powered by Buttondown.
+      </p>
+    </section>
+  </main>
+
+  <!-- ── Footer (matches site pattern) ── -->
+  <footer class="hey-footer">
+    <div class="wrap hey-footer-cols">
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">product</span>
+        <a href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">download</a>
+        <a href="index.html#product">pricing</a>
+        <a href="courses.html">courses</a>
+      </div>
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">learn</span>
+        <a href="courses.html" aria-current="page">course store</a>
+        <a href="index.html#fluency">how it works</a>
+        <a href="index.html#faq">faq</a>
+      </div>
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">contact</span>
+        <a href="enterprise.html">for teams</a>
+        <a href="mailto:enterprise@teachy.app?subject=Teachy%20for%20Teams">email us</a>
+      </div>
+      <div class="hey-footer-col hey-footer-disclaimer">
+        <span class="hey-footer-head">privacy</span>
+        <p>Teachy only sees your screen when you press the hotkey. Screenshots go through your own proxy — never stored, never sold.</p>
+      </div>
+    </div>
+    <div class="hey-pixel-band" aria-hidden="true">
+      <span class="hey-pixel" data-text="teachy">teachy</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── Course store JS ──
+    // Fetches the registry, renders cards per state, handles clipboard copy.
+
+    const REGISTRY_URL = "https://raw.githubusercontent.com/VedSoni-dev/teachy-releases/main/registry.json";
+    const DMG_DOWNLOAD_URL = "https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg";
+
+    // Elements we interact with throughout
+    const statusRegion = document.getElementById("courses-status-region");
+    const loadingSpinner = document.getElementById("loading-spinner");
+    const loadingLabel = document.getElementById("loading-label");
+    const gridSection = document.getElementById("courses-grid-section");
+    const coursesGrid = document.getElementById("courses-grid");
+    const coursesCountLabel = document.getElementById("courses-count-label");
+
+    // ── Fetch registry and render, with graceful error handling ──
+
+    async function fetchAndRenderCourses() {
+      showLoadingState();
+
+      let registryData;
+      try {
+        const fetchResponse = await fetch(REGISTRY_URL, { cache: "no-cache" });
+        if (!fetchResponse.ok) {
+          throw new Error(`Registry responded with HTTP ${fetchResponse.status}`);
+        }
+        registryData = await fetchResponse.json();
+      } catch (fetchError) {
+        showErrorState(fetchError);
+        return;
+      }
+
+      const courseList = registryData.courses ?? [];
+      renderCourseCards(courseList);
+    }
+
+    function showLoadingState() {
+      statusRegion.hidden = false;
+      loadingSpinner.hidden = false;
+      loadingLabel.textContent = "Loading courses…";
+      gridSection.hidden = true;
+    }
+
+    function showErrorState(error) {
+      loadingSpinner.hidden = true;
+      loadingLabel.innerHTML = "";
+
+      const errorTitle = document.createElement("p");
+      errorTitle.className = "courses-status-error-title";
+      errorTitle.textContent = "Couldn't load courses";
+      statusRegion.insertBefore(errorTitle, loadingLabel);
+
+      loadingLabel.textContent = "Check your connection and try again.";
+
+      const retryLink = document.createElement("a");
+      retryLink.className = "courses-status-retry-link";
+      retryLink.textContent = "Try again";
+      retryLink.href = "#";
+      retryLink.addEventListener("click", (clickEvent) => {
+        clickEvent.preventDefault();
+        // Reset error state before retrying
+        errorTitle.remove();
+        retryLink.remove();
+        fetchAndRenderCourses();
+      });
+      statusRegion.appendChild(retryLink);
+    }
+
+    // ── Render all course cards into the grid ──
+
+    function renderCourseCards(courseList) {
+      statusRegion.hidden = true;
+      gridSection.hidden = false;
+
+      const totalInstallableCount = courseList.filter(
+        (course) => course.installURL && !course.shipsWithApp
+      ).length;
+
+      const bundledCount = courseList.filter((course) => course.shipsWithApp).length;
+
+      coursesCountLabel.textContent = buildCountSummaryLabel(courseList.length, totalInstallableCount, bundledCount);
+
+      coursesGrid.innerHTML = "";
+
+      courseList.forEach((courseData) => {
+        const cardElement = buildCourseCardElement(courseData);
+        cardElement.setAttribute("role", "listitem");
+        coursesGrid.appendChild(cardElement);
+      });
+    }
+
+    function buildCountSummaryLabel(total, installableCount, bundledCount) {
+      const parts = [];
+      if (total > 0) parts.push(`${total} courses`);
+      if (installableCount > 0) parts.push(`${installableCount} installable`);
+      if (bundledCount > 0) parts.push(`${bundledCount} bundled`);
+      return parts.join(" · ");
+    }
+
+    // ── Build a single course card DOM element ──
+
+    function buildCourseCardElement(courseData) {
+      const isInstallable = Boolean(courseData.installURL) && !courseData.shipsWithApp;
+      const isBundledWithApp = Boolean(courseData.shipsWithApp);
+      const isComingSoon = !courseData.installURL && !courseData.shipsWithApp;
+
+      const card = document.createElement("article");
+      card.className = buildCardClassName(isInstallable, isBundledWithApp, isComingSoon, courseData.featured);
+
+      card.innerHTML = `
+        ${buildCardHeaderHTML(courseData, isBundledWithApp)}
+        ${buildCardBodyHTML(courseData)}
+        ${buildCardMetaChipsHTML(courseData)}
+        ${buildCardAuthorHTML(courseData)}
+        ${buildCardActionsHTML(courseData, isInstallable, isBundledWithApp, isComingSoon)}
+      `;
+
+      // Wire up the clipboard copy button if present
+      const copyButton = card.querySelector(".course-copy-url-button");
+      if (copyButton) {
+        copyButton.addEventListener("click", () => {
+          handleCopyInstallURL(copyButton, courseData.installURL);
+        });
+      }
+
+      return card;
+    }
+
+    function buildCardClassName(isInstallable, isBundledWithApp, isComingSoon, isFeatured) {
+      const classNames = ["course-card"];
+      if (isFeatured && !isComingSoon) classNames.push("course-card-featured");
+      if (isBundledWithApp) classNames.push("course-card-bundled");
+      if (isComingSoon) classNames.push("course-card-coming-soon");
+      return classNames.join(" ");
+    }
+
+    function buildCardHeaderHTML(courseData, isBundledWithApp) {
+      const trackChipHTML = courseData.trackTitle
+        ? `<span class="course-track-chip">${escapeHTML(courseData.trackTitle)}</span>`
+        : "";
+
+      const bundledBadgeHTML = isBundledWithApp
+        ? `<span class="course-bundled-badge"><span class="course-bundled-badge-check">✓</span> Ships with Teachy</span>`
+        : "";
+
+      return `
+        <div class="course-card-header">
+          ${trackChipHTML}
+          ${bundledBadgeHTML}
+        </div>
+      `;
+    }
+
+    function buildCardBodyHTML(courseData) {
+      return `
+        <h3 class="course-card-title">${escapeHTML(courseData.title)}</h3>
+        <p class="course-card-subtitle">${escapeHTML(courseData.subtitle)}</p>
+        <p class="course-card-blurb">${escapeHTML(courseData.blurb)}</p>
+      `;
+    }
+
+    function buildCardMetaChipsHTML(courseData) {
+      const minutesChipHTML = courseData.estimatedMinutes
+        ? `<span class="course-meta-chip"><em class="course-meta-chip-icon">&#128338;</em> ${courseData.estimatedMinutes} min</span>`
+        : "";
+
+      const stepsChipHTML = courseData.goalCount
+        ? `<span class="course-meta-chip"><em class="course-meta-chip-icon">&#10004;</em> ${courseData.goalCount} steps</span>`
+        : "";
+
+      return `
+        <div class="course-card-meta">
+          ${minutesChipHTML}
+          ${stepsChipHTML}
+        </div>
+      `;
+    }
+
+    function buildCardAuthorHTML(courseData) {
+      if (!courseData.authorName) return "";
+      return `
+        <div class="course-card-author">
+          <span class="course-author-avatar" aria-hidden="true"></span>
+          <span class="course-author-name">by ${escapeHTML(courseData.authorName)}</span>
+        </div>
+      `;
+    }
+
+    function buildCardActionsHTML(courseData, isInstallable, isBundledWithApp, isComingSoon) {
+      if (isComingSoon) {
+        return `
+          <div class="course-card-actions">
+            <span class="course-install-button course-install-button-disabled" aria-disabled="true">
+              Coming soon
+            </span>
+          </div>
+        `;
+      }
+
+      if (isBundledWithApp) {
+        return `
+          <div class="course-card-actions">
+            <p class="course-bundled-note">&#10003; Already in your Teachy app — open Courses to start</p>
+          </div>
+        `;
+      }
+
+      // Installable course: primary install button + copy URL + deeplink fallback
+      const installHref = `teachy://install?url=${encodeURIComponent(courseData.installURL)}`;
+      return `
+        <div class="course-card-actions">
+          <a
+            class="course-install-button course-install-button-primary"
+            href="${escapeHTML(installHref)}"
+            aria-label="Install ${escapeHTML(courseData.title)} in Teachy"
+          >
+            Install in Teachy
+          </a>
+          <div class="course-secondary-actions">
+            <button
+              type="button"
+              class="course-copy-url-button"
+              aria-label="Copy course URL for ${escapeHTML(courseData.title)} to clipboard"
+            >
+              Copy course URL
+            </button>
+            <p class="course-deeplink-fallback">
+              Nothing happened?
+              <a href="${DMG_DOWNLOAD_URL}" target="_blank" rel="noopener">Get Teachy first</a>
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    // ── Clipboard copy with brief "Copied!" feedback ──
+
+    async function handleCopyInstallURL(copyButton, installURL) {
+      try {
+        await navigator.clipboard.writeText(installURL);
+        const originalButtonText = copyButton.textContent;
+        copyButton.textContent = "Copied!";
+        copyButton.classList.add("copied");
+        setTimeout(() => {
+          copyButton.textContent = originalButtonText;
+          copyButton.classList.remove("copied");
+        }, 2000);
+      } catch (clipboardError) {
+        // Clipboard API blocked (e.g. no HTTPS locally) — fall back gracefully
+        copyButton.textContent = "Copy failed";
+        setTimeout(() => {
+          copyButton.textContent = "Copy course URL";
+        }, 2000);
+      }
+    }
+
+    // ── Minimal HTML escaping for injected content ──
+
+    function escapeHTML(rawText) {
+      if (!rawText) return "";
+      return String(rawText)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    // ── Kick off on load ──
+    fetchAndRenderCourses();
+  </script>
+</body>
+</html>
