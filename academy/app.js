@@ -11,7 +11,7 @@
     );
   } catch (e) {}
 
-  var INTRO_STORAGE_KEY = "teachyIntroSeen_v1";
+  var INTRO_STORAGE_KEY = "teachyIntroSeen_v2";
 
   var tourTimer = null;
   var introAborted = false;
@@ -26,9 +26,15 @@
   var floodStack = document.getElementById("flood-stack");
   var floodKicker = document.getElementById("flood-kicker");
   var floodType = document.getElementById("flood-type");
+  var floodMarginNote = document.getElementById("flood-margin-note");
+  var floodVandal = document.getElementById("flood-vandal");
   var manifestoType = document.getElementById("manifesto-type");
   var introducingType = document.getElementById("introducing-type");
   var bamWrap = document.getElementById("bam-wrap");
+  var introNoteMarks = document.querySelector(".intro-note-marks");
+  var bamTitleWrap = document.querySelector(".bam-title-wrap");
+  var bamCircle = document.querySelector(".bam-circle");
+  var bamStars = document.querySelector(".bam-stars");
   var skipIntroBtn = document.getElementById("skip-intro");
   var skipDemoBtn = document.getElementById("skip-demo");
   var replayIntroBtn = document.getElementById("replay-intro");
@@ -414,11 +420,24 @@
     await waitOrAbort(1400);
   }
 
+  function resetIntroMarks() {
+    if (floodVandal) floodVandal.classList.remove("is-marking", "is-marked");
+    if (floodMarginNote) {
+      floodMarginNote.hidden = true;
+      floodMarginNote.classList.remove("is-on");
+    }
+    if (introNoteMarks) introNoteMarks.classList.remove("is-drawn");
+    if (bamTitleWrap) bamTitleWrap.classList.remove("is-circled");
+    if (bamCircle) bamCircle.classList.remove("is-drawn");
+    if (bamStars) bamStars.classList.remove("is-drawn");
+  }
+
   async function runIntro(options) {
     options = options || {};
     introAborted = false;
     stopLandingCursor();
     resetDemo();
+    resetIntroMarks();
     buildFloodStack();
     if (bamWrap) {
       bamWrap.hidden = true;
@@ -437,49 +456,70 @@
     }
 
     if (!options.demoOnly) {
+      // —— Act 1: tutorial flood + sharpie vandalism ——
       showPanel(panelFlood);
       if (floodKicker) floodKicker.classList.remove("is-on");
       if (floodType) floodType.textContent = "";
-      await waitOrAbort(220);
-      if (introAborted) return finishIntro(false);
-      if (floodKicker) floodKicker.classList.add("is-on");
       await waitOrAbort(280);
       if (introAborted) return finishIntro(false);
-      await typewrite(floodType, "When you try to learn anything…", 30);
+      if (floodKicker) floodKicker.classList.add("is-on");
+      await waitOrAbort(320);
       if (introAborted) return finishIntro(false);
-      await waitOrAbort(450);
+      await typewrite(floodType, "Trying to learn anything…", 28);
       if (introAborted) return finishIntro(false);
-      await typewrite(floodType, "You get this.", 36);
+      await waitOrAbort(380);
       if (introAborted) return finishIntro(false);
-      await waitOrAbort(650);
+      await typewrite(floodType, "You get THIS.", 34);
+      if (introAborted) return finishIntro(false);
+      await waitOrAbort(420);
       if (introAborted) return finishIntro(false);
 
+      if (floodVandal) {
+        floodVandal.classList.add("is-marking");
+        await waitOrAbort(900);
+        if (introAborted) return finishIntro(false);
+        floodVandal.classList.add("is-marked");
+      }
+      if (floodMarginNote) {
+        floodMarginNote.hidden = false;
+        void floodMarginNote.offsetWidth;
+        floodMarginNote.classList.add("is-on");
+      }
+      await waitOrAbort(900);
+      if (introAborted) return finishIntro(false);
+
+      // —— Act 2: notebook manifesto with marker doodles ——
       showPanel(panelManifesto);
       var manifestoLines = [
-        "The era of reaction-based learning is gone.",
-        "No one learns from watching someone else do the work anymore.",
-        "It’s time for a 1:1 tutor who teaches by acting first.",
+        { text: "watching ≠ learning.", mark: false },
+        { text: "you need someone next to you.", mark: true },
+        { text: "pointing. coaching. checking.", mark: false },
       ];
       if (manifestoType) manifestoType.innerHTML = "";
       for (var manifestoIndex = 0; manifestoIndex < manifestoLines.length; manifestoIndex++) {
         if (introAborted) return finishIntro(false);
         var manifestoLine = document.createElement("p");
         manifestoLine.className = "type-line manifesto-line-typed";
+        if (manifestoIndex === 1) manifestoLine.classList.add("is-star-line");
         if (manifestoType) manifestoType.appendChild(manifestoLine);
-        await typewrite(manifestoLine, manifestoLines[manifestoIndex], 34);
+        await typewrite(manifestoLine, manifestoLines[manifestoIndex].text, 36);
         if (introAborted) return finishIntro(false);
-        await waitOrAbort(420);
+        if (manifestoIndex === 0 && introNoteMarks) {
+          introNoteMarks.classList.add("is-drawn");
+        }
+        await waitOrAbort(480);
       }
       if (introAborted) return finishIntro(false);
-      await waitOrAbort(550);
+      await waitOrAbort(700);
       if (introAborted) return finishIntro(false);
 
+      // —— Act 3: circled brand reveal ——
       showPanel(panelName);
-      await waitOrAbort(300);
+      await waitOrAbort(280);
       if (introAborted) return finishIntro(false);
-      await typewrite(introducingType, "introducinggg…", 75);
+      await typewrite(introducingType, "ok wait — introducing…", 55);
       if (introAborted) return finishIntro(false);
-      await waitOrAbort(380);
+      await waitOrAbort(320);
       if (introAborted) return finishIntro(false);
 
       if (bamWrap) {
@@ -492,7 +532,14 @@
         void introStage.offsetWidth;
         introStage.classList.add("is-shake");
       }
-      await waitOrAbort(1600);
+      await waitOrAbort(520);
+      if (introAborted) return finishIntro(false);
+      if (bamTitleWrap) bamTitleWrap.classList.add("is-circled");
+      if (bamCircle) bamCircle.classList.add("is-drawn");
+      await waitOrAbort(420);
+      if (introAborted) return finishIntro(false);
+      if (bamStars) bamStars.classList.add("is-drawn");
+      await waitOrAbort(1100);
       if (introAborted) return finishIntro(false);
     }
 
@@ -630,89 +677,91 @@
     }, 200);
   }
 
-  // Chat texting animation — remake of the reference AnimatedChat loop:
-  // for each message, show a typing bubble (colored like the upcoming message),
-  // then reveal the message; after the last one, hold and restart forever.
+  // Chat texting animation — each compact thread loops on its own,
+  // staggered so the row feels alive with different tasks.
   (function initChatAnimation() {
-    var chatSurface = document.querySelector(".chat-surface");
-    if (!chatSurface) return;
+    var surfaces = Array.prototype.slice.call(document.querySelectorAll(".chat-surface"));
+    if (!surfaces.length) return;
 
-    var rows = Array.prototype.slice.call(chatSurface.querySelectorAll(".chat-row"));
-    var typing = chatSurface.querySelector(".chat-typing");
-    if (!rows.length || !typing) return;
+    var typingAppearDelay = 420;
+    var messageRevealDelay = 1400;
+    var restartHoldDelay = 2200;
 
-    var typingAppearDelay = 500;   // wait before the typing bubble pops in
-    var messageRevealDelay = 1700; // total time per message (typing hides, message shows)
-    var restartHoldDelay = 2600;   // pause on the finished conversation before looping
-    var animationStarted = false;
+    function animateSurface(chatSurface) {
+      var rows = Array.prototype.slice.call(chatSurface.querySelectorAll(".chat-row"));
+      var typing = chatSurface.querySelector(".chat-typing");
+      if (!rows.length || !typing) return;
 
-    // Style the shared typing bubble like the message that is about to arrive
-    function matchTypingToRow(row) {
-      typing.classList.remove("chat-left", "chat-right", "chat-blue", "chat-orange");
-      typing.classList.add(
-        row.classList.contains("chat-right") ? "chat-right" : "chat-left",
-        row.classList.contains("chat-blue") ? "chat-blue" : "chat-orange"
-      );
-      row.parentNode.insertBefore(typing, row);
-    }
+      var animationStarted = false;
+      var startDelay = parseInt(chatSurface.getAttribute("data-chat-delay"), 10) || 0;
 
-    function hideTyping() {
-      typing.classList.remove("is-shown");
-    }
-
-    function resetConversation() {
-      rows.forEach(function (row) {
-        row.classList.remove("is-shown");
-      });
-      hideTyping();
-    }
-
-    function showMessage(index) {
-      if (index >= rows.length) {
-        setTimeout(function () {
-          resetConversation();
-          setTimeout(function () { showMessage(0); }, 400);
-        }, restartHoldDelay);
-        return;
+      function matchTypingToRow(row) {
+        typing.classList.remove("chat-left", "chat-right", "chat-blue", "chat-orange");
+        typing.classList.add(
+          row.classList.contains("chat-right") ? "chat-right" : "chat-left",
+          row.classList.contains("chat-blue") ? "chat-blue" : "chat-orange"
+        );
+        row.parentNode.insertBefore(typing, row);
       }
 
-      var row = rows[index];
+      function hideTyping() {
+        typing.classList.remove("is-shown");
+      }
 
-      setTimeout(function () {
-        matchTypingToRow(row);
-        typing.classList.add("is-shown");
-      }, typingAppearDelay);
-
-      setTimeout(function () {
+      function resetConversation() {
+        rows.forEach(function (row) {
+          row.classList.remove("is-shown");
+        });
         hideTyping();
-        row.classList.add("is-shown");
-        showMessage(index + 1);
-      }, messageRevealDelay);
+      }
+
+      function showMessage(index) {
+        if (index >= rows.length) {
+          setTimeout(function () {
+            resetConversation();
+            setTimeout(function () { showMessage(0); }, 320);
+          }, restartHoldDelay);
+          return;
+        }
+
+        var row = rows[index];
+
+        setTimeout(function () {
+          matchTypingToRow(row);
+          typing.classList.add("is-shown");
+        }, typingAppearDelay);
+
+        setTimeout(function () {
+          hideTyping();
+          row.classList.add("is-shown");
+          showMessage(index + 1);
+        }, messageRevealDelay);
+      }
+
+      function startLoop() {
+        if (animationStarted) return;
+        animationStarted = true;
+        setTimeout(function () { showMessage(0); }, startDelay);
+      }
+
+      if ("IntersectionObserver" in window) {
+        var chatObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                startLoop();
+                chatObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08 }
+        );
+        chatObserver.observe(chatSurface);
+      } else {
+        startLoop();
+      }
     }
 
-    function startLoop() {
-      if (animationStarted) return;
-      animationStarted = true;
-      showMessage(0);
-    }
-
-    // Start as soon as any part of the surface scrolls into view; the old 30%
-    // threshold could never be reached on short viewports, so the demo never played.
-    if ("IntersectionObserver" in window) {
-      var chatObserver = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              startLoop();
-              chatObserver.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-      chatObserver.observe(chatSurface);
-    } else {
-      startLoop();
-    }
+    surfaces.forEach(animateSurface);
   })();
 })();

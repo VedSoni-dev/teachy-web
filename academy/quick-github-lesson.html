@@ -5,84 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Free lesson: edit your first video — Teachy</title>
   <meta name="description" content="A free 5-minute hands-on lesson: trim a clip, add text and music, then export — taught by Teachy like a real 1:1 tutor." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .lesson-page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: var(--bg);
-      color: var(--ink);
+    .lesson-page-main {
+      padding: 48px 0 72px;
     }
 
-    .lesson-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 16px 24px;
-      border-bottom: 1px solid var(--line);
-      background: var(--surface);
+    .lesson-intro {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 40px;
     }
 
-    .lesson-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .lesson-brand .brand-mark {
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      background: var(--accent);
-      display: grid;
-      place-items: center;
-      color: #fff;
+    .lesson-intro h1 {
+      margin: 14px 0 10px;
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 52px);
       font-weight: 800;
-      font-size: 14px;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: #1b1a2e;
     }
 
-    .lesson-brand-name { font-weight: 600; letter-spacing: -0.02em; }
-    .lesson-brand-tag { font-size: 11px; color: var(--ink-soft); }
+    .lesson-intro p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
 
-    .lesson-actions { display: flex; align-items: center; gap: 12px; }
-
-    .lesson-main {
-      flex: 1;
+    .lesson-layout {
       display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 24px;
-      padding: 24px;
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
-      box-sizing: border-box;
+      grid-template-columns: 280px 1fr;
+      gap: 28px;
+      align-items: start;
     }
 
     .lesson-steps {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      align-self: start;
+      position: sticky;
+      top: 80px;
     }
 
     .lesson-step {
       display: flex;
       gap: 14px;
       padding: 14px 16px;
-      border-radius: var(--radius);
-      border: 1px solid transparent;
-      background: var(--surface);
-      transition: border-color 0.2s, background 0.2s;
+      border-radius: 16px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(27, 26, 46, 0.04);
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     }
 
     .lesson-step.active {
-      border-color: rgba(51, 128, 255, 0.35);
-      background: var(--accent-soft);
+      border-color: rgba(47, 111, 237, 0.35);
+      background: linear-gradient(180deg, #f5f9ff 0%, #eaf2ff 100%);
+      box-shadow: 0 8px 22px -10px rgba(47, 111, 237, 0.35);
     }
 
-    .lesson-step.done { opacity: 0.65; }
+    .lesson-step.done {
+      opacity: 0.72;
+    }
 
     .lesson-step-num {
       flex-shrink: 0;
@@ -93,23 +83,35 @@
       place-items: center;
       font-size: 12px;
       font-weight: 700;
-      background: rgba(255, 255, 255, 0.06);
+      background: #f2f3f6;
       color: var(--ink-soft);
+      border: 1px solid rgba(15, 23, 42, 0.1);
     }
 
-    .lesson-step.active .lesson-step-num { background: var(--accent); color: #fff; }
-    .lesson-step.done .lesson-step-num { background: var(--green); color: #04130a; }
+    .lesson-step.active .lesson-step-num {
+      background: var(--accent);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .lesson-step.done .lesson-step-num {
+      background: #8fd18a;
+      color: #0d3a14;
+      border-color: transparent;
+    }
 
     .lesson-step-body h3 {
       margin: 0 0 3px;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1b1a2e;
     }
 
     .lesson-step-body p {
       margin: 0;
-      font-size: 12px;
+      font-size: 13px;
       line-height: 1.45;
       color: var(--ink-soft);
     }
@@ -117,14 +119,22 @@
     .lesson-stage {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       min-width: 0;
     }
 
+    .lesson-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
     .lesson-progress {
-      height: 3px;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.06);
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.08);
       overflow: hidden;
     }
 
@@ -132,65 +142,60 @@
       display: block;
       height: 100%;
       width: 0;
-      background: var(--accent);
+      border-radius: inherit;
+      background: linear-gradient(90deg, #5b9cff, #2f6fed);
       transition: width 0.4s ease;
     }
 
     .lesson-restart {
-      border: none;
-      background: transparent;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: #fff;
       color: var(--ink-soft);
       font: inherit;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      padding: 6px 10px;
-      border-radius: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
     }
 
-    .lesson-restart:hover { background: rgba(255, 255, 255, 0.08); color: var(--ink); }
-
-    .lesson-footnote {
-      text-align: center;
-      font-size: 12px;
-      color: var(--ink-soft);
-      padding: 0 24px 24px;
-    }
-    .lesson-footnote a { color: var(--accent); }
-
-    /* —— Bigger fake in-browser editor —— */
-    .demo-shell {
-      display: grid;
-      gap: 14px;
+    .lesson-restart:hover {
+      background: #f5f6f8;
+      color: var(--ink);
+      border-color: rgba(15, 23, 42, 0.2);
     }
 
-    .demo-browser.editor {
-      border-radius: 18px;
+    .lesson-stage .hey-frame {
+      width: 100%;
+    }
+
+    .lesson-stage .demo-browser {
+      border-radius: 14px;
       overflow: visible;
-      box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        0 40px 100px rgba(0, 0, 0, 0.5);
-      background: #0f1115;
-      color: #e8eaed;
+      background: #fff;
+      color: #1b1a2e;
+      box-shadow: none;
     }
 
-    .demo-chrome.editor {
-      background: #1b1e25;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 18px 18px 0 0;
-      overflow: hidden;
+    .lesson-stage .demo-chrome {
+      background: linear-gradient(180deg, #fbfcfd 0%, #e6e9ee 55%, #d5d9df 100%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 14px 14px 0 0;
     }
 
-    .demo-url.editor {
-      background: #0f1115;
-      color: #8a93a3;
+    .lesson-stage .demo-url {
+      background: #fff;
+      color: #4a4f57;
+      border: 1px solid rgba(15, 23, 42, 0.1);
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
     }
 
-    .demo-page.editor {
+    .lesson-stage .demo-page {
       min-height: 460px;
-      background: #0f1115;
-      border-radius: 0 0 18px 18px;
+      background: #f7f8fb;
+      border-radius: 0 0 14px 14px;
       display: grid;
       grid-template-rows: 1fr auto;
       padding: 16px;
@@ -198,16 +203,20 @@
       overflow: visible;
     }
 
-    /* preview */
+    .lesson-stage .demo-view {
+      padding: 0;
+    }
+
     .ve-preview {
       position: relative;
       border-radius: 12px;
       overflow: hidden;
       background:
-        radial-gradient(120% 120% at 30% 20%, #3a2a5e 0%, #1a1430 45%, #0c0a18 100%);
+        radial-gradient(120% 120% at 30% 20%, #ffd6e4 0%, #cfe3ff 45%, #e8f0ff 100%);
+      border: 1px solid rgba(15, 23, 42, 0.08);
       display: grid;
       place-items: center;
-      min-height: 300px;
+      min-height: 280px;
     }
 
     .ve-preview-frame {
@@ -224,17 +233,17 @@
     }
 
     .ve-film-cell {
-      border-right: 1px solid rgba(255, 255, 255, 0.05);
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+      border-right: 1px solid rgba(27, 26, 46, 0.06);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
     }
 
     .ve-playhead {
       position: absolute;
-      top: 0; bottom: 0;
+      top: 0;
+      bottom: 0;
       width: 2px;
       background: var(--clicky);
-      box-shadow: 0 0 10px rgba(51, 128, 255, 0.8);
+      box-shadow: 0 0 10px rgba(51, 128, 255, 0.55);
       left: 18%;
       transition: left 0.4s ease;
     }
@@ -242,19 +251,24 @@
     .ve-caption {
       position: relative;
       z-index: 3;
-      background: rgba(0, 0, 0, 0.55);
+      background: rgba(27, 26, 46, 0.78);
       color: #fff;
+      font-family: var(--font-display);
       font-size: 26px;
       font-weight: 700;
       letter-spacing: -0.02em;
       padding: 8px 16px;
-      border-radius: 8px;
+      border-radius: 10px;
       opacity: 0;
       transform: translateY(8px);
       transition: opacity 0.35s ease, transform 0.35s ease;
       text-align: center;
     }
-    .ve-caption.is-on { opacity: 1; transform: none; }
+
+    .ve-caption.is-on {
+      opacity: 1;
+      transform: none;
+    }
 
     .ve-music-note {
       position: absolute;
@@ -264,31 +278,36 @@
       font-size: 13px;
       font-weight: 700;
       color: #fff;
-      background: rgba(51, 128, 255, 0.85);
+      background: var(--clicky);
       padding: 6px 12px;
       border-radius: 999px;
+      box-shadow: 0 8px 18px -8px rgba(47, 111, 237, 0.55);
       opacity: 0;
       transform: translateY(8px);
       transition: opacity 0.35s ease, transform 0.35s ease;
     }
-    .ve-music-note.is-on { opacity: 1; transform: none; }
 
-    /* timeline */
+    .ve-music-note.is-on {
+      opacity: 1;
+      transform: none;
+    }
+
     .ve-timeline {
-      background: #15181f;
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: #fff;
+      border: 1px solid rgba(15, 23, 42, 0.1);
       border-radius: 12px;
       padding: 12px 14px;
       display: grid;
       gap: 10px;
+      box-shadow: 0 2px 8px rgba(27, 26, 46, 0.04);
     }
 
     .ve-track-label {
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: #8a93a3;
+      color: var(--ink-soft);
       margin-bottom: 4px;
     }
 
@@ -296,53 +315,47 @@
       position: relative;
       height: 38px;
       border-radius: 8px;
-      background: linear-gradient(180deg, #2d3a52, #1d2738);
-      border: 1px solid rgba(51, 128, 255, 0.35);
+      background: linear-gradient(180deg, #dce8ff, #c2d6ff);
+      border: 1px solid rgba(47, 111, 237, 0.35);
       display: flex;
       align-items: center;
       padding: 0 12px;
       font-size: 12px;
       font-weight: 600;
-      color: #c7d2e8;
+      color: #1b3a7a;
       overflow: hidden;
       transition: width 0.45s var(--ease);
     }
 
-    .ve-clip.video { background: linear-gradient(180deg, #34406b, #232c4a); }
-    .ve-clip.text { background: linear-gradient(180deg, #3a2c54, #2a2040); border-color: rgba(173,127,255,0.4); color: #e3d6ff; }
-    .ve-clip.audio { background: linear-gradient(180deg, #1f4a3a, #163b2e); border-color: rgba(81,207,102,0.4); color: #c9f3d8; }
+    .ve-clip.video {
+      background: linear-gradient(180deg, #d6e4ff, #b8ceff);
+    }
+
+    .ve-clip.text {
+      background: linear-gradient(180deg, #efe4ff, #dcc9ff);
+      border-color: rgba(140, 100, 220, 0.4);
+      color: #4a2f7a;
+    }
+
+    .ve-clip.audio {
+      background: linear-gradient(180deg, #d8f5df, #b8e8c4);
+      border-color: rgba(80, 170, 100, 0.45);
+      color: #1f5a32;
+    }
 
     .ve-clip .ve-trim {
       position: absolute;
-      right: 0; top: 0; bottom: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
       width: 14px;
-      background: rgba(51, 128, 255, 0.5);
+      background: rgba(47, 111, 237, 0.45);
       cursor: ew-resize;
     }
 
-    .ve-toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .ve-btn {
-      border: 0;
-      background: #232a3a;
-      color: #e8eaed;
-      font: inherit;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 10px 16px;
-      border-radius: 9px;
-      cursor: pointer;
-      transition: box-shadow 0.2s, transform 0.15s, background 0.2s;
-    }
-
-    .ve-btn.primary { background: var(--accent); color: #fff; }
-
-    .ve-btn.is-hot {
-      box-shadow: 0 0 0 3px rgba(51, 128, 255, 0.45);
+    .ve-clip.is-hot,
+    .ve-trim.is-hot {
+      box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.4);
       animation: demoPulse 1.2s ease-in-out infinite;
     }
 
@@ -351,25 +364,42 @@
       flex-direction: column;
       align-items: center;
       gap: 16px;
-      padding: 40px 12px;
+      padding: 48px 12px;
       text-align: center;
+      min-height: 320px;
+      justify-content: center;
     }
 
-    .ve-export h2 { margin: 0; font-size: 22px; letter-spacing: -0.03em; }
-    .ve-export p { margin: 0; color: #8a93a3; font-size: 14px; }
+    .ve-export h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #1b1a2e;
+      cursor: pointer;
+    }
+
+    .ve-export p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+    }
 
     .ve-progress-bar {
       width: 260px;
       height: 8px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.08);
       overflow: hidden;
     }
+
     .ve-progress-bar > span {
       display: block;
       height: 100%;
       width: 0;
-      background: var(--accent);
+      border-radius: inherit;
+      background: linear-gradient(90deg, #5b9cff, #2f6fed);
       transition: width 0.3s linear;
     }
 
@@ -377,50 +407,88 @@
       width: 56px;
       height: 56px;
       border-radius: 50%;
-      background: var(--accent-soft);
+      background: linear-gradient(180deg, #eaf3ff, #cfe3ff);
       color: var(--accent);
+      border: 1px solid rgba(47, 111, 237, 0.3);
       display: grid;
       place-items: center;
       font-size: 26px;
       font-weight: 800;
+      box-shadow: 0 8px 18px -8px rgba(47, 111, 237, 0.4);
     }
 
     .ve-done-url {
       display: inline-block;
-      background: #0d1117;
-      color: #c9d1d9;
+      background: #fff;
+      color: #4a4f57;
       padding: 10px 16px;
       border-radius: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.1);
       font-size: 12px;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
 
-    .demo-hud.editor {
-      margin-top: 2px;
+    .lesson-footnote {
+      text-align: center;
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin: 36px auto 0;
+      max-width: 52ch;
+      line-height: 1.55;
+    }
+
+    .lesson-footnote a {
+      color: var(--accent);
+      font-weight: 600;
     }
 
     @media (max-width: 860px) {
-      .lesson-main { grid-template-columns: 1fr; }
+      .lesson-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-steps {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .lesson-steps {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
-<body>
-  <div class="lesson-page">
-    <header class="lesson-topbar">
-      <div class="lesson-brand">
-        <span class="brand-mark">T</span>
-        <span>
-          <span class="lesson-brand-name">Teachy</span><br />
-          <span class="lesson-brand-tag">Free lesson · ~5 min</span>
-        </span>
-      </div>
-      <div class="lesson-actions">
-        <button type="button" class="lesson-restart" id="lesson-restart">Start over</button>
-        <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">Get Teachy</a>
-      </div>
-    </header>
+<body class="hey-page">
+  <div class="hey-grain" aria-hidden="true"></div>
 
-    <main class="lesson-main">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark"></span>
+        teachy
+      </a>
+      <nav class="nav">
+        <a href="index.html#product">pricing</a>
+        <a href="enterprise.html">enterprise</a>
+        <a href="index.html#faq">faq</a>
+        <a class="nav-cta" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">
+          <span>get teachy</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="lesson-page-main wrap">
+    <div class="lesson-intro">
+      <span class="hey-label-bubble">free lesson · ~5 min</span>
+      <h1>edit your first video</h1>
+      <p>trim a clip, add a title and music, then export — teachy coaches you the same way it does on your mac.</p>
+    </div>
+
+    <div class="lesson-layout">
       <aside class="lesson-steps" id="lesson-steps">
         <div class="lesson-step" data-step="1">
           <span class="lesson-step-num">1</span>
@@ -453,86 +521,118 @@
       </aside>
 
       <section class="lesson-stage">
-        <div class="lesson-progress"><span id="lesson-progress-bar"></span></div>
+        <div class="lesson-toolbar">
+          <div class="lesson-progress"><span id="lesson-progress-bar"></span></div>
+          <button type="button" class="lesson-restart" id="lesson-restart">start over</button>
+        </div>
 
         <div class="demo-shell">
-          <div class="demo-browser editor" id="demo-browser">
-            <div class="demo-chrome editor">
-              <div class="demo-dots"><i></i><i></i><i></i></div>
-              <div class="demo-url editor">
-                <span class="demo-lock" aria-hidden="true"></span>
-                <span id="demo-url-text">teachy.studio/edit</span>
+          <div class="hey-frame">
+            <div class="demo-browser" id="demo-browser">
+              <div class="demo-chrome">
+                <div class="demo-dots"><i></i><i></i><i></i></div>
+                <div class="demo-url">
+                  <span class="demo-lock" aria-hidden="true"></span>
+                  <span id="demo-url-text">teachy.studio/edit</span>
+                </div>
               </div>
-            </div>
 
-            <div class="demo-page editor" id="demo-page">
-              <!-- Steps 1–3: editor -->
-              <div class="demo-view is-active" data-view="editor" id="demo-view-editor">
-                <div class="ve-preview">
-                  <div class="ve-preview-frame">
-                    <div class="ve-clip-film">
-                      <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
-                      <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
-                      <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
+              <div class="demo-page" id="demo-page">
+                <div class="demo-view is-active" data-view="editor" id="demo-view-editor">
+                  <div class="ve-preview">
+                    <div class="ve-preview-frame">
+                      <div class="ve-clip-film">
+                        <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
+                        <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
+                        <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
+                      </div>
+                    </div>
+                    <div class="ve-playhead" id="ve-playhead"></div>
+                    <div class="ve-caption" id="ve-caption">My First Video</div>
+                    <div class="ve-music-note" id="ve-music-note">♪ music on</div>
+                  </div>
+
+                  <div class="ve-timeline">
+                    <div>
+                      <div class="ve-track-label">Video</div>
+                      <div class="ve-clip video" id="ve-video-clip" style="width: 100%;">
+                        beach-clip.mp4
+                        <span class="ve-trim" id="ve-trim"></span>
+                      </div>
+                    </div>
+                    <div id="ve-text-row" hidden>
+                      <div class="ve-track-label">Text</div>
+                      <div class="ve-clip text" style="width: 34%;">My First Video</div>
+                    </div>
+                    <div id="ve-audio-row" hidden>
+                      <div class="ve-track-label">Audio</div>
+                      <div class="ve-clip audio" style="width: 100%;">Lo-fi beat.mp3</div>
                     </div>
                   </div>
-                  <div class="ve-playhead" id="ve-playhead"></div>
-                  <div class="ve-caption" id="ve-caption">My First Video</div>
-                  <div class="ve-music-note" id="ve-music-note">♪ music on</div>
                 </div>
 
-                <div class="ve-timeline">
-                  <div>
-                    <div class="ve-track-label">Video</div>
-                    <div class="ve-clip video" id="ve-video-clip" style="width: 100%;">
-                      beach-clip.mp4
-                      <span class="ve-trim" id="ve-trim"></span>
-                    </div>
-                  </div>
-                  <div id="ve-text-row" hidden>
-                    <div class="ve-track-label">Text</div>
-                    <div class="ve-clip text" style="width: 34%;">My First Video</div>
-                  </div>
-                  <div id="ve-audio-row" hidden>
-                    <div class="ve-track-label">Audio</div>
-                    <div class="ve-clip audio" style="width: 100%;">Lo-fi beat.mp3</div>
+                <div class="demo-view" data-view="export" id="demo-view-export" hidden>
+                  <div class="ve-export">
+                    <div class="ve-done-check" id="ve-export-check" hidden>✓</div>
+                    <h2 id="ve-export-title">Export your video</h2>
+                    <p id="ve-export-sub">One click renders the whole timeline.</p>
+                    <div class="ve-progress-bar" id="ve-export-bar-wrap" hidden><span id="ve-export-bar"></span></div>
+                    <div class="ve-done-url" id="ve-done-url" hidden>teachy.studio/share/my-first-video</div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Step 4: export -->
-              <div class="demo-view" data-view="export" id="demo-view-export" hidden>
-                <div class="ve-export">
-                  <div class="ve-done-check" id="ve-export-check" hidden>✓</div>
-                  <h2 id="ve-export-title">Export your video</h2>
-                  <p id="ve-export-sub">One click renders the whole timeline.</p>
-                  <div class="ve-progress-bar" id="ve-export-bar-wrap" hidden><span id="ve-export-bar"></span></div>
-                  <div class="ve-done-url" id="ve-done-url" hidden>teachy.studio/share/my-first-video</div>
+                <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
+
+                <div class="demo-clicky" id="demo-clicky" hidden>
+                  <div class="demo-speech" id="demo-speech" aria-live="polite"></div>
+                  <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
                 </div>
-              </div>
-
-              <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
-
-              <div class="demo-clicky" id="demo-clicky" hidden>
-                <div class="demo-speech" id="demo-speech" aria-live="polite"></div>
-                <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
               </div>
             </div>
           </div>
 
-          <div class="demo-hud editor">
+          <div class="demo-hud">
             <span class="demo-phase" id="demo-phase">Let’s go</span>
-            <button type="button" class="text-btn" id="skip-lesson">Skip lesson</button>
+            <button type="button" class="text-btn" id="skip-lesson">skip lesson</button>
           </div>
         </div>
-      </section>
-    </main>
 
-    <p class="lesson-footnote">
-      This is a pretend editor in your browser — but the steps are exactly what you’d do in any video app.
-      <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">Want Teachy to coach you live? Get the app →</a>
-    </p>
-  </div>
+        <p class="lesson-footnote">
+          this is a pretend editor in your browser — but the steps are exactly what you’d do in any video app.
+          <a href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">want teachy to coach you live? get the app →</a>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="hey-footer">
+    <div class="wrap hey-footer-cols">
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">product</span>
+        <a href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">download</a>
+        <a href="quick-github-lesson.html">free lesson</a>
+        <a href="index.html#product">pricing</a>
+      </div>
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">learn</span>
+        <a href="quick-github-lesson.html">free lesson</a>
+        <a href="index.html#fluency">how it works</a>
+        <a href="index.html#faq">faq</a>
+      </div>
+      <div class="hey-footer-col">
+        <span class="hey-footer-head">contact</span>
+        <a href="enterprise.html">for teams</a>
+        <a href="mailto:enterprise@teachy.app?subject=Teachy%20for%20Teams">email us</a>
+      </div>
+      <div class="hey-footer-col hey-footer-disclaimer">
+        <span class="hey-footer-head">privacy</span>
+        <p>teachy only sees your screen when you press the hotkey. screenshots go through your own proxy — never stored, never sold.</p>
+      </div>
+    </div>
+    <div class="hey-pixel-band" aria-hidden="true">
+      <span class="hey-pixel" data-text="teachy">teachy</span>
+    </div>
+  </footer>
 
   <script>
     (function () {
@@ -750,7 +850,6 @@
         if (aborted) return;
         await wait(450);
 
-        // Step 1: trim
         setStep(1, "active");
         if (vePlayhead) vePlayhead.style.left = "18%";
         await teachySays("grab the right edge of the clip and drag left to trim the boring bit.");
@@ -780,7 +879,6 @@
         if (aborted) return;
         await wait(400);
 
-        // Step 2: title
         setStep(1, "done");
         setStep(2, "active");
         if (veTextRow) veTextRow.hidden = false;
@@ -796,7 +894,6 @@
         if (aborted) return;
         await wait(400);
 
-        // Step 3: music
         setStep(2, "done");
         setStep(3, "active");
         if (veAudioRow) veAudioRow.hidden = false;
@@ -812,7 +909,6 @@
         if (aborted) return;
         await wait(400);
 
-        // Step 4: export
         setStep(3, "done");
         setStep(4, "active");
         showView(demoViewExport);

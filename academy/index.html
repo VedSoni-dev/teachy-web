@@ -11,24 +11,56 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="hey-page">
-  <!-- Cinematic intro → interactive demo -->
+  <!-- Scrapbook intro → interactive demo -->
   <div id="intro" class="intro" aria-hidden="false">
     <div class="intro-stage" id="intro-stage">
 
       <div class="intro-panel intro-flood" id="panel-flood">
+        <div class="intro-paper" aria-hidden="true"></div>
         <div class="flood-stack" id="flood-stack" aria-hidden="true"></div>
+        <div class="flood-vandal" id="flood-vandal" aria-hidden="true">
+          <svg class="fv-mark fv-circle-1" viewBox="0 0 120 90" fill="none">
+            <ellipse class="mk-path" cx="60" cy="45" rx="52" ry="36" pathLength="1" />
+          </svg>
+          <svg class="fv-mark fv-x-1" viewBox="0 0 80 80" fill="none">
+            <path class="mk-path" d="M12 14 L68 66 M68 14 L12 66" pathLength="1" />
+          </svg>
+          <svg class="fv-mark fv-circle-2" viewBox="0 0 120 90" fill="none">
+            <ellipse class="mk-path" cx="60" cy="45" rx="50" ry="34" pathLength="1" />
+          </svg>
+          <svg class="fv-mark fv-x-2" viewBox="0 0 80 80" fill="none">
+            <path class="mk-path" d="M10 18 L70 62 M66 12 L14 68" pathLength="1" />
+          </svg>
+          <svg class="fv-mark fv-scribble" viewBox="0 0 200 40" fill="none">
+            <path class="mk-path" d="M8 22 C30 6, 50 34, 72 18 S110 8, 130 24 S170 36, 192 14" pathLength="1" />
+          </svg>
+          <span class="fv-sticker fv-sticker-nope">NOPE</span>
+          <span class="fv-sticker fv-sticker-skip">skip →</span>
+        </div>
         <div class="flood-veil">
           <p class="flood-kicker" id="flood-kicker">Sound familiar?</p>
           <p class="type-line flood-type" id="flood-type" aria-live="polite"></p>
+          <p class="flood-margin-note" id="flood-margin-note" hidden>← every. single. time.</p>
         </div>
       </div>
 
       <div class="intro-panel intro-manifesto" id="panel-manifesto" hidden>
-        <div class="manifesto-type" id="manifesto-type" aria-live="polite"></div>
+        <div class="intro-notebook-page">
+          <div class="intro-holes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="intro-date-scrawl" aria-hidden="true">today ★</p>
+          <div class="manifesto-type" id="manifesto-type" aria-live="polite"></div>
+          <svg class="intro-note-marks" viewBox="0 0 420 220" fill="none" aria-hidden="true">
+            <path class="mk-path inm-underline" d="M40 78 C90 70, 160 88, 220 74 S320 68, 380 82" pathLength="1" />
+            <ellipse class="mk-path inm-circle" cx="210" cy="148" rx="118" ry="38" pathLength="1" />
+            <path class="mk-path inm-star" d="M360 28 L366 42 L382 44 L370 54 L374 70 L360 62 L346 70 L350 54 L338 44 L354 42 Z" pathLength="1" />
+            <path class="mk-path inm-arrow" d="M48 168 C70 150, 96 142, 124 148 L112 136 M124 148 L110 158" pathLength="1" />
+          </svg>
+        </div>
       </div>
 
       <div class="intro-panel intro-name" id="panel-name" hidden>
@@ -36,8 +68,19 @@
         <div class="bam-wrap" id="bam-wrap" hidden>
           <div class="bam-flash" id="bam-flash"></div>
           <div class="intro-clicky-mark bam-mark" aria-hidden="true"></div>
-          <h1 class="brand-reveal bam-title" id="bam-title">Teachy</h1>
-          <p class="brand-sub bam-sub" id="bam-sub">the simplest way to learn anything</p>
+          <div class="bam-title-wrap">
+            <h1 class="brand-reveal bam-title" id="bam-title">Teachy</h1>
+            <svg class="bam-circle" viewBox="0 0 280 110" fill="none" aria-hidden="true">
+              <ellipse class="mk-path" cx="140" cy="55" rx="128" ry="42" pathLength="1" />
+            </svg>
+            <svg class="bam-stars" viewBox="0 0 320 140" fill="none" aria-hidden="true">
+              <path class="mk-path bam-star-a" d="M28 40 L32 52 L45 54 L35 62 L38 75 L28 68 L18 75 L21 62 L11 54 L24 52 Z" pathLength="1" />
+              <path class="mk-path bam-star-b" d="M292 28 L296 38 L308 40 L298 48 L301 60 L292 53 L283 60 L286 48 L276 40 L288 38 Z" pathLength="1" />
+              <path class="mk-path bam-star-c" d="M268 98 L271 106 L280 107 L273 113 L275 122 L268 117 L261 122 L263 113 L256 107 L265 106 Z" pathLength="1" />
+            </svg>
+          </div>
+          <p class="brand-sub bam-sub" id="bam-sub">your 1:1 tutor — on the real screen</p>
+          <p class="bam-hand-note" aria-hidden="true">★ finally.</p>
         </div>
       </div>
 
@@ -189,9 +232,8 @@
       </div>
 
       <div class="hey-hero-center">
-        <span class="hey-eyebrow"><i class="hey-eyebrow-dot"></i>your 1:1 ai-fluency tutor · lives on your mac</span>
         <h1 class="hey-wordmark" data-text="teachy">teachy</h1>
-        <p class="hey-tagline">an ai buddy that helps you get <span class="hl">fluent in ai &amp; building</span> — by actually doing it</p>
+        <p class="hey-tagline">an ai buddy that helps you get <span class="hl">fluent in ai &amp; building</span></p>
         <div class="hero-actions">
           <a class="btn btn-primary" id="get-teachy" href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">
             <span class="btn-icon" aria-hidden="true">
@@ -238,21 +280,11 @@
         <span class="hey-bubble hb-3" aria-hidden="true"></span>
         <span class="hey-bubble hb-4" aria-hidden="true"></span>
         <span class="hey-bubble hb-5" aria-hidden="true"></span>
-        <div class="hey-stamp" aria-hidden="true">
-          <svg viewBox="0 0 120 120">
-            <defs><path id="hey-stamp-path" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"></path></defs>
-            <text><textPath href="#hey-stamp-path">★ learn by doing ★ not by watching ★ </textPath></text>
-          </svg>
-          <span class="hey-stamp-mid">▶</span>
-        </div>
       </div>
 
-      <p class="hero-hint" id="hero-hint">the blue cursor is teachy. it follows yours.</p>
     </section>
 
-    <div class="hey-dots" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span><span class="hey-dot-play">▸</span>
-    </div>
+    <div class="hey-rule" aria-hidden="true"><span></span></div>
 
     <!-- —— Feature rows —— -->
     <section class="hey-features wrap" id="fluency">
@@ -277,9 +309,7 @@
         </div>
       </article>
 
-      <div class="hey-dots hey-dots-tight" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span>
-      </div>
+      <div class="hey-rule hey-rule-tight" aria-hidden="true"><span></span></div>
 
       <article class="hey-feature hey-feature-reverse">
         <div class="hey-feature-copy">
@@ -307,9 +337,7 @@
         </div>
       </article>
 
-      <div class="hey-dots hey-dots-tight" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span class="hey-dot-play">▸</span>
-      </div>
+      <div class="hey-rule hey-rule-tight" aria-hidden="true"><span></span></div>
 
       <article class="hey-feature">
         <div class="hey-feature-copy">
@@ -336,152 +364,114 @@
 
     <!-- —— Capability strip: the breadth of what teachy coaches —— -->
     <section class="hey-apps">
+      <div class="hey-apps-wall" aria-hidden="true">
+        <img class="hey-apps-logo" src="logos/claude.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/chatgpt.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/figma.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/excel.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/vscode.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/apple.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/github.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/notion.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/terminal.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/canva.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/blender.svg" alt="" />
+        <img class="hey-apps-logo" src="logos/photoshop.svg" alt="" />
+      </div>
       <div class="hey-section-head">
         <h2>get fluent in <span class="hl">all of it</span>.</h2>
-        <p>the ai tools everyone's fumbling with — and the software around them. teachy coaches you inside the real app, whichever one you just opened.</p>
-      </div>
-      <div class="hey-apps-marquee" aria-hidden="true">
-        <div class="hey-apps-track">
-          <span class="hey-app-chip"><b class="ac-claude"></b>claude</span>
-          <span class="hey-app-chip"><b class="ac-gpt"></b>chatgpt</span>
-          <span class="hey-app-chip"><b class="ac-figma"></b>figma</span>
-          <span class="hey-app-chip"><b class="ac-excel"></b>excel &amp; sheets</span>
-          <span class="hey-app-chip"><b class="ac-code"></b>vs code</span>
-          <span class="hey-app-chip"><b class="ac-music"></b>garageband</span>
-          <span class="hey-app-chip"><b class="ac-git"></b>github</span>
-          <span class="hey-app-chip"><b class="ac-notion"></b>notion</span>
-          <span class="hey-app-chip"><b class="ac-term"></b>the terminal</span>
-          <span class="hey-app-chip"><b class="ac-canva"></b>canva</span>
-          <span class="hey-app-chip"><b class="ac-blender"></b>blender</span>
-          <span class="hey-app-chip"><b class="ac-photo"></b>photoshop</span>
-        </div>
-        <div class="hey-apps-track" aria-hidden="true">
-          <span class="hey-app-chip"><b class="ac-claude"></b>claude</span>
-          <span class="hey-app-chip"><b class="ac-gpt"></b>chatgpt</span>
-          <span class="hey-app-chip"><b class="ac-figma"></b>figma</span>
-          <span class="hey-app-chip"><b class="ac-excel"></b>excel &amp; sheets</span>
-          <span class="hey-app-chip"><b class="ac-code"></b>vs code</span>
-          <span class="hey-app-chip"><b class="ac-music"></b>garageband</span>
-          <span class="hey-app-chip"><b class="ac-git"></b>github</span>
-          <span class="hey-app-chip"><b class="ac-notion"></b>notion</span>
-          <span class="hey-app-chip"><b class="ac-term"></b>the terminal</span>
-          <span class="hey-app-chip"><b class="ac-canva"></b>canva</span>
-          <span class="hey-app-chip"><b class="ac-blender"></b>blender</span>
-          <span class="hey-app-chip"><b class="ac-photo"></b>photoshop</span>
-        </div>
+        <p>the ai tools everyone's fumbling with, and the software around them. teachy coaches you inside the real app, whichever one you just opened.</p>
       </div>
       <p class="hey-apps-foot">…and whatever you open next. <strong>teachy figures it out live.</strong></p>
     </section>
 
-    <!-- —— Chat demo —— -->
-    <section class="chat-demo wrap">
-      <div class="hey-section-head">
+    <!-- —— Chat demo: five tiny threads, different tasks —— -->
+    <section class="chat-demo">
+      <div class="hey-section-head wrap">
         <h2>like texting a friend who knows everything</h2>
+        <p>photo edits, git, spreadsheets, figma, the terminal. whatever’s on your screen.</p>
       </div>
-      <div class="chat-surface" aria-label="Texting animation">
-        <div class="chat-row chat-right chat-blue">
-          <div class="chat-bubble">
-            <span class="chat-tail-fill" aria-hidden="true"></span>
-            <span class="chat-tail-mask" aria-hidden="true"></span>
-            <div class="chat-bubble-body">
-              <span class="chat-sheen" aria-hidden="true"></span>
-              <p>how do i cut the background out of this photo</p>
-            </div>
-          </div>
+      <div class="chat-gallery" aria-label="Example Teachy conversations">
+
+        <div class="chat-surface" data-chat-delay="0" aria-label="Photo edit">
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>cut the background out of this photo</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>open Preview. i’ll point at the wand.</p></div></div></div>
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>ohh got it!</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>clean cut. drop it in the poster?</p></div></div></div>
+          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
         </div>
-        <div class="chat-row chat-left chat-orange">
-          <div class="chat-bubble">
-            <span class="chat-tail-fill" aria-hidden="true"></span>
-            <span class="chat-tail-mask" aria-hidden="true"></span>
-            <div class="chat-bubble-body">
-              <span class="chat-sheen" aria-hidden="true"></span>
-              <p>on it — open it in Preview. i'll point at the exact tool.</p>
-            </div>
-          </div>
+
+        <div class="chat-surface" data-chat-delay="350" aria-label="Git">
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>how do i commit this</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>stage the files first. click here.</p></div></div></div>
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>ok… message?</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>“fix login redirect”. then commit.</p></div></div></div>
+          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
         </div>
-        <div class="chat-row chat-left chat-orange">
-          <div class="chat-bubble">
-            <span class="chat-tail-fill" aria-hidden="true"></span>
-            <span class="chat-tail-mask" aria-hidden="true"></span>
-            <div class="chat-bubble-body">
-              <span class="chat-sheen" aria-hidden="true"></span>
-              <p>i can see it. click the little wand icon, top-right.</p>
-            </div>
-          </div>
+
+        <div class="chat-surface" data-chat-delay="700" aria-label="Spreadsheet">
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>sum this column for me</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>click B4. type =SUM(</p></div></div></div>
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>then drag?</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>yep. B1 to B3. enter. 883.</p></div></div></div>
+          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
         </div>
-        <div class="chat-row chat-right chat-blue">
-          <div class="chat-bubble">
-            <span class="chat-tail-fill" aria-hidden="true"></span>
-            <span class="chat-tail-mask" aria-hidden="true"></span>
-            <div class="chat-bubble-body">
-              <span class="chat-sheen" aria-hidden="true"></span>
-              <p>ohh got it. done!</p>
-            </div>
-          </div>
+
+        <div class="chat-surface" data-chat-delay="1050" aria-label="Figma">
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>never opened figma. help</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>drop a rectangle for the bg.</p></div></div></div>
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>title’s too small</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>grab the corner. pull. bigger.</p></div></div></div>
+          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
         </div>
-        <div class="chat-row chat-left chat-orange">
-          <div class="chat-bubble">
-            <span class="chat-tail-fill" aria-hidden="true"></span>
-            <span class="chat-tail-mask" aria-hidden="true"></span>
-            <div class="chat-bubble-body">
-              <span class="chat-sheen" aria-hidden="true"></span>
-              <p>clean cut. want me to drop it into that poster next?</p>
-            </div>
-          </div>
+
+        <div class="chat-surface" data-chat-delay="1400" aria-label="Terminal">
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>how do i deploy this</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>open terminal. i’ll type with you.</p></div></div></div>
+          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>npm run build… done</p></div></div></div>
+          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>nice. now push. you’re live.</p></div></div></div>
+          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
         </div>
-        <div class="chat-typing chat-left chat-orange">
-          <div class="chat-bubble">
-            <span class="chat-tail-fill" aria-hidden="true"></span>
-            <span class="chat-tail-mask" aria-hidden="true"></span>
-            <div class="chat-bubble-body">
-              <span class="chat-sheen" aria-hidden="true"></span>
-              <p class="chat-typing-dots"><span></span><span></span><span></span></p>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
 
     <!-- —— Manifesto letter —— -->
     <section class="hey-letter-band">
-      <div class="hey-cascade hey-cascade-left" aria-hidden="true">
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      </div>
       <div class="hey-letter">
+        <p class="hey-letter-from">a note from the founder</p>
         <p>we all know how to watch tutorials. very few of us know how to actually make things.</p>
         <p>that's not a you problem. videos can't see your screen, can't point at the right button, and can't tell when you're stuck.</p>
         <p>teachy can. it sits beside your cursor and <mark>coaches you through the real work</mark> until the thing is actually made.</p>
         <p>it's free, it lives quietly in your menu bar, and it remembers what you already know. come make something.</p>
-        <p class="hey-signature">— ved, maker of teachy</p>
-      </div>
-      <div class="hey-cascade hey-cascade-right" aria-hidden="true">
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <p class="hey-signature">— ved</p>
       </div>
     </section>
 
-    <!-- —— Outcomes wall —— -->
+    <!-- —— Outcomes: a few real wins, not a wall of sameness —— -->
     <section class="hey-wall">
-      <div class="hey-marquee" aria-hidden="true">
-        <div class="hey-marquee-track">
-          <span>learn by actually doing it · learn by actually doing it · learn by actually doing it · learn by actually doing it · </span>
-          <span>learn by actually doing it · learn by actually doing it · learn by actually doing it · learn by actually doing it · </span>
-        </div>
+      <div class="hey-section-head wrap">
+        <h2>stuff people actually finish</h2>
+        <p>not “watched a video.” made the thing.</p>
       </div>
-      <div class="hey-section-head">
-        <h2>real things, actually made</h2>
-        <p>what learning with teachy looks like in week one.</p>
-      </div>
-      <div class="hey-wall-grid wrap">
-        <article class="hey-card hey-tint-blue"><span class="hey-card-tag">day 1</span><p>put my first website on the internet. an actual url. my url.</p></article>
-        <article class="hey-card hey-tint-pink"><span class="hey-card-tag">day 2</span><p>opened my first pull request without googling "what is a pull request"</p></article>
-        <article class="hey-card hey-tint-yellow"><span class="hey-card-tag">day 3</span><p>finally understand what git actually does. it pointed at every button.</p></article>
-        <article class="hey-card hey-tint-green"><span class="hey-card-tag">day 4</span><p>built a claude workflow that drafts my weekly report</p></article>
-        <article class="hey-card hey-tint-purple"><span class="hey-card-tag">day 5</span><p>wrote a python script that renamed 400 files. by hand that's a saturday.</p></article>
-        <article class="hey-card hey-tint-blue"><span class="hey-card-tag">day 6</span><p>made a figma mockup without watching a single video</p></article>
-        <article class="hey-card hey-tint-yellow"><span class="hey-card-tag">week 2</span><p>my terminal doesn't scare me anymore</p></article>
-        <article class="hey-card hey-tint-pink"><span class="hey-card-tag">week 2</span><p>automated the spreadsheet i've hated for two years</p></article>
-        <article class="hey-card hey-tint-green"><span class="hey-card-tag">week 3</span><p>taught my mom to use chatgpt. teachy taught me first.</p></article>
-      </div>
+      <ul class="hey-wins wrap">
+        <li class="hey-win hey-win-wide">
+          <span class="hey-win-label">shipped</span>
+          <p>first website live. real url. theirs.</p>
+        </li>
+        <li class="hey-win">
+          <span class="hey-win-label">figured out</span>
+          <p>git, without googling every button</p>
+        </li>
+        <li class="hey-win">
+          <span class="hey-win-label">automated</span>
+          <p>the spreadsheet they’d been dreading</p>
+        </li>
+        <li class="hey-win hey-win-accent">
+          <span class="hey-win-label">taught</span>
+          <p>mom how to use chatgpt. teachy taught them first.</p>
+        </li>
+      </ul>
       <p class="hey-wall-cta">
         <a href="https://github.com/VedSoni-dev/teachy/releases/latest" target="_blank" rel="noopener">free, forever. <strong>get teachy →</strong></a>
       </p>
@@ -503,7 +493,7 @@
             <ul>
               <li>voice tutor on any app or tool</li>
               <li>courses with real, verified outcomes</li>
-              <li>"do it for me" when you're stuck</li>
+              <li>live coaching inside the real app</li>
               <li>remembers what you know</li>
               <li>free forever · no account needed</li>
             </ul>
@@ -523,8 +513,10 @@
             <ul>
               <li>custom learning paths for your org</li>
               <li>trained on your stack, SOPs, internal tools</li>
+              <li>steers people to the right AI for each task</li>
+              <li>keeps sensitive data out of the wrong places</li>
+              <li>coaches best practices live, not via policy PDFs</li>
               <li>1:1 coaching at scale, not slide decks</li>
-              <li>bespoke AI systems + integration</li>
               <li>verified skills, not "watched training"</li>
             </ul>
             <a class="btn btn-secondary" href="enterprise.html">
@@ -602,6 +594,10 @@
         <p>teachy only sees your screen when you press the hotkey. screenshots go through your own proxy — never stored, never sold.</p>
       </div>
     </div>
+    <p class="hey-footer-credit wrap">
+      inspired by the interface of
+      <a href="https://www.heyclicky.com/" target="_blank" rel="noopener">hey clicky</a>.
+    </p>
     <div class="hey-pixel-band" aria-hidden="true">
       <span class="hey-pixel" data-text="teachy">teachy</span>
     </div>
