@@ -13,165 +13,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=reaction1" />
 </head>
 <body class="hey-page">
-  <!-- Scrapbook intro → interactive demo -->
-  <div id="intro" class="intro" aria-hidden="false">
-    <div class="intro-stage" id="intro-stage">
-
-      <div class="intro-panel intro-flood" id="panel-flood">
-        <div class="intro-paper" aria-hidden="true"></div>
-        <div class="flood-stack" id="flood-stack" aria-hidden="true"></div>
-        <div class="flood-vandal" id="flood-vandal" aria-hidden="true">
-          <svg class="fv-mark fv-circle-1" viewBox="0 0 120 90" fill="none">
-            <ellipse class="mk-path" cx="60" cy="45" rx="52" ry="36" pathLength="1" />
-          </svg>
-          <svg class="fv-mark fv-x-1" viewBox="0 0 80 80" fill="none">
-            <path class="mk-path" d="M12 14 L68 66 M68 14 L12 66" pathLength="1" />
-          </svg>
-          <svg class="fv-mark fv-circle-2" viewBox="0 0 120 90" fill="none">
-            <ellipse class="mk-path" cx="60" cy="45" rx="50" ry="34" pathLength="1" />
-          </svg>
-          <svg class="fv-mark fv-x-2" viewBox="0 0 80 80" fill="none">
-            <path class="mk-path" d="M10 18 L70 62 M66 12 L14 68" pathLength="1" />
-          </svg>
-          <svg class="fv-mark fv-scribble" viewBox="0 0 200 40" fill="none">
-            <path class="mk-path" d="M8 22 C30 6, 50 34, 72 18 S110 8, 130 24 S170 36, 192 14" pathLength="1" />
-          </svg>
-          <span class="fv-sticker fv-sticker-nope">NOPE</span>
-          <span class="fv-sticker fv-sticker-skip">skip →</span>
-        </div>
-        <div class="flood-veil">
-          <p class="flood-kicker" id="flood-kicker">Sound familiar?</p>
-          <p class="type-line flood-type" id="flood-type" aria-live="polite"></p>
-          <p class="flood-margin-note" id="flood-margin-note" hidden>← every. single. time.</p>
-        </div>
-      </div>
-
-      <div class="intro-panel intro-manifesto" id="panel-manifesto" hidden>
-        <div class="intro-notebook-page">
-          <div class="intro-holes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-          <p class="intro-date-scrawl" aria-hidden="true">today ★</p>
-          <div class="manifesto-type" id="manifesto-type" aria-live="polite"></div>
-          <svg class="intro-note-marks" viewBox="0 0 420 220" fill="none" aria-hidden="true">
-            <path class="mk-path inm-underline" d="M40 78 C90 70, 160 88, 220 74 S320 68, 380 82" pathLength="1" />
-            <ellipse class="mk-path inm-circle" cx="210" cy="148" rx="118" ry="38" pathLength="1" />
-            <path class="mk-path inm-star" d="M360 28 L366 42 L382 44 L370 54 L374 70 L360 62 L346 70 L350 54 L338 44 L354 42 Z" pathLength="1" />
-            <path class="mk-path inm-arrow" d="M48 168 C70 150, 96 142, 124 148 L112 136 M124 148 L110 158" pathLength="1" />
-          </svg>
-        </div>
-      </div>
-
-      <div class="intro-panel intro-name" id="panel-name" hidden>
-        <p class="type-line introducing-type" id="introducing-type"></p>
-        <div class="bam-wrap" id="bam-wrap" hidden>
-          <div class="bam-flash" id="bam-flash"></div>
-          <div class="intro-clicky-mark bam-mark" aria-hidden="true"></div>
-          <div class="bam-title-wrap">
-            <h1 class="brand-reveal bam-title" id="bam-title">Teachy</h1>
-            <svg class="bam-circle" viewBox="0 0 280 110" fill="none" aria-hidden="true">
-              <ellipse class="mk-path" cx="140" cy="55" rx="128" ry="42" pathLength="1" />
-            </svg>
-            <svg class="bam-stars" viewBox="0 0 320 140" fill="none" aria-hidden="true">
-              <path class="mk-path bam-star-a" d="M28 40 L32 52 L45 54 L35 62 L38 75 L28 68 L18 75 L21 62 L11 54 L24 52 Z" pathLength="1" />
-              <path class="mk-path bam-star-b" d="M292 28 L296 38 L308 40 L298 48 L301 60 L292 53 L283 60 L286 48 L276 40 L288 38 Z" pathLength="1" />
-              <path class="mk-path bam-star-c" d="M268 98 L271 106 L280 107 L273 113 L275 122 L268 117 L261 122 L263 113 L256 107 L265 106 Z" pathLength="1" />
-            </svg>
-          </div>
-          <p class="brand-sub bam-sub" id="bam-sub">your 1:1 tutor — on the real screen</p>
-          <p class="bam-hand-note" aria-hidden="true">★ finally.</p>
-        </div>
-      </div>
-
-      <!-- Interactive IRL-style demo (fake browser) -->
-      <div class="intro-panel intro-demo" id="panel-demo" hidden>
-        <div class="demo-shell">
-          <div class="demo-browser" id="demo-browser">
-            <div class="demo-chrome">
-              <div class="demo-dots"><i></i><i></i><i></i></div>
-              <div class="demo-url">
-                <span class="demo-lock" aria-hidden="true"></span>
-                <span id="demo-url-text">github.com/new</span>
-              </div>
-            </div>
-
-            <div class="demo-page" id="demo-page">
-              <div class="demo-view is-active" data-view="home" id="demo-view-home">
-                <header class="gh-top">
-                  <span class="gh-logo">Octo</span>
-                  <nav class="gh-nav"><span>Pull requests</span><span>Issues</span></nav>
-                  <button type="button" class="gh-new" id="demo-btn-new" data-demo-target="new">
-                    New <em>▾</em>
-                  </button>
-                </header>
-                <div class="gh-home-body">
-                  <h2>Your repositories</h2>
-                  <p class="gh-muted">Nothing here yet, let's make one.</p>
-                  <ul class="gh-empty-list">
-                    <li></li><li></li><li></li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="demo-view" data-view="form" id="demo-view-form" hidden>
-                <div class="gh-form">
-                  <h2>Create a new repository</h2>
-                  <label class="gh-field">
-                    <span>Repository name</span>
-                    <input
-                      id="demo-repo-name"
-                      type="text"
-                      placeholder="hello-teachy"
-                      autocomplete="off"
-                      spellcheck="false"
-                      data-demo-target="name"
-                    />
-                  </label>
-                  <label class="gh-field">
-                    <span>Description (optional)</span>
-                    <input type="text" placeholder="my first repo" disabled tabindex="-1" />
-                  </label>
-                  <div class="gh-visibility">
-                    <label><input type="radio" checked disabled /> Public</label>
-                    <label><input type="radio" disabled /> Private</label>
-                  </div>
-                  <button type="button" class="gh-create" id="demo-btn-create" data-demo-target="create" disabled>
-                    Create repository
-                  </button>
-                </div>
-              </div>
-
-              <div class="demo-view" data-view="done" id="demo-view-done" hidden>
-                <div class="gh-done">
-                  <div class="gh-check" aria-hidden="true">✓</div>
-                  <h2 id="demo-done-title">hello-teachy</h2>
-                  <p>Created. Empty repo, ready for your first commit.</p>
-                  <div class="gh-code-block">
-                    <code>git clone https://github.com/you/hello-teachy.git</code>
-                  </div>
-                </div>
-              </div>
-
-              <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
-
-              <div class="demo-clicky" id="demo-clicky" hidden>
-                <div class="demo-speech" id="demo-speech" aria-live="polite"></div>
-                <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="demo-hud">
-            <span class="demo-phase" id="demo-phase">Your turn</span>
-            <button type="button" class="text-btn" id="skip-demo">Skip demo</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button type="button" class="intro-skip-all" id="skip-intro">Skip intro</button>
-  </div>
-
   <div id="clicky-guide" class="clicky-guide" hidden aria-hidden="true">
     <div class="clicky-cursor" aria-hidden="true"></div>
   </div>
@@ -186,6 +30,7 @@
         teachy
       </a>
       <nav class="nav">
+        <a href="#reaction">try it</a>
         <a href="#product">pricing</a>
         <a href="enterprise.html">enterprise</a>
         <a href="#faq">faq</a>
@@ -193,7 +38,6 @@
           <span>get teachy</span>
         </a>
       </nav>
-      <button type="button" class="ghost-btn" id="replay-intro">replay</button>
     </div>
   </header>
 
@@ -282,6 +126,109 @@
         <span class="hey-bubble hb-5" aria-hidden="true"></span>
       </div>
 
+    </section>
+
+    <div class="hey-rule" aria-hidden="true"><span></span></div>
+
+    <!-- —— Reaction loop: interactive demo on the page —— -->
+    <section class="hey-reaction wrap" id="reaction">
+      <div class="hey-reaction-copy">
+        <span class="hey-label-bubble">try it</span>
+        <h2>you act. teachy reacts.</h2>
+        <p>Not a video you pause. Teachy points at the next move, waits for you to do it, then checks and coaches the next step — the same reaction loop as on your Mac.</p>
+        <ol class="hey-reaction-steps">
+          <li><strong>points</strong> at what to do</li>
+          <li><strong>waits</strong> for you to click or type</li>
+          <li><strong>checks</strong>, then coaches the next step</li>
+        </ol>
+        <button type="button" class="btn btn-secondary" id="restart-demo">
+          <span class="btn-label">restart demo</span>
+        </button>
+      </div>
+
+      <div class="hey-reaction-demo" id="panel-demo">
+        <div class="demo-shell">
+          <div class="demo-browser" id="demo-browser">
+            <div class="demo-chrome">
+              <div class="demo-dots"><i></i><i></i><i></i></div>
+              <div class="demo-url">
+                <span class="demo-lock" aria-hidden="true"></span>
+                <span id="demo-url-text">github.com/new</span>
+              </div>
+            </div>
+
+            <div class="demo-page" id="demo-page">
+              <div class="demo-view is-active" data-view="home" id="demo-view-home">
+                <header class="gh-top">
+                  <span class="gh-logo">Octo</span>
+                  <nav class="gh-nav"><span>Pull requests</span><span>Issues</span></nav>
+                  <button type="button" class="gh-new" id="demo-btn-new" data-demo-target="new">
+                    New <em>▾</em>
+                  </button>
+                </header>
+                <div class="gh-home-body">
+                  <h2>Your repositories</h2>
+                  <p class="gh-muted">Nothing here yet, let's make one.</p>
+                  <ul class="gh-empty-list">
+                    <li></li><li></li><li></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="demo-view" data-view="form" id="demo-view-form" hidden>
+                <div class="gh-form">
+                  <h2>Create a new repository</h2>
+                  <label class="gh-field">
+                    <span>Repository name</span>
+                    <input
+                      id="demo-repo-name"
+                      type="text"
+                      placeholder="hello-teachy"
+                      autocomplete="off"
+                      spellcheck="false"
+                      data-demo-target="name"
+                    />
+                  </label>
+                  <label class="gh-field">
+                    <span>Description (optional)</span>
+                    <input type="text" placeholder="my first repo" disabled tabindex="-1" />
+                  </label>
+                  <div class="gh-visibility">
+                    <label><input type="radio" checked disabled /> Public</label>
+                    <label><input type="radio" disabled /> Private</label>
+                  </div>
+                  <button type="button" class="gh-create" id="demo-btn-create" data-demo-target="create" disabled>
+                    Create repository
+                  </button>
+                </div>
+              </div>
+
+              <div class="demo-view" data-view="done" id="demo-view-done" hidden>
+                <div class="gh-done">
+                  <div class="gh-check" aria-hidden="true">✓</div>
+                  <h2 id="demo-done-title">hello-teachy</h2>
+                  <p>Created. Empty repo, ready for your first commit.</p>
+                  <div class="gh-code-block">
+                    <code>git clone https://github.com/you/hello-teachy.git</code>
+                  </div>
+                </div>
+              </div>
+
+              <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
+
+              <div class="demo-clicky" id="demo-clicky" hidden>
+                <div class="demo-speech" id="demo-speech" aria-live="polite"></div>
+                <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-hud">
+            <span class="demo-phase" id="demo-phase">Your turn</span>
+            <button type="button" class="text-btn" id="skip-demo">Skip</button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <div class="hey-rule" aria-hidden="true"><span></span></div>
@@ -603,6 +550,6 @@
     </div>
   </footer>
 
-  <script src="app.js" defer></script>
+  <script src="app.js?v=reaction1" defer></script>
 </body>
 </html>

@@ -11,35 +11,14 @@
     );
   } catch (e) {}
 
-  var INTRO_STORAGE_KEY = "teachyIntroSeen_v2";
-
-  var tourTimer = null;
-  var introAborted = false;
+  var demoAborted = false;
   var demoWaitingCleanup = null;
+  var demoRunToken = 0;
 
-  var introEl = document.getElementById("intro");
-  var introStage = document.getElementById("intro-stage");
-  var panelFlood = document.getElementById("panel-flood");
-  var panelManifesto = document.getElementById("panel-manifesto");
-  var panelName = document.getElementById("panel-name");
-  var panelDemo = document.getElementById("panel-demo");
-  var floodStack = document.getElementById("flood-stack");
-  var floodKicker = document.getElementById("flood-kicker");
-  var floodType = document.getElementById("flood-type");
-  var floodMarginNote = document.getElementById("flood-margin-note");
-  var floodVandal = document.getElementById("flood-vandal");
-  var manifestoType = document.getElementById("manifesto-type");
-  var introducingType = document.getElementById("introducing-type");
-  var bamWrap = document.getElementById("bam-wrap");
-  var introNoteMarks = document.querySelector(".intro-note-marks");
-  var bamTitleWrap = document.querySelector(".bam-title-wrap");
-  var bamCircle = document.querySelector(".bam-circle");
-  var bamStars = document.querySelector(".bam-stars");
-  var skipIntroBtn = document.getElementById("skip-intro");
   var skipDemoBtn = document.getElementById("skip-demo");
-  var replayIntroBtn = document.getElementById("replay-intro");
-  var tryDemoBtn = document.getElementById("try-demo");
+  var restartDemoBtn = document.getElementById("restart-demo");
   var clickyGuide = document.getElementById("clicky-guide");
+  var reactionSection = document.getElementById("reaction");
 
   var demoPhase = document.getElementById("demo-phase");
   var demoPage = document.getElementById("demo-page");
@@ -56,45 +35,15 @@
   var demoRepoName = document.getElementById("demo-repo-name");
   var demoDoneTitle = document.getElementById("demo-done-title");
 
-  var FLOOD_THUMBS = [
-    "thumbs/1.png",
-    "thumbs/2.png",
-    "thumbs/3.png",
-    "thumbs/4.png",
-    "thumbs/5.png",
-    "thumbs/6.png",
-  ];
-
-  var STACK_LAYOUT = [
-    { x: -150, y: 28, r: -14, z: 1 },
-    { x: 150, y: 20, r: 12, z: 2 },
-    { x: -70, y: -10, r: -6, z: 3 },
-    { x: 80, y: -6, r: 7, z: 4 },
-    { x: -20, y: 8, r: -2, z: 5 },
-    { x: 10, y: -18, r: 3, z: 6 },
-  ];
-
   function waitOrAbort(ms) {
     return new Promise(function (resolve) {
       var started = Date.now();
       var id = setInterval(function () {
-        if (introAborted || Date.now() - started >= ms) {
+        if (demoAborted || Date.now() - started >= ms) {
           clearInterval(id);
           resolve();
         }
       }, 40);
-    });
-  }
-
-  function showPanel(panel) {
-    [panelFlood, panelManifesto, panelName, panelDemo].forEach(function (el) {
-      if (!el) return;
-      el.hidden = el !== panel;
-      if (el === panel) {
-        el.style.animation = "none";
-        void el.offsetWidth;
-        el.style.animation = "";
-      }
     });
   }
 
@@ -109,7 +58,7 @@
     el.appendChild(caret);
 
     for (var i = 0; i < text.length; i++) {
-      if (introAborted) return;
+      if (demoAborted) return;
       textNode.textContent += text.charAt(i);
       var ch = text.charAt(i);
       var pause = speed;
@@ -118,29 +67,7 @@
       await waitOrAbort(pause);
     }
     await waitOrAbort(280);
-    if (!introAborted && caret.parentNode) caret.remove();
-  }
-
-  function buildFloodStack() {
-    if (!floodStack) return;
-    floodStack.innerHTML = "";
-    FLOOD_THUMBS.forEach(function (src, index) {
-      var layout = STACK_LAYOUT[index] || STACK_LAYOUT[STACK_LAYOUT.length - 1];
-      var card = document.createElement("div");
-      card.className = "flood-card-big";
-      card.style.zIndex = String(layout.z);
-      card.style.animationDelay = (index * 0.1).toFixed(2) + "s";
-      card.style.setProperty(
-        "--stack-end",
-        "translate(" + layout.x + "px, " + layout.y + "px) scale(1) rotate(" + layout.r + "deg)"
-      );
-      card.innerHTML =
-        '<img src="' +
-        src +
-        '" alt="" />' +
-        '<div class="fc-play" aria-hidden="true"></div>';
-      floodStack.appendChild(card);
-    });
+    if (!demoAborted && caret.parentNode) caret.remove();
   }
 
   function setDemoPhase(text, mode) {
@@ -223,7 +150,7 @@
 
   function waitForUser(register) {
     return new Promise(function (resolve) {
-      if (introAborted) {
+      if (demoAborted) {
         resolve(null);
         return;
       }
@@ -237,7 +164,7 @@
       }
       demoWaitingCleanup = register(done);
       var poll = setInterval(function () {
-        if (introAborted) {
+        if (demoAborted) {
           clearInterval(poll);
           done(null);
         }
@@ -268,25 +195,25 @@
     if (demoUrlText) demoUrlText.textContent = "github.com";
     if (demoDoneTitle) demoDoneTitle.textContent = "hello-teachy";
     showDemoView(demoViewHome);
-    setDemoPhase("Demo", "");
+    setDemoPhase("Ready", "");
   }
 
-  async function playInteractiveDemo() {
+  async function playInteractiveDemo(runToken) {
     resetDemo();
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
 
     setDemoPhase("Watch", "");
     placeDemoClicky(56, 100, false);
     await clickySays("hey — pretend this browser is your Mac. i’ll teach you like i do for real.");
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
     await waitOrAbort(450);
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
 
     // Step 1: click New
     if (demoUrlText) demoUrlText.textContent = "github.com";
     showDemoView(demoViewHome);
     await clickySays("goal: create a GitHub repo. click New.");
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
     pointDemoAt(demoBtnNew);
     setDemoPhase("Your turn", "wait");
 
@@ -306,21 +233,21 @@
         if (demoBtnNew) demoBtnNew.removeEventListener("click", onClick);
       };
     });
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
 
     clearDemoHighlights();
     setDemoPhase("Nice", "");
     placeDemoClicky(56, 100, false);
     await clickySays("good — you acted. that’s the loop.");
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
 
     // Step 2: name the repo
     showDemoView(demoViewForm);
     if (demoUrlText) demoUrlText.textContent = "github.com/new";
     await waitOrAbort(350);
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
     await clickySays("name it hello-teachy — then press return.");
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
     pointDemoAt(demoRepoName);
     if (demoRepoName) demoRepoName.focus();
     setDemoPhase("Your turn", "wait");
@@ -367,7 +294,7 @@
         }
       };
     });
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
 
     repoName = (repoName || (demoRepoName && demoRepoName.value.trim()) || "hello-teachy").replace(
       /\s+/g,
@@ -378,7 +305,7 @@
     clearDemoHighlights();
 
     await clickySays("perfect. hit Create repository.");
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
     pointDemoAt(demoBtnCreate);
     setDemoPhase("Your turn", "wait");
 
@@ -399,7 +326,7 @@
         if (demoBtnCreate) demoBtnCreate.removeEventListener("click", onClick);
       };
     });
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
 
     clearDemoHighlights();
     if (demoDoneTitle) demoDoneTitle.textContent = repoName;
@@ -409,167 +336,30 @@
     placeDemoClicky(56, 80, false);
 
     await clickySays("checked. point → you act → i check. that’s me.");
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
     await waitOrAbort(900);
-    if (introAborted) return;
+    if (demoAborted || runToken !== demoRunToken) return;
 
     await clickySays(
       "also — ask me anything. i keep memory of what you’re working on, so help stays specific to your day."
     );
-    if (introAborted) return;
-    await waitOrAbort(1400);
+    if (demoAborted || runToken !== demoRunToken) return;
+    setDemoPhase("Done", "done");
   }
 
-  function resetIntroMarks() {
-    if (floodVandal) floodVandal.classList.remove("is-marking", "is-marked");
-    if (floodMarginNote) {
-      floodMarginNote.hidden = true;
-      floodMarginNote.classList.remove("is-on");
-    }
-    if (introNoteMarks) introNoteMarks.classList.remove("is-drawn");
-    if (bamTitleWrap) bamTitleWrap.classList.remove("is-circled");
-    if (bamCircle) bamCircle.classList.remove("is-drawn");
-    if (bamStars) bamStars.classList.remove("is-drawn");
-  }
-
-  async function runIntro(options) {
-    options = options || {};
-    introAborted = false;
-    stopLandingCursor();
-    resetDemo();
-    resetIntroMarks();
-    buildFloodStack();
-    if (bamWrap) {
-      bamWrap.hidden = true;
-      bamWrap.classList.remove("is-in");
-    }
-    if (floodKicker) floodKicker.classList.remove("is-on");
-    if (floodType) floodType.textContent = "";
-    if (manifestoType) manifestoType.innerHTML = "";
-    if (introducingType) introducingType.textContent = "";
-    if (introStage) introStage.classList.remove("is-shake");
-
-    document.body.classList.add("intro-active");
-    if (introEl) {
-      introEl.classList.remove("is-done");
-      introEl.setAttribute("aria-hidden", "false");
-    }
-
-    if (!options.demoOnly) {
-      // —— Act 1: tutorial flood + sharpie vandalism ——
-      showPanel(panelFlood);
-      if (floodKicker) floodKicker.classList.remove("is-on");
-      if (floodType) floodType.textContent = "";
-      await waitOrAbort(280);
-      if (introAborted) return finishIntro(false);
-      if (floodKicker) floodKicker.classList.add("is-on");
-      await waitOrAbort(320);
-      if (introAborted) return finishIntro(false);
-      await typewrite(floodType, "Trying to learn anything…", 28);
-      if (introAborted) return finishIntro(false);
-      await waitOrAbort(380);
-      if (introAborted) return finishIntro(false);
-      await typewrite(floodType, "You get THIS.", 34);
-      if (introAborted) return finishIntro(false);
-      await waitOrAbort(420);
-      if (introAborted) return finishIntro(false);
-
-      if (floodVandal) {
-        floodVandal.classList.add("is-marking");
-        await waitOrAbort(900);
-        if (introAborted) return finishIntro(false);
-        floodVandal.classList.add("is-marked");
-      }
-      if (floodMarginNote) {
-        floodMarginNote.hidden = false;
-        void floodMarginNote.offsetWidth;
-        floodMarginNote.classList.add("is-on");
-      }
-      await waitOrAbort(900);
-      if (introAborted) return finishIntro(false);
-
-      // —— Act 2: notebook manifesto with marker doodles ——
-      showPanel(panelManifesto);
-      var manifestoLines = [
-        { text: "watching ≠ learning.", mark: false },
-        { text: "you need someone next to you.", mark: true },
-        { text: "pointing. coaching. checking.", mark: false },
-      ];
-      if (manifestoType) manifestoType.innerHTML = "";
-      for (var manifestoIndex = 0; manifestoIndex < manifestoLines.length; manifestoIndex++) {
-        if (introAborted) return finishIntro(false);
-        var manifestoLine = document.createElement("p");
-        manifestoLine.className = "type-line manifesto-line-typed";
-        if (manifestoIndex === 1) manifestoLine.classList.add("is-star-line");
-        if (manifestoType) manifestoType.appendChild(manifestoLine);
-        await typewrite(manifestoLine, manifestoLines[manifestoIndex].text, 36);
-        if (introAborted) return finishIntro(false);
-        if (manifestoIndex === 0 && introNoteMarks) {
-          introNoteMarks.classList.add("is-drawn");
-        }
-        await waitOrAbort(480);
-      }
-      if (introAborted) return finishIntro(false);
-      await waitOrAbort(700);
-      if (introAborted) return finishIntro(false);
-
-      // —— Act 3: circled brand reveal ——
-      showPanel(panelName);
-      await waitOrAbort(280);
-      if (introAborted) return finishIntro(false);
-      await typewrite(introducingType, "ok wait — introducing…", 55);
-      if (introAborted) return finishIntro(false);
-      await waitOrAbort(320);
-      if (introAborted) return finishIntro(false);
-
-      if (bamWrap) {
-        bamWrap.hidden = false;
-        void bamWrap.offsetWidth;
-        bamWrap.classList.add("is-in");
-      }
-      if (introStage) {
-        introStage.classList.remove("is-shake");
-        void introStage.offsetWidth;
-        introStage.classList.add("is-shake");
-      }
-      await waitOrAbort(520);
-      if (introAborted) return finishIntro(false);
-      if (bamTitleWrap) bamTitleWrap.classList.add("is-circled");
-      if (bamCircle) bamCircle.classList.add("is-drawn");
-      await waitOrAbort(420);
-      if (introAborted) return finishIntro(false);
-      if (bamStars) bamStars.classList.add("is-drawn");
-      await waitOrAbort(1100);
-      if (introAborted) return finishIntro(false);
-    }
-
-    showPanel(panelDemo);
-    await playInteractiveDemo();
-    if (introAborted) return finishIntro(false);
-
-    await waitOrAbort(400);
-    finishIntro(true);
-  }
-
-  function finishIntro(markSeen) {
-    introAborted = true;
+  function stopDemo() {
+    demoAborted = true;
+    demoRunToken += 1;
     cancelDemoWait();
     resetDemo();
-    if (markSeen) {
-      try {
-        localStorage.setItem(INTRO_STORAGE_KEY, "1");
-      } catch (e) {}
-    }
-    if (introEl) {
-      introEl.classList.add("is-done");
-      introEl.setAttribute("aria-hidden", "true");
-    }
-    document.body.classList.remove("intro-active");
-    startLandingCursor();
+    setDemoPhase("Skipped", "");
   }
 
-  function skipIntro() {
-    finishIntro(true);
+  function startDemo() {
+    demoAborted = false;
+    demoRunToken += 1;
+    var runToken = demoRunToken;
+    playInteractiveDemo(runToken);
   }
 
   var landingCursorActive = false;
@@ -614,32 +404,18 @@
     requestAnimationFrame(followPointerLoop);
   }
 
-  function stopLandingCursor() {
-    landingCursorActive = false;
-    document.body.classList.remove("landing-cursor");
-    window.removeEventListener("mousemove", onPointerMove);
-    if (clickyGuide) clickyGuide.hidden = true;
-  }
-
-  function beginReplay(demoOnly) {
-    if (tourTimer) clearTimeout(tourTimer);
-    if (clickyGuide) clickyGuide.hidden = true;
-    try {
-      localStorage.removeItem(INTRO_STORAGE_KEY);
-    } catch (e) {}
-    runIntro({ demoOnly: !!demoOnly });
-  }
-
-  if (skipIntroBtn) skipIntroBtn.addEventListener("click", skipIntro);
-  if (skipDemoBtn) skipDemoBtn.addEventListener("click", skipIntro);
-  if (replayIntroBtn) {
-    replayIntroBtn.addEventListener("click", function () {
-      beginReplay(false);
+  if (skipDemoBtn) {
+    skipDemoBtn.addEventListener("click", function () {
+      stopDemo();
     });
   }
-  if (tryDemoBtn) {
-    tryDemoBtn.addEventListener("click", function () {
-      beginReplay(true);
+
+  if (restartDemoBtn) {
+    restartDemoBtn.addEventListener("click", function () {
+      startDemo();
+      if (reactionSection) {
+        reactionSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
     });
   }
 
@@ -654,27 +430,39 @@
     });
   }
 
-  var seen = false;
-  try {
-    seen = localStorage.getItem(INTRO_STORAGE_KEY) === "1";
-  } catch (e) {}
+  // Land straight on the page — no cinematic intro.
+  startLandingCursor();
+  resetDemo();
 
-  var forceIntro =
-    /(?:\?|&)(?:intro|fresh)=1\b/.test(window.location.search) ||
-    window.location.hash === "#intro";
-
-  if (seen && !forceIntro) {
-    if (introEl) {
-      introEl.classList.add("is-done");
-      introEl.setAttribute("aria-hidden", "true");
+  // Start the reaction demo once the section is in view.
+  if (reactionSection && demoPage) {
+    var demoStarted = false;
+    function beginWhenVisible() {
+      if (demoStarted) return;
+      demoStarted = true;
+      startDemo();
     }
-    document.body.classList.remove("intro-active");
-    startLandingCursor();
-  } else {
-    document.body.classList.add("intro-active");
-    setTimeout(function () {
-      runIntro({ demoOnly: false });
-    }, 200);
+
+    if ("IntersectionObserver" in window) {
+      var reactionObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              beginWhenVisible();
+              reactionObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.28 }
+      );
+      reactionObserver.observe(reactionSection);
+    } else {
+      beginWhenVisible();
+    }
+
+    if (window.location.hash === "#reaction") {
+      beginWhenVisible();
+    }
   }
 
   // Chat texting animation — each compact thread loops on its own,
@@ -719,7 +507,9 @@
         if (index >= rows.length) {
           setTimeout(function () {
             resetConversation();
-            setTimeout(function () { showMessage(0); }, 320);
+            setTimeout(function () {
+              showMessage(0);
+            }, 320);
           }, restartHoldDelay);
           return;
         }
@@ -741,7 +531,9 @@
       function startLoop() {
         if (animationStarted) return;
         animationStarted = true;
-        setTimeout(function () { showMessage(0); }, startDelay);
+        setTimeout(function () {
+          showMessage(0);
+        }, startDelay);
       }
 
       if ("IntersectionObserver" in window) {

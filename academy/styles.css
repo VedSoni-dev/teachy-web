@@ -3155,6 +3155,95 @@ body.hey-page {
   font-size: 17px;
 }
 
+/* —— Reaction loop demo (in-page, replaces cinematic intro) —— */
+
+.hey-reaction {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  gap: 48px;
+  align-items: center;
+  padding: 28px 0 40px;
+}
+
+.hey-reaction-copy h2 {
+  margin: 16px 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1b1a2e;
+}
+
+.hey-reaction-copy p {
+  margin: 0 0 18px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(27, 26, 46, 0.72);
+  max-width: 34ch;
+}
+
+.hey-reaction-steps {
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.hey-reaction-steps li {
+  position: relative;
+  padding-left: 1.55em;
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgba(27, 26, 46, 0.78);
+}
+
+.hey-reaction-steps li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: #3380ff;
+  box-shadow: 0 0 0 3px rgba(51, 128, 255, 0.18);
+}
+
+.hey-reaction-steps strong {
+  font-weight: 700;
+  color: #1b1a2e;
+}
+
+.hey-reaction-demo {
+  width: 100%;
+  min-width: 0;
+}
+
+.hey-reaction .demo-shell {
+  gap: 12px;
+}
+
+.hey-reaction .text-btn {
+  color: rgba(27, 26, 46, 0.55);
+}
+
+.hey-reaction .text-btn:hover {
+  color: #1b1a2e;
+}
+
+@media (max-width: 900px) {
+  .hey-reaction {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 12px 0 28px;
+  }
+
+  .hey-reaction-copy p {
+    max-width: none;
+  }
+}
+
 /* —— Feature rows —— */
 
 .hey-features {
