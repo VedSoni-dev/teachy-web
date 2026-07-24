@@ -14,8 +14,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = 8765;
 const WIDTH = 1280;
 const HEIGHT = 720;
-const DURATION_MS = 14000;
-const RECORD_MS = DURATION_MS + 900; // capture just over one loop
+const DURATION_MS = 15000;
+const RECORD_MS = DURATION_MS + 1000; // capture just over one loop
 const OUT_WEBM = join(__dirname, "teachy-hero.webm");
 const OUT_MP4 = join(__dirname, "teachy-hero.mp4");
 const OUT_POSTER = join(__dirname, "teachy-hero-poster.jpg");
@@ -51,8 +51,22 @@ function startStaticServer() {
   });
 }
 
+function resolveFfmpeg() {
+  const candidates = [
+    "ffmpeg",
+    "/opt/homebrew/bin/ffmpeg",
+    "/usr/local/bin/ffmpeg",
+  ];
+  for (const candidate of candidates) {
+    const result = spawnSync(candidate, ["-version"], { encoding: "utf8" });
+    if (result.status === 0) return candidate;
+  }
+  throw new Error("ffmpeg not found — brew install ffmpeg");
+}
+
 function runFfmpeg(args) {
-  const result = spawnSync("ffmpeg", args, { encoding: "utf8" });
+  const ffmpegBin = resolveFfmpeg();
+  const result = spawnSync(ffmpegBin, args, { encoding: "utf8" });
   if (result.status !== 0) {
     console.error(result.stderr);
     throw new Error(`ffmpeg failed: ${args.join(" ")}`);
@@ -106,15 +120,12 @@ async function main() {
   runFfmpeg([
     "-y",
     "-i", rawPath,
-    "-ss", "0.15",
-    "-t", "14",
+    "-ss", "0.25",
+    "-t", "15",
     "-an",
-    "-c:v", "libvpx-vp9",
-    "-b:v", "0",
-    "-crf", "34",
-    "-row-mt", "1",
-    "-deadline", "good",
-    "-cpu-used", "2",
+    "-c:v", "libvpx",
+    "-b:v", "900k",
+    "-crf", "32",
     "-pix_fmt", "yuv420p",
     "-vf", `scale=${WIDTH}:${HEIGHT}:flags=lanczos`,
     OUT_WEBM,
@@ -137,7 +148,7 @@ async function main() {
   runFfmpeg([
     "-y",
     "-i", OUT_WEBM,
-    "-ss", "2.2",
+    "-ss", "2.5",
     "-vframes", "1",
     "-q:v", "3",
     OUT_POSTER,
