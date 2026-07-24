@@ -3022,6 +3022,31 @@ body.hey-page {
   margin: 56px auto 0;
 }
 
+.hey-hero-video-frame {
+  width: 100%;
+}
+
+.hey-hero-video-window {
+  overflow: hidden;
+  background: #0f141c;
+}
+
+.hey-hero-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0 0 14px 14px;
+  background: #eef3f9;
+  box-shadow: none;
+}
+
+.hey-hero-video-window .hey-window-bar {
+  border-radius: 14px 14px 0 0;
+}
+
 .hey-hero .hero-hint {
   position: relative;
   z-index: 1;
