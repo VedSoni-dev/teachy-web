@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=nowins1" />
+  <link rel="stylesheet" href="styles.css?v=lean1" />
 </head>
 <body class="hey-page">
   <div id="clicky-guide" class="clicky-guide" hidden aria-hidden="true">
@@ -30,7 +30,7 @@
         teachy
       </a>
       <nav class="nav">
-        <a href="#reaction">try it</a>
+        <a href="#how">how it works</a>
         <a href="#product">pricing</a>
         <a href="enterprise.html">enterprise</a>
         <a href="#faq">faq</a>
@@ -130,187 +130,40 @@
 
     <div class="hey-rule" aria-hidden="true"><span></span></div>
 
-    <!-- —— Reaction loop: interactive demo on the page —— -->
-    <section class="hey-reaction wrap" id="reaction">
-      <div class="hey-reaction-copy">
-        <span class="hey-label-bubble">try it</span>
-        <h2>you act. teachy reacts.</h2>
-        <p>Not a video you pause. Teachy points at the next move, waits for you to do it, then checks and coaches the next step — the same reaction loop as on your Mac.</p>
-        <ol class="hey-reaction-steps">
-          <li><strong>points</strong> at what to do</li>
-          <li><strong>waits</strong> for you to click or type</li>
-          <li><strong>checks</strong>, then coaches the next step</li>
-        </ol>
-        <button type="button" class="btn btn-secondary" id="restart-demo">
-          <span class="btn-label">restart demo</span>
-        </button>
+    <!-- —— How it works: three beats —— -->
+    <section class="hey-how wrap" id="how">
+      <div class="hey-section-head">
+        <h2>how it works</h2>
+        <p>you act. teachy reacts. no video to pause.</p>
       </div>
-
-      <div class="hey-reaction-demo" id="panel-demo">
-        <div class="demo-shell">
-          <div class="demo-browser" id="demo-browser">
-            <div class="demo-chrome">
-              <div class="demo-dots"><i></i><i></i><i></i></div>
-              <div class="demo-url">
-                <span class="demo-lock" aria-hidden="true"></span>
-                <span id="demo-url-text">github.com/new</span>
-              </div>
-            </div>
-
-            <div class="demo-page" id="demo-page">
-              <div class="demo-view is-active" data-view="home" id="demo-view-home">
-                <header class="gh-top">
-                  <span class="gh-logo">Octo</span>
-                  <nav class="gh-nav"><span>Pull requests</span><span>Issues</span></nav>
-                  <button type="button" class="gh-new" id="demo-btn-new" data-demo-target="new">
-                    New <em>▾</em>
-                  </button>
-                </header>
-                <div class="gh-home-body">
-                  <h2>Your repositories</h2>
-                  <p class="gh-muted">Nothing here yet, let's make one.</p>
-                  <ul class="gh-empty-list">
-                    <li></li><li></li><li></li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="demo-view" data-view="form" id="demo-view-form" hidden>
-                <div class="gh-form">
-                  <h2>Create a new repository</h2>
-                  <label class="gh-field">
-                    <span>Repository name</span>
-                    <input
-                      id="demo-repo-name"
-                      type="text"
-                      placeholder="hello-teachy"
-                      autocomplete="off"
-                      spellcheck="false"
-                      data-demo-target="name"
-                    />
-                  </label>
-                  <label class="gh-field">
-                    <span>Description (optional)</span>
-                    <input type="text" placeholder="my first repo" disabled tabindex="-1" />
-                  </label>
-                  <div class="gh-visibility">
-                    <label><input type="radio" checked disabled /> Public</label>
-                    <label><input type="radio" disabled /> Private</label>
-                  </div>
-                  <button type="button" class="gh-create" id="demo-btn-create" data-demo-target="create" disabled>
-                    Create repository
-                  </button>
-                </div>
-              </div>
-
-              <div class="demo-view" data-view="done" id="demo-view-done" hidden>
-                <div class="gh-done">
-                  <div class="gh-check" aria-hidden="true">✓</div>
-                  <h2 id="demo-done-title">hello-teachy</h2>
-                  <p>Created. Empty repo, ready for your first commit.</p>
-                  <div class="gh-code-block">
-                    <code>git clone https://github.com/you/hello-teachy.git</code>
-                  </div>
-                </div>
-              </div>
-
-              <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
-
-              <div class="demo-clicky" id="demo-clicky" hidden>
-                <div class="demo-speech" id="demo-speech" aria-live="polite"></div>
-                <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="demo-hud">
-            <span class="demo-phase" id="demo-phase">Your turn</span>
-            <button type="button" class="text-btn" id="skip-demo">Skip</button>
-          </div>
-        </div>
-      </div>
+      <ol class="hey-how-beats">
+        <li class="hey-how-beat">
+          <span class="hey-how-num" aria-hidden="true">1</span>
+          <h3>ask out loud</h3>
+          <p>hold <kbd>ctrl</kbd> + <kbd>option</kbd> and talk. teachy answers in speech and walks you through the real app — not a tutorial tab.</p>
+        </li>
+        <li class="hey-how-beat">
+          <span class="hey-how-num" aria-hidden="true">2</span>
+          <h3>it points &amp; waits</h3>
+          <p>the blue cursor points at the next move, waits for you to click or type, then coaches the next step — the reaction loop you see in the window above.</p>
+        </li>
+        <li class="hey-how-beat">
+          <span class="hey-how-num" aria-hidden="true">3</span>
+          <h3>checks &amp; remembers</h3>
+          <p>it verifies the outcome before moving on, and keeps a model of what you already know — so it stops re-explaining git and reviews what you’re about to forget.</p>
+        </li>
+      </ol>
     </section>
 
     <div class="hey-rule" aria-hidden="true"><span></span></div>
 
-    <!-- —— Feature rows —— -->
-    <section class="hey-features wrap" id="fluency">
-      <article class="hey-feature">
-        <div class="hey-feature-copy">
-          <span class="hey-label-bubble">teachy</span>
-          <h2>finally learn the thing</h2>
-          <p>hold <kbd>ctrl</kbd> + <kbd>option</kbd> and just ask, out loud. teachy answers in plain speech and walks you through the real app — no tutorial tab, no pausing a video every ten seconds.</p>
-        </div>
-        <div class="hey-feature-media">
-          <div class="hey-frame">
-            <div class="hey-window hey-rec-window">
-              <div class="hey-window-bar"><i></i><i></i><i></i><span>chatgpt · you're holding ctrl + option</span><span class="hey-rec" aria-hidden="true"><i class="hey-rec-dot"></i>rec<b class="hey-tc"></b></span></div>
-              <div class="hey-window-body hey-window-chatdemo">
-                <span class="hey-demo-bubble hey-demo-blue">is this a good prompt? "write me a caption"</span>
-                <span class="hey-demo-typing"><b></b><b></b><b></b></span>
-                <span class="hey-demo-bubble hey-demo-orange">almost! tell it who it's for and the vibe. want me to rewrite it with you?</span>
-                <span class="hey-demo-wave"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+    <!-- —— Logos + chats: breadth + voice, one section —— -->
+    <section class="hey-proof" id="proof">
+      <div class="hey-section-head wrap">
+        <h2>like texting a friend who knows <span class="hl">all of it</span></h2>
+        <p>claude, chatgpt, figma, spreadsheets, the terminal — teachy coaches inside whichever app you just opened.</p>
+      </div>
 
-      <div class="hey-rule hey-rule-tight" aria-hidden="true"><span></span></div>
-
-      <article class="hey-feature hey-feature-reverse">
-        <div class="hey-feature-copy">
-          <span class="hey-label-bubble">use your screen as context</span>
-          <h2>it sees what you see</h2>
-          <p>teachy looks at exactly what's on your screen, points at the right button with its little blue cursor, and checks the outcome before it moves on. real skills, verified — not "video watched."</p>
-        </div>
-        <div class="hey-feature-media">
-          <div class="hey-frame">
-            <div class="hey-window hey-rec-window">
-              <div class="hey-window-bar"><i></i><i></i><i></i><span>the spreadsheet you've been avoiding</span><span class="hey-rec" aria-hidden="true"><i class="hey-rec-dot"></i>rec<b class="hey-tc"></b></span></div>
-              <div class="hey-window-body hey-window-sheetdemo">
-                <div class="hey-sheet">
-                  <div class="hey-sheet-row hey-sheet-head"><span></span><span>A</span><span>B</span><span>C</span></div>
-                  <div class="hey-sheet-row"><span>1</span><span>mon</span><span>420</span><span></span></div>
-                  <div class="hey-sheet-row"><span>2</span><span>tue</span><span>168</span><span></span></div>
-                  <div class="hey-sheet-row"><span>3</span><span>wed</span><span>295</span><span></span></div>
-                  <div class="hey-sheet-row hey-sheet-total"><span>4</span><span>total</span><span class="hey-sheet-cell"><span class="hey-sheet-formula">=SUM(B1:B3)</span><span class="hey-sheet-result">883</span></span><span></span></div>
-                </div>
-                <span class="hey-sheet-chalk" aria-hidden="true"></span>
-                <span class="hey-point-cursor"><span class="hey-point-speech">this cell — type =SUM( and drag down</span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <div class="hey-rule hey-rule-tight" aria-hidden="true"><span></span></div>
-
-      <article class="hey-feature">
-        <div class="hey-feature-copy">
-          <span class="hey-label-bubble">it remembers you</span>
-          <h2>picks up where you left off</h2>
-          <p>teachy keeps a little model of what you already know — so it stops re-explaining git, skips ahead when you're quick, and reviews the things you're about to forget. like a tutor who's known you for months.</p>
-        </div>
-        <div class="hey-feature-media">
-          <div class="hey-frame">
-            <div class="hey-window hey-rec-window">
-              <div class="hey-window-bar"><i></i><i></i><i></i><span>teachy · what you know</span><span class="hey-rec" aria-hidden="true"><i class="hey-rec-dot"></i>rec<b class="hey-tc"></b></span></div>
-              <div class="hey-window-body hey-window-skilldemo">
-                <div class="hey-skill"><span class="hey-skill-name">git basics</span><span class="hey-skill-bar"><b class="hey-skill-fill-1"></b></span><span class="hey-skill-check hey-check-1">✓</span></div>
-                <div class="hey-skill"><span class="hey-skill-name">the terminal</span><span class="hey-skill-bar"><b class="hey-skill-fill-2"></b></span><span class="hey-skill-check hey-check-2">✓</span></div>
-                <div class="hey-skill"><span class="hey-skill-name">react</span><span class="hey-skill-bar"><b class="hey-skill-fill-3"></b></span><span class="hey-skill-check hey-check-3">✓</span></div>
-                <div class="hey-skill"><span class="hey-skill-name">deploying</span><span class="hey-skill-bar"><b class="hey-skill-fill-4"></b></span><span class="hey-skill-chip">up next</span></div>
-                <div class="hey-skill-footer"><span class="hey-streak">🔥 6-day streak</span><span class="hey-review-chip">review tomorrow: branches</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- —— Capability strip: the breadth of what teachy coaches —— -->
-    <section class="hey-apps">
       <div class="hey-apps-wall" aria-hidden="true">
         <img class="hey-apps-logo" src="logos/claude.svg" alt="" />
         <img class="hey-apps-logo" src="logos/chatgpt.svg" alt="" />
@@ -325,20 +178,8 @@
         <img class="hey-apps-logo" src="logos/blender.svg" alt="" />
         <img class="hey-apps-logo" src="logos/photoshop.svg" alt="" />
       </div>
-      <div class="hey-section-head">
-        <h2>get fluent in <span class="hl">all of it</span>.</h2>
-        <p>the ai tools everyone's fumbling with, and the software around them. teachy coaches you inside the real app, whichever one you just opened.</p>
-      </div>
-      <p class="hey-apps-foot">…and whatever you open next. <strong>teachy figures it out live.</strong></p>
-    </section>
 
-    <!-- —— Chat demo: five tiny threads, different tasks —— -->
-    <section class="chat-demo">
-      <div class="hey-section-head wrap">
-        <h2>like texting a friend who knows everything</h2>
-        <p>photo edits, git, spreadsheets, figma, the terminal. whatever’s on your screen.</p>
-      </div>
-      <div class="chat-gallery" aria-label="Example Teachy conversations">
+      <div class="chat-gallery wrap" aria-label="Example Teachy conversations">
 
         <div class="chat-surface" data-chat-delay="0" aria-label="Photo edit">
           <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>cut the background out of this photo</p></div></div></div>
@@ -381,18 +222,8 @@
         </div>
 
       </div>
-    </section>
 
-    <!-- —— Manifesto letter —— -->
-    <section class="hey-letter-band">
-      <div class="hey-letter">
-        <p class="hey-letter-from">a note from the founder</p>
-        <p>we all know how to watch tutorials. very few of us know how to actually make things.</p>
-        <p>that's not a you problem. videos can't see your screen, can't point at the right button, and can't tell when you're stuck.</p>
-        <p>teachy can. it sits beside your cursor and <mark>coaches you through the real work</mark> until the thing is actually made.</p>
-        <p>it's free, it lives quietly in your menu bar, and it remembers what you already know. come make something.</p>
-        <p class="hey-signature">— ved</p>
-      </div>
+      <p class="hey-apps-foot wrap">…and whatever you open next. <strong>teachy figures it out live.</strong></p>
     </section>
 
     <!-- —— Pricing sky band —— -->
@@ -499,7 +330,7 @@
       <div class="hey-footer-col">
         <span class="hey-footer-head">learn</span>
         <a href="quick-github-lesson.html">free lesson</a>
-        <a href="#fluency">how it works</a>
+        <a href="#how">how it works</a>
         <a href="#faq">faq</a>
       </div>
       <div class="hey-footer-col">
@@ -521,6 +352,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=reaction1" defer></script>
+  <script src="app.js?v=lean1" defer></script>
 </body>
 </html>

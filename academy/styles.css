@@ -3155,93 +3155,128 @@ body.hey-page {
   font-size: 17px;
 }
 
-/* —— Reaction loop demo (in-page, replaces cinematic intro) —— */
+/* —— How it works: three beats —— */
 
-.hey-reaction {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
-  gap: 48px;
-  align-items: center;
+.hey-how {
   padding: 28px 0 40px;
 }
 
-.hey-reaction-copy h2 {
-  margin: 16px 0 12px;
+.hey-how-beats {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.hey-how-beat {
+  position: relative;
+  padding-top: 4px;
+}
+
+.hey-how-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: #3380ff;
+  color: #fff;
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 40px);
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 0 4px rgba(51, 128, 255, 0.16);
+}
+
+.hey-how-beat h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 26px);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #1b1a2e;
 }
 
-.hey-reaction-copy p {
-  margin: 0 0 18px;
-  font-size: 17px;
+.hey-how-beat p {
+  margin: 0;
+  font-size: 15px;
   line-height: 1.55;
   color: rgba(27, 26, 46, 0.72);
-  max-width: 34ch;
+  max-width: 32ch;
 }
 
-.hey-reaction-steps {
-  margin: 0 0 22px;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 10px;
-}
-
-.hey-reaction-steps li {
-  position: relative;
-  padding-left: 1.55em;
-  font-size: 15px;
-  line-height: 1.45;
-  color: rgba(27, 26, 46, 0.78);
-}
-
-.hey-reaction-steps li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.45em;
-  width: 0.55em;
-  height: 0.55em;
-  border-radius: 50%;
-  background: #3380ff;
-  box-shadow: 0 0 0 3px rgba(51, 128, 255, 0.18);
-}
-
-.hey-reaction-steps strong {
-  font-weight: 700;
+.hey-how-beat kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(27, 26, 46, 0.14);
+  background: rgba(255, 255, 255, 0.7);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
   color: #1b1a2e;
 }
 
-.hey-reaction-demo {
-  width: 100%;
-  min-width: 0;
-}
-
-.hey-reaction .demo-shell {
-  gap: 12px;
-}
-
-.hey-reaction .text-btn {
-  color: rgba(27, 26, 46, 0.55);
-}
-
-.hey-reaction .text-btn:hover {
-  color: #1b1a2e;
-}
-
-@media (max-width: 900px) {
-  .hey-reaction {
+@media (max-width: 800px) {
+  .hey-how-beats {
     grid-template-columns: 1fr;
-    gap: 28px;
-    padding: 12px 0 28px;
+    gap: 22px;
   }
 
-  .hey-reaction-copy p {
+  .hey-how-beat p {
     max-width: none;
   }
+}
+
+/* —— Logos + chats combined —— */
+
+.hey-proof {
+  position: relative;
+  padding: 12px 0 48px;
+  overflow: hidden;
+}
+
+.hey-proof .hey-section-head {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 8px;
+}
+
+.hey-proof .hey-apps-wall {
+  position: relative;
+  inset: auto;
+  z-index: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 18px 28px;
+  max-width: 760px;
+  margin: 4px auto 32px;
+  padding: 8px 20px 4px;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.hey-proof .hey-apps-logo {
+  width: clamp(30px, 4.5vw, 44px);
+  height: clamp(30px, 4.5vw, 44px);
+}
+
+.hey-proof .chat-gallery {
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+}
+
+.hey-proof .hey-apps-foot {
+  position: relative;
+  z-index: 1;
+  margin: 28px auto 0;
+  text-align: center;
 }
 
 /* —— Feature rows —— */
