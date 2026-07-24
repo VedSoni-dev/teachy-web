@@ -3235,48 +3235,118 @@ body.hey-page {
 
 .hey-proof {
   position: relative;
-  padding: 12px 0 48px;
+  padding: 8px 0 56px;
   overflow: hidden;
 }
 
-.hey-proof .hey-section-head {
+.hey-proof-banner {
   position: relative;
-  z-index: 1;
-  margin-bottom: 8px;
+  display: grid;
+  place-items: center;
+  min-height: clamp(200px, 28vw, 280px);
+  margin: 0 0 28px;
+  padding: 48px clamp(16px, 3vw, 40px);
+  overflow: hidden;
 }
 
 .hey-proof .hey-apps-wall {
-  position: relative;
-  inset: auto;
+  position: absolute;
+  inset: 6% 2% 8%;
   z-index: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   align-items: center;
-  gap: 18px 28px;
-  max-width: 760px;
-  margin: 4px auto 32px;
-  padding: 8px 20px 4px;
-  opacity: 0.72;
+  justify-items: center;
+  gap: clamp(12px, 3vw, 36px);
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  opacity: 0.38;
   pointer-events: none;
+  filter: saturate(1.08);
 }
 
 .hey-proof .hey-apps-logo {
-  width: clamp(30px, 4.5vw, 44px);
-  height: clamp(30px, 4.5vw, 44px);
+  width: clamp(40px, 6.5vw, 72px);
+  height: clamp(40px, 6.5vw, 72px);
+}
+
+.hey-proof .hey-apps-wall .hey-apps-logo:nth-child(odd) { transform: rotate(-7deg); }
+.hey-proof .hey-apps-wall .hey-apps-logo:nth-child(even) { transform: rotate(6deg); }
+.hey-proof .hey-apps-wall .hey-apps-logo:nth-child(3n) { transform: rotate(-3deg) scale(1.1); }
+.hey-proof .hey-apps-wall .hey-apps-logo:nth-child(5n) { transform: rotate(9deg) scale(0.9); }
+
+.hey-proof-copy {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: 42rem;
+  text-align: center;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(246, 239, 225, 0.55) 0%,
+    rgba(246, 239, 225, 0.72) 50%,
+    rgba(246, 239, 225, 0.55) 100%
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.hey-proof-copy h2,
+.hey-proof-copy p {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .hey-proof .chat-gallery {
   position: relative;
   z-index: 1;
-  margin-top: 4px;
+  width: min(1360px, calc(100% - 32px));
+  max-width: none;
+  margin: 0 auto;
+  padding: 0;
 }
 
 .hey-proof .hey-apps-foot {
   position: relative;
   z-index: 1;
+  width: min(1360px, calc(100% - 32px));
   margin: 28px auto 0;
   text-align: center;
+}
+
+@media (max-width: 700px) {
+  .hey-proof-banner {
+    min-height: 180px;
+    padding: 36px 14px;
+  }
+
+  .hey-proof .hey-apps-wall {
+    inset: 10% 4% 12%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    opacity: 0.32;
+  }
+
+  .hey-proof-copy {
+    padding: 14px 16px;
+  }
+}
+
+/* —— Wider page gutters on the consumer landing —— */
+
+.hey-page .wrap {
+  width: min(1240px, calc(100% - 32px));
+}
+
+.hey-page .hey-how.wrap {
+  width: min(1240px, calc(100% - 32px));
+}
+
+.hey-page .chat-gallery {
+  max-width: 1360px;
 }
 
 /* —— Feature rows —— */
