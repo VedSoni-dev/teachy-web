@@ -3,7 +3,7 @@
 The Teachy Academy site — the landing page, the enterprise page, and the course
 registry that the app reads.
 
-Live at [vedsoni-dev.github.io/teachy](https://vedsoni-dev.github.io/teachy/).
+Live at [vedsoni-dev.github.io/teachy](https://teachy-ashy.vercel.app/).
 
 ## Layout
 

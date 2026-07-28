@@ -12,7 +12,7 @@ python3 -m http.server 8765
 
 ## Live site
 
-**https://vedsoni-dev.github.io/teachy/**
+**https://teachy-ashy.vercel.app/**
 
 Published from the `gh-pages` branch (static files — no GitHub Actions / no paid plan needed).
 
