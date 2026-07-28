@@ -40,3 +40,18 @@ when the session ends. That is the single way this system fails.
 
 Full protocol, including when NOT to record: `../teachy-brain/WRITE-BACK.md`.
 Check yourself with `pwsh ../teachy-brain/scripts/brain-status.ps1`.
+
+## Standing context
+
+Repeated here rather than left to memory files: those are keyed to the workspace
+root (C:\Users\vedan\teachy), so a session started inside this repo loads none of
+them. This block always loads.
+
+- **Ved never maintains the brain.** Keeping decisions, incidents and known
+  issues current is Claude's job, done as part of finishing work - not offered as
+  an option.
+- **He wants the call made, not a menu.** Decide, act, state the honest cost in a
+  sentence. Reserve questions for money, publication, and product direction.
+- **Never declare victory.** Name what is still missing. Verify by running things.
+- **The workspace** is three repos side by side: `teachy-app`, `teachy-web`,
+  `teachy-brain`, plus a generated `graph/`.
