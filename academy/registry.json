@@ -16,66 +16,23 @@
     }
   },
   "flagshipCourseID": "build-a-website",
-  "onrampCourseID": "use-ai-tools",
+  "onrampCourseID": "build-a-website",
   "websiteURL": "https://vedsoni-dev.github.io/teachy/",
   "courses": [
     {
-      "id": "use-ai-tools",
-      "title": "Use AI Tools",
-      "subtitle": "Claude, ChatGPT & friends — for real work",
-      "authorName": "Teachy",
-      "authorHandle": "teachy",
-      "estimatedMinutes": 40,
-      "goalCount": 6,
-      "trackTitle": "How to use",
-      "installURL": "https://raw.githubusercontent.com/VedSoni-dev/teachy/main/courses/use-ai-tools.json",
-      "hasVideoParts": false,
-      "shipsWithApp": false,
-      "featured": true,
-      "blurb": "Open a real AI tool, prompt clearly, get a result, fix it, teach it back — one of Teachy’s how-to-use paths."
-    },
-    {
       "id": "build-a-website",
-      "title": "Build & Deploy a Website",
-      "subtitle": "From zero to a live site",
+      "title": "Make a Website",
+      "subtitle": "Plan in ChatGPT. Build. Live on Vercel.",
       "authorName": "Teachy",
       "authorHandle": "teachy",
       "estimatedMinutes": 45,
-      "goalCount": 8,
+      "goalCount": 5,
       "trackTitle": "How to do",
       "installURL": "https://raw.githubusercontent.com/VedSoni-dev/teachy/main/courses/build-a-website.json",
       "hasVideoParts": false,
       "shipsWithApp": true,
       "featured": true,
-      "blurb": "A how-to-do path: plan, build, and deploy a real site on your Mac until it’s live."
-    },
-    {
-      "id": "ai-agents",
-      "title": "Build an AI Agent",
-      "subtitle": "From chat to something that acts",
-      "authorName": "Teachy",
-      "authorHandle": "teachy",
-      "estimatedMinutes": 50,
-      "goalCount": 6,
-      "trackTitle": "How to do",
-      "installURL": "",
-      "hasVideoParts": false,
-      "shipsWithApp": false,
-      "blurb": "Coming — how to do agents, not just talk about them."
-    },
-    {
-      "id": "wispr-flow",
-      "title": "Use Wispr Flow",
-      "subtitle": "Voice-first writing that ships",
-      "authorName": "Teachy",
-      "authorHandle": "teachy",
-      "estimatedMinutes": 25,
-      "goalCount": 4,
-      "trackTitle": "How to use",
-      "installURL": "",
-      "hasVideoParts": false,
-      "shipsWithApp": false,
-      "blurb": "Coming — how to use Wispr Flow on real work."
+      "blurb": "Teachy interviews you, writes the ChatGPT prompt, helps you mock and build, then ships a live Vercel URL."
     }
   ]
 }
