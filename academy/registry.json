@@ -12,12 +12,12 @@
       "positioning": "Bespoke AI + Teachy for employee AI fluency on your tools and workflows.",
       "price": "bespoke",
       "contact": "enterprise@teachy.app",
-      "page": "https://teachy-ashy.vercel.app/enterprise.html"
+      "page": "https://teachy-ashy-two.vercel.app/enterprise.html"
     }
   },
   "flagshipCourseID": "build-a-website",
   "onrampCourseID": "build-a-website",
-  "websiteURL": "https://teachy-ashy.vercel.app",
+  "websiteURL": "https://teachy-ashy-two.vercel.app",
   "courses": [
     {
       "id": "build-a-website",

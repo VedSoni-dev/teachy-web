@@ -12,15 +12,15 @@ python3 -m http.server 8765
 
 ## Live site
 
-**https://teachy-ashy.vercel.app/**
-
-Published from the `gh-pages` branch (static files — no GitHub Actions / no paid plan needed).
+**https://teachy-ashy-two.vercel.app/** — Vercel project linked to **`VedSoni-dev/teachy-web`**.
 
 ```bash
-./scripts/publish-academy.sh
+# after commit + push to teachy-web main:
+npx vercel deploy --prod
 ```
 
-That copies `academy/` to `gh-pages` and force-pushes. Edit files under `academy/` on `main` first, commit, then run the script.
+`teachy-ashy.vercel.app` is a stale alias on the old `VedSoni-dev/teachy` Vercel project — ignore until moved.
+Do not use `gh-pages` / GitHub Pages for live.
 
 ## Experience
 

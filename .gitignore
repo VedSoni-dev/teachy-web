@@ -1,3 +1,5 @@
 ﻿# Generated knowledge graph - a view, never a source. Rebuild, don't commit.
 graphify-out/
 
+.vercel
+.env*

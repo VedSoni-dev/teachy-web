@@ -3,7 +3,8 @@
 The Teachy Academy site — the landing page, the enterprise page, and the course
 registry that the app reads.
 
-Live at [vedsoni-dev.github.io/teachy](https://teachy-ashy.vercel.app/).
+Live at [https://teachy-ashy-two.vercel.app](https://teachy-ashy-two.vercel.app/) (Vercel ← **teachy-web**).
+`teachy-ashy.vercel.app` is the old alias still attached to `VedSoni-dev/teachy` — do not treat it as the source of truth until that alias is moved.
 
 ## Layout
 
