@@ -7653,3 +7653,1009 @@ body.ent-page .ent-feature p:not(.ent-label) {
   color: rgba(51, 128, 255, 0.85);
 }
 
+
+/* ============================================================
+   COMIC PASS — leave HeyClicky / Apple glass behind.
+   Ink outlines, speech balloons, sticker buttons, panel frames.
+   Logos + copy stay; only the visual language changes.
+   Scoped under body.comic-page (also has .hey-page).
+   ============================================================ */
+
+body.comic-page {
+  --font: "Nunito", "Baloo 2", system-ui, sans-serif;
+  --font-display: "Baloo 2", "Nunito", system-ui, sans-serif;
+  --font-hand: "Caveat", "Nunito", cursive;
+  --ink: #1a1520;
+  --ink-soft: #5c5566;
+  --bg: #f3e6c8;
+  --comic-stroke: #1a1520;
+  --comic-shadow: 4px 4px 0 #1a1520;
+  --comic-shadow-sm: 3px 3px 0 #1a1520;
+  font-family: var(--font);
+  letter-spacing: 0;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(26, 21, 32, 0.07) 1px, transparent 0) 0 0 / 14px 14px,
+    linear-gradient(180deg, #f7ecd4 0%, #efe0c0 45%, #e8d7b8 100%);
+  color: var(--ink);
+}
+
+/* Kill the VHS wash — comic paper, not analog tape */
+body.comic-page .hey-grain {
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  animation: none;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(26, 21, 32, 0.14) 1px, transparent 0);
+  background-size: 10px 10px;
+}
+
+/* —— Header: solid sticker bar, not glass —— */
+
+body.comic-page .site-header {
+  background: #fff8e8;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 3px solid var(--comic-stroke);
+  box-shadow: 0 3px 0 rgba(26, 21, 32, 0.08);
+}
+
+body.comic-page .nav a {
+  font-family: var(--font);
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+body.comic-page .nav-cta {
+  border: 2.5px solid var(--comic-stroke) !important;
+  border-radius: 12px !important;
+  background: #ffcf6b !important;
+  color: var(--comic-stroke) !important;
+  box-shadow: 2px 2px 0 var(--comic-stroke);
+  font-family: var(--font-display) !important;
+}
+
+body.comic-page .nav-cta:hover {
+  background: #3380ff !important;
+  color: #fff !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--comic-stroke);
+}
+
+/* —— Buttons: comic stickers, not Aqua glass —— */
+
+body.comic-page .btn {
+  border-radius: 14px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: var(--comic-stroke);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0;
+  min-height: 56px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+body.comic-page .btn::before {
+  display: none;
+}
+
+body.comic-page .btn-primary {
+  background: #3380ff;
+  color: #fffef5;
+  border-color: var(--comic-stroke);
+  box-shadow: var(--comic-shadow);
+}
+
+body.comic-page .btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--comic-stroke);
+}
+
+body.comic-page .btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--comic-stroke);
+}
+
+body.comic-page .btn-secondary {
+  background: #fff8e8;
+  color: var(--comic-stroke);
+  border-color: var(--comic-stroke);
+  box-shadow: var(--comic-shadow);
+}
+
+body.comic-page .btn-secondary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--comic-stroke);
+  background: #ffe8a8;
+}
+
+body.comic-page .btn-icon {
+  background: var(--comic-stroke);
+  border: 2px solid var(--comic-stroke);
+  box-shadow: none;
+  border-radius: 10px;
+}
+
+/* —— Hero —— */
+
+body.comic-page .hey-hero {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(26, 21, 32, 0.06) 1px, transparent 0) 0 0 / 12px 12px,
+    linear-gradient(180deg, #f9efd8 0%, #f3e4c4 55%, #ebe0cf 100%);
+}
+
+body.comic-page .hey-hero-paper {
+  opacity: 0.35;
+  background-image: none;
+}
+
+body.comic-page .hey-hero-orb {
+  opacity: 0.28;
+  filter: blur(40px);
+}
+
+body.comic-page .hey-wordmark {
+  font-family: var(--font-display);
+  text-shadow:
+    3px 3px 0 #fff8e8,
+    5px 5px 0 var(--comic-stroke);
+  letter-spacing: -0.02em;
+}
+
+body.comic-page .hey-tagline {
+  font-family: var(--font);
+  font-weight: 700;
+  color: var(--ink-soft);
+  letter-spacing: 0;
+}
+
+body.comic-page .hey-tagline .hl {
+  background: linear-gradient(180deg, transparent 55%, #ffcf6b 55%);
+  padding: 0 0.12em;
+  border-radius: 2px;
+}
+
+body.comic-page .hey-fineprint {
+  font-family: var(--font-hand);
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+
+/* Hero video: comic panel frame instead of soft glass */
+body.comic-page .hey-frame {
+  border-radius: 18px;
+  padding: 10px;
+  border: 3.5px solid var(--comic-stroke);
+  box-shadow: 8px 8px 0 var(--comic-stroke);
+  background-image: url("sky-grass-border.jpg");
+  background-size: cover;
+}
+
+body.comic-page .hey-frame:hover {
+  transform: translate(-3px, -3px) rotate(-0.4deg);
+  box-shadow: 11px 11px 0 var(--comic-stroke);
+}
+
+body.comic-page .hey-window {
+  border: 2.5px solid var(--comic-stroke);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+body.comic-page .hey-window-bar {
+  background: #fff8e8;
+  border-bottom: 2.5px solid var(--comic-stroke);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+/* —— Section heads —— */
+
+body.comic-page .hey-section-head h2 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  text-shadow: 2px 2px 0 rgba(255, 248, 232, 0.9);
+}
+
+body.comic-page .hey-section-head p {
+  font-family: var(--font);
+  font-weight: 600;
+}
+
+body.comic-page .hey-rule span {
+  border-top: 3px dashed rgba(26, 21, 32, 0.28);
+  background: none;
+  height: 0;
+}
+
+/* —— How it works: comic panels —— */
+
+body.comic-page .hey-how-beat {
+  background: #fffdf6;
+  border: 3px solid var(--comic-stroke);
+  border-radius: 16px;
+  padding: 22px 20px 20px;
+  box-shadow: var(--comic-shadow);
+  transform: rotate(-0.8deg);
+}
+
+body.comic-page .hey-how-beat:nth-child(2) {
+  transform: rotate(0.9deg);
+}
+
+body.comic-page .hey-how-beat:nth-child(3) {
+  transform: rotate(-0.4deg);
+}
+
+body.comic-page .hey-how-num {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 2.5px solid var(--comic-stroke);
+  background: #ffcf6b;
+  color: var(--comic-stroke);
+  box-shadow: 2px 2px 0 var(--comic-stroke);
+  font-size: 14px;
+}
+
+body.comic-page .hey-how-beat:nth-child(2) .hey-how-num {
+  background: #8fbaff;
+}
+
+body.comic-page .hey-how-beat:nth-child(3) .hey-how-num {
+  background: #8fd18a;
+}
+
+body.comic-page .hey-how-beat h3 {
+  font-family: var(--font-display);
+}
+
+body.comic-page .hey-how-beat p {
+  font-family: var(--font);
+  font-weight: 600;
+}
+
+body.comic-page .hey-how-beat kbd {
+  border: 2px solid var(--comic-stroke);
+  border-radius: 6px;
+  background: #fff8e8;
+  box-shadow: 1.5px 1.5px 0 var(--comic-stroke);
+  font-family: var(--font);
+  font-weight: 800;
+}
+
+/* —— Proof headline: clean type over logo wall (no goofy box) —— */
+
+body.comic-page .hey-proof-copy {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 12px 16px;
+  transform: none;
+  max-width: 36rem;
+}
+
+body.comic-page .hey-proof-copy h2 {
+  text-shadow:
+    0 0 18px rgba(243, 230, 200, 0.95),
+    0 0 40px rgba(243, 230, 200, 0.85),
+    2px 2px 0 rgba(243, 230, 200, 0.9);
+}
+
+body.comic-page .hey-proof-copy p {
+  text-shadow:
+    0 0 14px rgba(243, 230, 200, 0.95),
+    0 0 28px rgba(243, 230, 200, 0.8);
+}
+
+body.comic-page .hey-proof-copy .hl {
+  background: linear-gradient(180deg, transparent 52%, #ffb4c6 52%);
+  padding: 0 0.1em;
+}
+
+body.comic-page .hey-proof .hey-apps-wall {
+  opacity: 0.42;
+  filter: saturate(1.15) contrast(1.05);
+}
+
+body.comic-page .hey-apps-foot {
+  font-family: var(--font-hand);
+  font-size: 22px;
+  color: var(--ink);
+}
+
+/* ============================================================
+   SPEECH BALLOONS — replace Apple iMessage glass
+   ============================================================ */
+
+body.comic-page .chat-gallery {
+  gap: 18px;
+}
+
+body.comic-page .chat-surface {
+  background: #fffdf6;
+  border: 3.5px solid var(--comic-stroke);
+  border-radius: 18px;
+  padding: 14px 12px 18px;
+  box-shadow: var(--comic-shadow-sm);
+  min-height: 240px;
+  gap: 12px;
+}
+
+body.comic-page .chat-surface:nth-child(1) { transform: rotate(-1.2deg); }
+body.comic-page .chat-surface:nth-child(2) { transform: rotate(0.9deg); }
+body.comic-page .chat-surface:nth-child(3) { transform: rotate(-0.6deg); }
+body.comic-page .chat-surface:nth-child(4) { transform: rotate(1.1deg); }
+body.comic-page .chat-surface:nth-child(5) { transform: rotate(-0.8deg); }
+
+/* Hide Apple sheen + carve-mask tail */
+body.comic-page .chat-sheen {
+  display: none !important;
+}
+
+body.comic-page .chat-tail-mask {
+  display: none !important;
+}
+
+body.comic-page .chat-bubble {
+  max-width: 94%;
+  filter: drop-shadow(2.5px 2.5px 0 var(--comic-stroke));
+}
+
+body.comic-page .chat-bubble-body {
+  /* asymmetric comic balloon — not iMessage pill */
+  border-radius: 22px 22px 22px 8px;
+  border: 3px solid var(--comic-stroke);
+  padding: 8px 12px 9px;
+  box-shadow: none;
+  overflow: visible;
+}
+
+body.comic-page .chat-right .chat-bubble-body {
+  border-radius: 22px 22px 8px 22px;
+}
+
+body.comic-page .chat-bubble-body p {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--comic-stroke);
+}
+
+/* Learner = sun yellow; Teachy = sky blue — flat comic fills */
+body.comic-page .chat-blue .chat-bubble-body {
+  background: #ffd84a;
+  border-color: var(--comic-stroke);
+  box-shadow: none;
+}
+
+body.comic-page .chat-orange .chat-bubble-body {
+  background: #8fbaff;
+  border-color: var(--comic-stroke);
+  box-shadow: none;
+}
+
+/* Pointed comic tails (triangles) */
+body.comic-page .chat-tail-fill {
+  width: 0;
+  height: 0;
+  bottom: -3px;
+  background: transparent !important;
+  border-radius: 0 !important;
+  border-style: solid;
+  border-color: transparent;
+  z-index: 2;
+}
+
+body.comic-page .chat-right .chat-tail-fill {
+  right: 14px;
+  left: auto;
+  border-width: 0 0 14px 14px;
+  border-left-color: #ffd84a;
+  filter:
+    drop-shadow(2px 1.5px 0 var(--comic-stroke))
+    drop-shadow(-1px 1px 0 var(--comic-stroke));
+}
+
+body.comic-page .chat-left .chat-tail-fill {
+  left: 14px;
+  right: auto;
+  border-width: 0 14px 14px 0;
+  border-right-color: #8fbaff;
+  filter:
+    drop-shadow(-2px 1.5px 0 var(--comic-stroke))
+    drop-shadow(1px 1px 0 var(--comic-stroke));
+}
+
+body.comic-page .chat-blue .chat-tail-fill {
+  border-left-color: #ffd84a;
+}
+
+body.comic-page .chat-orange .chat-tail-fill {
+  border-right-color: #8fbaff;
+}
+
+body.comic-page .chat-right.chat-orange .chat-tail-fill {
+  border-width: 0 0 14px 14px;
+  border-left-color: #8fbaff;
+  border-right-color: transparent;
+}
+
+body.comic-page .chat-left.chat-blue .chat-tail-fill {
+  border-width: 0 14px 14px 0;
+  border-right-color: #ffd84a;
+  border-left-color: transparent;
+}
+
+body.comic-page .chat-typing-dots span {
+  background: var(--comic-stroke);
+  opacity: 0.55;
+  border-radius: 2px;
+  width: 6px;
+  height: 6px;
+}
+
+@keyframes comic-bubble-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.5) rotate(-4deg);
+  }
+  55% {
+    transform: translateY(-3px) scale(1.06) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+body.comic-page .chat-row.is-shown .chat-bubble,
+body.comic-page .chat-typing.is-shown .chat-bubble {
+  animation: comic-bubble-pop 0.42s cubic-bezier(0.22, 1.35, 0.36, 1) both;
+}
+
+/* —— Pricing cards as comic panels —— */
+
+body.comic-page .hey-sky {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.35) 1px, transparent 0) 0 0 / 12px 12px,
+    linear-gradient(180deg, #7eb8ef 0%, #a8d4f5 40%, #c8e6b8 100%);
+  border-top: 3px solid var(--comic-stroke);
+  border-bottom: 3px solid var(--comic-stroke);
+}
+
+body.comic-page .hey-price-card {
+  background: #fffdf6;
+  border: 3.5px solid var(--comic-stroke);
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 var(--comic-stroke);
+}
+
+body.comic-page .hey-price-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--comic-stroke);
+}
+
+body.comic-page .hey-price-tag {
+  border: 2.5px solid var(--comic-stroke);
+  background: #ffcf6b;
+  color: var(--comic-stroke);
+  box-shadow: 2px 2px 0 var(--comic-stroke);
+  border-radius: 8px;
+  font-family: var(--font-display);
+}
+
+body.comic-page .hey-price-tag::after,
+body.comic-page .hey-label-bubble::after {
+  display: none;
+}
+
+body.comic-page .hey-price-tag-ent {
+  background: #c4a8ff;
+}
+
+body.comic-page .hey-terminal {
+  border: 3px solid var(--comic-stroke);
+  border-radius: 14px;
+  box-shadow: var(--comic-shadow);
+  background: #1a1520;
+}
+
+body.comic-page .hey-terminal-btn {
+  border: 2.5px solid #ffcf6b;
+  border-radius: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+/* —— FAQ —— */
+
+body.comic-page .faq-item {
+  background: #fffdf6;
+  border: 2.75px solid var(--comic-stroke);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 var(--comic-stroke);
+  margin-bottom: 12px;
+}
+
+body.comic-page .faq-item summary {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+body.comic-page .faq-item p {
+  font-family: var(--font);
+  font-weight: 600;
+}
+
+/* —— Footer —— */
+
+body.comic-page .hey-footer,
+body.comic-page .comic-footer {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(26, 21, 32, 0.08) 1px, transparent 0) 0 0 / 12px 12px,
+    #fff8e8;
+  border-top: 3.5px solid var(--comic-stroke);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding-top: 48px;
+  color: var(--comic-stroke);
+}
+
+body.comic-page .comic-footer-inner {
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) 1fr;
+  gap: 36px;
+  align-items: start;
+  padding-bottom: 28px;
+}
+
+@media (max-width: 800px) {
+  body.comic-page .comic-footer-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+body.comic-page .comic-footer-brand .logo {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+body.comic-page .comic-footer-brand p {
+  margin: 0;
+  max-width: 28ch;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+body.comic-page .comic-footer .hey-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 720px) {
+  body.comic-page .comic-footer .hey-footer-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+body.comic-page .hey-footer-col a {
+  color: var(--ink-soft);
+  font-weight: 700;
+  font-family: var(--font);
+}
+
+body.comic-page .hey-footer-col a:hover {
+  color: #3380ff;
+  text-decoration: none;
+  transform: translateX(2px);
+}
+
+body.comic-page .hey-footer-disclaimer p {
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+body.comic-page .comic-footer-end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 22px;
+  padding: 28px 16px 36px;
+  border-top: 3px dashed rgba(26, 21, 32, 0.22);
+}
+
+body.comic-page .comic-footer-stamp {
+  font-family: var(--font-comic, "Bangers", cursive);
+  font-size: clamp(28px, 5vw, 42px);
+  letter-spacing: 0.04em;
+  color: #ff3b5c;
+  text-shadow: 2px 2px 0 var(--comic-stroke);
+  transform: rotate(-6deg);
+  padding: 4px 14px;
+  border: 3px solid var(--comic-stroke);
+  border-radius: 8px;
+  background: #ffd84a;
+  box-shadow: 3px 3px 0 var(--comic-stroke);
+}
+
+body.comic-page .comic-footer-cont {
+  font-family: var(--font-hand);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--comic-stroke);
+}
+
+body.comic-page .hey-pixel,
+body.comic-page .hey-pixel-band {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  body.comic-page .chat-surface {
+    flex: 0 0 210px;
+  }
+
+  body.comic-page .hey-how-beat {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   COMIC SFX — BAM! SPLAT! POW! starbursts + wordmark slam
+   ============================================================ */
+
+body.comic-page {
+  --font-comic: "Bangers", "Baloo 2", system-ui, cursive;
+}
+
+/* —— Shared stamp —— */
+
+.comic-sfx {
+  position: absolute;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2) rotate(var(--sfx-rot, -12deg));
+  transform-origin: center;
+  filter: drop-shadow(2px 2px 0 var(--comic-stroke, #1a1520));
+}
+
+.comic-sfx::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ffd84a;
+  clip-path: polygon(
+    50% 0%, 58% 18%, 78% 8%, 72% 28%, 96% 32%, 76% 44%,
+    92% 62%, 70% 58%, 74% 82%, 54% 68%, 50% 96%, 46% 68%,
+    26% 82%, 30% 58%, 8% 62%, 24% 44%, 4% 32%, 28% 28%,
+    22% 8%, 42% 18%
+  );
+  border: 0;
+  box-shadow: none;
+}
+
+.comic-sfx i {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-comic);
+  font-style: normal;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: #1a1520;
+  line-height: 1;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.55);
+  transform: rotate(-6deg);
+}
+
+.comic-sfx-yellow::before { background: #ffd84a; }
+.comic-sfx-pink::before { background: #ff8fb8; }
+.comic-sfx-cyan::before { background: #7ad7ff; }
+.comic-sfx-orange::before { background: #ff9f4a; }
+.comic-sfx-lime::before { background: #9be86c; }
+
+.comic-sfx.is-on {
+  animation: comic-sfx-slam 0.55s cubic-bezier(0.18, 1.45, 0.35, 1) both;
+}
+
+.comic-sfx.is-out {
+  animation: comic-sfx-out 0.35s ease-in both;
+}
+
+@keyframes comic-sfx-slam {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.15) rotate(calc(var(--sfx-rot, -12deg) - 28deg));
+  }
+  55% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.18) rotate(calc(var(--sfx-rot, -12deg) + 4deg));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(var(--sfx-rot, -12deg));
+  }
+}
+
+@keyframes comic-sfx-out {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(var(--sfx-rot, -12deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -62%) scale(0.55) rotate(calc(var(--sfx-rot, -12deg) + 18deg));
+  }
+}
+
+/* Floating stamps spawned next to chat bubbles */
+.comic-sfx-float {
+  width: 3.6rem;
+  height: 3.6rem;
+  z-index: 12;
+}
+
+.comic-sfx-float i {
+  font-size: 0.78rem;
+}
+
+body.comic-page .chat-surface {
+  overflow: visible;
+}
+
+body.comic-page .chat-gallery {
+  overflow: visible;
+}
+
+body.comic-page .hey-proof {
+  overflow: visible;
+}
+
+/* Stronger bubble slam when SFX fires */
+body.comic-page .chat-row.is-shown .chat-bubble {
+  animation: comic-bubble-wham 0.5s cubic-bezier(0.18, 1.5, 0.35, 1) both;
+}
+
+@keyframes comic-bubble-wham {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.35) rotate(-8deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.12) rotate(3deg);
+  }
+  72% {
+    transform: translateY(1px) scale(0.96) rotate(-1.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+/* Wordmark: clean slam letters, no orbiting stamps */
+body.comic-page .comic-wordmark {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  justify-content: center;
+  gap: 0.015em;
+  margin: 0 auto;
+}
+
+body.comic-page .comic-wordmark::before,
+body.comic-page .comic-wordmark::after {
+  display: none !important;
+}
+
+.comic-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(28px) scale(0.4) rotate(-18deg);
+  text-shadow:
+    3px 3px 0 #fff8e8,
+    5px 5px 0 var(--comic-stroke, #1a1520);
+}
+
+.comic-wordmark.is-slammed .comic-letter {
+  animation: comic-letter-slam 0.55s cubic-bezier(0.18, 1.55, 0.35, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms + 80ms);
+}
+
+@keyframes comic-letter-slam {
+  0% {
+    opacity: 0;
+    transform: translateY(36px) scale(0.3) rotate(-22deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.18) rotate(6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+.comic-wordmark.is-jiggle .comic-letter {
+  animation: comic-letter-jiggle 0.45s ease both;
+  animation-delay: calc(var(--i, 0) * 28ms);
+}
+
+@keyframes comic-letter-jiggle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(-6deg); }
+  50% { transform: translateY(2px) rotate(5deg); }
+  75% { transform: translateY(-3px) rotate(-3deg); }
+}
+
+/* Hero orbiting stamps around "teachy" */
+.comic-sfx-hero {
+  width: 5.2rem;
+  height: 5.2rem;
+  z-index: 3;
+  opacity: 0;
+}
+
+.comic-sfx-hero i {
+  font-size: 1.15rem;
+}
+
+.comic-sfx-hero.is-on {
+  animation: comic-sfx-slam 0.6s cubic-bezier(0.18, 1.45, 0.35, 1) both,
+    comic-sfx-hold 1.55s ease-in-out both;
+}
+
+@keyframes comic-sfx-hold {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -58%) scale(0.7) rotate(calc(var(--sfx-rot, -12deg) + 12deg)); }
+}
+
+.comic-sfx-bam {
+  left: -6%;
+  top: 12%;
+  --sfx-rot: -18deg;
+}
+
+.comic-sfx-bam::before { background: #ffd84a; }
+
+.comic-sfx-pow {
+  right: -8%;
+  left: auto;
+  top: 8%;
+  transform: translate(50%, -50%) scale(0.2) rotate(14deg);
+  --sfx-rot: 14deg;
+}
+
+.comic-sfx-pow::before { background: #ff8fb8; }
+
+.comic-sfx-pow.is-on {
+  animation-name: comic-sfx-slam-right, comic-sfx-hold-right;
+}
+
+@keyframes comic-sfx-slam-right {
+  0% {
+    opacity: 0;
+    transform: translate(50%, -50%) scale(0.15) rotate(-10deg);
+  }
+  55% {
+    opacity: 1;
+    transform: translate(50%, -50%) scale(1.18) rotate(18deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(50%, -50%) scale(1) rotate(14deg);
+  }
+}
+
+@keyframes comic-sfx-hold-right {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(50%, -58%) scale(0.7) rotate(22deg); }
+}
+
+.comic-sfx-splat {
+  left: 8%;
+  top: auto;
+  bottom: -6%;
+  --sfx-rot: -8deg;
+}
+
+.comic-sfx-splat::before { background: #7ad7ff; }
+
+.comic-sfx-zap {
+  right: 4%;
+  left: auto;
+  top: auto;
+  bottom: -4%;
+  transform: translate(50%, 50%) scale(0.2) rotate(10deg);
+  --sfx-rot: 10deg;
+}
+
+.comic-sfx-zap::before { background: #9be86c; }
+
+.comic-sfx-zap.is-on {
+  animation-name: comic-sfx-slam-br, comic-sfx-hold-br;
+}
+
+@keyframes comic-sfx-slam-br {
+  0% {
+    opacity: 0;
+    transform: translate(50%, 50%) scale(0.15) rotate(-8deg);
+  }
+  55% {
+    opacity: 1;
+    transform: translate(50%, 50%) scale(1.18) rotate(14deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(50%, 50%) scale(1) rotate(10deg);
+  }
+}
+
+@keyframes comic-sfx-hold-br {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(50%, 40%) scale(0.7) rotate(18deg); }
+}
+
+/* How-it-works panels get a little BAM on first view via CSS hover */
+body.comic-page .hey-how-beat:hover {
+  transform: translate(-2px, -2px) rotate(-1deg) !important;
+  box-shadow: 6px 6px 0 var(--comic-stroke);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comic-sfx,
+  .comic-letter,
+  .comic-speedlines,
+  body.comic-page .chat-row.is-shown .chat-bubble {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .comic-sfx-hero {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .comic-wordmark-stage {
+    padding: 22px 12px 6px;
+  }
+
+  .comic-sfx-hero {
+    width: 3.8rem;
+    height: 3.8rem;
+  }
+
+  .comic-sfx-hero i {
+    font-size: 0.85rem;
+  }
+
+  .comic-sfx-float {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .comic-sfx-float i {
+    font-size: 0.68rem;
+  }
+}

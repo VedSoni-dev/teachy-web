@@ -67,6 +67,80 @@
 
   startLandingCursor();
 
+  // —— Comic SFX: BAM! SPLAT! POW! stamps ——
+  var comicSfxWords = [
+    "BAM!", "SPLAT!", "POW!", "ZAP!", "WHAM!",
+    "BOOM!", "SNAP!", "KAPOW!", "YEAH!", "NICE!", "WHOOSH!"
+  ];
+  var comicSfxColors = ["yellow", "pink", "cyan", "orange", "lime"];
+  var comicSfxWordIndex = 0;
+
+  function nextComicSfxWord() {
+    var word = comicSfxWords[comicSfxWordIndex % comicSfxWords.length];
+    comicSfxWordIndex += 1;
+    return word;
+  }
+
+  function spawnComicSfx(host, options) {
+    if (!host || !document.body.classList.contains("comic-page")) return;
+    options = options || {};
+    var stamp = document.createElement("span");
+    stamp.className =
+      "comic-sfx comic-sfx-float comic-sfx-" +
+      (options.color || comicSfxColors[comicSfxWordIndex % comicSfxColors.length]);
+    stamp.setAttribute("aria-hidden", "true");
+    var label = document.createElement("i");
+    label.textContent = options.word || nextComicSfxWord();
+    stamp.appendChild(label);
+
+    var hostRect = host.getBoundingClientRect();
+    var stage = options.stage || host;
+    if (getComputedStyle(stage).position === "static") {
+      stage.style.position = "relative";
+    }
+    var stageRect = stage.getBoundingClientRect();
+    var side = options.side || (Math.random() > 0.5 ? "right" : "left");
+    var offsetX = side === "right" ? hostRect.width - 8 : -18;
+    var offsetY = options.y != null ? options.y : -6 + Math.random() * 10;
+    var rotate = (Math.random() > 0.5 ? 1 : -1) * (8 + Math.random() * 16);
+
+    stamp.style.left = Math.round(hostRect.left - stageRect.left + offsetX) + "px";
+    stamp.style.top = Math.round(hostRect.top - stageRect.top + offsetY) + "px";
+    stamp.style.setProperty("--sfx-rot", rotate + "deg");
+    stage.appendChild(stamp);
+
+    // Force reflow so the enter animation plays
+    void stamp.offsetWidth;
+    stamp.classList.add("is-on");
+
+    window.setTimeout(function () {
+      stamp.classList.add("is-out");
+    }, options.holdMs || 520);
+
+    window.setTimeout(function () {
+      if (stamp.parentNode) stamp.parentNode.removeChild(stamp);
+    }, (options.holdMs || 520) + 380);
+  }
+
+  // Hero wordmark: letter-by-letter slam (no BAM stamps on the title)
+  (function initComicWordmark() {
+    if (!document.body.classList.contains("comic-page")) return;
+    var wordmark = document.querySelector(".comic-wordmark");
+    if (!wordmark) return;
+
+    var text = (wordmark.getAttribute("data-text") || wordmark.textContent || "").trim();
+    wordmark.textContent = "";
+    wordmark.setAttribute("aria-label", text);
+    text.split("").forEach(function (character, index) {
+      var letter = document.createElement("span");
+      letter.className = "comic-letter";
+      letter.style.setProperty("--i", String(index));
+      letter.textContent = character;
+      wordmark.appendChild(letter);
+    });
+    wordmark.classList.add("is-slammed");
+  })();
+
   // Chat texting animation — each compact thread loops on its own,
   // staggered so the row feels alive with different tasks.
   (function initChatAnimation() {
@@ -126,6 +200,20 @@
         setTimeout(function () {
           hideTyping();
           row.classList.add("is-shown");
+          // Comic burst on every bubble pop — denser on teachy replies
+          var bubble = row.querySelector(".chat-bubble");
+          if (bubble) {
+            var isTeachy = row.classList.contains("chat-orange");
+            spawnComicSfx(bubble, {
+              stage: chatSurface,
+              side: row.classList.contains("chat-right") ? "right" : "left",
+              y: isTeachy ? -14 : -8,
+              holdMs: isTeachy ? 620 : 480,
+              color: isTeachy
+                ? comicSfxColors[(comicSfxWordIndex + 1) % comicSfxColors.length]
+                : comicSfxColors[comicSfxWordIndex % comicSfxColors.length]
+            });
+          }
           showMessage(index + 1);
         }, messageRevealDelay);
       }

@@ -3,465 +3,446 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Free lesson: edit your first video — Teachy</title>
-  <meta name="description" content="A free 5-minute hands-on lesson: trim a clip, add text and music, then export — taught by Teachy like a real 1:1 tutor." />
+  <title>Free lesson: ship your first commit — Teachy</title>
+  <meta name="description" content="Feel Teachy coach you live: blue cursor, chalk highlight, and a real GitHub flow — create a repo, add a file, commit." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=comic5" />
   <style>
-    .lesson-page-main {
-      padding: 48px 0 72px;
+    .tl-main {
+      padding: 28px 0 64px;
     }
 
-    .lesson-intro {
+    .tl-intro {
       text-align: center;
-      max-width: 640px;
-      margin: 0 auto 40px;
+      max-width: 36rem;
+      margin: 0 auto 22px;
     }
 
-    .lesson-intro h1 {
-      margin: 14px 0 10px;
+    .tl-badge {
+      display: inline-block;
       font-family: var(--font-display);
-      font-size: clamp(36px, 6vw, 52px);
       font-weight: 800;
-      letter-spacing: -0.035em;
-      line-height: 1.05;
-      color: #1b1a2e;
-    }
-
-    .lesson-intro p {
-      margin: 0;
-      font-size: 17px;
-      line-height: 1.55;
-      color: var(--ink-soft);
-    }
-
-    .lesson-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 28px;
-      align-items: start;
-    }
-
-    .lesson-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: sticky;
-      top: 80px;
-    }
-
-    .lesson-step {
-      display: flex;
-      gap: 14px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(15, 23, 42, 0.08);
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(27, 26, 46, 0.04);
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-    }
-
-    .lesson-step.active {
-      border-color: rgba(47, 111, 237, 0.35);
-      background: linear-gradient(180deg, #f5f9ff 0%, #eaf2ff 100%);
-      box-shadow: 0 8px 22px -10px rgba(47, 111, 237, 0.35);
-    }
-
-    .lesson-step.done {
-      opacity: 0.72;
-    }
-
-    .lesson-step-num {
-      flex-shrink: 0;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      font-weight: 700;
-      background: #f2f3f6;
-      color: var(--ink-soft);
-      border: 1px solid rgba(15, 23, 42, 0.1);
-    }
-
-    .lesson-step.active .lesson-step-num {
-      background: var(--accent);
-      color: #fff;
-      border-color: transparent;
-    }
-
-    .lesson-step.done .lesson-step-num {
-      background: #8fd18a;
-      color: #0d3a14;
-      border-color: transparent;
-    }
-
-    .lesson-step-body h3 {
-      margin: 0 0 3px;
-      font-family: var(--font-display);
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #1b1a2e;
-    }
-
-    .lesson-step-body p {
-      margin: 0;
       font-size: 13px;
-      line-height: 1.45;
+      padding: 6px 14px;
+      border: 2.5px solid var(--comic-stroke, #1a1520);
+      border-radius: 10px;
+      background: #ffcf6b;
+      box-shadow: 2px 2px 0 var(--comic-stroke, #1a1520);
+    }
+
+    .tl-intro h1 {
+      margin: 14px 0 8px;
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5.5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--comic-stroke, #1a1520);
+      text-shadow: 3px 3px 0 #fff8e8, 5px 5px 0 var(--comic-stroke, #1a1520);
+    }
+
+    .tl-intro p {
+      margin: 0;
+      font-family: var(--font);
+      font-weight: 600;
+      font-size: 16px;
       color: var(--ink-soft);
     }
 
-    .lesson-stage {
+    /* —— Teachy lesson HUD (matches app coaching chrome) —— */
+    .tl-hud {
       display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .lesson-toolbar {
-      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 12px 16px;
+      max-width: 880px;
+      margin: 0 auto 14px;
+      padding: 12px 16px;
+      background: rgba(26, 21, 32, 0.88);
+      border: 3px solid var(--comic-stroke, #1a1520);
+      border-radius: 16px;
+      box-shadow: 4px 4px 0 var(--comic-stroke, #1a1520);
+      color: #fff;
     }
 
-    .lesson-progress {
+    .tl-hud-goal {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: #ffcf6b;
+      white-space: nowrap;
+    }
+
+    .tl-hud-line {
       flex: 1;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.08);
+      min-width: 180px;
+      font-family: var(--font);
+      font-weight: 650;
+      font-size: 14.5px;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .tl-hud-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .tl-hud-btn {
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.12s;
+    }
+
+    .tl-hud-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .tl-hud-btn.primary {
+      background: #3380ff;
+      border-color: #1a1520;
+      color: #fff;
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .tl-hud-btn.primary:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .tl-hud-btn[hidden] {
+      display: none !important;
+    }
+
+    /* —— Stage: comic frame around the “Mac” —— */
+    .tl-stage {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .tl-frame {
+      border: 3.5px solid var(--comic-stroke, #1a1520);
+      border-radius: 18px;
+      padding: 10px;
+      background: #7eb8ef;
+      box-shadow: 8px 8px 0 var(--comic-stroke, #1a1520);
+    }
+
+    .tl-frame .demo-browser {
+      border-radius: 12px;
+      border: 2.5px solid var(--comic-stroke, #1a1520);
+      box-shadow: none;
       overflow: hidden;
     }
 
-    .lesson-progress > span {
-      display: block;
-      height: 100%;
-      width: 0;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #5b9cff, #2f6fed);
-      transition: width 0.4s ease;
+    .tl-frame .demo-chrome {
+      border-bottom: 2.5px solid var(--comic-stroke, #1a1520);
+      background: #fff8e8;
     }
 
-    .lesson-restart {
-      border: 1px solid rgba(15, 23, 42, 0.12);
+    .tl-frame .demo-url {
+      border: 2px solid var(--comic-stroke, #1a1520);
+      font-family: var(--font);
+    }
+
+    .tl-frame .demo-page {
+      min-height: 420px;
+      background: #f6f8fa;
+    }
+
+    /* GitHub-ish screens */
+    .tl-view {
+      padding: 20px 22px 28px;
+    }
+
+    .tl-view[hidden] {
+      display: none !important;
+    }
+
+    .tl-gh-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(27, 26, 46, 0.1);
+    }
+
+    .tl-gh-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #24292f;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .tl-gh-title {
+      font-family: var(--font);
+      font-weight: 800;
+      font-size: 16px;
+      color: #1a1520;
+    }
+
+    .tl-gh-sub {
+      font-size: 12px;
+      color: #6b6478;
+      font-weight: 600;
+    }
+
+    .tl-form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: #1a1520;
+    }
+
+    .tl-input {
+      width: 100%;
+      max-width: 420px;
+      padding: 10px 12px;
+      border: 2px solid #d0d7de;
+      border-radius: 8px;
+      font: inherit;
+      font-weight: 600;
+      font-size: 14px;
       background: #fff;
-      color: var(--ink-soft);
+      color: #1a1520;
+    }
+
+    .tl-input:focus {
+      outline: 2px solid #3380ff;
+      border-color: #3380ff;
+    }
+
+    .tl-input.is-target {
+      border-color: #3380ff;
+      box-shadow: 0 0 0 3px rgba(51, 128, 255, 0.2);
+    }
+
+    .tl-gh-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 14px;
+      padding: 10px 16px;
+      border: 2px solid #1a1520;
+      border-radius: 8px;
+      background: #238636;
+      color: #fff;
+      font-family: var(--font);
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 #1a1520;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+
+    .tl-gh-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 #1a1520;
+    }
+
+    .tl-gh-btn:active,
+    .tl-gh-btn.is-pressed {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 #1a1520;
+    }
+
+    .tl-gh-btn.secondary {
+      background: #fff;
+      color: #1a1520;
+    }
+
+    .tl-gh-btn.is-target {
+      outline: 3px solid #3380ff;
+      outline-offset: 3px;
+    }
+
+    .tl-file-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .tl-textarea {
+      width: 100%;
+      min-height: 88px;
+      padding: 10px 12px;
+      border: 2px solid #d0d7de;
+      border-radius: 8px;
       font: inherit;
       font-size: 13px;
       font-weight: 600;
-      cursor: pointer;
-      padding: 8px 14px;
-      border-radius: 999px;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-    }
-
-    .lesson-restart:hover {
-      background: #f5f6f8;
-      color: var(--ink);
-      border-color: rgba(15, 23, 42, 0.2);
-    }
-
-    .lesson-stage .hey-frame {
-      width: 100%;
-    }
-
-    .lesson-stage .demo-browser {
-      border-radius: 14px;
-      overflow: visible;
+      resize: vertical;
       background: #fff;
-      color: #1b1a2e;
-      box-shadow: none;
     }
 
-    .lesson-stage .demo-chrome {
-      background: linear-gradient(180deg, #fbfcfd 0%, #e6e9ee 55%, #d5d9df 100%);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      border-radius: 14px 14px 0 0;
+    .tl-textarea.is-target {
+      border-color: #3380ff;
+      box-shadow: 0 0 0 3px rgba(51, 128, 255, 0.2);
     }
 
-    .lesson-stage .demo-url {
+    .tl-commit-box {
+      margin-top: 16px;
+      padding: 14px;
       background: #fff;
-      color: #4a4f57;
-      border: 1px solid rgba(15, 23, 42, 0.1);
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 12px;
-    }
-
-    .lesson-stage .demo-page {
-      min-height: 460px;
-      background: #f7f8fb;
-      border-radius: 0 0 14px 14px;
-      display: grid;
-      grid-template-rows: 1fr auto;
-      padding: 16px;
-      gap: 14px;
-      overflow: visible;
-    }
-
-    .lesson-stage .demo-view {
-      padding: 0;
-    }
-
-    .ve-preview {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      background:
-        radial-gradient(120% 120% at 30% 20%, #ffd6e4 0%, #cfe3ff 45%, #e8f0ff 100%);
-      border: 1px solid rgba(15, 23, 42, 0.08);
-      display: grid;
-      place-items: center;
-      min-height: 280px;
-    }
-
-    .ve-preview-frame {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .ve-clip-film {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-    }
-
-    .ve-film-cell {
-      border-right: 1px solid rgba(27, 26, 46, 0.06);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
-    }
-
-    .ve-playhead {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--clicky);
-      box-shadow: 0 0 10px rgba(51, 128, 255, 0.55);
-      left: 18%;
-      transition: left 0.4s ease;
-    }
-
-    .ve-caption {
-      position: relative;
-      z-index: 3;
-      background: rgba(27, 26, 46, 0.78);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      padding: 8px 16px;
+      border: 1px solid #d0d7de;
       border-radius: 10px;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      max-width: 480px;
+    }
+
+    .tl-done-card {
       text-align: center;
+      padding: 48px 20px;
     }
 
-    .ve-caption.is-on {
-      opacity: 1;
-      transform: none;
+    .tl-done-stamp {
+      display: inline-block;
+      font-family: "Bangers", cursive;
+      font-size: 48px;
+      color: #ff3b5c;
+      text-shadow: 2px 2px 0 #1a1520;
+      transform: rotate(-8deg);
+      margin-bottom: 8px;
     }
 
-    .ve-music-note {
-      position: absolute;
-      z-index: 3;
-      left: 14px;
-      bottom: 14px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      background: var(--clicky);
-      padding: 6px 12px;
-      border-radius: 999px;
-      box-shadow: 0 8px 18px -8px rgba(47, 111, 237, 0.55);
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    .ve-music-note.is-on {
-      opacity: 1;
-      transform: none;
-    }
-
-    .ve-timeline {
-      background: #fff;
-      border: 1px solid rgba(15, 23, 42, 0.1);
-      border-radius: 12px;
-      padding: 12px 14px;
-      display: grid;
-      gap: 10px;
-      box-shadow: 0 2px 8px rgba(27, 26, 46, 0.04);
-    }
-
-    .ve-track-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 4px;
-    }
-
-    .ve-clip {
-      position: relative;
-      height: 38px;
-      border-radius: 8px;
-      background: linear-gradient(180deg, #dce8ff, #c2d6ff);
-      border: 1px solid rgba(47, 111, 237, 0.35);
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #1b3a7a;
-      overflow: hidden;
-      transition: width 0.45s var(--ease);
-    }
-
-    .ve-clip.video {
-      background: linear-gradient(180deg, #d6e4ff, #b8ceff);
-    }
-
-    .ve-clip.text {
-      background: linear-gradient(180deg, #efe4ff, #dcc9ff);
-      border-color: rgba(140, 100, 220, 0.4);
-      color: #4a2f7a;
-    }
-
-    .ve-clip.audio {
-      background: linear-gradient(180deg, #d8f5df, #b8e8c4);
-      border-color: rgba(80, 170, 100, 0.45);
-      color: #1f5a32;
-    }
-
-    .ve-clip .ve-trim {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 14px;
-      background: rgba(47, 111, 237, 0.45);
-      cursor: ew-resize;
-    }
-
-    .ve-clip.is-hot,
-    .ve-trim.is-hot {
-      box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.4);
-      animation: demoPulse 1.2s ease-in-out infinite;
-    }
-
-    .ve-export {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      padding: 48px 12px;
-      text-align: center;
-      min-height: 320px;
-      justify-content: center;
-    }
-
-    .ve-export h2 {
-      margin: 0;
+    .tl-done-card h2 {
+      margin: 0 0 8px;
       font-family: var(--font-display);
       font-size: 28px;
       font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #1b1a2e;
-      cursor: pointer;
     }
 
-    .ve-export p {
-      margin: 0;
-      color: var(--ink-soft);
-      font-size: 15px;
-    }
-
-    .ve-progress-bar {
-      width: 260px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.08);
-      overflow: hidden;
-    }
-
-    .ve-progress-bar > span {
-      display: block;
-      height: 100%;
-      width: 0;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #5b9cff, #2f6fed);
-      transition: width 0.3s linear;
-    }
-
-    .ve-done-check {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, #eaf3ff, #cfe3ff);
-      color: var(--accent);
-      border: 1px solid rgba(47, 111, 237, 0.3);
-      display: grid;
-      place-items: center;
-      font-size: 26px;
-      font-weight: 800;
-      box-shadow: 0 8px 18px -8px rgba(47, 111, 237, 0.4);
-    }
-
-    .ve-done-url {
-      display: inline-block;
-      background: #fff;
-      color: #4a4f57;
-      padding: 10px 16px;
-      border-radius: 10px;
-      border: 1px solid rgba(15, 23, 42, 0.1);
-      font-size: 12px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    }
-
-    .lesson-footnote {
-      text-align: center;
-      font-size: 14px;
-      color: var(--ink-soft);
-      margin: 36px auto 0;
-      max-width: 52ch;
-      line-height: 1.55;
-    }
-
-    .lesson-footnote a {
-      color: var(--accent);
+    .tl-done-card p {
+      margin: 0 0 8px;
       font-weight: 600;
+      color: #6b6478;
     }
 
-    @media (max-width: 860px) {
-      .lesson-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .lesson-steps {
-        position: static;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
+    .tl-sha {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      color: #57606a;
+      margin-bottom: 20px;
     }
 
-    @media (max-width: 560px) {
-      .lesson-steps {
-        grid-template-columns: 1fr;
+    /* Teachy overlay inside the browser */
+    .tl-frame .demo-clicky {
+      z-index: 60;
+    }
+
+    .tl-frame .demo-speech {
+      border: 2.5px solid #1a1520;
+      box-shadow: 3px 3px 0 #1a1520;
+      font-family: var(--font);
+      font-weight: 700;
+    }
+
+    .tl-frame .demo-chalk {
+      border-width: 2.5px;
+      border-radius: 8px;
+    }
+
+    .tl-frame .demo-cursor {
+      width: 22px;
+      height: 22px;
+      filter: drop-shadow(2px 2px 0 rgba(26, 21, 32, 0.35));
+    }
+
+    .tl-live-pill {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(26, 21, 32, 0.88);
+      border: 2px solid #1a1520;
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .tl-live-pill::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ff3b5c;
+      box-shadow: 0 0 0 3px rgba(255, 59, 92, 0.35);
+      animation: tl-pulse 1.2s ease infinite;
+    }
+
+    @keyframes tl-pulse {
+      50% { opacity: 0.45; }
+    }
+
+    .tl-footnote {
+      text-align: center;
+      margin: 22px auto 0;
+      max-width: 44ch;
+      font-family: var(--font-hand);
+      font-size: 18px;
+      color: var(--ink-soft);
+    }
+
+    .tl-footnote a {
+      color: #3380ff;
+      font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+      .tl-hud {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .tl-hud-actions {
+        width: 100%;
+      }
+
+      .tl-hud-btn {
+        flex: 1;
+      }
+
+      .tl-frame .demo-page {
+        min-height: 380px;
       }
     }
   </style>
 </head>
-<body class="hey-page">
+<body class="hey-page comic-page">
   <div class="hey-grain" aria-hidden="true"></div>
 
   <header class="site-header">
@@ -471,9 +452,9 @@
         teachy
       </a>
       <nav class="nav">
+        <a href="index.html#how">how it works</a>
         <a href="index.html#product">pricing</a>
         <a href="enterprise.html">enterprise</a>
-        <a href="index.html#faq">faq</a>
         <a class="nav-cta" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">
           <span>get teachy</span>
         </a>
@@ -481,156 +462,151 @@
     </div>
   </header>
 
-  <main class="lesson-page-main wrap">
-    <div class="lesson-intro">
-      <span class="hey-label-bubble">free lesson · ~5 min</span>
-      <h1>edit your first video</h1>
-      <p>trim a clip, add a title and music, then export — teachy coaches you the same way it does on your mac.</p>
+  <main class="tl-main wrap">
+    <div class="tl-intro">
+      <span class="tl-badge">free lesson · ~3 min</span>
+      <h1>ship your first commit</h1>
+      <p>same loop as the mac app — teachy points, you click, it checks. feel the tutor before you download.</p>
     </div>
 
-    <div class="lesson-layout">
-      <aside class="lesson-steps" id="lesson-steps">
-        <div class="lesson-step" data-step="1">
-          <span class="lesson-step-num">1</span>
-          <div class="lesson-step-body">
-            <h3>Trim the clip</h3>
-            <p>Drag the right edge of your video to cut it down to the good part.</p>
-          </div>
-        </div>
-        <div class="lesson-step" data-step="2">
-          <span class="lesson-step-num">2</span>
-          <div class="lesson-step-body">
-            <h3>Add a title</h3>
-            <p>Drop a text layer over the start — “My First Video”.</p>
-          </div>
-        </div>
-        <div class="lesson-step" data-step="3">
-          <span class="lesson-step-num">3</span>
-          <div class="lesson-step-body">
-            <h3>Add music</h3>
-            <p>Lay a music track under the whole thing.</p>
-          </div>
-        </div>
-        <div class="lesson-step" data-step="4">
-          <span class="lesson-step-num">4</span>
-          <div class="lesson-step-body">
-            <h3>Export</h3>
-            <p>Render it out. Your video is ready to share.</p>
-          </div>
-        </div>
-      </aside>
+    <div class="tl-hud" id="tl-hud">
+      <span class="tl-hud-goal" id="tl-goal">goal · create the repo</span>
+      <p class="tl-hud-line" id="tl-line" aria-live="polite">hold up — i’ll point at the green button. click it when you’re ready.</p>
+      <div class="tl-hud-actions">
+        <button type="button" class="tl-hud-btn" id="tl-hint">hint</button>
+        <button type="button" class="tl-hud-btn primary" id="tl-did">i did it</button>
+        <button type="button" class="tl-hud-btn" id="tl-restart" hidden>start over</button>
+      </div>
+    </div>
 
-      <section class="lesson-stage">
-        <div class="lesson-toolbar">
-          <div class="lesson-progress"><span id="lesson-progress-bar"></span></div>
-          <button type="button" class="lesson-restart" id="lesson-restart">start over</button>
-        </div>
-
-        <div class="demo-shell">
-          <div class="hey-frame">
-            <div class="demo-browser" id="demo-browser">
-              <div class="demo-chrome">
-                <div class="demo-dots"><i></i><i></i><i></i></div>
-                <div class="demo-url">
-                  <span class="demo-lock" aria-hidden="true"></span>
-                  <span id="demo-url-text">teachy.studio/edit</span>
-                </div>
-              </div>
-
-              <div class="demo-page" id="demo-page">
-                <div class="demo-view is-active" data-view="editor" id="demo-view-editor">
-                  <div class="ve-preview">
-                    <div class="ve-preview-frame">
-                      <div class="ve-clip-film">
-                        <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
-                        <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
-                        <div class="ve-film-cell"></div><div class="ve-film-cell"></div>
-                      </div>
-                    </div>
-                    <div class="ve-playhead" id="ve-playhead"></div>
-                    <div class="ve-caption" id="ve-caption">My First Video</div>
-                    <div class="ve-music-note" id="ve-music-note">♪ music on</div>
-                  </div>
-
-                  <div class="ve-timeline">
-                    <div>
-                      <div class="ve-track-label">Video</div>
-                      <div class="ve-clip video" id="ve-video-clip" style="width: 100%;">
-                        beach-clip.mp4
-                        <span class="ve-trim" id="ve-trim"></span>
-                      </div>
-                    </div>
-                    <div id="ve-text-row" hidden>
-                      <div class="ve-track-label">Text</div>
-                      <div class="ve-clip text" style="width: 34%;">My First Video</div>
-                    </div>
-                    <div id="ve-audio-row" hidden>
-                      <div class="ve-track-label">Audio</div>
-                      <div class="ve-clip audio" style="width: 100%;">Lo-fi beat.mp3</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="demo-view" data-view="export" id="demo-view-export" hidden>
-                  <div class="ve-export">
-                    <div class="ve-done-check" id="ve-export-check" hidden>✓</div>
-                    <h2 id="ve-export-title">Export your video</h2>
-                    <p id="ve-export-sub">One click renders the whole timeline.</p>
-                    <div class="ve-progress-bar" id="ve-export-bar-wrap" hidden><span id="ve-export-bar"></span></div>
-                    <div class="ve-done-url" id="ve-done-url" hidden>teachy.studio/share/my-first-video</div>
-                  </div>
-                </div>
-
-                <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
-
-                <div class="demo-clicky" id="demo-clicky" hidden>
-                  <div class="demo-speech" id="demo-speech" aria-live="polite"></div>
-                  <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
-                </div>
-              </div>
+    <div class="tl-stage">
+      <div class="tl-frame">
+        <div class="demo-browser" id="demo-browser">
+          <div class="demo-chrome">
+            <div class="demo-dots"><i></i><i></i><i></i></div>
+            <div class="demo-url">
+              <span class="demo-lock" aria-hidden="true"></span>
+              <span id="demo-url-text">github.com/new</span>
             </div>
           </div>
 
-          <div class="demo-hud">
-            <span class="demo-phase" id="demo-phase">Let’s go</span>
-            <button type="button" class="text-btn" id="skip-lesson">skip lesson</button>
+          <div class="demo-page" id="demo-page">
+            <span class="tl-live-pill">teachy · coaching live</span>
+
+            <!-- Step 0: new repo -->
+            <div class="tl-view" data-view="new" id="view-new">
+              <div class="tl-gh-header">
+                <span class="tl-gh-mark">⌘</span>
+                <div>
+                  <div class="tl-gh-title">Create a new repository</div>
+                  <div class="tl-gh-sub">A repository contains all project files, including revision history.</div>
+                </div>
+              </div>
+              <label class="tl-form-label" for="repo-name">Repository name</label>
+              <input class="tl-input" id="repo-name" value="my-first-repo" readonly />
+              <button type="button" class="tl-gh-btn" id="btn-create" data-target="create">Create repository</button>
+            </div>
+
+            <!-- Step 1: add file -->
+            <div class="tl-view" data-view="file" id="view-file" hidden>
+              <div class="tl-gh-header">
+                <span class="tl-gh-mark">⌘</span>
+                <div>
+                  <div class="tl-gh-title">you / my-first-repo</div>
+                  <div class="tl-gh-sub">Empty repository — add a README to get started.</div>
+                </div>
+              </div>
+              <button type="button" class="tl-gh-btn secondary" id="btn-add-file" data-target="addfile">Add file ▾</button>
+              <div class="tl-file-row" id="file-row" hidden>
+                <span>📄</span> README.md · staged
+              </div>
+            </div>
+
+            <!-- Step 2: commit message + commit -->
+            <div class="tl-view" data-view="commit" id="view-commit" hidden>
+              <div class="tl-gh-header">
+                <span class="tl-gh-mark">⌘</span>
+                <div>
+                  <div class="tl-gh-title">Commit new file</div>
+                  <div class="tl-gh-sub">README.md · 1 file changed</div>
+                </div>
+              </div>
+              <div class="tl-commit-box">
+                <label class="tl-form-label" for="commit-msg">Commit message</label>
+                <textarea class="tl-textarea" id="commit-msg" data-target="message" readonly>add readme</textarea>
+                <button type="button" class="tl-gh-btn" id="btn-commit" data-target="commit">Commit changes</button>
+              </div>
+            </div>
+
+            <!-- Done -->
+            <div class="tl-view" data-view="done" id="view-done" hidden>
+              <div class="tl-done-card">
+                <div class="tl-done-stamp">BAM!</div>
+                <h2>you shipped a commit</h2>
+                <p>that’s the exact loop teachy runs on your mac — point, wait, verify.</p>
+                <p class="tl-sha" id="done-sha">a3f91c2 · add readme · just now</p>
+                <a class="btn btn-primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">
+                  <span class="btn-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.83.94-2.19 1.66-3.32 1.57a3.78 3.78 0 0 1 1.12-2.9C13.9 2.09 15.32 1.5 16.36 1.43zM20.5 17.02c-.55 1.27-.82 1.84-1.53 2.96-.99 1.57-2.39 3.52-4.12 3.53-1.54.02-1.94-.99-4.03-.98-2.09.01-2.53 1-4.07.97-1.73-.02-3.05-1.79-4.04-3.35C-.36 16.4-.9 11.4 1.05 8.62 2.34 6.77 4.14 5.68 6.05 5.68c1.94 0 3.16 1.06 4.77 1.06 1.56 0 2.51-1.06 4.77-1.06 1.7 0 3.5.92 4.79 2.51-4.2 2.3-3.51 8.28.12 8.83z"/></svg>
+                  </span>
+                  <span class="btn-label">get teachy for mac</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="demo-chalk" id="demo-chalk" aria-hidden="true"></div>
+
+            <div class="demo-clicky" id="demo-clicky">
+              <div class="demo-cursor" id="demo-cursor" aria-hidden="true"></div>
+              <div class="demo-speech is-on" id="demo-speech" aria-live="polite">i’ll point — you click.</div>
+            </div>
           </div>
         </div>
-
-        <p class="lesson-footnote">
-          this is a pretend editor in your browser — but the steps are exactly what you’d do in any video app.
-          <a href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">want teachy to coach you live? get the app →</a>
-        </p>
-      </section>
+      </div>
     </div>
+
+    <p class="tl-footnote">
+      this is a pretend github inside teachy’s coach UI.
+      <a href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">want it on your real mac? →</a>
+    </p>
   </main>
 
-  <footer class="hey-footer">
-    <div class="wrap hey-footer-cols">
-      <div class="hey-footer-col">
-        <span class="hey-footer-head">product</span>
-        <a href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">download</a>
-        <a href="quick-github-lesson.html">free lesson</a>
-        <a href="index.html#product">pricing</a>
+  <footer class="hey-footer comic-footer">
+    <div class="wrap comic-footer-inner">
+      <div class="comic-footer-brand">
+        <a class="logo" href="index.html">
+          <span class="logo-mark"></span>
+          teachy
+        </a>
+        <p>an ai buddy that coaches you live — free forever.</p>
       </div>
-      <div class="hey-footer-col">
-        <span class="hey-footer-head">learn</span>
-        <a href="quick-github-lesson.html">free lesson</a>
-        <a href="index.html#fluency">how it works</a>
-        <a href="index.html#faq">faq</a>
-      </div>
-      <div class="hey-footer-col">
-        <span class="hey-footer-head">contact</span>
-        <a href="enterprise.html">for teams</a>
-        <a href="mailto:enterprise@teachy.app?subject=Teachy%20for%20Teams">email us</a>
-      </div>
-      <div class="hey-footer-col hey-footer-disclaimer">
-        <span class="hey-footer-head">privacy</span>
-        <p>teachy only sees your screen when you press the hotkey. screenshots go through your own proxy — never stored, never sold.</p>
+      <div class="hey-footer-cols">
+        <div class="hey-footer-col">
+          <span class="hey-footer-head">product</span>
+          <a href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">download</a>
+          <a href="quick-github-lesson.html">free lesson</a>
+          <a href="index.html#product">pricing</a>
+        </div>
+        <div class="hey-footer-col">
+          <span class="hey-footer-head">learn</span>
+          <a href="quick-github-lesson.html">free lesson</a>
+          <a href="index.html#how">how it works</a>
+          <a href="index.html#faq">faq</a>
+        </div>
+        <div class="hey-footer-col">
+          <span class="hey-footer-head">contact</span>
+          <a href="enterprise.html">for teams</a>
+          <a href="mailto:enterprise@teachy.app?subject=Teachy%20for%20Teams">email us</a>
+        </div>
+        <div class="hey-footer-col hey-footer-disclaimer">
+          <span class="hey-footer-head">privacy</span>
+          <p>teachy only sees your screen when you press the hotkey. nothing is stored or sold.</p>
+        </div>
       </div>
     </div>
-    <div class="hey-pixel-band" aria-hidden="true">
-      <span class="hey-pixel" data-text="teachy">teachy</span>
+    <div class="comic-footer-end" aria-hidden="true">
+      <span class="comic-footer-stamp">the end?</span>
+      <span class="comic-footer-cont">…nah. go make something.</span>
     </div>
   </footer>
 
@@ -638,344 +614,227 @@
     (function () {
       "use strict";
 
-      var aborted = false;
-      var waitCleanup = null;
-
-      var demoPhase = document.getElementById("demo-phase");
-      var demoPage = document.getElementById("demo-page");
-      var demoClicky = document.getElementById("demo-clicky");
-      var demoSpeech = document.getElementById("demo-speech");
-      var demoCursor = document.getElementById("demo-cursor");
-      var demoChalk = document.getElementById("demo-chalk");
-      var demoUrlText = document.getElementById("demo-url-text");
-      var demoViewEditor = document.getElementById("demo-view-editor");
-      var demoViewExport = document.getElementById("demo-view-export");
-      var veVideoClip = document.getElementById("ve-video-clip");
-      var veTrim = document.getElementById("ve-trim");
-      var veTextRow = document.getElementById("ve-text-row");
-      var veAudioRow = document.getElementById("ve-audio-row");
-      var veCaption = document.getElementById("ve-caption");
-      var veMusicNote = document.getElementById("ve-music-note");
-      var vePlayhead = document.getElementById("ve-playhead");
-      var veExportCheck = document.getElementById("ve-export-check");
-      var veExportTitle = document.getElementById("ve-export-title");
-      var veExportSub = document.getElementById("ve-export-sub");
-      var veExportBarWrap = document.getElementById("ve-export-bar-wrap");
-      var veExportBar = document.getElementById("ve-export-bar");
-      var veDoneUrl = document.getElementById("ve-done-url");
-      var progressBar = document.getElementById("lesson-progress-bar");
-      var stepEls = Array.prototype.slice.call(document.querySelectorAll(".lesson-step"));
-
-      function wait(ms) {
-        return new Promise(function (resolve) {
-          var started = Date.now();
-          var id = setInterval(function () {
-            if (aborted || Date.now() - started >= ms) {
-              clearInterval(id);
-              resolve();
-            }
-          }, 40);
-        });
-      }
-
-      async function typewrite(el, text, msPerChar) {
-        if (!el) return;
-        var speed = msPerChar || 26;
-        el.innerHTML = "";
-        var textNode = document.createTextNode("");
-        var caret = document.createElement("span");
-        caret.className = "caret";
-        el.appendChild(textNode);
-        el.appendChild(caret);
-        for (var i = 0; i < text.length; i++) {
-          if (aborted) return;
-          textNode.textContent += text.charAt(i);
-          var ch = text.charAt(i);
-          var pause = speed;
-          if (ch === "." || ch === "—" || ch === ",") pause = speed * 7;
-          if (ch === "g") pause = speed * 2.2;
-          await wait(pause);
+      var steps = [
+        {
+          view: "new",
+          url: "github.com/new",
+          goal: "goal · create the repo",
+          line: "see that green button? click Create repository — i’ll wait.",
+          speech: "click the green one.",
+          targetId: "btn-create",
+          hint: "bottom of the form — bright green. that’s it."
+        },
+        {
+          view: "file",
+          url: "github.com/you/my-first-repo",
+          goal: "goal · add a README",
+          line: "empty repo. hit Add file so we have something to commit.",
+          speech: "Add file — right here.",
+          targetId: "btn-add-file",
+          hint: "the gray button under the header. one click stages README.md."
+        },
+        {
+          view: "commit",
+          url: "github.com/you/my-first-repo/new/main",
+          goal: "goal · write the message",
+          line: "short message already filled. look at it, then hit I did it.",
+          speech: "read the message. then confirm.",
+          targetId: "commit-msg",
+          hint: "commit messages say what changed — not a diary entry.",
+          advanceOnly: true
+        },
+        {
+          view: "commit",
+          url: "github.com/you/my-first-repo/new/main",
+          goal: "goal · commit",
+          line: "last move — Commit changes. that’s the snapshot. forever.",
+          speech: "Commit changes. ship it.",
+          targetId: "btn-commit",
+          hint: "green button under the message box."
         }
-        await wait(280);
-        if (!aborted && caret.parentNode) caret.remove();
-      }
+      ];
 
-      function setPhase(text, mode) {
-        if (!demoPhase) return;
-        demoPhase.textContent = text;
-        demoPhase.classList.toggle("is-wait", mode === "wait");
-        demoPhase.classList.toggle("is-done", mode === "done");
-      }
+      var step = 0;
+      var page = document.getElementById("demo-page");
+      var clicky = document.getElementById("demo-clicky");
+      var speech = document.getElementById("demo-speech");
+      var chalk = document.getElementById("demo-chalk");
+      var cursor = document.getElementById("demo-cursor");
+      var urlText = document.getElementById("demo-url-text");
+      var goalEl = document.getElementById("tl-goal");
+      var lineEl = document.getElementById("tl-line");
+      var hintBtn = document.getElementById("tl-hint");
+      var didBtn = document.getElementById("tl-did");
+      var restartBtn = document.getElementById("tl-restart");
+      var fileRow = document.getElementById("file-row");
 
-      function showView(view) {
-        [demoViewEditor, demoViewExport].forEach(function (el) {
-          if (!el) return;
-          el.hidden = el !== view;
+      var views = {
+        new: document.getElementById("view-new"),
+        file: document.getElementById("view-file"),
+        commit: document.getElementById("view-commit"),
+        done: document.getElementById("view-done")
+      };
+
+      function clearTargets() {
+        page.querySelectorAll(".is-target").forEach(function (el) {
+          el.classList.remove("is-target");
         });
       }
 
-      function clearHighlights() {
-        [veTrim, veVideoClip].forEach(function (el) {
-          if (el) el.classList.remove("is-hot");
+      function showView(name) {
+        Object.keys(views).forEach(function (key) {
+          views[key].hidden = key !== name;
         });
-        if (demoChalk) demoChalk.classList.remove("is-on");
-      }
-
-      function showClicky() {
-        if (demoClicky) demoClicky.hidden = false;
-      }
-
-      function placeClicky(left, top, flip) {
-        if (!demoClicky) return;
-        showClicky();
-        demoClicky.style.left = Math.round(left) + "px";
-        demoClicky.style.top = Math.round(top) + "px";
-        demoClicky.classList.toggle("is-flipped", !!flip);
       }
 
       function pointAt(el) {
-        if (!demoPage || !el) return;
-        var pageRect = demoPage.getBoundingClientRect();
-        var targetRect = el.getBoundingClientRect();
-        var nearRightEdge = targetRect.left - pageRect.left > pageRect.width * 0.55;
-        var left = targetRect.left - pageRect.left + (nearRightEdge ? -8 : targetRect.width + 10);
-        var top = targetRect.top - pageRect.top + Math.max(0, targetRect.height * 0.15);
-        placeClicky(left, top, nearRightEdge);
+        if (!el || !page) return;
+        var pageRect = page.getBoundingClientRect();
+        var rect = el.getBoundingClientRect();
 
-        if (demoChalk) {
-          var pad = 6;
-          demoChalk.style.left = Math.round(targetRect.left - pageRect.left - pad) + "px";
-          demoChalk.style.top = Math.round(targetRect.top - pageRect.top - pad) + "px";
-          demoChalk.style.width = Math.round(targetRect.width + pad * 2) + "px";
-          demoChalk.style.height = Math.round(targetRect.height + pad * 2) + "px";
-          demoChalk.classList.add("is-on");
+        // Park the blue cursor just past the target's right edge (app-like point)
+        var left = rect.left - pageRect.left + rect.width + 10;
+        var top = rect.top - pageRect.top + rect.height / 2 - 8;
+
+        left = Math.max(16, Math.min(left, pageRect.width - 200));
+        top = Math.max(36, Math.min(top, pageRect.height - 48));
+
+        clicky.style.left = left + "px";
+        clicky.style.top = top + "px";
+        clicky.classList.remove("is-flipped");
+
+        // If we'd hang off the right, flip speech to the left of the cursor
+        if (left > pageRect.width - 220) {
+          left = rect.left - pageRect.left - 28;
+          left = Math.max(16, left);
+          clicky.style.left = left + "px";
+          clicky.classList.add("is-flipped");
         }
-        el.classList.add("is-hot");
+
+        chalk.style.left = rect.left - pageRect.left - 6 + "px";
+        chalk.style.top = rect.top - pageRect.top - 6 + "px";
+        chalk.style.width = rect.width + 12 + "px";
+        chalk.style.height = rect.height + 12 + "px";
+        chalk.classList.add("is-on");
+
+        clearTargets();
+        el.classList.add("is-target");
       }
 
-      async function teachySays(text) {
-        showClicky();
-        if (demoSpeech) {
-          demoSpeech.classList.add("is-on");
-          await typewrite(demoSpeech, text, 22);
-        }
+      function say(text) {
+        speech.classList.remove("is-on");
+        speech.textContent = text;
+        // reflow for pop
+        void speech.offsetWidth;
+        speech.classList.add("is-on");
       }
 
-      function cancelWait() {
-        if (typeof waitCleanup === "function") {
-          waitCleanup();
-          waitCleanup = null;
+      function paint() {
+        if (step >= steps.length) {
+          showView("done");
+          urlText.textContent = "github.com/you/my-first-repo";
+          goalEl.textContent = "done · first commit shipped";
+          lineEl.textContent = "nice. that’s the teachy loop — point, you act, verify.";
+          say("you did it. for real next time, i’m on your mac.");
+          chalk.classList.remove("is-on");
+          clearTargets();
+          clicky.style.left = "42%";
+          clicky.style.top = "58%";
+          didBtn.hidden = true;
+          hintBtn.hidden = true;
+          restartBtn.hidden = false;
+          return;
         }
-      }
 
-      function waitForUser(register) {
-        return new Promise(function (resolve) {
-          if (aborted) {
-            resolve(null);
-            return;
-          }
-          cancelWait();
-          var settled = false;
-          function done(value) {
-            if (settled) return;
-            settled = true;
-            cancelWait();
-            resolve(value);
-          }
-          waitCleanup = register(done);
-          var poll = setInterval(function () {
-            if (aborted) {
-              clearInterval(poll);
-              done(null);
-            }
-          }, 80);
-          var prev = waitCleanup;
-          waitCleanup = function () {
-            clearInterval(poll);
-            if (typeof prev === "function") prev();
-          };
+        var s = steps[step];
+        showView(s.view);
+        urlText.textContent = s.url;
+        goalEl.textContent = s.goal;
+        lineEl.textContent = s.line;
+        say(s.speech);
+        didBtn.hidden = false;
+        hintBtn.hidden = false;
+        restartBtn.hidden = true;
+
+        if (s.view === "file" && step > 1) {
+          fileRow.hidden = false;
+        }
+        if (s.view === "file" && step === 1) {
+          fileRow.hidden = true;
+        }
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            var target = document.getElementById(s.targetId);
+            pointAt(target);
+          });
         });
       }
 
-      function setStep(n, state) {
-        stepEls.forEach(function (el) {
-          var num = parseInt(el.getAttribute("data-step"), 10);
-          el.classList.toggle("active", num === n && state !== "done");
-          el.classList.toggle("done", num < n || (num === n && state === "done"));
-        });
-        if (progressBar) {
-          progressBar.style.width = ((n - (state === "done" ? 0 : 1)) / stepEls.length * 100) + "%";
+      function advance() {
+        var s = steps[step];
+        if (!s) return;
+
+        var target = document.getElementById(s.targetId);
+        if (target && target.tagName === "BUTTON") {
+          target.classList.add("is-pressed");
+          cursor.classList.add("is-click");
+          setTimeout(function () {
+            target.classList.remove("is-pressed");
+            cursor.classList.remove("is-click");
+          }, 180);
         }
+
+        if (s.targetId === "btn-add-file") {
+          fileRow.hidden = false;
+        }
+
+        step += 1;
+        setTimeout(paint, 280);
       }
 
-      function resetAll() {
-        cancelWait();
-        clearHighlights();
-        if (demoClicky) {
-          demoClicky.hidden = true;
-          demoClicky.style.left = "48px";
-          demoClicky.style.top = "120px";
-          demoClicky.classList.remove("is-flipped");
-        }
-        if (demoSpeech) {
-          demoSpeech.classList.remove("is-on");
-          demoSpeech.textContent = "";
-        }
-        if (demoCursor) demoCursor.classList.remove("is-click");
-        if (demoUrlText) demoUrlText.textContent = "teachy.studio/edit";
-        if (veVideoClip) veVideoClip.style.width = "100%";
-        if (veTextRow) veTextRow.hidden = true;
-        if (veAudioRow) veAudioRow.hidden = true;
-        if (veCaption) veCaption.classList.remove("is-on");
-        if (veMusicNote) veMusicNote.classList.remove("is-on");
-        if (vePlayhead) vePlayhead.style.left = "18%";
-        if (veExportCheck) veExportCheck.hidden = true;
-        if (veExportBarWrap) veExportBarWrap.hidden = true;
-        if (veExportBar) veExportBar.style.width = "0";
-        if (veDoneUrl) veDoneUrl.hidden = true;
-        if (veExportTitle) veExportTitle.textContent = "Export your video";
-        if (veExportSub) veExportSub.textContent = "One click renders the whole timeline.";
-        showView(demoViewEditor);
-        setPhase("Let’s go", "");
-        setStep(1, "todo");
-      }
+      didBtn.addEventListener("click", advance);
+      hintBtn.addEventListener("click", function () {
+        var s = steps[step];
+        if (!s) return;
+        lineEl.textContent = s.hint;
+        say(s.hint);
+        var target = document.getElementById(s.targetId);
+        pointAt(target);
+      });
 
-      async function runLesson() {
-        aborted = false;
-        resetAll();
-        if (aborted) return;
+      restartBtn.addEventListener("click", function () {
+        step = 0;
+        fileRow.hidden = true;
+        paint();
+      });
 
-        setStep(1, "todo");
-        await teachySays("hey — this is a pretend video editor in your browser. i’ll teach you like i do for real. goal: make a short video.");
-        if (aborted) return;
-        await wait(450);
-
-        setStep(1, "active");
-        if (vePlayhead) vePlayhead.style.left = "18%";
-        await teachySays("grab the right edge of the clip and drag left to trim the boring bit.");
-        if (aborted) return;
-        pointAt(veTrim);
-        setPhase("Your turn", "wait");
-
-        await waitForUser(function (done) {
-          function onDown(event) {
-            event.preventDefault();
-            if (demoCursor) {
-              demoCursor.classList.add("is-click");
-              setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
-            }
-            if (veVideoClip) veVideoClip.style.width = "62%";
-            if (vePlayhead) vePlayhead.style.left = "62%";
-            done(true);
-          }
-          veTrim.addEventListener("mousedown", onDown);
-          return function () { veTrim.removeEventListener("mousedown", onDown); };
-        });
-        if (aborted) return;
-
-        clearHighlights();
-        setPhase("Nice", "");
-        await teachySays("trimmed. the clip is now 6 seconds of the good part.");
-        if (aborted) return;
-        await wait(400);
-
-        setStep(1, "done");
-        setStep(2, "active");
-        if (veTextRow) veTextRow.hidden = false;
-        await teachySays("now a title. we added a text layer — see it on the Text track? it shows at the start.");
-        if (aborted) return;
-        pointAt(veTextRow.querySelector(".ve-clip"));
-        setPhase("Checked ✓", "done");
-        if (veCaption) {
-          setTimeout(function () { if (veCaption) veCaption.classList.add("is-on"); }, 200);
-        }
-        await wait(700);
-        await teachySays("“My First Video” fades in over the clip. that’s a title.");
-        if (aborted) return;
-        await wait(400);
-
-        setStep(2, "done");
-        setStep(3, "active");
-        if (veAudioRow) veAudioRow.hidden = false;
-        await teachySays("last layer: music. we dropped a beat under the whole thing.");
-        if (aborted) return;
-        pointAt(veAudioRow.querySelector(".ve-clip"));
-        setPhase("Checked ✓", "done");
-        if (veMusicNote) {
-          setTimeout(function () { if (veMusicNote) veMusicNote.classList.add("is-on"); }, 200);
-        }
-        await wait(700);
-        await teachySays("title, clip, music — your timeline is full. time to export.");
-        if (aborted) return;
-        await wait(400);
-
-        setStep(3, "done");
-        setStep(4, "active");
-        showView(demoViewExport);
-        if (demoUrlText) demoUrlText.textContent = "teachy.studio/export";
-        await teachySays("hit Export — the editor renders everything into one video file.");
-        if (aborted) return;
-        setPhase("Your turn", "wait");
-
-        await waitForUser(function (done) {
-          function onClick(event) {
-            event.preventDefault();
-            if (demoCursor) {
-              demoCursor.classList.add("is-click");
-              setTimeout(function () { if (demoCursor) demoCursor.classList.remove("is-click"); }, 180);
-            }
-            done(true);
-          }
-          veExportTitle.addEventListener("click", onClick);
-          return function () { veExportTitle.removeEventListener("click", onClick); };
-        });
-        if (aborted) return;
-
-        if (veExportBarWrap) veExportBarWrap.hidden = false;
-        if (veExportTitle) veExportTitle.textContent = "Rendering…";
-        if (veExportSub) veExportSub.textContent = "Bringing your timeline together.";
-        for (var p = 0; p <= 100; p += 25) {
-          if (aborted) return;
-          if (veExportBar) veExportBar.style.width = p + "%";
-          await wait(260);
-        }
-        if (veExportCheck) veExportCheck.hidden = false;
-        if (veExportTitle) veExportTitle.textContent = "Done!";
-        if (veExportSub) veExportSub.textContent = "Your video is ready to share.";
-        if (veDoneUrl) veDoneUrl.hidden = false;
-        setStep(4, "done");
-        setPhase("You did it ✓", "done");
-        await teachySays("that’s a full video: trimmed, titled, scored, exported. you did it — and i coached you the whole way.");
-      }
-
-      var skipBtn = document.getElementById("skip-lesson");
-      if (skipBtn) {
-        skipBtn.addEventListener("click", function () {
-          aborted = true;
-          if (veTextRow) veTextRow.hidden = false;
-          if (veAudioRow) veAudioRow.hidden = false;
-          if (veCaption) veCaption.classList.add("is-on");
-          if (veMusicNote) veMusicNote.classList.add("is-on");
-          if (veVideoClip) veVideoClip.style.width = "62%";
-          showView(demoViewExport);
-          if (veExportCheck) veExportCheck.hidden = false;
-          if (veExportTitle) veExportTitle.textContent = "Done!";
-          if (veExportSub) veExportSub.textContent = "Your video is ready to share.";
-          if (veDoneUrl) veDoneUrl.hidden = false;
-          if (demoUrlText) demoUrlText.textContent = "teachy.studio/share/my-first-video";
-          setPhase("Done ✓", "done");
-          setStep(4, "done");
+      function bindTargetClick(id, expectedStep) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("click", function (event) {
+          event.preventDefault();
+          if (step !== expectedStep) return;
+          advance();
         });
       }
 
-      var restartBtn = document.getElementById("lesson-restart");
-      if (restartBtn) {
-        restartBtn.addEventListener("click", function () {
-          runLesson();
-        });
-      }
+      // Direct binds so clicking the pointed control feels like doing the step
+      bindTargetClick("btn-create", 0);
+      bindTargetClick("btn-add-file", 1);
+      bindTargetClick("btn-commit", 3);
 
-      runLesson();
+      // Initial park + paint
+      clicky.style.left = "48px";
+      clicky.style.top = "120px";
+      paint();
+
+      window.addEventListener("resize", function () {
+        if (step >= steps.length) return;
+        var s = steps[step];
+        if (!s) return;
+        pointAt(document.getElementById(s.targetId));
+      });
     })();
   </script>
 </body>
