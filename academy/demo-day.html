@@ -353,7 +353,12 @@ table.compact th,table.compact td{padding:.4rem .75rem}
   body{overflow:visible;background:#fff}
   body::after{display:none}
   .deck{height:auto}
-  .slide{position:relative;display:grid!important;height:720px;width:1280px;page-break-after:always;overflow:hidden}
+  .slide,.slide.active{
+    position:relative;display:grid!important;
+    height:720px;width:1280px;
+    page-break-after:always;overflow:hidden;
+    animation:none!important;opacity:1!important;transform:none!important;
+  }
   .bar,.hud,.help,.notes,.overview,.wc{display:none!important}
 }
 </style>
@@ -538,7 +543,38 @@ table.compact th,table.compact td{padding:.4rem .75rem}
   <div class="wc">40 words · traction</div>
 </section>
 
-<!-- 7 · TEAM & ASK ------------------------------------------- -->
+<!-- 7 · AGGIEX ----------------------------------------------- -->
+<section class="slide" data-title="AggieX" data-notes="Credit specifically, not a thank-you. Point: coachable, pivot from evidence. Spoken: 'AggieX didn't give me the idea. The Crucible took away every place I could hide from the numbers — and the rebuild is the product I'm showing you.'">
+  <div class="inner">
+    <p class="kicker">aggieX · ten weeks</p>
+    <h2>The program that wouldn’t let me hide.</h2>
+    <div class="grid g2 mt">
+      <div class="panel tight">
+        <h3>What it forced</h3>
+        <ul class="ticks">
+          <li><strong>Market + GTM as process</strong> — map the landscape, stop guessing</li>
+          <li><strong>Beachhead discipline</strong> — one winnable segment, not “everyone”</li>
+          <li><strong>Founder-led outreach</strong> — response rate, meetings, commitments</li>
+          <li><strong>MVP scope</strong> — what shipped, what got cut, why</li>
+        </ul>
+      </div>
+      <div class="panel dark tight">
+        <h3>The part that hurt</h3>
+        <ul class="ticks">
+          <li><strong>Crucible:</strong> “installs are not learning — why does anyone come back?”</li>
+          <li><strong>So I rebuilt.</strong> Desktop app → community workspace</li>
+          <li><strong>Aggie Network</strong> — warm intros that turn a demo into a pipeline</li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel accent mt tight">
+      <p><strong>Net:</strong> AggieX didn’t give me the idea. It took away every place I could hide from the numbers — and the pivot is the product today.</p>
+    </div>
+  </div>
+  <div class="wc">42 words · aggieX</div>
+</section>
+
+<!-- 8 · TEAM & ASK ------------------------------------------- -->
 <section class="slide" data-title="Team & ask" data-notes="Capability, not transcript. Then ask: amount, runway, what else. Pause after the number. Spoken: 'Six startups before this. Fern gave kids a voice. Cognition mapped how people forget — NVIDIA and DeepMind backed it. I sat inside real firms at Pillar and watched them buy AI nobody could use. Then I walked the interview loop and built the job that didn't exist.'">
   <div class="inner">
     <p class="kicker">why me · the ask</p>
@@ -735,7 +771,7 @@ table.compact th,table.compact td{padding:.4rem .75rem}
 
 <div class="bar"><i id="progress"></i></div>
 
-<div class="help">← → nav · <b>f</b> full · <b>n</b> notes · <b>t</b> timer · <b>o</b> overview · slides 1–7 = pitch</div>
+<div class="help">← → nav · <b>f</b> full · <b>n</b> notes · <b>t</b> timer · <b>o</b> overview · slides 1–8 = pitch</div>
 
 <div class="hud">
   <span class="pill timer" id="timer" hidden>00:00</span>
@@ -757,7 +793,7 @@ table.compact th,table.compact td{padding:.4rem .75rem}
   var i = 0;
   var notesOn = false;
   var $ = function(id){ return document.getElementById(id); };
-  var PITCH = 7; // first N are the Demo Day pitch
+  var PITCH = 8; // first N are the Demo Day pitch
 
   function render(){
     slides.forEach(function(s,n){ s.classList.toggle('active', n===i); });
