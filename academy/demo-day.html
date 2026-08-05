@@ -4,867 +4,666 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Teachy — Demo Day</title>
+<meta name="description" content="Teachy Demo Day deck: AI fluency across the organization — approved tools, verified practice, data rules enforced at the moment of use." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=ent12" />
 <style>
-/* ============================================================
-   Teachy demo day deck — AggieX Final Demo Day format.
-   Seven pitch slides + appendix. ~20 words/slide target, 50 max.
-   Visual language: comic panels (decision 0019).
-   Keys: → ← space nav · F fullscreen · N notes · T timer · O overview
-   ============================================================ */
-
+/* —— Demo Day shell (enterprise system + pitch chrome) —— */
 :root{
-  --ink:#1b1a2e;
-  --ink-soft:#5b5872;
-  --paper:#f6efe1;
-  --paper-2:#efe4d2;
-  --maroon:#500000;
-  --blue:#2f6fed;
-  --yellow:#ffd166;
-  --green:#2f9e64;
-  --line:rgba(27,26,46,.14);
-  --shadow:6px 6px 0 var(--ink);
-  --shadow-sm:4px 4px 0 var(--ink);
-  --font-display:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;
-  --font-body:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
-  --font-hand:"Caveat","Segoe Script","Bradley Hand",cursive;
-  --font-mono:"JetBrains Mono","Cascadia Mono",Consolas,monospace;
+  --deck-ink:#14131a;
+  --deck-muted:#5c5868;
+  --deck-line:rgba(20,19,26,.12);
+  --deck-bg:#f4f2ec;
+  --deck-panel:#fffcf7;
+  --deck-maroon:#500000;
+  --deck-blue:#1f4fd8;
+  --deck-green:#1f7a4d;
+  --deck-warn:#b42318;
+  --deck-ease:cubic-bezier(.22,1,.36,1);
 }
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-html,body{height:100%}
-body{
-  font-family:var(--font-body);
-  color:var(--ink);
-  background:var(--paper);
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body.deck-page{
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+  color:var(--deck-ink);
+  background:var(--deck-bg);
   overflow:hidden;
   -webkit-font-smoothing:antialiased;
 }
-
-body::after{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.45;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-}
-
 .deck{position:relative;height:100vh;width:100vw}
-
 .slide{
   position:absolute;inset:0;
   display:none;
-  padding:clamp(1.4rem,3.1vw,3.4rem) clamp(1.5rem,5vw,5rem);
-  align-content:center;
-  background:
-    radial-gradient(ellipse 80% 60% at 15% 8%,rgba(80,0,0,.10),transparent 55%),
-    radial-gradient(ellipse 70% 55% at 92% 88%,rgba(47,111,237,.12),transparent 52%),
-    linear-gradient(165deg,var(--paper) 0%,var(--paper-2) 55%,#e8f0ea 100%);
+  padding:clamp(1.5rem,3.5vh,2.75rem) clamp(1.5rem,5vw,4.5rem) clamp(2rem,4vh,3rem);
   overflow:auto;
+  background:
+    radial-gradient(ellipse 70% 50% at 0% 0%,rgba(80,0,0,.06),transparent 55%),
+    radial-gradient(ellipse 60% 45% at 100% 100%,rgba(31,79,216,.05),transparent 50%),
+    var(--deck-bg);
 }
-.slide.active{display:grid;animation:rise .38s cubic-bezier(.2,.8,.2,1) both}
-.slide.appendix{background:
-  radial-gradient(ellipse 80% 60% at 15% 8%,rgba(80,0,0,.06),transparent 55%),
-  linear-gradient(165deg,#ebe4d6 0%,#e4dcc9 100%);
+.slide.active{display:grid;align-content:center}
+.slide.active .reveal{
+  animation:deck-rise .7s var(--deck-ease) both;
 }
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.slide.active .reveal-d1{animation-delay:.08s}
+.slide.active .reveal-d2{animation-delay:.16s}
+.slide.active .reveal-d3{animation-delay:.24s}
+.slide.active .reveal-d4{animation-delay:.32s}
+.slide.active .reveal-d5{animation-delay:.4s}
+@keyframes deck-rise{
+  from{opacity:0;transform:translateY(18px) scale(.985);filter:blur(4px)}
+  to{opacity:1;transform:none;filter:none}
+}
 
 .inner{width:min(1180px,100%);margin-inline:auto}
-
-.kicker{
-  font-family:var(--font-hand);
-  font-size:clamp(1.1rem,2.2vw,1.6rem);
-  color:var(--maroon);
-  margin-bottom:.35rem;
+.deck-kicker{
+  font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--deck-maroon);margin:0 0 .65rem;
 }
-h1{
-  font-family:var(--font-display);
-  font-weight:800;
-  font-size:clamp(3.4rem,9vw,7rem);
-  line-height:.92;
-  letter-spacing:-.035em;
-  color:var(--maroon);
-}
-h2{
-  font-family:var(--font-display);
-  font-weight:800;
-  font-size:clamp(2rem,4.6vw,3.4rem);
-  line-height:1.02;
-  letter-spacing:-.03em;
-  margin-bottom:.4rem;
-}
-h3{
-  font-family:var(--font-display);
-  font-weight:700;
-  font-size:clamp(1.05rem,1.8vw,1.35rem);
-  letter-spacing:-.01em;
-  margin-bottom:.3rem;
-}
-p{font-size:clamp(1rem,1.5vw,1.22rem);line-height:1.5;color:var(--ink)}
-.lede{font-size:clamp(1.15rem,2.1vw,1.6rem);line-height:1.4;max-width:46ch;color:var(--ink-soft)}
-.soft{color:var(--ink-soft)}
-.big{font-family:var(--font-display);font-weight:800;font-size:clamp(2.2rem,5.5vw,4rem);line-height:1;letter-spacing:-.03em}
-strong{font-weight:800}
-
-mark{
-  background:linear-gradient(transparent 58%,var(--yellow) 58%);
-  color:inherit;padding:0 .1em;
-}
-
-.panel{
-  background:#fffdf7;
-  border:3px solid var(--ink);
-  border-radius:14px;
-  box-shadow:var(--shadow);
-  padding:clamp(1rem,1.8vw,1.5rem);
-}
-.panel.tight{padding:clamp(.6rem,1.1vw,.9rem)}
-.panel.accent{background:var(--yellow)}
-.panel.dark{background:var(--maroon);color:#fff4e6;border-color:var(--ink)}
-.panel.dark h3,.panel.dark .big{color:#fff4e6}
-.panel.dark p,.panel.dark li{color:rgba(255,244,230,.9)}
-.panel.blue{background:var(--blue);color:#fff;border-color:var(--ink)}
-.panel.blue h3,.panel.blue p,.panel.blue .big{color:#fff}
-
-.balloon{
-  position:relative;
-  background:#fffdf7;
-  border:3px solid var(--ink);
-  border-radius:22px;
-  box-shadow:var(--shadow);
-  padding:1.1rem 1.4rem;
-  font-family:var(--font-display);
+.deck-title{
+  font-family:"IBM Plex Serif",Georgia,serif;
   font-weight:600;
-  font-size:clamp(1.05rem,1.9vw,1.45rem);
+  font-size:clamp(2.1rem,4.6vw,3.55rem);
+  line-height:1.08;letter-spacing:-.02em;margin:0 0 .75rem;
+  max-width:18ch;
 }
-.balloon::after{
-  content:"";position:absolute;left:2.4rem;bottom:-18px;
-  width:0;height:0;
-  border:16px solid transparent;
-  border-top-color:var(--ink);
-  border-bottom:0;
+.deck-lede{
+  font-size:clamp(1.05rem,1.55vw,1.25rem);
+  line-height:1.5;color:var(--deck-muted);margin:0;max-width:52ch;
 }
-.balloon::before{
-  content:"";position:absolute;left:2.7rem;bottom:-12px;z-index:1;
-  width:0;height:0;
-  border:12px solid transparent;
-  border-top-color:#fffdf7;
-  border-bottom:0;
-}
-
-.stamp{
-  display:inline-block;
-  font-family:var(--font-display);
-  font-weight:800;
-  font-size:.78rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  padding:.28rem .6rem;
-  border:2.5px solid var(--ink);
-  border-radius:999px;
-  background:#fffdf7;
-  color:var(--ink);
-  box-shadow:2px 2px 0 var(--ink);
-}
-.stamp.maroon{background:var(--maroon);color:#fff4e6}
-.stamp.blue{background:var(--blue);color:#fff}
-.stamp.green{background:var(--green);color:#fff}
-.stamp.ghost{background:transparent;box-shadow:none;border-style:dashed}
-
-.wc{
-  position:absolute;right:clamp(1rem,3vw,2.5rem);bottom:clamp(2.2rem,4vw,3.2rem);
-  font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);
-  letter-spacing:.02em;
-}
-.slide.appendix .wc{color:rgba(91,88,114,.7)}
-
-.grid{display:grid;gap:clamp(.8rem,1.5vw,1.25rem)}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g4{grid-template-columns:repeat(4,1fr)}
-.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.2rem,3vw,3rem);align-items:center}
-.stack{display:grid;gap:.7rem}
-.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
-.mt{margin-top:clamp(1rem,2.2vw,1.9rem)}
-.mt-s{margin-top:.8rem}
-.center{text-align:center}
-
-ul.ticks{list-style:none;display:grid;gap:.55rem}
-ul.ticks li{
-  position:relative;padding-left:1.8em;
-  font-size:clamp(.98rem,1.45vw,1.16rem);line-height:1.42;
-}
-ul.ticks li::before{
-  content:"";position:absolute;left:0;top:.24em;
-  width:1.05em;height:1.05em;border-radius:5px;
-  border:2.5px solid var(--ink);background:var(--yellow);
-}
-ul.ticks.x li::before{background:#ff8b6b}
-ul.ticks.dot li::before{border-radius:50%;background:var(--blue)}
-
-table{border-collapse:separate;border-spacing:0;width:100%;font-size:clamp(.9rem,1.25vw,1.05rem)}
-th,td{padding:.62rem .8rem;text-align:left;border-bottom:2px solid var(--line);vertical-align:top}
-th{font-family:var(--font-display);font-weight:800;font-size:.85em;text-transform:uppercase;letter-spacing:.05em;color:var(--maroon)}
-tr:last-child td{border-bottom:0}
-td.win{font-weight:800}
-table.compact th,table.compact td{padding:.4rem .75rem}
-
-.num{font-family:var(--font-display);font-weight:800;font-size:clamp(2rem,4.2vw,3.2rem);line-height:1;letter-spacing:-.03em;color:var(--maroon)}
-.num-label{font-size:.95rem;color:var(--ink-soft);margin-top:.25rem}
-
-.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;align-items:stretch}
-.loop .step{
-  background:#fffdf7;border:3px solid var(--ink);border-radius:12px;box-shadow:var(--shadow-sm);
-  padding:.9rem .7rem;text-align:center;
-}
-.loop .step .n{font-family:var(--font-hand);font-size:1.4rem;color:var(--maroon);line-height:1}
-.loop .step h3{font-size:clamp(.95rem,1.4vw,1.15rem);margin:.2rem 0 .15rem}
-.loop .step p{font-size:.86rem;color:var(--ink-soft);line-height:1.35}
-
-.tam-diagram{width:min(220px,100%);aspect-ratio:1;margin-inline:auto}
-
-/* 2×2 competition matrix */
-.quad{
-  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
-  gap:0;border:3px solid var(--ink);border-radius:14px;overflow:hidden;
-  box-shadow:var(--shadow);min-height:min(380px,52vh);position:relative;
-  background:#fffdf7;
-}
-.quad .cell{
-  padding:clamp(.9rem,1.6vw,1.3rem);
-  border-right:2px solid var(--line);border-bottom:2px solid var(--line);
-  display:flex;flex-direction:column;gap:.35rem;justify-content:center;
-}
-.quad .cell:nth-child(2n){border-right:0}
-.quad .cell:nth-child(n+3){border-bottom:0}
-.quad .cell.win{
-  background:var(--yellow);
-}
-.quad .cell .who{font-family:var(--font-display);font-weight:800;font-size:clamp(.95rem,1.4vw,1.15rem)}
-.quad .cell .what{font-size:.9rem;color:var(--ink-soft);line-height:1.35}
-.quad-wrap{position:relative;padding:1.6rem 0 1.4rem 2.2rem}
-.quad-ylab{
-  position:absolute;left:0;top:50%;transform:rotate(-90deg) translateX(-50%);
-  transform-origin:left center;
-  font-family:var(--font-display);font-weight:800;font-size:.78rem;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--maroon);white-space:nowrap;
-}
-.quad-xlab{
-  text-align:center;margin-top:.7rem;
-  font-family:var(--font-display);font-weight:800;font-size:.78rem;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--maroon);
-}
-.axis-ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--ink-soft);margin-top:.2rem;padding:0 .4rem}
-.axis-ends.y{
-  position:absolute;left:-.15rem;top:1.6rem;bottom:1.4rem;width:1.8rem;
-  writing-mode:vertical-rl;transform:rotate(180deg);
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:.72rem;color:var(--ink-soft);padding:0;
-}
-
-.rail{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;position:relative}
-.rail::before{content:"";position:absolute;left:0;right:0;top:1.05rem;height:4px;background:var(--ink);border-radius:2px}
-.rail .stop{position:relative;padding-top:2.6rem}
-.rail .stop::before{
-  content:"";position:absolute;top:0;left:0;width:2.2rem;height:2.2rem;border-radius:50%;
-  background:var(--yellow);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
-}
-.rail .stop.now::before{background:var(--green)}
-
-.cred{
-  display:grid;gap:.55rem;
-}
-.cred .row-item{
-  display:grid;grid-template-columns:7.5rem 1fr;gap:.8rem;align-items:start;
-  padding:.55rem .7rem;background:#fffdf7;border:2.5px solid var(--ink);
-  border-radius:10px;box-shadow:var(--shadow-sm);
-}
-.cred .row-item .tag{
-  font-family:var(--font-display);font-weight:800;font-size:.85rem;
-  color:var(--maroon);text-transform:uppercase;letter-spacing:.04em;
-}
-.cred .row-item p{font-size:.95rem;line-height:1.35}
-
-.bar{
-  position:fixed;left:0;right:0;bottom:0;height:6px;background:rgba(27,26,46,.12);z-index:50;
-}
-.bar > i{display:block;height:100%;background:var(--maroon);transition:width .3s ease}
-
-.hud{
-  position:fixed;right:1rem;bottom:1.1rem;z-index:55;
-  display:flex;gap:.5rem;align-items:center;
-  font-family:var(--font-display);font-weight:700;font-size:.85rem;
-}
-.hud .pill{
-  background:#fffdf7;border:2.5px solid var(--ink);border-radius:999px;
-  padding:.28rem .7rem;box-shadow:2px 2px 0 var(--ink);
-}
-.hud .pill.timer{background:var(--maroon);color:#fff4e6;font-family:var(--font-mono);letter-spacing:.02em}
-.hud .pill.timer.over{background:#c0392b}
-.hud button{
-  font:inherit;cursor:pointer;background:#fffdf7;border:2.5px solid var(--ink);
-  border-radius:999px;padding:.28rem .7rem;box-shadow:2px 2px 0 var(--ink);color:var(--ink);
-}
-.hud button:active{transform:translate(2px,2px);box-shadow:none}
-
-.help{
-  position:fixed;left:1rem;bottom:1.1rem;z-index:55;
-  font-size:.78rem;color:var(--ink-soft);font-family:var(--font-mono);
-}
-
-.notes{
-  position:fixed;left:0;right:0;bottom:0;z-index:58;
-  max-height:38vh;overflow:auto;
-  background:var(--ink);color:#f3f1ff;
-  padding:1rem 1.4rem 1.6rem;
-  border-top:4px solid var(--maroon);
-  font-size:.95rem;line-height:1.5;
-  display:none;
-}
-.notes.on{display:block}
-.notes b{color:var(--yellow);font-family:var(--font-display)}
-
-.overview{
-  position:fixed;inset:0;z-index:70;background:rgba(27,26,46,.96);
-  display:none;padding:2rem;overflow:auto;
-}
-.overview.on{display:block}
-.overview .og{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.8rem}
-.overview button{
-  font-family:var(--font-display);font-weight:700;text-align:left;cursor:pointer;
-  background:#fffdf7;border:3px solid var(--ink);border-radius:10px;padding:.7rem .8rem;
-  font-size:.9rem;color:var(--ink);
-}
-.overview button span{display:block;font-family:var(--font-hand);color:var(--maroon);font-size:1rem}
-.overview button.ap{opacity:.75}
-.overview h2{color:#fff4e6;margin-bottom:1rem}
-
+.deck-lede strong{color:var(--deck-ink);font-weight:600}
+.deck-grid{display:grid;gap:clamp(1rem,2vw,1.5rem)}
+.deck-split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.2rem,3vw,2.5rem);align-items:center}
+.deck-split-wide{grid-template-columns:.9fr 1.1fr}
 @media (max-width:900px){
-  .split{grid-template-columns:1fr}
-  .g3,.g4{grid-template-columns:repeat(2,1fr)}
-  .loop{grid-template-columns:repeat(2,1fr)}
-  .rail{grid-template-columns:1fr;gap:.6rem}
-  .rail::before{display:none}
-  .rail .stop{padding-top:0;padding-left:3rem}
-  .rail .stop::before{top:.1rem}
-  .cred .row-item{grid-template-columns:1fr}
-  .quad{min-height:280px}
+  .deck-split,.deck-split-wide,.deck-metrics,.deck-pains,.deck-three,.deck-trac{grid-template-columns:1fr}
+  .slide{align-content:start;padding-top:1.25rem}
 }
 
-@media print{
-  @page{size:1280px 720px;margin:0}
-  body{overflow:visible;background:#fff}
-  body::after{display:none}
-  .deck{height:auto}
-  .slide,.slide.active{
-    position:relative;display:grid!important;
-    height:720px;width:1280px;
-    page-break-after:always;overflow:hidden;
-    animation:none!important;opacity:1!important;transform:none!important;
-  }
-  .bar,.hud,.help,.notes,.overview,.wc{display:none!important}
+.deck-metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1.25rem;
 }
+.deck-metric{
+  background:var(--deck-panel);border:1px solid var(--deck-line);border-radius:12px;
+  padding:.9rem 1rem;
+}
+.deck-metric strong{display:block;font-size:.95rem;margin-bottom:.25rem}
+.deck-metric span{display:block;font-size:.82rem;line-height:1.4;color:var(--deck-muted)}
+
+.deck-pains{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.1rem}
+.deck-pain{
+  background:var(--deck-panel);border:1px solid var(--deck-line);border-radius:14px;
+  padding:1.15rem 1.2rem;min-height:100%;
+}
+.deck-pain.risk{border-color:rgba(180,35,24,.28);background:#fff8f6}
+.deck-pain .n{
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--deck-maroon);margin-bottom:.45rem;
+}
+.deck-pain.risk .n{color:var(--deck-warn)}
+.deck-pain h3{font-family:"IBM Plex Serif",Georgia,serif;font-size:1.25rem;margin:0 0 .45rem;font-weight:600}
+.deck-pain p{margin:0;font-size:.95rem;line-height:1.45;color:var(--deck-muted)}
+
+.deck-quote{
+  margin-top:1.1rem;padding:1.15rem 1.3rem;border-radius:14px;
+  background:var(--deck-ink);color:#f6f3ea;
+  display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;
+}
+.deck-quote .avatar{
+  width:3.25rem;height:3.25rem;border-radius:50%;background:var(--deck-maroon);
+  display:grid;place-items:center;font-weight:700;font-size:.75rem;letter-spacing:.04em;
+}
+.deck-quote blockquote{margin:0;font-family:"IBM Plex Serif",Georgia,serif;font-size:clamp(1.05rem,1.7vw,1.3rem);line-height:1.4;font-weight:500}
+.deck-quote cite{display:block;margin-top:.55rem;font-style:normal;font-size:.85rem;opacity:.65;font-family:"IBM Plex Sans",system-ui,sans-serif}
+
+/* product panels slightly scaled for slides */
+.deck-media .ent-panel{box-shadow:0 18px 40px rgba(20,19,26,.08)}
+.deck-media .ent-panel-live{min-height:280px}
+.deck-media .ent-guard-scene{min-height:300px}
+
+.deck-circles{
+  position:relative;width:min(420px,100%);aspect-ratio:1;margin-inline:auto;
+}
+.deck-circles svg{width:100%;height:100%}
+.deck-ring-copy{position:absolute;left:50%;transform:translateX(-50%);text-align:center;width:72%}
+.deck-ring-copy .lab{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.deck-ring-copy .amt{font-family:"IBM Plex Serif",Georgia,serif;font-size:1.35rem;font-weight:600;margin-top:.1rem}
+.deck-ring-copy .cap{font-size:.78rem;color:var(--deck-muted);line-height:1.3;margin-top:.15rem}
+.deck-ring-tam{top:5%}.deck-ring-tam .lab,.deck-ring-tam .amt{color:var(--deck-maroon)}
+.deck-ring-sam{top:24%}.deck-ring-sam .lab,.deck-ring-sam .amt{color:var(--deck-blue)}
+.deck-ring-som{top:44%;width:46%}.deck-ring-som .lab,.deck-ring-som .amt{color:var(--deck-green)}
+
+.deck-axis{
+  position:relative;width:min(560px,100%);aspect-ratio:1;margin:0 auto;
+  background:var(--deck-panel);border:1px solid var(--deck-line);border-radius:16px;
+}
+.deck-axis svg{position:absolute;inset:0;width:100%;height:100%}
+.deck-dot{
+  position:absolute;transform:translate(-50%,-50%);width:min(10.5rem,42%);
+  background:#fff;border:1px solid var(--deck-line);border-radius:12px;padding:.65rem .7rem;
+  box-shadow:0 8px 20px rgba(20,19,26,.06);
+}
+.deck-dot.win{border-color:var(--deck-maroon);background:#fff8f5;box-shadow:0 10px 28px rgba(80,0,0,.12)}
+.deck-dot .who{font-weight:700;font-size:.88rem}
+.deck-dot .what{font-size:.75rem;color:var(--deck-muted);line-height:1.35;margin-top:.25rem}
+.deck-axis-lab{
+  position:absolute;font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--deck-muted);
+}
+.deck-axis-lab.xt{left:50%;bottom:.55rem;transform:translateX(-50%)}
+.deck-axis-lab.yl{left:.45rem;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:left center}
+.deck-axis-end{position:absolute;font-size:.72rem;color:var(--deck-muted)}
+.deck-axis-end.t{left:1.6rem;top:.55rem}
+.deck-axis-end.b{left:1.6rem;bottom:2.2rem}
+.deck-axis-end.l{left:.7rem;bottom:1.55rem}
+.deck-axis-end.r{right:.7rem;bottom:1.55rem}
+
+.deck-trac{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:1rem}
+.deck-trac .t{
+  background:var(--deck-panel);border:1px solid var(--deck-line);border-radius:14px;
+  padding:1.2rem 1rem;text-align:center;
+}
+.deck-trac .t .num{
+  font-family:"IBM Plex Serif",Georgia,serif;font-size:clamp(2.4rem,5vw,3.4rem);
+  font-weight:600;line-height:1;color:var(--deck-maroon);
+}
+.deck-trac .t .lab{margin-top:.45rem;font-size:.9rem;color:var(--deck-muted);line-height:1.35}
+.deck-trac .t.accent{background:#fff8f5;border-color:rgba(80,0,0,.2)}
+.deck-trac .t.dark{background:var(--deck-ink);color:#f6f3ea;border-color:transparent}
+.deck-trac .t.dark .num{color:#f0c9a0}
+.deck-trac .t.dark .lab{color:rgba(246,243,234,.72)}
+
+.deck-three{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:1rem}
+.deck-card{
+  background:var(--deck-panel);border:1px solid var(--deck-line);border-radius:14px;padding:1.1rem 1.15rem;
+}
+.deck-card h3{margin:0 0 .4rem;font-size:1.05rem}
+.deck-card p{margin:0;font-size:.9rem;line-height:1.45;color:var(--deck-muted)}
+
+.deck-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-top:1.1rem;position:relative}
+.deck-flow::before{
+  content:"";position:absolute;left:4%;right:4%;top:1.15rem;height:1px;background:var(--deck-line);
+}
+.deck-flow .s{position:relative;padding-top:2.5rem}
+.deck-flow .s::before{
+  content:"";position:absolute;top:.55rem;left:0;width:1.35rem;height:1.35rem;border-radius:50%;
+  background:var(--deck-maroon);border:2px solid #fff;box-shadow:0 0 0 1px var(--deck-line);
+}
+.deck-flow .s.now::before{background:var(--deck-green)}
+.deck-flow h3{margin:0 0 .25rem;font-size:.95rem}
+.deck-flow p{margin:0;font-size:.82rem;color:var(--deck-muted);line-height:1.4}
+@media (max-width:900px){
+  .deck-flow{grid-template-columns:1fr}
+  .deck-flow::before{display:none}
+  .deck-flow .s{padding-top:0;padding-left:2rem}
+  .deck-flow .s::before{top:.15rem}
+}
+
+.deck-ask{
+  background:var(--deck-ink);color:#f6f3ea;border-radius:16px;padding:1.35rem 1.4rem;
+}
+.deck-ask .amt{font-family:"IBM Plex Serif",Georgia,serif;font-size:clamp(2.2rem,4vw,3rem);font-weight:600}
+.deck-ask p{margin:.35rem 0 0;opacity:.75;font-size:.95rem}
+.deck-ask ul{margin:.85rem 0 0;padding:0;list-style:none;display:grid;gap:.4rem}
+.deck-ask li{font-size:.9rem;padding-left:1.1rem;position:relative;opacity:.9}
+.deck-ask li::before{content:"";position:absolute;left:0;top:.45em;width:.45rem;height:.45rem;border-radius:50%;background:#f0c9a0}
+
+.cred-list{display:grid;gap:.55rem}
+.cred-row{
+  display:grid;grid-template-columns:6.5rem 1fr;gap:.75rem;align-items:start;
+  padding:.7rem .8rem;background:var(--deck-panel);border:1px solid var(--deck-line);border-radius:10px;
+}
+.cred-row .tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--deck-maroon);padding-top:.15rem}
+.cred-row p{margin:0;font-size:.9rem;line-height:1.4;color:var(--deck-muted)}
+.cred-row p strong{color:var(--deck-ink)}
+
+.deck-center{text-align:center}
+.deck-center .deck-title{margin-inline:auto}
+.deck-center .deck-lede{margin-inline:auto}
+.deck-stamp-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1.25rem}
+.deck-stamp{
+  display:inline-flex;align-items:center;padding:.4rem .75rem;border-radius:999px;
+  border:1px solid var(--deck-line);background:var(--deck-panel);
+  font-size:.8rem;font-weight:600;
+}
+.deck-stamp.solid{background:var(--deck-maroon);color:#fff;border-color:transparent}
+
+.deck-progress{
+  position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(20,19,26,.08);z-index:40;
+}
+.deck-progress > i{display:block;height:100%;width:0;background:var(--deck-maroon);transition:width .35s var(--deck-ease)}
+.deck-hint{
+  position:fixed;left:1rem;bottom:.85rem;z-index:41;
+  font-size:.72rem;color:var(--deck-muted);letter-spacing:.02em;
+}
+.deck-count{
+  position:fixed;right:1rem;bottom:.75rem;z-index:41;
+  font-size:.78rem;font-weight:600;color:var(--deck-muted);
+  background:rgba(255,252,247,.9);border:1px solid var(--deck-line);
+  border-radius:999px;padding:.28rem .65rem;backdrop-filter:blur(8px);
+}
+
+.logo-row{
+  display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:center;
+  margin-top:1.4rem;opacity:.55;
+}
+.logo-row img{height:22px;width:auto;filter:grayscale(1)}
 </style>
 </head>
-<body>
+<body class="deck-page ent-page">
 
 <div class="deck" id="deck">
 
-<!-- ============================================================
-     PITCH · 7 SLIDES (AggieX Demo Day)
-     ============================================================ -->
-
-<!-- 1 · TITLE ------------------------------------------------ -->
-<section class="slide" data-title="Title" data-notes="Open cold. Slogan is a sentence a learner said — discovered, not invented. Pause. Do not explain the name. Spoken: 'We opened the summer building a desktop coach. Someone told us they watched the whole tutorial and still didn't know what to click. That sentence is now the company.'">
-  <div class="inner center">
-    <p class="kicker">AggieX Demo Day · August 7, 2026</p>
-    <h1>teachy</h1>
-    <p class="lede" style="margin:1.2rem auto 0;max-width:28ch">The coach that makes you <mark>do it</mark> — and checks.</p>
-    <div class="row mt" style="justify-content:center">
-      <span class="stamp maroon">Vedant Soni · founder</span>
-      <span class="stamp">Texas A&amp;M · CS</span>
-      <span class="stamp ghost">ved.06.soni@gmail.com</span>
+<!-- 1 TITLE -->
+<section class="slide" data-title="Title" data-notes="Open on the enterprise line. Pause. Then the subtitle does the work.">
+  <div class="inner deck-center">
+    <p class="deck-kicker reveal">AggieX Demo Day · August 7, 2026</p>
+    <h1 class="deck-title reveal reveal-d1" style="max-width:16ch">AI fluency across your organization</h1>
+    <p class="deck-lede reveal reveal-d2">Licensed AI tools underperform without guided practice on real work. Teachy coaches every employee in context — the approved tool, the correct method, and your data rules enforced at the moment of use.</p>
+    <div class="deck-stamp-row reveal reveal-d3">
+      <span class="deck-stamp solid">Vedant Soni · Founder</span>
+      <span class="deck-stamp">Teachy for Teams</span>
+      <span class="deck-stamp">ved.06.soni@gmail.com</span>
+    </div>
+    <div class="logo-row reveal reveal-d4" aria-hidden="true">
+      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
     </div>
   </div>
-  <div class="wc">14 words · title</div>
 </section>
 
-<!-- 2 · PROBLEM ---------------------------------------------- -->
-<section class="slide" data-title="Problem" data-notes="Nineteen words for the problem. Numbers do the arguing. Spoken: 'We came in believing people needed better tutorials. Ten weeks of sitting next to Aggies said the wall is transfer — watching never becomes doing on their screen.'">
+<!-- 2 PROBLEM -->
+<section class="slide" data-title="Problem" data-notes="Two enterprise failures. Then the CEO story. This is fluency AND governance.">
   <div class="inner">
-    <p class="kicker">problem</p>
-    <h2>Everyone bought AI.<br>Almost nobody can use it.</h2>
-    <p class="lede mt-s" style="max-width:42ch">They watch the tutorial. Then stare at <em>their</em> screen and freeze.</p>
-    <div class="grid g3 mt">
-      <div class="panel center">
-        <div class="num">$380B</div>
-        <div class="num-label">corporate L&amp;D spend — certificates, not competence</div>
-      </div>
-      <div class="panel center">
-        <div class="num">seats</div>
-        <div class="num-label">ChatGPT / Copilot renew. Daily use stays “summarize, rewrite, stop.”</div>
-      </div>
-      <div class="panel center accent">
-        <div class="num" style="font-size:clamp(1.4rem,2.8vw,2rem)">no proof</div>
-        <div class="num-label">Video watched ≠ skill on the real UI</div>
-      </div>
+    <p class="deck-kicker reveal">The problem</p>
+    <h2 class="deck-title reveal reveal-d1">Companies bought AI.<br>Two failures followed.</h2>
+    <div class="deck-pains">
+      <article class="deck-pain reveal reveal-d2">
+        <div class="n">Failure 01 · Underuse</div>
+        <h3>Seats renew. Skill does not.</h3>
+        <p>Organizations pay for ChatGPT, Copilot, and Claude. Without guided practice on real work, daily use stays shallow — summarize, rewrite, stop. Licensed tools underperform.</p>
+      </article>
+      <article class="deck-pain risk reveal reveal-d3">
+        <div class="n">Failure 02 · Shadow AI</div>
+        <h3>Work leaves approved systems.</h3>
+        <p>Employees who can use AI skip the company stack and paste customer data, source code, and other restricted material into public models — because the approved path feels harder.</p>
+      </article>
     </div>
-    <div class="balloon mt" style="max-width:48ch">“I watched the whole tutorial and I still don’t know what to click.”</div>
-  </div>
-  <div class="wc">38 words · problem</div>
-</section>
-
-<!-- 3 · SOLUTION --------------------------------------------- -->
-<section class="slide" data-title="Solution" data-notes="Show, don't tell. Verb is 'we built.' Demo cue: ask in channel → Builder answers → vision verifies. Spoken: 'Week 1 was a desktop app people installed and abandoned. The Crucible asked why anyone comes back. We rebuilt as a room — coaches as members, practice on the live screen.'">
-  <div class="inner">
-    <p class="kicker">solution</p>
-    <h2>Point. Act. Check. Remember.</h2>
-    <div class="loop mt">
-      <div class="step"><div class="n">1</div><h3>Point</h3><p>Vision reads their live screen</p></div>
-      <div class="step"><div class="n">2</div><h3>Act</h3><p>They do the work — Teachy never clicks for them</p></div>
-      <div class="step"><div class="n">3</div><h3>Check</h3><p>Vision verifies the goal is actually done</p></div>
-      <div class="step"><div class="n">4</div><h3>Room</h3><p>Agents teach in the open — the next visit is someone else’s question</p></div>
-    </div>
-    <div class="grid g2 mt">
-      <div class="panel tight">
-        <h3>Shipped this summer</h3>
-        <p class="soft">Free Mac app · open curriculum · v2 workspace with agent members · Teachy Builder</p>
-      </div>
-      <div class="panel tight accent">
-        <h3>The verb is “built”</h3>
-        <p>Week 1 desktop coach → Crucible killed “installs = learning” → rebuilt as a community where teachers are agents.</p>
-      </div>
-    </div>
-  </div>
-  <div class="wc">42 words · solution</div>
-</section>
-
-<!-- 4 · MARKET ----------------------------------------------- -->
-<section class="slide" data-title="Market" data-notes="TAM earns attention. SOM earns belief — napkin math. Spoken: 'Week 1 answer was everyone who learns AI. Crucible cut it to one room we can name — Aggie Innovators — then the companies that already bought seats and got nothing.'">
-  <div class="inner">
-    <p class="kicker">market</p>
-    <h2>One segment. Named, sized, defended.</h2>
-    <div class="split mt-s" style="grid-template-columns:.75fr 1.25fr;align-items:center">
-      <div class="tam-diagram" aria-hidden="true">
-        <svg viewBox="0 0 460 460" width="100%" height="100%">
-          <circle cx="230" cy="230" r="208" fill="var(--maroon)" opacity=".16" stroke="var(--ink)" stroke-width="3"/>
-          <circle cx="230" cy="230" r="140" fill="var(--blue)" opacity=".22" stroke="var(--ink)" stroke-width="3"/>
-          <circle cx="230" cy="230" r="72" fill="var(--green)" opacity=".32" stroke="var(--ink)" stroke-width="3"/>
-          <text x="230" y="46" text-anchor="middle" font-family="var(--font-display)" font-weight="800" font-size="19" fill="var(--maroon)">TAM</text>
-          <text x="230" y="116" text-anchor="middle" font-family="var(--font-display)" font-weight="800" font-size="17" fill="var(--blue)">SAM</text>
-          <text x="230" y="196" text-anchor="middle" font-family="var(--font-display)" font-weight="800" font-size="15" fill="var(--green)">SOM</text>
-        </svg>
-      </div>
-      <div class="stack" style="gap:.45rem">
-        <div class="panel tight">
-          <span class="stamp maroon">TAM · $380B</span>
-          <p class="soft mt-s" style="font-size:.95em">Global corporate L&amp;D / workforce training.</p>
-        </div>
-        <div class="panel tight">
-          <span class="stamp blue">SAM · $7.5B → $18B</span>
-          <p class="soft mt-s" style="font-size:.95em">AI-powered corporate training · ~19%/yr. <span style="font-size:.85em">(Mordor)</span></p>
-        </div>
-        <div class="panel tight accent">
-          <span class="stamp green">BEACHHEAD · SOM</span>
-          <p class="mt-s" style="font-size:.95em"><strong>Aggie builders → firms with unused AI seats.</strong><br>15 pilots × $12K = <strong>$180K</strong> year one — napkin math, not a ceiling.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="wc">36 words · market</div>
-</section>
-
-<!-- 5 · COMPETITION ------------------------------------------ -->
-<section class="slide" data-title="Competition" data-notes="Two axes customers decide on — practice vs content, verified vs hope. Spoken: 'We didn't pick these axes to win. Every buyer asked two things first: can they do it on their screen, and can you prove it.'">
-  <div class="inner">
-    <p class="kicker">competition</p>
-    <h2>Nobody else is in this corner.</h2>
-    <div class="split mt" style="grid-template-columns:1.15fr .85fr;align-items:center">
-      <div class="quad-wrap">
-        <div class="axis-ends y"><span>Verified on screen</span><span>No proof</span></div>
-        <div class="quad">
-          <div class="cell">
-            <div class="who">Vendor academies</div>
-            <div class="what">Prompt tips. Certificate. Still stuck on the real UI.</div>
-          </div>
-          <div class="cell win">
-            <div class="who">TEACHY</div>
-            <div class="what">Practice on the live screen. Vision says done. In a room.</div>
-          </div>
-          <div class="cell">
-            <div class="who">LMS / LinkedIn Learning</div>
-            <div class="what">Video library. Watch ≠ skill.</div>
-          </div>
-          <div class="cell">
-            <div class="who">Chatbots</div>
-            <div class="what">Answers replace the learning. No practice loop.</div>
-          </div>
-        </div>
-        <div class="quad-xlab">Watches content ← → Does the work</div>
-      </div>
-      <div class="stack">
-        <div class="panel tight">
-          <h3>Axes from buyers</h3>
-          <p class="soft">Not reverse-engineered for the top-right. Surfaced in outreach: <em>their screen</em> and <em>proof</em>.</p>
-        </div>
-        <div class="panel tight accent">
-          <p><strong>We sell competence.</strong> Everyone else sells content or answers.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="wc">28 words · competition</div>
-</section>
-
-<!-- 6 · TRACTION --------------------------------------------- -->
-<section class="slide" data-title="Traction" data-notes="Evidence has a date. Pre-revenue is fine — say it flatly. Why-now spoken over this slide: models can finally see a live screen; ACP lets coaches ride the learner's own harness; AI seat spend is exploding while competence is flat. Spoken: 'May: empty slide. Week 5 Crucible killed the desktop-only thesis. August: room shipped, curriculum live, first paid pilot is the next dated number.'">
-  <div class="inner">
-    <p class="kicker">traction · ten weeks of evidence</p>
-    <h2>Dated. Not promised.</h2>
-    <div class="grid g4 mt">
-      <div class="panel center">
-        <div class="num" style="font-size:clamp(1.6rem,3.2vw,2.4rem)">v1→v2</div>
-        <div class="num-label">Shipped free Mac app, then rebuilt as a workspace after Crucible</div>
-      </div>
-      <div class="panel center">
-        <div class="num" style="font-size:clamp(1.6rem,3.2vw,2.4rem)">open</div>
-        <div class="num-label">Curriculum live: AI Fluency + Build &amp; Deploy a Website</div>
-      </div>
-      <div class="panel center">
-        <div class="num" style="font-size:clamp(1.6rem,3.2vw,2.4rem)">room</div>
-        <div class="num-label">Channels, agent members, Teachy Builder — in hands</div>
-      </div>
-      <div class="panel center accent">
-        <div class="num" style="font-size:clamp(1.6rem,3.2vw,2.4rem)">$0</div>
-        <div class="num-label">Revenue booked. First $12K pilot is the next dated number.</div>
-      </div>
-    </div>
-    <div class="panel dark mt tight">
-      <p><strong>What changed:</strong> Week 1 = desktop installs. Week 5 Crucible = “installs ≠ learning.” August = community where coaches are agents — because retention lives in a room.</p>
-    </div>
-  </div>
-  <div class="wc">40 words · traction</div>
-</section>
-
-<!-- 7 · AGGIEX ----------------------------------------------- -->
-<section class="slide" data-title="AggieX" data-notes="Credit specifically, not a thank-you. Point: coachable, pivot from evidence. Spoken: 'AggieX didn't give me the idea. The Crucible took away every place I could hide from the numbers — and the rebuild is the product I'm showing you.'">
-  <div class="inner">
-    <p class="kicker">aggieX · ten weeks</p>
-    <h2>The program that wouldn’t let me hide.</h2>
-    <div class="grid g2 mt">
-      <div class="panel tight">
-        <h3>What it forced</h3>
-        <ul class="ticks">
-          <li><strong>Market + GTM as process</strong> — map the landscape, stop guessing</li>
-          <li><strong>Beachhead discipline</strong> — one winnable segment, not “everyone”</li>
-          <li><strong>Founder-led outreach</strong> — response rate, meetings, commitments</li>
-          <li><strong>MVP scope</strong> — what shipped, what got cut, why</li>
-        </ul>
-      </div>
-      <div class="panel dark tight">
-        <h3>The part that hurt</h3>
-        <ul class="ticks">
-          <li><strong>Crucible:</strong> “installs are not learning — why does anyone come back?”</li>
-          <li><strong>So I rebuilt.</strong> Desktop app → community workspace</li>
-          <li><strong>Aggie Network</strong> — warm intros that turn a demo into a pipeline</li>
-        </ul>
-      </div>
-    </div>
-    <div class="panel accent mt tight">
-      <p><strong>Net:</strong> AggieX didn’t give me the idea. It took away every place I could hide from the numbers — and the pivot is the product today.</p>
-    </div>
-  </div>
-  <div class="wc">42 words · aggieX</div>
-</section>
-
-<!-- 8 · TEAM & ASK ------------------------------------------- -->
-<section class="slide" data-title="Team & ask" data-notes="Capability, not transcript. Then ask: amount, runway, what else. Pause after the number. Spoken: 'Six startups before this. Fern gave kids a voice. Cognition mapped how people forget — NVIDIA and DeepMind backed it. I sat inside real firms at Pillar and watched them buy AI nobody could use. Then I walked the interview loop and built the job that didn't exist.'">
-  <div class="inner">
-    <p class="kicker">why me · the ask</p>
-    <div class="split" style="grid-template-columns:1.2fr .8fr;align-items:start">
+    <div class="deck-quote reveal reveal-d4">
+      <div class="avatar">CEO</div>
       <div>
-        <h2>Vedant Soni</h2>
-        <p class="soft" style="margin-bottom:.7rem">20 · CS, Texas A&amp;M · 47,500+ users shipped across prior products</p>
-        <div class="cred">
-          <div class="row-item">
-            <div class="tag">Fern</div>
-            <p>Founder — AI for kids who can’t speak. AAC → real communication. <strong>12,500 users.</strong></p>
+        <blockquote>“I watched our interns copy-paste proprietary data into Claude Code.”</blockquote>
+        <cite>A CEO I spoke with — the moment this stopped being an L&amp;D problem and became fluency + governance.</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 SOLUTION -->
+<section class="slide" data-title="Solution" data-notes="Four enterprise capabilities. Same language as the Teams site.">
+  <div class="inner">
+    <p class="deck-kicker reveal">Solution</p>
+    <h2 class="deck-title reveal reveal-d1" style="max-width:20ch">Coached on real work. Data kept in approved systems.</h2>
+    <p class="deck-lede reveal reveal-d2">Teachy is not a course library. It is organizational AI fluency — tool selection, method, and policy — enforced at the moment of use.</p>
+    <ul class="deck-metrics reveal reveal-d3">
+      <li class="deck-metric"><strong>Right tool</strong><span>Matched to the task in front of each employee</span></li>
+      <li class="deck-metric"><strong>Data governance</strong><span>Sensitive content kept in approved systems</span></li>
+      <li class="deck-metric"><strong>Internal systems</strong><span>Coaching on software unique to your company</span></li>
+      <li class="deck-metric"><strong>Verified fluency</strong><span>Demonstrated competence, not seat licenses</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4 PRODUCT · TOOL -->
+<section class="slide" data-title="Right tool" data-notes="Show the product. Guidance at the point of work.">
+  <div class="inner deck-split deck-split-wide">
+    <div>
+      <p class="deck-kicker reveal">Tool selection</p>
+      <h2 class="deck-title reveal reveal-d1" style="max-width:14ch">Guidance at the point of work</h2>
+      <p class="deck-lede reveal reveal-d2">Teachy observes the live task and directs people to the appropriate system — a licensed model for drafting, a spreadsheet function for analysis, or your internal assistant for anything sensitive — with a prompt that fits policy.</p>
+    </div>
+    <div class="deck-media reveal reveal-d3">
+      <div class="ent-panel ent-panel-live">
+        <div class="ent-panel-meta">
+          <span>Work context</span>
+          <span>Renewal email · CRM opportunity</span>
+        </div>
+        <div class="ent-panel-body ent-hero-scene">
+          <div class="ent-panel-doc">
+            <p class="ent-panel-doc-title">Re: Q3 renewal — Acme Corp</p>
+            <span class="ent-line" style="width:88%"></span>
+            <span class="ent-line" style="width:72%"></span>
+            <span class="ent-line" style="width:94%"></span>
+            <span class="ent-line" style="width:58%"></span>
           </div>
-          <div class="row-item">
-            <div class="tag">Cognition</div>
-            <p>Cofounder &amp; CTO — Butterfly personal knowledge graph w/ CMU learning science. <strong>35,000+ users.</strong> Backed by <strong>NVIDIA</strong> + <strong>Google DeepMind</strong>. YC interview.</p>
-          </div>
-          <div class="row-item">
-            <div class="tag">Pillar AI</div>
-            <p>Founder — bespoke AI inside real-estate firms. Where I watched seats renew and competence stay flat.</p>
-          </div>
-          <div class="row-item">
-            <div class="tag">Labs</div>
-            <p>PI, EDEN Robotics (physical AI) · researcher, ART Lab · Aggie Innovators · AggieX Crucible survivor.</p>
+          <div class="ent-panel-callout ent-anim-callout">
+            <p class="ent-panel-callout-label">Recommended tool</p>
+            <p class="ent-panel-callout-title">Claude · approved for customer correspondence</p>
+            <p class="ent-panel-callout-body">Draft a renewal note referencing Q2 usage. Keep under 150 words. End with a scheduling request. Do not include account identifiers beyond the opportunity name.</p>
           </div>
         </div>
       </div>
-      <div class="stack">
-        <div class="panel dark">
-          <span class="stamp" style="background:#fff4e6;color:var(--maroon)">the ask</span>
-          <div class="big mt-s" style="font-size:clamp(1.8rem,3.5vw,2.6rem)">$250K</div>
-          <p class="mt-s">Pre-seed · 18 months</p>
-          <ul class="ticks mt-s" style="gap:.35rem">
-            <li>Port coach loop · Windows</li>
-            <li>3 paid pilots + case study</li>
-            <li>500 weekly actives in the Aggie room</li>
-            <li>Warm intros to design partners</li>
-          </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5 PRODUCT · GOVERNANCE -->
+<section class="slide" data-title="Governance" data-notes="The money slide for CISOs. Shadow AI blocked in the moment.">
+  <div class="inner deck-split deck-split-wide">
+    <div>
+      <p class="deck-kicker reveal">Data policy</p>
+      <h2 class="deck-title reveal reveal-d1" style="max-width:16ch">Prevent sensitive data from leaving approved systems</h2>
+      <p class="deck-lede reveal reveal-d2">When someone attempts to place customer data, source code, or other restricted material into a public model, Teachy intervenes and routes the work to the approved assistant.</p>
+    </div>
+    <div class="deck-media reveal reveal-d3">
+      <div class="ent-panel ent-panel-live">
+        <div class="ent-panel-meta">
+          <span>Public model</span>
+          <span>ChatGPT · composer</span>
         </div>
-        <div class="panel accent tight">
-          <p><strong>Why I win:</strong> I’ve shipped assistive tech, scaled a learning product, sold into the buyer, and already live in the first room we launch into.</p>
+        <div class="ent-panel-body ent-guard-scene">
+          <div class="ent-guard-chat" aria-hidden="true">
+            <div class="ent-guard-bubble">Ask anything about your accounts…</div>
+            <div class="ent-guard-composer">
+              <span class="ent-guard-placeholder">Message ChatGPT…</span>
+              <div class="ent-guard-paste">
+                <span class="ent-guard-paste-label">Pasting</span>
+                customer roster · national IDs · payment references
+              </div>
+            </div>
+          </div>
+          <div class="ent-guard-veil" aria-hidden="true"></div>
+          <div class="ent-guard-popup" role="status">
+            <div class="ent-guard-popup-top">
+              <span class="ent-guard-popup-mark" aria-hidden="true"></span>
+              <span class="ent-guard-popup-badge">Teachy · policy</span>
+            </div>
+            <p class="ent-guard-popup-title">Hold on — that’s customer PII</p>
+            <p class="ent-guard-popup-body">This content must not enter a public model. Keep it in approved systems and continue with your internal assistant.</p>
+            <div class="ent-guard-popup-action">Open Acme internal assistant</div>
+          </div>
+          <div class="ent-guard-routed">Routed safely · Acme internal assistant</div>
         </div>
       </div>
     </div>
   </div>
-  <div class="wc">48 words · team &amp; ask</div>
 </section>
 
-<!-- ============================================================
-     APPENDIX · Q&A (not in the 10-minute pitch)
-     ============================================================ -->
-
-<!-- A1 · WHY NOW --------------------------------------------- -->
-<section class="slide appendix" data-title="A · Why now" data-notes="Appendix. Open if asked. Three forces, fast.">
-  <div class="inner">
-    <p class="kicker">appendix · why now</p>
-    <h2>AI fluency is the new literacy —<br>and nobody built the practice layer.</h2>
-    <div class="grid g3 mt">
-      <div class="panel">
-        <h3>Capability outran training</h3>
-        <p class="soft">Models do real work. Institutions can’t teach people to direct them fast enough.</p>
-      </div>
-      <div class="panel">
-        <h3>Screens became readable</h3>
-        <p class="soft">Vision can judge “is it done?” on a messy live screen. That gate is new.</p>
-      </div>
-      <div class="panel">
-        <h3>Agents got a protocol</h3>
-        <p class="soft">ACP: coach rides the learner’s own harness. No inference bill. No lock-in.</p>
-      </div>
+<!-- 6 PRODUCT · STACK -->
+<section class="slide" data-title="Your stack" data-notes="Internal systems no LMS covers. Verified fluency table.">
+  <div class="inner deck-split">
+    <div>
+      <p class="deck-kicker reveal">Organizational fit</p>
+      <h2 class="deck-title reveal reveal-d1" style="max-width:16ch">Fluency on your stack — including systems no course covers</h2>
+      <p class="deck-lede reveal reveal-d2">Teachy learns your workflows, SOPs, and custom applications. New employees are coached through the exact software they will use — so day one produces work, not a queue of informal questions.</p>
     </div>
-    <p class="mt lede">Content is free. <mark>Verified practice is not.</mark></p>
-  </div>
-  <div class="wc">appendix</div>
-</section>
-
-<!-- A2 · BUSINESS MODEL -------------------------------------- -->
-<section class="slide appendix" data-title="A · Business model" data-notes="Free is distribution. Enterprise is revenue. Know $12K cold.">
-  <div class="inner">
-    <p class="kicker">appendix · business model</p>
-    <h2>Free is the distribution. Enterprise is the revenue.</h2>
-    <div class="grid g2 mt">
-      <div class="panel">
-        <span class="stamp">Teachy</span>
-        <h3 class="mt-s">Individuals — free forever</h3>
-        <ul class="ticks dot">
-          <li>Open source, open curriculum</li>
-          <li>Learner brings their own model — our cost ≈ $0</li>
-          <li>Every room is a funnel into their employer</li>
-        </ul>
-      </div>
-      <div class="panel dark">
-        <span class="stamp">Teachy Enterprise</span>
-        <h3 class="mt-s">Companies — bespoke</h3>
-        <ul class="ticks">
-          <li><strong>Pilot</strong> · 4 weeks · <strong>$12K</strong></li>
-          <li><strong>Rollout</strong> · multi-team · <strong>$60K/yr</strong></li>
-          <li><strong>Partner</strong> · bespoke AI + curriculum · <strong>$150K/yr</strong></li>
-        </ul>
+    <div class="deck-media reveal reveal-d3">
+      <div class="ent-panel ent-panel-live">
+        <div class="ent-panel-meta">
+          <span>Team fluency</span>
+          <span>Pilot cohort</span>
+        </div>
+        <div class="ent-panel-body ent-panel-table">
+          <table>
+            <thead>
+              <tr><th>Role</th><th>Focus</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr class="ent-row-1"><td>Sales</td><td>Approved drafting tools</td><td>Verified</td></tr>
+              <tr class="ent-row-2"><td>Operations</td><td>Spreadsheet analysis</td><td>Verified</td></tr>
+              <tr class="ent-row-3"><td>Support</td><td>Internal assistant</td><td>Verified</td></tr>
+              <tr class="ent-row-4"><td>New hires</td><td>Portal onboarding</td><td>In progress</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-  <div class="wc">appendix</div>
 </section>
 
-<!-- A3 · GTM ------------------------------------------------- -->
-<section class="slide appendix" data-title="A · Go to market" data-notes="Win one room. Then the next.">
-  <div class="inner">
-    <p class="kicker">appendix · go to market</p>
-    <h2>Win one room. Then the next one.</h2>
-    <div class="rail mt">
-      <div class="stop now">
-        <h3>Now</h3>
-        <p class="soft">Aggie Innovators. Founder in the DMs. Prove return visits.</p>
+<!-- 7 MARKET -->
+<section class="slide" data-title="Market" data-notes="Same buyer owns L&D and AI risk. Beachhead is firms that already bought seats.">
+  <div class="inner deck-split">
+    <div>
+      <p class="deck-kicker reveal">Market</p>
+      <h2 class="deck-title reveal reveal-d1" style="max-width:14ch">L&amp;D budget and governance budget. Same buyer.</h2>
+      <p class="deck-lede reveal reveal-d2">Beachhead: organizations that already licensed AI, are not seeing fluency, and are exposed to shadow AI — including firms I have already consulted for.</p>
+    </div>
+    <div class="deck-circles reveal reveal-d3" aria-label="TAM SAM SOM">
+      <svg viewBox="0 0 400 400" aria-hidden="true">
+        <circle cx="200" cy="200" r="188" fill="#500000" fill-opacity=".10" stroke="#14131a" stroke-width="1.5"/>
+        <circle cx="200" cy="200" r="128" fill="#1f4fd8" fill-opacity=".12" stroke="#14131a" stroke-width="1.5"/>
+        <circle cx="200" cy="200" r="68" fill="#1f7a4d" fill-opacity=".18" stroke="#14131a" stroke-width="1.5"/>
+      </svg>
+      <div class="deck-ring-copy deck-ring-tam">
+        <div class="lab">TAM</div>
+        <div class="amt">$380B</div>
+        <div class="cap">Corporate L&amp;D + workforce AI spend</div>
       </div>
-      <div class="stop">
-        <h3>Campus</h3>
-        <p class="soft">Dean-endorsed how Aggies learn to build. Org rooms multiply.</p>
+      <div class="deck-ring-copy deck-ring-sam">
+        <div class="lab">SAM</div>
+        <div class="amt">AI seats that fail</div>
+        <div class="cap">Licensed tools unused — or leaking to public models</div>
       </div>
-      <div class="stop">
-        <h3>Pilot</h3>
-        <p class="soft">First $12K design partner. One case study unlocks the rest.</p>
-      </div>
-      <div class="stop">
-        <h3>Expand</h3>
-        <p class="soft">Land with fluency. Expand with bespoke AI inside the room.</p>
+      <div class="deck-ring-copy deck-ring-som">
+        <div class="lab">SOM</div>
+        <div class="amt">$180K Y1</div>
+        <div class="cap">15 pilots × $12K · warm pipeline</div>
       </div>
     </div>
   </div>
-  <div class="wc">appendix</div>
 </section>
 
-<!-- A4 · DEFENSIBILITY --------------------------------------- -->
-<section class="slide appendix" data-title="A · Moat" data-notes="Anticipate OpenAI-weekend. Answer: engine + room, not content.">
+<!-- 8 COMPETITION -->
+<section class="slide" data-title="Competition" data-notes="We make approved AI the easy path. LMS can't. Chatbots are the leak.">
   <div class="inner">
-    <p class="kicker">appendix · defensibility</p>
-    <h2>Content is fuel. The engine is the moat.</h2>
-    <table class="mt">
-      <tr><th>What we own</th><th>Why it’s not a weekend build</th></tr>
-      <tr><td class="win">Verification loop</td><td>Judging “done” on a stranger’s messy screen is pedagogy, not a prompt.</td></tr>
-      <tr><td class="win">Learner model</td><td>Skills, spaced repetition, teach-back — adaptive tutor, not a checklist.</td></tr>
-      <tr><td class="win">Agents with identity</td><td>Who said what, in which room, auditable on the transport.</td></tr>
-      <tr><td class="win">Open curriculum</td><td>Anyone publishes a path as JSON. Catalog compounds without us.</td></tr>
-      <tr><td class="win">BYO harness</td><td>ACP on their subscription. We never see a credential or pay inference.</td></tr>
-    </table>
-  </div>
-  <div class="wc">appendix</div>
-</section>
-
-<!-- A5 · ROADMAP --------------------------------------------- -->
-<section class="slide appendix" data-title="A · Roadmap" data-notes="Two quarters only.">
-  <div class="inner">
-    <p class="kicker">appendix · roadmap</p>
-    <h2>Next two quarters.</h2>
-    <div class="grid g2 mt">
-      <div class="panel">
-        <span class="stamp maroon">this quarter</span>
-        <ul class="ticks mt-s">
-          <li>Port screen-coach + verify into the workspace</li>
-          <li>Builder in first-run onboarding</li>
-          <li>Course content as channel feeds</li>
-          <li>First room with real weekly actives</li>
-        </ul>
+    <p class="deck-kicker reveal">Competition</p>
+    <h2 class="deck-title reveal reveal-d1" style="max-width:18ch">Nobody else joins fluency to governance.</h2>
+    <div class="deck-axis reveal reveal-d2" aria-label="Competitive landscape">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="10" y1="50" x2="90" y2="50" stroke="#14131a" stroke-width=".6" opacity=".35"/>
+        <line x1="50" y1="10" x2="50" y2="90" stroke="#14131a" stroke-width=".6" opacity=".35"/>
+      </svg>
+      <span class="deck-axis-end t">Verified fluency</span>
+      <span class="deck-axis-end b">No proof</span>
+      <span class="deck-axis-end l">Shadow / public AI</span>
+      <span class="deck-axis-end r">Approved company AI</span>
+      <span class="deck-axis-lab xt">Where work happens →</span>
+      <span class="deck-axis-lab yl">Skill proof</span>
+      <div class="deck-dot" style="left:26%;top:30%">
+        <div class="who">ChatGPT / Claude</div>
+        <div class="what">Powerful — and where secrets go when the company stack feels hard.</div>
       </div>
-      <div class="panel">
-        <span class="stamp blue">next quarter</span>
-        <ul class="ticks dot mt-s">
-          <li>First paid pilot → case study</li>
-          <li>Admin + verified-skill proof pack</li>
-          <li>Windows / browser learner surface</li>
-          <li>Open publishing for teachers</li>
-        </ul>
+      <div class="deck-dot win" style="left:76%;top:24%">
+        <div class="who">Teachy</div>
+        <div class="what">Practice on approved AI. Verified. Shadow AI becomes unnecessary.</div>
+      </div>
+      <div class="deck-dot" style="left:28%;top:74%">
+        <div class="who">LMS / LinkedIn Learning</div>
+        <div class="what">Video certificates. No proof on real tools. No policy at paste-time.</div>
+      </div>
+      <div class="deck-dot" style="left:74%;top:74%">
+        <div class="who">Vendor academies</div>
+        <div class="what">Prompt tips for their product. No governance. No verify.</div>
       </div>
     </div>
   </div>
-  <div class="wc">appendix</div>
 </section>
 
-<!-- A6 · CLOSE ----------------------------------------------- -->
-<section class="slide appendix" data-title="A · Close" data-notes="If you need a leave-behind beat after Q&A. Land it and stop.">
-  <div class="inner center">
-    <p class="kicker">one more thing</p>
-    <p class="big" style="max-width:18ch;margin-inline:auto">Stop watching.<br>Start doing.</p>
-    <p class="lede mt" style="margin-inline:auto;max-width:36ch">Teachy is how the world learns to do real work on a computer — free, 1:1, act-first.</p>
-    <div class="row mt" style="justify-content:center">
-      <span class="stamp maroon">Vedant Soni</span>
-      <span class="stamp">ved.06.soni@gmail.com</span>
-      <span class="stamp ghost">teachy · open source</span>
+<!-- 9 TRACTION -->
+<section class="slide" data-title="Traction" data-notes="B2C proof. Paying users. Enterprise pipeline from consulting.">
+  <div class="inner">
+    <p class="deck-kicker reveal">Traction</p>
+    <h2 class="deck-title reveal reveal-d1">B2C live. Enterprise in conversation.</h2>
+    <div class="deck-trac reveal reveal-d2">
+      <div class="t">
+        <div class="num">7</div>
+        <div class="lab">people using Teachy today</div>
+      </div>
+      <div class="t accent">
+        <div class="num">2</div>
+        <div class="lab">already paying · personal</div>
+      </div>
+      <div class="t dark">
+        <div class="num" style="font-size:clamp(1.6rem,3.2vw,2.2rem)">Pipeline</div>
+        <div class="lab">Consulting clients + firms that bought AI help and did not get the value</div>
+      </div>
+    </div>
+    <div class="deck-three reveal reveal-d3">
+      <article class="deck-card">
+        <h3>Shipped</h3>
+        <p>Personal Teachy in market. Coach loop on live screens. Path from individual fluency to employer pilot.</p>
+      </article>
+      <article class="deck-card">
+        <h3>Evidence from the field</h3>
+        <p>Every consulting engagement surfaced the same pair: unused seats and shadow AI. That is the enterprise wedge.</p>
+      </article>
+      <article class="deck-card">
+        <h3>Next dated milestone</h3>
+        <p>First scoped company pilot with a cohort that already feels both pains — warm intro, not cold outbound.</p>
+      </article>
     </div>
   </div>
-  <div class="wc">appendix</div>
+</section>
+
+<!-- 10 SECURITY + PILOT -->
+<section class="slide" data-title="Engagement" data-notes="Security trust + how a pilot works. Serious buyer language.">
+  <div class="inner">
+    <p class="deck-kicker reveal">Security &amp; engagement</p>
+    <h2 class="deck-title reveal reveal-d1" style="max-width:18ch">Fluency and control arrive together.</h2>
+    <div class="deck-three reveal reveal-d2">
+      <article class="deck-card">
+        <h3>Data handling</h3>
+        <p>Screen context is read only during a coaching moment and routes through your proxy. Nothing is stored or sold.</p>
+      </article>
+      <article class="deck-card">
+        <h3>Policy enforcement</h3>
+        <p>You define what is sensitive and where it may go. Teachy blocks incorrect placement in the moment.</p>
+      </article>
+      <article class="deck-card">
+        <h3>Stack alignment</h3>
+        <p>Configured to your internal software, SOPs, and licensed AI — coaching matches how the company actually works.</p>
+      </article>
+    </div>
+    <div class="deck-flow reveal reveal-d3">
+      <div class="s"><h3>01 Discover</h3><p>Roles, daily work, licensed tools, data rules.</p></div>
+      <div class="s"><h3>02 Configure</h3><p>Align Teachy to systems and guardrails.</p></div>
+      <div class="s now"><h3>03 Deploy</h3><p>Employees learn by doing. We refine stalls.</p></div>
+      <div class="s"><h3>04 Measure</h3><p>Verified fluency per person. Expand on evidence.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 TEAM & ASK -->
+<section class="slide" data-title="Team & ask" data-notes="Capability then ask. Pause after the number.">
+  <div class="inner deck-split">
+    <div>
+      <p class="deck-kicker reveal">Founder</p>
+      <h2 class="deck-title reveal reveal-d1" style="max-width:12ch">Vedant Soni</h2>
+      <p class="deck-lede reveal reveal-d2" style="margin-bottom:.9rem">Built products people use. Sat inside companies that bought AI and got neither fluency nor control. Building the layer that delivers both.</p>
+      <div class="cred-list reveal reveal-d3">
+        <div class="cred-row"><div class="tag">Fern</div><p>Founder — AI for children who cannot speak. <strong>12,500 users.</strong></p></div>
+        <div class="cred-row"><div class="tag">Cognition</div><p>Cofounder &amp; CTO — Butterfly. <strong>35,000+ users.</strong> NVIDIA + Google DeepMind. YC interview.</p></div>
+        <div class="cred-row"><div class="tag">Pillar AI</div><p>Founder — bespoke AI inside real businesses. Where unused seats and shadow AI showed up in the room.</p></div>
+        <div class="cred-row"><div class="tag">Texas A&amp;M</div><p>CS · ART Lab · EDEN Robotics PI · AggieX</p></div>
+      </div>
+    </div>
+    <div class="deck-ask reveal reveal-d4">
+      <div class="amt">$250K</div>
+      <p>Pre-seed · 18 months</p>
+      <ul>
+        <li>Enterprise pilot motion + case study</li>
+        <li>Policy + coach loop on Windows / browser</li>
+        <li>Verified fluency reporting for leadership</li>
+        <li>Warm introductions to design-partner companies</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 12 CLOSE -->
+<section class="slide" data-title="Close" data-notes="Land the pilot ask. Stop talking.">
+  <div class="inner deck-center">
+    <p class="deck-kicker reveal">Next step</p>
+    <h2 class="deck-title reveal reveal-d1" style="max-width:16ch">Request a scoped pilot</h2>
+    <p class="deck-lede reveal reveal-d2">Share your team, tools, and definition of fluency. We return a concrete engagement plan — approved tool recommendations, data placement rules enforced in the moment, coaching on internal software, and verified fluency reporting for leadership.</p>
+    <div class="deck-stamp-row reveal reveal-d3">
+      <span class="deck-stamp solid">Vedant Soni</span>
+      <span class="deck-stamp">ved.06.soni@gmail.com</span>
+      <span class="deck-stamp">enterprise@teachy.app</span>
+    </div>
+  </div>
 </section>
 
 </div>
 
-<div class="bar"><i id="progress"></i></div>
-
-<div class="help">← → nav · <b>f</b> full · <b>n</b> notes · <b>t</b> timer · <b>o</b> overview · slides 1–8 = pitch</div>
-
-<div class="hud">
-  <span class="pill timer" id="timer" hidden>00:00</span>
-  <button id="prev" title="previous">‹</button>
-  <span class="pill" id="counter">1 / 13</span>
-  <button id="next" title="next">›</button>
-</div>
-
-<div class="notes" id="notes"></div>
-
-<div class="overview" id="overview">
-  <h2>Slides</h2>
-  <div class="og" id="og"></div>
-</div>
+<div class="deck-progress"><i id="progress"></i></div>
+<div class="deck-hint">← → or space to advance · F fullscreen</div>
+<div class="deck-count" id="counter">1 / 12</div>
 
 <script>
-(function(){
+(function () {
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var i = 0;
-  var notesOn = false;
-  var $ = function(id){ return document.getElementById(id); };
-  var PITCH = 8; // first N are the Demo Day pitch
+  var $ = function (id) { return document.getElementById(id); };
 
-  function render(){
-    slides.forEach(function(s,n){ s.classList.toggle('active', n===i); });
-    var label = (i+1) + ' / ' + slides.length;
-    if (i >= PITCH) label += ' · appx';
-    $('counter').textContent = label;
-    $('progress').style.width = ((i+1)/slides.length*100) + '%';
-    $('notes').innerHTML = '<b>' + (slides[i].dataset.title||'') + '</b> — ' + (slides[i].dataset.notes||'no notes');
-    if (location.hash !== '#'+(i+1)) history.replaceState(null,'','#'+(i+1));
+  function restartAnims(slide) {
+    // retrigger CSS product animations when a slide becomes active
+    slide.querySelectorAll('.ent-anim-callout, .ent-anim-coach, .ent-guard-paste, .ent-guard-veil, .ent-guard-popup, .ent-guard-routed, .ent-step-1, .ent-step-2, .ent-step-3, .ent-row-1, .ent-row-2, .ent-row-3, .ent-row-4').forEach(function (el) {
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+    });
+  }
+
+  function render() {
+    slides.forEach(function (s, n) {
+      var on = n === i;
+      s.classList.toggle('active', on);
+      if (on) restartAnims(s);
+    });
+    $('counter').textContent = (i + 1) + ' / ' + slides.length;
+    $('progress').style.width = ((i + 1) / slides.length * 100) + '%';
+    if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
     slides[i].scrollTop = 0;
   }
-  function go(n){ i = Math.max(0, Math.min(slides.length-1, n)); render(); }
 
-  var t0 = null, tick = null;
-  function fmt(ms){
-    var s = Math.floor(ms/1000);
-    return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
-  }
-  function toggleTimer(){
-    var el = $('timer');
-    if (tick){ clearInterval(tick); tick = null; el.hidden = true; return; }
-    t0 = performance.now(); el.hidden = false;
-    tick = setInterval(function(){
-      var d = performance.now() - t0;
-      el.textContent = fmt(d);
-      el.classList.toggle('over', d > 10*60*1000); // 10-minute Demo Day pitch
-    }, 250);
+  function go(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    render();
   }
 
-  var ov = $('overview');
-  slides.forEach(function(s,n){
-    var b = document.createElement('button');
-    if (n >= PITCH) b.className = 'ap';
-    b.innerHTML = '<span>' + (n+1) + (n < PITCH ? '' : ' · A') + '</span>' + (s.dataset.title||'slide');
-    b.onclick = function(){ ov.classList.remove('on'); go(n); };
-    $('og').appendChild(b);
-  });
-
-  document.addEventListener('keydown', function(e){
+  document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     var k = e.key;
-    if (k==='ArrowRight' || k==='PageDown' || k===' ' || k==='Enter'){ e.preventDefault(); go(i+1); }
-    else if (k==='ArrowLeft' || k==='PageUp'){ e.preventDefault(); go(i-1); }
-    else if (k==='Home'){ go(0); }
-    else if (k==='End'){ go(slides.length-1); }
-    else if (k==='f' || k==='F'){ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
-    else if (k==='n' || k==='N' || k==='s' || k==='S'){ notesOn = !notesOn; $('notes').classList.toggle('on', notesOn); }
-    else if (k==='t' || k==='T'){ toggleTimer(); }
-    else if (k==='o' || k==='O'){ ov.classList.toggle('on'); }
-    else if (k==='Escape'){ ov.classList.remove('on'); }
-    else if (/^[0-9]$/.test(k)){ go(parseInt(k,10)-1); }
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter') { e.preventDefault(); go(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(slides.length - 1);
+    else if (k === 'f' || k === 'F') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
   });
 
-  $('next').onclick = function(){ go(i+1); };
-  $('prev').onclick = function(){ go(i-1); };
-
-  document.getElementById('deck').addEventListener('click', function(e){
-    if (e.target.closest('.hud, .overview, .notes')) return;
-    go(i+1);
+  document.getElementById('deck').addEventListener('click', function (e) {
+    if (e.target.closest('a,button')) return;
+    go(i + 1);
   });
 
   var x0 = null;
-  addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
-  addEventListener('touchend', function(e){
-    if (x0===null) return;
+  addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', function (e) {
+    if (x0 === null) return;
     var dx = e.changedTouches[0].clientX - x0;
-    if (Math.abs(dx) > 50) go(dx < 0 ? i+1 : i-1);
+    if (Math.abs(dx) > 50) go(dx < 0 ? i + 1 : i - 1);
     x0 = null;
-  }, {passive:true});
+  }, { passive: true });
 
-  go(parseInt((location.hash||'#1').slice(1),10)-1 || 0);
+  go(parseInt((location.hash || '#1').slice(1), 10) - 1 || 0);
 })();
 </script>
 </body>
