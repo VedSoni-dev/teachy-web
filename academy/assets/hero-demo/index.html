@@ -3,17 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Teachy hero demo</title>
+  <title>Teachy · enterprise coaching demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --teachy: #3380ff;
-      --teachy-glow: rgba(51, 128, 255, 0.45);
-      --ink: #1b1a2e;
-      --muted: #6b6478;
-      --loop: 15s;
+      --ink: #14131a;
+      --muted: #5c5868;
+      --line: #e4e0d8;
+      --paper: #fffdf9;
+      --maroon: #500000;
+      --teachy: #1f4fd8;
+      --teachy-soft: rgba(31, 79, 216, 0.14);
+      --danger: #c62828;
+      --ok: #1b7a45;
+      --loop: 16s;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
@@ -23,12 +28,12 @@
       width: 1280px;
       height: 720px;
       overflow: hidden;
-      font-family: Inter, system-ui, sans-serif;
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(ellipse 55% 45% at 15% 10%, rgba(51, 128, 255, 0.16), transparent 60%),
-        radial-gradient(ellipse 45% 40% at 90% 80%, rgba(255, 170, 90, 0.12), transparent 55%),
-        #e8eef6;
+        radial-gradient(ellipse 50% 40% at 12% 8%, rgba(80, 0, 0, 0.07), transparent 55%),
+        radial-gradient(ellipse 45% 40% at 92% 88%, rgba(31, 79, 216, 0.08), transparent 55%),
+        linear-gradient(165deg, #f4f0e8 0%, #ebe6dc 48%, #e4ebe8 100%);
     }
 
     .stage {
@@ -40,40 +45,67 @@
     .menubar {
       position: absolute;
       inset: 0 0 auto;
-      height: 26px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 18px;
       font-size: 12px;
       font-weight: 600;
-      color: rgba(27, 26, 46, 0.7);
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-      z-index: 2;
+      color: rgba(20, 19, 26, 0.65);
+      background: rgba(255, 253, 249, 0.72);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(20, 19, 26, 0.06);
+      z-index: 5;
+    }
+    .menubar-left { display: flex; gap: 16px; align-items: center; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--ink); opacity: 0.7;
     }
 
-    .menubar-left { display: flex; gap: 14px; align-items: center; }
-    .apple {
-      width: 11px; height: 11px; border-radius: 3px;
-      background: var(--ink); opacity: 0.75;
+    .hud {
+      position: absolute;
+      left: 50%;
+      top: 42px;
+      transform: translateX(-50%);
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(20, 19, 26, 0.9);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      box-shadow: 0 12px 28px rgba(20, 19, 26, 0.28);
+    }
+    .hud i {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #ff4d5e;
+      box-shadow: 0 0 0 4px rgba(255, 77, 94, 0.28);
+      animation: pulse 1.2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
 
-    /* Fake ChatGPT window — Teachy coaches on top of a real app */
     .window {
       position: absolute;
-      left: 140px;
-      top: 62px;
-      width: 1000px;
-      height: 580px;
-      border-radius: 16px;
+      left: 110px;
+      top: 78px;
+      width: 1060px;
+      height: 560px;
+      border-radius: 14px;
       overflow: hidden;
-      background: #fff;
-      border: 1px solid rgba(27, 26, 46, 0.08);
+      background: var(--paper);
+      border: 1px solid rgba(20, 19, 26, 0.1);
       box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.85) inset,
-        0 30px 80px rgba(27, 26, 46, 0.18);
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 36px 90px rgba(20, 19, 26, 0.2);
     }
 
     .chrome {
@@ -82,12 +114,11 @@
       align-items: center;
       gap: 8px;
       padding: 0 14px;
-      background: linear-gradient(180deg, #fbfcfe, #eef1f5);
-      border-bottom: 1px solid #e6e9ef;
+      background: linear-gradient(180deg, #fbfaf7, #efece5);
+      border-bottom: 1px solid var(--line);
     }
-
     .chrome i {
-      width: 12px; height: 12px; border-radius: 50%; display: block;
+      width: 11px; height: 11px; border-radius: 50%; display: block;
     }
     .chrome i:nth-child(1) { background: #ff5f57; }
     .chrome i:nth-child(2) { background: #febc2e; }
@@ -95,11 +126,11 @@
 
     .url {
       flex: 1;
-      margin: 0 18px 0 8px;
+      margin: 0 16px 0 8px;
       height: 28px;
       border-radius: 8px;
       background: #fff;
-      border: 1px solid #e2e6ee;
+      border: 1px solid #e2ddd4;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -108,92 +139,167 @@
       color: var(--muted);
       font-weight: 500;
     }
-
     .url::before {
       content: "";
-      width: 8px; height: 8px; border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: #34d399;
-      box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2);
+      box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.22);
+    }
+    .url span {
+      animation: url-swap var(--loop) steps(1, end) infinite;
+    }
+    @keyframes url-swap {
+      0%, 58% { content: none; }
+    }
+    .url span::before {
+      content: "chatgpt.com";
+      animation: host-swap var(--loop) steps(1, end) infinite;
+    }
+    @keyframes host-swap {
+      0%, 58% { content: "chatgpt.com"; }
+      59%, 100% { content: "claude.ai · Acme approved"; }
     }
 
-    .chat {
+    .app {
       position: relative;
       height: calc(100% - 44px);
       display: grid;
       grid-template-rows: auto 1fr auto;
-      background: #f7f7f8;
+      background: #f6f4ef;
     }
 
-    .chat-head {
-      padding: 14px 22px;
-      background: #fff;
-      border-bottom: 1px solid #eceef2;
-      font-weight: 650;
+    .app-head {
+      padding: 14px 24px;
+      background: #fffdf9;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .app-head strong {
       font-size: 14px;
-      color: #444;
+      font-weight: 650;
+      animation: head-swap var(--loop) steps(1, end) infinite;
+    }
+    @keyframes head-swap {
+      0%, 58% { content: none; }
+    }
+    .app-head strong::before {
+      content: "ChatGPT";
+      animation: title-swap var(--loop) steps(1, end) infinite;
+    }
+    @keyframes title-swap {
+      0%, 58% { content: "ChatGPT"; }
+      59%, 100% { content: "Claude · company workspace"; }
+    }
+    .app-head em {
+      font-style: normal;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: approved-badge var(--loop) var(--ease) infinite;
+    }
+    @keyframes approved-badge {
+      0%, 58% { opacity: 0; transform: translateY(4px); }
+      64%, 100% { opacity: 1; transform: none; color: var(--ok); }
     }
 
     .thread {
-      padding: 28px 72px;
+      padding: 28px 64px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
       overflow: hidden;
     }
 
     .bubble {
-      max-width: 70%;
+      max-width: 72%;
       padding: 14px 16px;
-      border-radius: 18px;
-      font-size: 15px;
+      border-radius: 16px;
+      font-size: 14.5px;
       line-height: 1.45;
       font-weight: 500;
     }
-
-    .bubble.user {
-      align-self: flex-end;
-      background: #ebeff5;
-      color: var(--ink);
-    }
-
     .bubble.bot {
       align-self: flex-start;
       background: #fff;
-      border: 1px solid #e7e9ee;
+      border: 1px solid #e7e2d8;
       color: #333;
-      box-shadow: 0 6px 18px rgba(27, 26, 46, 0.04);
+      box-shadow: 0 6px 18px rgba(20, 19, 26, 0.04);
+    }
+    .bubble.user {
+      align-self: flex-end;
+      background: #ebe7df;
+      color: var(--ink);
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .bubble.user.paste {
+      animation: show-paste var(--loop) var(--ease) infinite;
+    }
+    .bubble.user.safe {
+      animation: show-safe var(--loop) var(--ease) infinite;
+      background: #e8eefc;
+      border: 1px solid rgba(31, 79, 216, 0.18);
+    }
+    @keyframes show-paste {
+      0%, 8% { opacity: 0; transform: translateY(8px); }
+      14%, 48% { opacity: 1; transform: none; }
+      54%, 100% { opacity: 0; transform: translateY(-6px); }
+    }
+    @keyframes show-safe {
+      0%, 68% { opacity: 0; transform: translateY(10px); max-height: 0; padding-top: 0; padding-bottom: 0; overflow: hidden; }
+      74%, 100% { opacity: 1; transform: none; max-height: 120px; padding: 14px 16px; }
     }
 
     .composer {
       position: relative;
       margin: 0 48px 28px;
       background: #fff;
-      border: 1.5px solid #d9dee8;
-      border-radius: 18px;
-      min-height: 92px;
+      border: 1.5px solid #d9d3c8;
+      border-radius: 16px;
+      min-height: 96px;
       padding: 14px 56px 14px 16px;
-      box-shadow: 0 10px 28px rgba(27, 26, 46, 0.05);
+      box-shadow: 0 10px 28px rgba(20, 19, 26, 0.05);
+      animation: composer-state var(--loop) var(--ease) infinite;
+    }
+    @keyframes composer-state {
+      0%, 10% { border-color: #d9d3c8; box-shadow: 0 10px 28px rgba(20, 19, 26, 0.05); }
+      16%, 42% { border-color: var(--danger); box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.12), 0 10px 28px rgba(20, 19, 26, 0.05); }
+      50%, 58% { border-color: #d9d3c8; opacity: 0.55; }
+      64%, 100% { border-color: var(--teachy); box-shadow: 0 0 0 4px var(--teachy-soft), 0 10px 28px rgba(20, 19, 26, 0.05); opacity: 1; }
     }
 
     .composer .label {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #9aa0ad;
+      color: #9a9488;
       margin-bottom: 8px;
     }
-
     .composer .text {
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 500;
       color: var(--ink);
-      min-height: 1.3em;
-      white-space: nowrap;
-      overflow: hidden;
+      line-height: 1.4;
+      min-height: 2.6em;
     }
-
-    .composer .text.placeholder { color: #a3a9b6; }
+    .composer .text::after {
+      white-space: pre-wrap;
+      animation: typed var(--loop) steps(1, end) infinite;
+    }
+    @keyframes typed {
+      0%, 10% { content: "Message ChatGPT…"; color: #a39d92; }
+      14% { content: "Summarize this customer roster for Q3 outreach:\n"; color: var(--ink); }
+      18%, 48% { content: "Summarize this customer roster for Q3 outreach:\nAcme · national IDs · payment refs attached"; color: var(--ink); }
+      54%, 62% { content: ""; color: #a39d92; }
+      68% { content: "Draft a renewal note for Acme Corp."; color: var(--ink); }
+      74%, 100% { content: "Draft a renewal note for Acme Corp referencing Q2 usage. Keep under 150 words. No account IDs."; color: var(--ink); }
+    }
 
     .send {
       position: absolute;
@@ -203,111 +309,201 @@
       height: 36px;
       border-radius: 50%;
       border: none;
-      background: #d0d5df;
+      background: #cfc9bd;
       display: grid;
       place-items: center;
+      animation: send-ready var(--loop) var(--ease) infinite;
+    }
+    .send svg { width: 15px; height: 15px; fill: #fff; }
+    @keyframes send-ready {
+      0%, 70% { background: #cfc9bd; }
+      76%, 100% { background: var(--teachy); }
     }
 
-    .send svg { width: 16px; height: 16px; fill: #fff; }
-
-    .chalk {
+    /* Policy veil + popup */
+    .veil {
       position: absolute;
-      inset: -7px;
-      border-radius: 22px;
-      border: 2.5px solid rgba(51, 128, 255, 0.9);
-      box-shadow: 0 0 0 6px rgba(51, 128, 255, 0.14);
+      inset: 44px 0 0;
+      background: rgba(20, 19, 26, 0.42);
+      backdrop-filter: blur(2px);
       opacity: 0;
       pointer-events: none;
+      z-index: 10;
+      animation: veil-in var(--loop) var(--ease) infinite;
+    }
+    @keyframes veil-in {
+      0%, 28% { opacity: 0; }
+      34%, 52% { opacity: 1; }
+      58%, 100% { opacity: 0; }
     }
 
-    .send .chalk {
-      border-radius: 50%;
-      inset: -8px;
+    .popup {
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -46%) scale(0.96);
+      width: 440px;
+      z-index: 20;
+      background: #fffdf9;
+      border: 1px solid rgba(20, 19, 26, 0.12);
+      border-radius: 16px;
+      padding: 18px 20px 16px;
+      box-shadow: 0 28px 70px rgba(20, 19, 26, 0.28);
+      opacity: 0;
+      pointer-events: none;
+      animation: popup-in var(--loop) var(--ease) infinite;
+    }
+    @keyframes popup-in {
+      0%, 30% { opacity: 0; transform: translate(-50%, -40%) scale(0.94); }
+      36%, 52% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      58%, 100% { opacity: 0; transform: translate(-50%, -56%) scale(0.98); }
+    }
+    .popup-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .popup-mark {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--maroon);
+      box-shadow: 0 0 0 4px rgba(80, 0, 0, 0.12);
+    }
+    .popup-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--maroon);
+    }
+    .popup h3 {
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .popup p {
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .popup .action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--teachy);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 650;
+      box-shadow: 0 10px 24px rgba(31, 79, 216, 0.3);
+      animation: action-pulse var(--loop) var(--ease) infinite;
+    }
+    @keyframes action-pulse {
+      0%, 40% { transform: scale(1); }
+      44%, 48% { transform: scale(0.96); }
+      52% { transform: scale(1); }
     }
 
-    /* —— THE BUDDY (this is Teachy) —— */
-    .buddy {
+    .routed {
+      position: absolute;
+      left: 50%;
+      bottom: 118px;
+      transform: translateX(-50%) translateY(12px);
+      z-index: 25;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(27, 122, 69, 0.95);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 650;
+      opacity: 0;
+      box-shadow: 0 12px 28px rgba(27, 122, 69, 0.35);
+      animation: routed-in var(--loop) var(--ease) infinite;
+    }
+    @keyframes routed-in {
+      0%, 54% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+      58%, 68% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      74%, 100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+    }
+
+    /* Coach cursor */
+    .coach {
       position: absolute;
       z-index: 50;
-      left: 0;
-      top: 0;
+      left: 0; top: 0;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
       pointer-events: none;
-      filter: drop-shadow(0 14px 28px rgba(51, 128, 255, 0.35));
+      filter: drop-shadow(0 14px 28px rgba(31, 79, 216, 0.35));
       will-change: transform;
+      animation: coach-path var(--loop) var(--ease) infinite;
+    }
+    @keyframes coach-path {
+      0%, 8%   { transform: translate3d(760px, 250px, 0); opacity: 0; }
+      12%, 14% { opacity: 1; transform: translate3d(720px, 360px, 0); }
+      20%, 30% { transform: translate3d(640px, 430px, 0); }
+      36%, 48% { transform: translate3d(700px, 300px, 0); }
+      54%, 56% { transform: translate3d(740px, 340px, 0) scale(0.92); }
+      62%, 70% { transform: translate3d(820px, 480px, 0); }
+      78%, 90% { transform: translate3d(700px, 500px, 0); }
+      96%, 100%{ transform: translate3d(760px, 250px, 0); opacity: 0; }
     }
 
-    .buddy-speech {
+    .coach-speech {
       background: var(--teachy);
       color: #fff;
-      font-family: "Baloo 2", sans-serif;
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 650;
       letter-spacing: -0.01em;
-      line-height: 1.25;
+      line-height: 1.3;
       padding: 11px 14px;
-      border-radius: 16px 16px 16px 5px;
-      max-width: 260px;
-      box-shadow: 0 12px 30px rgba(51, 128, 255, 0.4);
+      border-radius: 14px 14px 14px 5px;
+      max-width: 280px;
+      box-shadow: 0 12px 30px rgba(31, 79, 216, 0.4);
       opacity: 0;
-      transform: translateY(6px) scale(0.96);
-      white-space: nowrap;
+      animation: speech-vis var(--loop) var(--ease) infinite;
+    }
+    .coach-speech::before {
+      animation: speech-copy var(--loop) steps(1, end) infinite;
+    }
+    @keyframes speech-vis {
+      0%, 10% { opacity: 0; transform: translateY(6px) scale(0.96); }
+      14%, 30% { opacity: 1; transform: none; }
+      34%, 36% { opacity: 0; }
+      40%, 50% { opacity: 1; transform: none; }
+      54%, 56% { opacity: 0; }
+      64%, 72% { opacity: 1; transform: none; }
+      78%, 90% { opacity: 1; transform: none; }
+      94%, 100%{ opacity: 0; }
+    }
+    @keyframes speech-copy {
+      0%, 34% { content: "hold on — that’s customer PII"; }
+      35%, 56% { content: "keep it in approved systems"; }
+      57%, 76% { content: "open your company Claude"; }
+      77%, 100% { content: "verified — you wrote it safely"; }
     }
 
-    .buddy-cursor {
-      width: 34px;
-      height: 34px;
+    .coach-cursor {
+      width: 28px;
+      height: 28px;
       background: var(--teachy);
       clip-path: polygon(12% 8%, 92% 48%, 12% 92%);
       transform: rotate(-28deg);
-      margin-left: 6px;
-      filter: drop-shadow(0 8px 16px var(--teachy-glow));
-    }
-
-    .buddy-cursor.is-click {
-      transform: rotate(-28deg) scale(0.82);
-    }
-
-    .hud {
-      position: absolute;
-      left: 50%;
-      top: 34px;
-      transform: translateX(-50%);
-      z-index: 20;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(27, 26, 46, 0.88);
-      color: #fff;
-      font-family: "Baloo 2", sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      box-shadow: 0 12px 30px rgba(27, 26, 46, 0.25);
-    }
-
-    .hud i {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #ff4d5e;
-      box-shadow: 0 0 0 4px rgba(255, 77, 94, 0.25);
-      animation: pulse 1.2s ease infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.45; }
+      margin-left: 4px;
     }
 
     .toast {
       position: absolute;
       left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%) translateY(20px);
-      z-index: 30;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(16px);
+      z-index: 35;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -315,131 +511,22 @@
       border-radius: 999px;
       background: var(--teachy);
       color: #fff;
-      font-family: "Baloo 2", sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      box-shadow: 0 16px 40px rgba(51, 128, 255, 0.4);
+      font-size: 14.5px;
+      font-weight: 650;
+      box-shadow: 0 16px 40px rgba(31, 79, 216, 0.4);
       opacity: 0;
       pointer-events: none;
+      animation: toast-in var(--loop) var(--ease) infinite;
     }
-
     .toast b {
       width: 22px; height: 22px; border-radius: 50%;
       background: #fff; color: var(--teachy);
       display: grid; place-items: center;
       font-size: 13px;
     }
-
-    /* Animations */
-    .buddy { animation: buddy-path var(--loop) var(--ease) infinite; }
-    .buddy-speech { animation: speech-swap var(--loop) var(--ease) infinite; }
-    .buddy-cursor { animation: cursor-click var(--loop) var(--ease) infinite; }
-    .composer .chalk { animation: chalk-box var(--loop) var(--ease) infinite; }
-    .send .chalk { animation: chalk-send var(--loop) var(--ease) infinite; }
-    .composer { animation: composer-focus var(--loop) var(--ease) infinite; }
-    .send { animation: send-ready var(--loop) var(--ease) infinite; }
-    .composer .text { animation: prompt-type var(--loop) steps(1, end) infinite; }
-    .toast { animation: toast-in var(--loop) var(--ease) infinite; }
-    .bubble.user.weak { animation: fade-weak var(--loop) var(--ease) infinite; }
-    .bubble.user.strong { animation: show-strong var(--loop) var(--ease) infinite; }
-
-    @keyframes buddy-path {
-      /* start near center-right so poster frame shows Teachy immediately */
-      0%, 6%   { transform: translate3d(620px, 220px, 0); }
-      /* point at the weak prompt / composer */
-      14%, 38% { transform: translate3d(520px, 430px, 0); }
-      /* move to send */
-      48%, 62% { transform: translate3d(860px, 500px, 0); }
-      /* celebrate near toast */
-      72%, 88% { transform: translate3d(560px, 480px, 0); }
-      100%     { transform: translate3d(620px, 220px, 0); }
-    }
-
-    @keyframes speech-swap {
-      0%, 8%   { opacity: 0; transform: translateY(8px) scale(0.96); }
-      12%, 36% { opacity: 1; transform: none; }
-      40%, 44% { opacity: 0; transform: translateY(-4px) scale(0.98); }
-      48%, 60% { opacity: 1; transform: none; }
-      64%, 68% { opacity: 0; transform: translateY(-4px) scale(0.98); }
-      72%, 88% { opacity: 1; transform: none; }
-      92%, 100%{ opacity: 0; transform: translateY(-4px) scale(0.98); }
-    }
-
-    /* text content via attr swaps on ::after — use multiple overlays instead */
-    .buddy-speech::before {
-      content: "hold on — that prompt is too vague";
-      animation: line-a var(--loop) steps(1, end) infinite;
-    }
-
-    @keyframes line-a {
-      0%, 40% { content: "hold on — that prompt is too vague"; }
-      41%, 64% { content: "tap Send when it’s ready"; }
-      65%, 100% { content: "nice — you did that. i checked."; }
-    }
-
-    @keyframes cursor-click {
-      0%, 54% { transform: rotate(-28deg) scale(1); }
-      56%, 58% { transform: rotate(-28deg) scale(0.8); }
-      60%, 100% { transform: rotate(-28deg) scale(1); }
-    }
-
-    @keyframes chalk-box {
-      0%, 12% { opacity: 0; }
-      16%, 36% { opacity: 1; }
-      42%, 100% { opacity: 0; }
-    }
-
-    @keyframes chalk-send {
-      0%, 46% { opacity: 0; }
-      50%, 60% { opacity: 1; }
-      66%, 100% { opacity: 0; }
-    }
-
-    @keyframes composer-focus {
-      0%, 12% { border-color: #d9dee8; box-shadow: 0 10px 28px rgba(27, 26, 46, 0.05); }
-      16%, 38% { border-color: var(--teachy); box-shadow: 0 0 0 5px rgba(51, 128, 255, 0.16), 0 10px 28px rgba(27, 26, 46, 0.05); }
-      44%, 100% { border-color: #d9dee8; box-shadow: 0 10px 28px rgba(27, 26, 46, 0.05); }
-    }
-
-    @keyframes send-ready {
-      0%, 46% { background: #d0d5df; }
-      50%, 100% { background: var(--teachy); }
-    }
-
-    @keyframes prompt-type {
-      0%, 18% {
-        color: #a3a9b6;
-      }
-      19% { color: var(--ink); }
-    }
-
-    .composer .text::after {
-      content: "Message ChatGPT";
-      animation: typed var(--loop) steps(1, end) infinite;
-    }
-
-    @keyframes typed {
-      0%, 18% { content: "Message ChatGPT"; color: #a3a9b6; }
-      22% { content: "w"; }
-      24% { content: "wr"; }
-      26% { content: "write me a"; }
-      30% { content: "write me a caption for"; }
-      36%, 100% { content: "write a playful IG caption for teens who skate"; }
-    }
-
-    @keyframes fade-weak {
-      0%, 20% { opacity: 1; }
-      28%, 100% { opacity: 0.35; }
-    }
-
-    @keyframes show-strong {
-      0%, 34% { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; margin: 0; overflow: hidden; }
-      38%, 100% { opacity: 1; max-height: 80px; padding: 14px 16px; }
-    }
-
     @keyframes toast-in {
-      0%, 70% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-      76%, 92% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      0%, 78% { opacity: 0; transform: translateX(-50%) translateY(16px); }
+      84%, 96% { opacity: 1; transform: translateX(-50%) translateY(0); }
       100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
     }
   </style>
@@ -448,12 +535,12 @@
   <div class="stage">
     <div class="menubar" aria-hidden="true">
       <div class="menubar-left">
-        <span class="apple"></span>
-        <span>ChatGPT</span>
+        <span class="dot"></span>
+        <span>Teachy</span>
         <span>File</span>
         <span>Edit</span>
       </div>
-      <span>Fri 5:42 PM</span>
+      <span>Mon 10:42 AM</span>
     </div>
 
     <div class="hud"><i></i> teachy · coaching live</div>
@@ -461,43 +548,58 @@
     <div class="window">
       <div class="chrome">
         <i></i><i></i><i></i>
-        <div class="url">chatgpt.com</div>
+        <div class="url"><span></span></div>
       </div>
 
-      <div class="chat">
-        <div class="chat-head">ChatGPT</div>
-        <div class="thread">
-          <div class="bubble user weak">write me a caption</div>
-          <div class="bubble bot">Sure — here’s one: “Living my best life ✨” Want something more specific?</div>
-          <div class="bubble user strong">write a playful IG caption for teens who skate</div>
+      <div class="app">
+        <div class="app-head">
+          <strong></strong>
+          <em>Approved · customer correspondence</em>
         </div>
 
-        <div class="composer" id="composer">
-          <div class="label">prompt</div>
+        <div class="thread">
+          <div class="bubble bot">Ask anything about your accounts…</div>
+          <div class="bubble user paste">Paste: customer roster · national IDs · payment references</div>
+          <div class="bubble user safe">Draft a renewal note for Acme Corp referencing Q2 usage. Keep under 150 words. No account IDs.</div>
+        </div>
+
+        <div class="composer">
+          <div class="label">composer</div>
           <div class="text"></div>
           <button class="send" type="button" aria-label="Send">
             <svg viewBox="0 0 24 24"><path d="M3.4 20.6L20.5 12 3.4 3.4l2.8 7.3L16 12l-9.8 1.3z"/></svg>
-            <span class="chalk" aria-hidden="true"></span>
           </button>
-          <span class="chalk" aria-hidden="true"></span>
         </div>
+
+        <div class="veil" aria-hidden="true"></div>
+
+        <div class="popup" role="status">
+          <div class="popup-top">
+            <span class="popup-mark" aria-hidden="true"></span>
+            <span class="popup-badge">Teachy · policy</span>
+          </div>
+          <h3>Hold on — that’s customer PII</h3>
+          <p>This content must not enter a public model. Keep it in approved systems and continue with your internal assistant.</p>
+          <div class="action">Open Acme internal assistant</div>
+        </div>
+
+        <div class="routed">Routed safely · Acme Claude</div>
       </div>
     </div>
 
-    <!-- Teachy buddy: blue speech + blue triangle cursor (matches the app) -->
-    <div class="buddy" aria-hidden="true">
-      <div class="buddy-speech"></div>
-      <div class="buddy-cursor"></div>
+    <div class="coach" aria-hidden="true">
+      <div class="coach-speech"></div>
+      <div class="coach-cursor"></div>
     </div>
 
-    <div class="toast"><b>✓</b> checked — better prompt, you wrote it</div>
+    <div class="toast"><b>✓</b> verified — safe prompt, you wrote it</div>
   </div>
 
   <script>
     window.__TEACHY_HERO_DEMO__ = {
       width: 1280,
       height: 720,
-      durationMs: 15000,
+      durationMs: 16000,
       ready: true
     };
   </script>

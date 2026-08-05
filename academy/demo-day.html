@@ -359,21 +359,7 @@ body.deck-page{
 }
 
 
-/* —— landing continuity: logo marquee + chat threads —— */
-.deck-marquee{
-  position:fixed;left:0;right:0;bottom:2.4rem;z-index:30;
-  height:52px;overflow:hidden;pointer-events:none;
-  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
-  opacity:.55;
-}
-.deck-marquee-track{
-  display:flex;align-items:center;gap:2.5rem;width:max-content;
-  animation:deck-marquee 38s linear infinite;
-}
-.deck-marquee-track img{
-  height:28px;width:auto;opacity:.7;filter:grayscale(1);
-}
+/* —— logo wall lives on one slide only —— */
 @keyframes deck-marquee{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
@@ -428,7 +414,6 @@ body.deck-page{
 .deck-page .chat-gallery{display:contents}
 @media (max-width:900px){
   .deck-chat-grid{grid-template-columns:1fr}
-  .deck-marquee{display:none}
 }
 
 </style>
@@ -438,44 +423,15 @@ body.deck-page{
 <div class="deck-ambient" aria-hidden="true"><canvas id="ambient"></canvas></div>
 <div class="coach-pointer" id="coachPointer" aria-hidden="true"></div>
 
-<div class="deck-marquee" aria-hidden="true">
-  <div class="deck-marquee-track">
-      <img src="logos/claude.svg" alt="" />
-      <img src="logos/chatgpt.svg" alt="" />
-      <img src="logos/figma.svg" alt="" />
-      <img src="logos/excel.svg" alt="" />
-      <img src="logos/vscode.svg" alt="" />
-      <img src="logos/apple.svg" alt="" />
-      <img src="logos/github.svg" alt="" />
-      <img src="logos/notion.svg" alt="" />
-      <img src="logos/terminal.svg" alt="" />
-      <img src="logos/canva.svg" alt="" />
-      <img src="logos/blender.svg" alt="" />
-      <img src="logos/photoshop.svg" alt="" />
-      <img src="logos/claude.svg" alt="" />
-      <img src="logos/chatgpt.svg" alt="" />
-      <img src="logos/figma.svg" alt="" />
-      <img src="logos/excel.svg" alt="" />
-      <img src="logos/vscode.svg" alt="" />
-      <img src="logos/apple.svg" alt="" />
-      <img src="logos/github.svg" alt="" />
-      <img src="logos/notion.svg" alt="" />
-      <img src="logos/terminal.svg" alt="" />
-      <img src="logos/canva.svg" alt="" />
-      <img src="logos/blender.svg" alt="" />
-      <img src="logos/photoshop.svg" alt="" />
-  </div>
-</div>
-
 <div class="deck" id="deck">
 
 <!-- 1 TITLE -->
 <section class="slide" data-title="Title" data-notes="Open on the enterprise line. Video proves the product before you speak.">
   <div class="title-stage">
     <div class="title-video reveal" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="auto" poster="assets/hero-demo/teachy-hero-poster.jpg">
-        <source src="assets/hero-demo/teachy-hero.webm" type="video/webm" />
-        <source src="assets/hero-demo/teachy-hero.mp4" type="video/mp4" />
+      <video autoplay muted loop playsinline preload="auto" poster="assets/hero-demo/teachy-hero-poster.jpg?v=20260805b">
+        <source src="assets/hero-demo/teachy-hero.webm?v=20260805b" type="video/webm" />
+        <source src="assets/hero-demo/teachy-hero.mp4?v=20260805b" type="video/mp4" />
       </video>
     </div>
     <div class="inner deck-center">
@@ -542,9 +498,9 @@ body.deck-page{
     <div class="reveal reveal-d3">
       <div class="live-stage" data-live-video>
         <span class="live-badge"><i></i> Live product · coaching loop</span>
-        <video autoplay muted loop playsinline preload="auto" poster="assets/hero-demo/teachy-hero-poster.jpg">
-          <source src="assets/hero-demo/teachy-hero.webm" type="video/webm" />
-          <source src="assets/hero-demo/teachy-hero.mp4" type="video/mp4" />
+        <video autoplay muted loop playsinline preload="auto" poster="assets/hero-demo/teachy-hero-poster.jpg?v=20260805b">
+          <source src="assets/hero-demo/teachy-hero.webm?v=20260805b" type="video/webm" />
+          <source src="assets/hero-demo/teachy-hero.mp4?v=20260805b" type="video/mp4" />
         </video>
       </div>
     </div>

@@ -14,8 +14,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = 8765;
 const WIDTH = 1280;
 const HEIGHT = 720;
-const DURATION_MS = 15000;
-const RECORD_MS = DURATION_MS + 1000; // capture just over one loop
+const DURATION_MS = 16000;
+const RECORD_MS = DURATION_MS + 1200; // capture just over one loop
 const OUT_WEBM = join(__dirname, "teachy-hero.webm");
 const OUT_MP4 = join(__dirname, "teachy-hero.mp4");
 const OUT_POSTER = join(__dirname, "teachy-hero-poster.jpg");
@@ -93,7 +93,7 @@ async function main() {
 
   const context = await browser.newContext({
     viewport: { width: WIDTH, height: HEIGHT },
-    deviceScaleFactor: 1,
+    deviceScaleFactor: 2,
     recordVideo: {
       dir: TMP_DIR,
       size: { width: WIDTH, height: HEIGHT },
@@ -116,16 +116,17 @@ async function main() {
   const rawPath = await video.path();
   console.log("Raw recording:", rawPath, `${mb(rawPath)} MB`);
 
-  // Trim to exactly one loop and compress for the web.
+  // Trim to exactly one loop; keep bitrate high enough for pitch screens.
   runFfmpeg([
     "-y",
     "-i", rawPath,
-    "-ss", "0.25",
-    "-t", "15",
+    "-ss", "0.2",
+    "-t", "16",
     "-an",
-    "-c:v", "libvpx",
-    "-b:v", "900k",
-    "-crf", "32",
+    "-c:v", "libvpx-vp9",
+    "-b:v", "2.5M",
+    "-crf", "28",
+    "-row-mt", "1",
     "-pix_fmt", "yuv420p",
     "-vf", `scale=${WIDTH}:${HEIGHT}:flags=lanczos`,
     OUT_WEBM,
@@ -134,12 +135,15 @@ async function main() {
 
   runFfmpeg([
     "-y",
-    "-i", OUT_WEBM,
+    "-i", rawPath,
+    "-ss", "0.2",
+    "-t", "16",
     "-an",
     "-c:v", "libx264",
     "-preset", "slow",
-    "-crf", "26",
+    "-crf", "18",
     "-pix_fmt", "yuv420p",
+    "-vf", `scale=${WIDTH}:${HEIGHT}:flags=lanczos`,
     "-movflags", "+faststart",
     OUT_MP4,
   ]);
@@ -147,10 +151,10 @@ async function main() {
 
   runFfmpeg([
     "-y",
-    "-i", OUT_WEBM,
-    "-ss", "2.5",
+    "-i", OUT_MP4,
+    "-ss", "3.2",
     "-vframes", "1",
-    "-q:v", "3",
+    "-q:v", "2",
     OUT_POSTER,
   ]);
   console.log("Wrote", OUT_POSTER, `${mb(OUT_POSTER)} MB`);
