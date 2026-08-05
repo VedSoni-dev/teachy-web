@@ -358,12 +358,115 @@ body.deck-page{
   opacity:0;pointer-events:none;
 }
 
+
+/* —— landing continuity: logo marquee + chat threads —— */
+.deck-marquee{
+  position:fixed;left:0;right:0;bottom:2.4rem;z-index:30;
+  height:52px;overflow:hidden;pointer-events:none;
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  opacity:.55;
+}
+.deck-marquee-track{
+  display:flex;align-items:center;gap:2.5rem;width:max-content;
+  animation:deck-marquee 38s linear infinite;
+}
+.deck-marquee-track img{
+  height:28px;width:auto;opacity:.7;filter:grayscale(1);
+}
+@keyframes deck-marquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+.logo-wall-slide{
+  position:relative;overflow:hidden;min-height:min(70vh,640px);
+}
+.logo-wall-slide .wall-copy{
+  position:relative;z-index:2;text-align:center;max-width:40rem;margin:0 auto 1.2rem;
+}
+.logo-marquee-huge{
+  position:relative;z-index:1;margin:1rem 0;
+  overflow:hidden;
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+}
+.logo-marquee-huge .track{
+  display:flex;align-items:center;gap:clamp(2rem,4vw,3.5rem);width:max-content;
+  padding:.6rem 0;
+}
+.logo-marquee-huge .track img{
+  height:clamp(48px,8vw,88px);width:auto;
+  opacity:.85;filter:grayscale(.2);
+  transition:transform .3s ease, filter .3s ease;
+}
+.logo-marquee-huge.row-a .track{animation:deck-marquee 28s linear infinite}
+.logo-marquee-huge.row-b .track{animation:deck-marquee 34s linear infinite reverse}
+.logo-marquee-huge.row-c .track{animation:deck-marquee 22s linear infinite}
+
+.deck-chat-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.7rem,1.5vw,1.1rem);
+  margin-top:1rem;
+  align-items:start;
+}
+.deck-page .chat-surface{
+  background:rgba(255,252,247,.92);
+  border:1px solid var(--deck-line);
+  border-radius:18px;
+  padding:.85rem .75rem;
+  min-height:220px;
+  box-shadow:0 14px 36px rgba(20,19,26,.07);
+}
+.deck-page .chat-surface[data-label]::before{
+  content:attr(data-label);
+  display:block;
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--deck-muted);margin:0 .35rem .55rem;
+}
+.deck-page .chat-gallery{display:contents}
+@media (max-width:900px){
+  .deck-chat-grid{grid-template-columns:1fr}
+  .deck-marquee{display:none}
+}
+
 </style>
 </head>
 <body class="deck-page ent-page">
 
 <div class="deck-ambient" aria-hidden="true"><canvas id="ambient"></canvas></div>
 <div class="coach-pointer" id="coachPointer" aria-hidden="true"></div>
+
+<div class="deck-marquee" aria-hidden="true">
+  <div class="deck-marquee-track">
+      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/figma.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/vscode.svg" alt="" />
+      <img src="logos/apple.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/terminal.svg" alt="" />
+      <img src="logos/canva.svg" alt="" />
+      <img src="logos/blender.svg" alt="" />
+      <img src="logos/photoshop.svg" alt="" />
+      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/figma.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/vscode.svg" alt="" />
+      <img src="logos/apple.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/terminal.svg" alt="" />
+      <img src="logos/canva.svg" alt="" />
+      <img src="logos/blender.svg" alt="" />
+      <img src="logos/photoshop.svg" alt="" />
+  </div>
+</div>
+
 <div class="deck" id="deck">
 
 <!-- 1 TITLE -->
@@ -443,6 +546,130 @@ body.deck-page{
           <source src="assets/hero-demo/teachy-hero.webm" type="video/webm" />
           <source src="assets/hero-demo/teachy-hero.mp4" type="video/mp4" />
         </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3b LOGO WALL -->
+<section class="slide" data-title="Everywhere" data-notes="Let the wall move. Say: Teachy coaches inside the tools they already pay for.">
+  <div class="inner logo-wall-slide">
+    <div class="wall-copy">
+      <p class="deck-kicker reveal">Coverage</p>
+      <h2 class="deck-title reveal reveal-d1" style="max-width:18ch;margin-inline:auto;text-align:center">Inside every tool your team already opened.</h2>
+      <p class="deck-lede reveal reveal-d2" style="margin-inline:auto;text-align:center">Claude, ChatGPT, spreadsheets, Figma, the terminal, your internal portal — Teachy coaches on the live screen, not in a separate LMS tab.</p>
+    </div>
+    <div class="logo-marquee-huge row-a reveal reveal-d2" aria-hidden="true">
+      <div class="track">      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/figma.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/vscode.svg" alt="" />
+      <img src="logos/apple.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/terminal.svg" alt="" />
+      <img src="logos/canva.svg" alt="" />
+      <img src="logos/blender.svg" alt="" />
+      <img src="logos/photoshop.svg" alt="" />
+      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/figma.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/vscode.svg" alt="" />
+      <img src="logos/apple.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/terminal.svg" alt="" />
+      <img src="logos/canva.svg" alt="" />
+      <img src="logos/blender.svg" alt="" />
+      <img src="logos/photoshop.svg" alt="" /></div>
+    </div>
+    <div class="logo-marquee-huge row-b reveal reveal-d3" aria-hidden="true">
+      <div class="track">      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/figma.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/vscode.svg" alt="" />
+      <img src="logos/apple.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/terminal.svg" alt="" />
+      <img src="logos/canva.svg" alt="" />
+      <img src="logos/blender.svg" alt="" />
+      <img src="logos/photoshop.svg" alt="" />
+      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/figma.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/vscode.svg" alt="" />
+      <img src="logos/apple.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/terminal.svg" alt="" />
+      <img src="logos/canva.svg" alt="" />
+      <img src="logos/blender.svg" alt="" />
+      <img src="logos/photoshop.svg" alt="" /></div>
+    </div>
+    <div class="logo-marquee-huge row-c reveal reveal-d4" aria-hidden="true">
+      <div class="track">      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/figma.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/vscode.svg" alt="" />
+      <img src="logos/apple.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/terminal.svg" alt="" />
+      <img src="logos/canva.svg" alt="" />
+      <img src="logos/blender.svg" alt="" />
+      <img src="logos/photoshop.svg" alt="" />
+      <img src="logos/claude.svg" alt="" />
+      <img src="logos/chatgpt.svg" alt="" />
+      <img src="logos/figma.svg" alt="" />
+      <img src="logos/excel.svg" alt="" />
+      <img src="logos/vscode.svg" alt="" />
+      <img src="logos/apple.svg" alt="" />
+      <img src="logos/github.svg" alt="" />
+      <img src="logos/notion.svg" alt="" />
+      <img src="logos/terminal.svg" alt="" />
+      <img src="logos/canva.svg" alt="" />
+      <img src="logos/blender.svg" alt="" />
+      <img src="logos/photoshop.svg" alt="" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3c CHAT BUBBLES -->
+<section class="slide" data-title="Interactions" data-notes="This is the product feeling — texting a coach who can see the screen.">
+  <div class="inner">
+    <p class="deck-kicker reveal">The interaction</p>
+    <h2 class="deck-title reveal reveal-d1" style="max-width:18ch">Like texting a friend who knows the stack.</h2>
+    <p class="deck-lede reveal reveal-d2">Employees ask in plain language. Teachy answers in context — and when the ask is risky, it redirects to approved systems.</p>
+    <div class="deck-chat-grid reveal reveal-d3" data-chat-deck>
+      <div class="chat-surface" data-label="Sales · approved drafting" data-chat-delay="0">
+        <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>draft a renewal for Acme</p></div></div></div>
+        <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>use company Claude — I’ll open it and point.</p></div></div></div>
+        <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>keep customer IDs out?</p></div></div></div>
+        <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>yes. opportunity name only. policy-safe.</p></div></div></div>
+        <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
+      </div>
+
+      <div class="chat-surface" data-label="Shadow AI blocked" data-chat-delay="280">
+        <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>paste this roster into ChatGPT</p></div></div></div>
+        <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>hold on — that’s customer PII.</p></div></div></div>
+        <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>where then?</p></div></div></div>
+        <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>Acme internal assistant. I’ll route you.</p></div></div></div>
+        <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
+      </div>
+
+      <div class="chat-surface" data-label="New hire · portal" data-chat-delay="560">
+        <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>where do I submit finance approval</p></div></div></div>
+        <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>internal portal · step 03. I’ll point.</p></div></div></div>
+        <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>confirm amount first?</p></div></div></div>
+        <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>yes — then submit. verified.</p></div></div></div>
+        <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
       </div>
     </div>
   </div>
@@ -897,6 +1124,61 @@ body.deck-page{
     });
   });
 
+
+  // chat bubble loops (landing-page style) — restart when slide enters
+  var chatTimers = [];
+  function clearChatTimers() {
+    chatTimers.forEach(clearTimeout);
+    chatTimers = [];
+  }
+  function armChat(slide) {
+    clearChatTimers();
+    var surfaces = slide.querySelectorAll('.chat-surface');
+    if (!surfaces.length) return;
+
+    surfaces.forEach(function (chatSurface) {
+      var rows = Array.prototype.slice.call(chatSurface.querySelectorAll('.chat-row'));
+      var typing = chatSurface.querySelector('.chat-typing');
+      if (!rows.length || !typing) return;
+      var startDelay = parseInt(chatSurface.getAttribute('data-chat-delay'), 10) || 0;
+
+      function matchTypingToRow(row) {
+        typing.classList.remove('chat-left', 'chat-right', 'chat-blue', 'chat-orange');
+        typing.classList.add(
+          row.classList.contains('chat-right') ? 'chat-right' : 'chat-left',
+          row.classList.contains('chat-blue') ? 'chat-blue' : 'chat-orange'
+        );
+        row.parentNode.insertBefore(typing, row);
+      }
+      function resetConversation() {
+        rows.forEach(function (row) { row.classList.remove('is-shown'); });
+        typing.classList.remove('is-shown');
+      }
+      function showMessage(index) {
+        if (!slide.classList.contains('active')) return;
+        if (index >= rows.length) {
+          chatTimers.push(setTimeout(function () {
+            resetConversation();
+            chatTimers.push(setTimeout(function () { showMessage(0); }, 320));
+          }, 1800));
+          return;
+        }
+        var row = rows[index];
+        chatTimers.push(setTimeout(function () {
+          matchTypingToRow(row);
+          typing.classList.add('is-shown');
+        }, 380));
+        chatTimers.push(setTimeout(function () {
+          typing.classList.remove('is-shown');
+          row.classList.add('is-shown');
+          showMessage(index + 1);
+        }, 1250));
+      }
+      resetConversation();
+      chatTimers.push(setTimeout(function () { showMessage(0); }, startDelay + 200));
+    });
+  }
+
   // coach pointer orbit on product stages
   var ptrRaf = null;
   function runPointer(slide) {
@@ -923,6 +1205,7 @@ body.deck-page{
   enterSlide = function (slide) {
     _enter(slide);
     runPointer(slide);
+    armChat(slide);
   };
 
   document.addEventListener('keydown', function (e) {
