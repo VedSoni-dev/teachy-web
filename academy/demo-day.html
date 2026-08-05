@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css?v=ent12" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <style>
 /* —— Demo Day shell (enterprise system + pitch chrome) —— */
 :root{
@@ -32,18 +33,25 @@ body.deck-page{
   overflow:hidden;
   -webkit-font-smoothing:antialiased;
 }
-.deck{position:relative;height:100vh;width:100vw}
+.deck{position:relative;height:100vh;width:100vw;z-index:1}
 .slide{
   position:absolute;inset:0;
-  display:none;
+  display:grid;
   padding:clamp(1.5rem,3.5vh,2.75rem) clamp(1.5rem,5vw,4.5rem) clamp(2rem,4vh,3rem);
   overflow:auto;
+  align-content:center;
   background:
     radial-gradient(ellipse 70% 50% at 0% 0%,rgba(80,0,0,.06),transparent 55%),
     radial-gradient(ellipse 60% 45% at 100% 100%,rgba(31,79,216,.05),transparent 50%),
     var(--deck-bg);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateY(24px) scale(.98);
+  filter:blur(10px);
 }
-.slide.active{display:grid;align-content:center}
+.slide.active{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transform:none;filter:none;
+}
 .slide.active .reveal{
   animation:deck-rise .7s var(--deck-ease) both;
 }
@@ -249,29 +257,140 @@ body.deck-page{
   margin-top:1.4rem;opacity:.55;
 }
 .logo-row img{height:22px;width:auto;filter:grayscale(1)}
+
+/* —— spectacle layer —— */
+.deck-ambient{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.deck-ambient canvas{width:100%;height:100%;opacity:.55}
+
+.title-stage{position:relative;isolation:isolate}
+.title-video{
+  position:absolute;inset:-8% -6% auto;height:58%;
+  border-radius:20px;overflow:hidden;z-index:0;
+  border:1px solid var(--deck-line);
+  box-shadow:0 30px 80px rgba(20,19,26,.14);
+  mask-image:linear-gradient(to bottom, #000 35%, transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom, #000 35%, transparent 100%);
+}
+.title-video video{
+  width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(1.05) contrast(1.05);
+  transform:scale(1.04);
+}
+.title-stage .inner{position:relative;z-index:2;padding-top:min(34vh,280px)}
+
+.live-stage{
+  position:relative;border-radius:18px;overflow:hidden;
+  border:1px solid var(--deck-line);background:#0e0d14;
+  box-shadow:0 28px 70px rgba(20,19,26,.2);
+  aspect-ratio:16/10;max-height:min(52vh,520px);
+}
+.live-stage video,.live-stage iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
+  object-fit:cover;
+}
+.live-stage .live-badge{
+  position:absolute;top:12px;left:12px;z-index:3;
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.28rem .6rem;border-radius:999px;
+  background:rgba(14,13,20,.72);color:#fff;font-size:.72rem;font-weight:600;
+  backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);
+}
+.live-stage .live-badge i{
+  width:7px;height:7px;border-radius:50%;background:#ff3b5c;
+  box-shadow:0 0 0 3px rgba(255,59,92,.3);
+  animation:live-pulse 1.2s ease infinite;
+}
+@keyframes live-pulse{50%{opacity:.4}}
+
+.tilt-wrap{
+  perspective:1200px;transform-style:preserve-3d;
+}
+.tilt-card{
+  transform-style:preserve-3d;will-change:transform;
+  transition:transform .12s linear;
+}
+.tilt-card .ent-panel{transform:translateZ(20px)}
+
+.coach-pointer{
+  position:absolute;width:18px;height:18px;border-radius:50%;
+  background:var(--deck-blue);border:2.5px solid #fff;
+  box-shadow:0 0 0 6px rgba(31,79,216,.25), 0 8px 20px rgba(20,19,26,.25);
+  pointer-events:none;z-index:20;opacity:0;
+  transform:translate(-50%,-50%);
+}
+.coach-pointer.on{opacity:1}
+
+.float-orb{
+  position:absolute;border-radius:50%;filter:blur(40px);opacity:.35;pointer-events:none;z-index:0;
+}
+.slide .inner{position:relative;z-index:1}
+
+.deck-metric,.deck-pain,.deck-card,.deck-ask,.cred-row,.deck-dot,.deck-trac .t{
+  transition:transform .45s var(--deck-ease), box-shadow .45s var(--deck-ease);
+}
+.slide.active .deck-metric:hover,
+.slide.active .deck-pain:hover,
+.slide.active .deck-card:hover,
+.slide.active .deck-trac .t:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 36px rgba(20,19,26,.1);
+}
+
+.count-up{font-variant-numeric:tabular-nums}
+
+.morph-ring circle{
+  transform-origin:200px 200px;
+  animation:ring-breathe 6s ease-in-out infinite;
+}
+.morph-ring circle:nth-child(2){animation-delay:-1.5s}
+.morph-ring circle:nth-child(3){animation-delay:-3s}
+@keyframes ring-breathe{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.03)}
+}
+
+.shard{
+  position:absolute;inset:auto;width:120px;height:80px;border-radius:14px;
+  background:var(--deck-panel);border:1px solid var(--deck-line);
+  box-shadow:0 12px 30px rgba(20,19,26,.1);
+  opacity:0;pointer-events:none;
+}
+
 </style>
 </head>
 <body class="deck-page ent-page">
 
+<div class="deck-ambient" aria-hidden="true"><canvas id="ambient"></canvas></div>
+<div class="coach-pointer" id="coachPointer" aria-hidden="true"></div>
 <div class="deck" id="deck">
 
 <!-- 1 TITLE -->
-<section class="slide" data-title="Title" data-notes="Open on the enterprise line. Pause. Then the subtitle does the work.">
-  <div class="inner deck-center">
-    <p class="deck-kicker reveal">AggieX Demo Day · August 7, 2026</p>
-    <h1 class="deck-title reveal reveal-d1" style="max-width:16ch">AI fluency across your organization</h1>
-    <p class="deck-lede reveal reveal-d2">Licensed AI tools underperform without guided practice on real work. Teachy coaches every employee in context — the approved tool, the correct method, and your data rules enforced at the moment of use.</p>
-    <div class="deck-stamp-row reveal reveal-d3">
-      <span class="deck-stamp solid">Vedant Soni · Founder</span>
-      <span class="deck-stamp">Teachy for Teams</span>
-      <span class="deck-stamp">ved.06.soni@gmail.com</span>
+<section class="slide" data-title="Title" data-notes="Open on the enterprise line. Video proves the product before you speak.">
+  <div class="title-stage">
+    <div class="title-video reveal" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="auto" poster="assets/hero-demo/teachy-hero-poster.jpg">
+        <source src="assets/hero-demo/teachy-hero.webm" type="video/webm" />
+        <source src="assets/hero-demo/teachy-hero.mp4" type="video/mp4" />
+      </video>
     </div>
-    <div class="logo-row reveal reveal-d4" aria-hidden="true">
-      <img src="logos/claude.svg" alt="" />
-      <img src="logos/chatgpt.svg" alt="" />
-      <img src="logos/excel.svg" alt="" />
-      <img src="logos/notion.svg" alt="" />
-      <img src="logos/github.svg" alt="" />
+    <div class="inner deck-center">
+      <p class="deck-kicker reveal">AggieX Demo Day · August 7, 2026</p>
+      <h1 class="deck-title reveal reveal-d1" style="max-width:16ch">AI fluency across your organization</h1>
+      <p class="deck-lede reveal reveal-d2">Licensed AI tools underperform without guided practice on real work. Teachy coaches every employee in context — the approved tool, the correct method, and your data rules enforced at the moment of use.</p>
+      <div class="deck-stamp-row reveal reveal-d3">
+        <span class="deck-stamp solid">Vedant Soni · Founder</span>
+        <span class="deck-stamp">Teachy for Teams</span>
+        <span class="deck-stamp">ved.06.soni@gmail.com</span>
+      </div>
+      <div class="logo-row reveal reveal-d4" aria-hidden="true">
+        <img src="logos/claude.svg" alt="" />
+        <img src="logos/chatgpt.svg" alt="" />
+        <img src="logos/excel.svg" alt="" />
+        <img src="logos/notion.svg" alt="" />
+        <img src="logos/github.svg" alt="" />
+      </div>
     </div>
   </div>
 </section>
@@ -304,17 +423,28 @@ body.deck-page{
 </section>
 
 <!-- 3 SOLUTION -->
-<section class="slide" data-title="Solution" data-notes="Four enterprise capabilities. Same language as the Teams site.">
-  <div class="inner">
-    <p class="deck-kicker reveal">Solution</p>
-    <h2 class="deck-title reveal reveal-d1" style="max-width:20ch">Coached on real work. Data kept in approved systems.</h2>
-    <p class="deck-lede reveal reveal-d2">Teachy is not a course library. It is organizational AI fluency — tool selection, method, and policy — enforced at the moment of use.</p>
-    <ul class="deck-metrics reveal reveal-d3">
-      <li class="deck-metric"><strong>Right tool</strong><span>Matched to the task in front of each employee</span></li>
-      <li class="deck-metric"><strong>Data governance</strong><span>Sensitive content kept in approved systems</span></li>
-      <li class="deck-metric"><strong>Internal systems</strong><span>Coaching on software unique to your company</span></li>
-      <li class="deck-metric"><strong>Verified fluency</strong><span>Demonstrated competence, not seat licenses</span></li>
-    </ul>
+<section class="slide" data-title="Solution" data-notes="Say the line, then let the live product video finish the argument.">
+  <div class="inner deck-split deck-split-wide">
+    <div>
+      <p class="deck-kicker reveal">Solution</p>
+      <h2 class="deck-title reveal reveal-d1" style="max-width:14ch">Coached on real work. Data kept in approved systems.</h2>
+      <p class="deck-lede reveal reveal-d2">Not a course library — organizational AI fluency. Tool selection, method, and policy enforced at the moment of use.</p>
+      <ul class="deck-metrics reveal reveal-d3" style="grid-template-columns:1fr 1fr;margin-top:1rem">
+        <li class="deck-metric"><strong>Right tool</strong><span>Matched to the live task</span></li>
+        <li class="deck-metric"><strong>Data governance</strong><span>Sensitive work stays approved</span></li>
+        <li class="deck-metric"><strong>Internal systems</strong><span>Your stack, not generic courses</span></li>
+        <li class="deck-metric"><strong>Verified fluency</strong><span>Competence, not seat licenses</span></li>
+      </ul>
+    </div>
+    <div class="reveal reveal-d3">
+      <div class="live-stage" data-live-video>
+        <span class="live-badge"><i></i> Live product · coaching loop</span>
+        <video autoplay muted loop playsinline preload="auto" poster="assets/hero-demo/teachy-hero-poster.jpg">
+          <source src="assets/hero-demo/teachy-hero.webm" type="video/webm" />
+          <source src="assets/hero-demo/teachy-hero.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -326,8 +456,9 @@ body.deck-page{
       <h2 class="deck-title reveal reveal-d1" style="max-width:14ch">Guidance at the point of work</h2>
       <p class="deck-lede reveal reveal-d2">Teachy observes the live task and directs people to the appropriate system — a licensed model for drafting, a spreadsheet function for analysis, or your internal assistant for anything sensitive — with a prompt that fits policy.</p>
     </div>
-    <div class="deck-media reveal reveal-d3">
-      <div class="ent-panel ent-panel-live">
+    <div class="deck-media reveal reveal-d3 tilt-wrap">
+      <div class="tilt-card">
+      <div class="ent-panel ent-panel-live" data-coach-stage>
         <div class="ent-panel-meta">
           <span>Work context</span>
           <span>Renewal email · CRM opportunity</span>
@@ -347,6 +478,7 @@ body.deck-page{
           </div>
         </div>
       </div>
+      </div>
     </div>
   </div>
 </section>
@@ -359,8 +491,9 @@ body.deck-page{
       <h2 class="deck-title reveal reveal-d1" style="max-width:16ch">Prevent sensitive data from leaving approved systems</h2>
       <p class="deck-lede reveal reveal-d2">When someone attempts to place customer data, source code, or other restricted material into a public model, Teachy intervenes and routes the work to the approved assistant.</p>
     </div>
-    <div class="deck-media reveal reveal-d3">
-      <div class="ent-panel ent-panel-live">
+    <div class="deck-media reveal reveal-d3 tilt-wrap">
+      <div class="tilt-card">
+      <div class="ent-panel ent-panel-live" data-coach-stage>
         <div class="ent-panel-meta">
           <span>Public model</span>
           <span>ChatGPT · composer</span>
@@ -389,6 +522,7 @@ body.deck-page{
           <div class="ent-guard-routed">Routed safely · Acme internal assistant</div>
         </div>
       </div>
+      </div>
     </div>
   </div>
 </section>
@@ -401,8 +535,9 @@ body.deck-page{
       <h2 class="deck-title reveal reveal-d1" style="max-width:16ch">Fluency on your stack — including systems no course covers</h2>
       <p class="deck-lede reveal reveal-d2">Teachy learns your workflows, SOPs, and custom applications. New employees are coached through the exact software they will use — so day one produces work, not a queue of informal questions.</p>
     </div>
-    <div class="deck-media reveal reveal-d3">
-      <div class="ent-panel ent-panel-live">
+    <div class="deck-media reveal reveal-d3 tilt-wrap">
+      <div class="tilt-card">
+      <div class="ent-panel ent-panel-live" data-coach-stage>
         <div class="ent-panel-meta">
           <span>Team fluency</span>
           <span>Pilot cohort</span>
@@ -421,6 +556,7 @@ body.deck-page{
           </table>
         </div>
       </div>
+      </div>
     </div>
   </div>
 </section>
@@ -434,7 +570,7 @@ body.deck-page{
       <p class="deck-lede reveal reveal-d2">Beachhead: organizations that already licensed AI, are not seeing fluency, and are exposed to shadow AI — including firms I have already consulted for.</p>
     </div>
     <div class="deck-circles reveal reveal-d3" aria-label="TAM SAM SOM">
-      <svg viewBox="0 0 400 400" aria-hidden="true">
+      <svg class="morph-ring" viewBox="0 0 400 400" aria-hidden="true">
         <circle cx="200" cy="200" r="188" fill="#500000" fill-opacity=".10" stroke="#14131a" stroke-width="1.5"/>
         <circle cx="200" cy="200" r="128" fill="#1f4fd8" fill-opacity=".12" stroke="#14131a" stroke-width="1.5"/>
         <circle cx="200" cy="200" r="68" fill="#1f7a4d" fill-opacity=".18" stroke="#14131a" stroke-width="1.5"/>
@@ -501,11 +637,11 @@ body.deck-page{
     <h2 class="deck-title reveal reveal-d1">B2C live. Enterprise in conversation.</h2>
     <div class="deck-trac reveal reveal-d2">
       <div class="t">
-        <div class="num">7</div>
+        <div class="num count-up" data-count="7">0</div>
         <div class="lab">people using Teachy today</div>
       </div>
       <div class="t accent">
-        <div class="num">2</div>
+        <div class="num count-up" data-count="2">0</div>
         <div class="lab">already paying · personal</div>
       </div>
       <div class="t dark">
@@ -609,33 +745,185 @@ body.deck-page{
 (function () {
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var i = 0;
+  var busy = false;
   var $ = function (id) { return document.getElementById(id); };
+  var pointer = $('coachPointer');
+  var hasGsap = typeof gsap !== 'undefined';
 
-  function restartAnims(slide) {
-    // retrigger CSS product animations when a slide becomes active
+  // ambient particle field
+  (function ambient() {
+    var c = $('ambient');
+    if (!c) return;
+    var ctx = c.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var dots = [];
+    function resize() {
+      c.width = window.innerWidth * dpr;
+      c.height = window.innerHeight * dpr;
+      dots = [];
+      var n = Math.floor((window.innerWidth * window.innerHeight) / 18000);
+      for (var k = 0; k < n; k++) {
+        dots.push({
+          x: Math.random() * c.width,
+          y: Math.random() * c.height,
+          r: (Math.random() * 1.6 + 0.4) * dpr,
+          vx: (Math.random() - 0.5) * 0.15 * dpr,
+          vy: (Math.random() - 0.5) * 0.15 * dpr,
+          a: Math.random() * 0.35 + 0.08
+        });
+      }
+    }
+    function tick() {
+      ctx.clearRect(0, 0, c.width, c.height);
+      for (var k = 0; k < dots.length; k++) {
+        var d = dots[k];
+        d.x += d.vx; d.y += d.vy;
+        if (d.x < 0) d.x = c.width; if (d.x > c.width) d.x = 0;
+        if (d.y < 0) d.y = c.height; if (d.y > c.height) d.y = 0;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(80,0,0,' + d.a + ')';
+        ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    resize();
+    addEventListener('resize', resize);
+    tick();
+  })();
+
+  function restartProductAnims(slide) {
     slide.querySelectorAll('.ent-anim-callout, .ent-anim-coach, .ent-guard-paste, .ent-guard-veil, .ent-guard-popup, .ent-guard-routed, .ent-step-1, .ent-step-2, .ent-step-3, .ent-row-1, .ent-row-2, .ent-row-3, .ent-row-4').forEach(function (el) {
       el.style.animation = 'none';
       void el.offsetWidth;
       el.style.animation = '';
     });
+    slide.querySelectorAll('video').forEach(function (v) {
+      try { v.currentTime = 0; v.play(); } catch (e) {}
+    });
   }
 
-  function render() {
+  function countUps(slide) {
+    slide.querySelectorAll('.count-up').forEach(function (el) {
+      var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+      if (!hasGsap) { el.textContent = target; return; }
+      var obj = { n: 0 };
+      gsap.to(obj, {
+        n: target,
+        duration: 1.1,
+        ease: 'power2.out',
+        onUpdate: function () { el.textContent = Math.round(obj.n); }
+      });
+    });
+  }
+
+  function enterSlide(slide) {
+    restartProductAnims(slide);
+    countUps(slide);
+    var reveals = slide.querySelectorAll('.reveal');
+    if (hasGsap) {
+      gsap.fromTo(reveals,
+        { opacity: 0, y: 22, filter: 'blur(6px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7, stagger: 0.07, ease: 'power3.out', overwrite: true }
+      );
+      var media = slide.querySelectorAll('.tilt-card, .live-stage, .deck-circles, .deck-axis, .deck-quote');
+      gsap.fromTo(media,
+        { opacity: 0, y: 30, scale: 0.96, rotateX: 6 },
+        { opacity: 1, y: 0, scale: 1, rotateX: 0, duration: 0.85, delay: 0.12, stagger: 0.08, ease: 'power3.out', overwrite: true }
+      );
+    }
+  }
+
+  function render(fromIdx) {
     slides.forEach(function (s, n) {
-      var on = n === i;
-      s.classList.toggle('active', on);
-      if (on) restartAnims(s);
+      s.classList.toggle('active', n === i);
     });
     $('counter').textContent = (i + 1) + ' / ' + slides.length;
     $('progress').style.width = ((i + 1) / slides.length * 100) + '%';
     if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
     slides[i].scrollTop = 0;
+    enterSlide(slides[i]);
   }
 
   function go(n) {
-    i = Math.max(0, Math.min(slides.length - 1, n));
-    render();
+    if (busy) return;
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    if (n === i) return;
+    var prev = slides[i];
+    var next = slides[n];
+    var dir = n > i ? 1 : -1;
+    i = n;
+
+    if (!hasGsap) {
+      prev.classList.remove('active');
+      next.classList.add('active');
+      $('counter').textContent = (i + 1) + ' / ' + slides.length;
+      $('progress').style.width = ((i + 1) / slides.length * 100) + '%';
+      if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+      enterSlide(next);
+      return;
+    }
+
+    busy = true;
+    next.classList.add('active');
+    gsap.set(next, { opacity: 0, y: 32 * dir, filter: 'blur(12px)', scale: 0.98 });
+    gsap.timeline({
+      onComplete: function () {
+        busy = false;
+        prev.classList.remove('active');
+        gsap.set(prev, { clearProps: 'all' });
+        enterSlide(next);
+        $('counter').textContent = (i + 1) + ' / ' + slides.length;
+        $('progress').style.width = ((i + 1) / slides.length * 100) + '%';
+        if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+      }
+    })
+      .to(prev, { opacity: 0, y: -22 * dir, filter: 'blur(12px)', scale: 0.98, duration: 0.4, ease: 'power2.in' }, 0)
+      .to(next, { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, duration: 0.6, ease: 'power3.out' }, 0.15);
   }
+
+  // 3D tilt on product cards
+  document.querySelectorAll('.tilt-wrap').forEach(function (wrap) {
+    var card = wrap.querySelector('.tilt-card');
+    if (!card) return;
+    wrap.addEventListener('mousemove', function (e) {
+      var r = wrap.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'rotateY(' + (px * 10) + 'deg) rotateX(' + (-py * 8) + 'deg) translateZ(0)';
+    });
+    wrap.addEventListener('mouseleave', function () {
+      card.style.transform = 'rotateY(0) rotateX(0)';
+    });
+  });
+
+  // coach pointer orbit on product stages
+  var ptrRaf = null;
+  function runPointer(slide) {
+    if (ptrRaf) cancelAnimationFrame(ptrRaf);
+    pointer.classList.remove('on');
+    var stage = slide.querySelector('[data-coach-stage]');
+    if (!stage) return;
+    pointer.classList.add('on');
+    var t0 = performance.now();
+    function frame(now) {
+      if (!slide.classList.contains('active')) { pointer.classList.remove('on'); return; }
+      var r = stage.getBoundingClientRect();
+      var tt = ((now - t0) % 3200) / 3200;
+      var x = r.left + r.width * (0.55 + Math.sin(tt * Math.PI * 2) * 0.18);
+      var y = r.top + r.height * (0.35 + Math.cos(tt * Math.PI * 2) * 0.12);
+      pointer.style.left = x + 'px';
+      pointer.style.top = y + 'px';
+      ptrRaf = requestAnimationFrame(frame);
+    }
+    ptrRaf = requestAnimationFrame(frame);
+  }
+
+  var _enter = enterSlide;
+  enterSlide = function (slide) {
+    _enter(slide);
+    runPointer(slide);
+  };
 
   document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -650,7 +938,7 @@ body.deck-page{
   });
 
   document.getElementById('deck').addEventListener('click', function (e) {
-    if (e.target.closest('a,button')) return;
+    if (e.target.closest('a,button,video')) return;
     go(i + 1);
   });
 
@@ -663,7 +951,10 @@ body.deck-page{
     x0 = null;
   }, { passive: true });
 
-  go(parseInt((location.hash || '#1').slice(1), 10) - 1 || 0);
+  i = Math.max(0, parseInt((location.hash || '#1').slice(1), 10) - 1 || 0);
+  slides[i].classList.add('active');
+  if (hasGsap) gsap.set(slides[i], { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 });
+  render();
 })();
 </script>
 </body>
