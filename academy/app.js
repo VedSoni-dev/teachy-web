@@ -255,7 +255,7 @@
     var statusEl = document.getElementById("waitlist-status");
     var submitBtn = document.getElementById("waitlist-submit");
     var companyRadio = document.getElementById("waitlist-intent-company");
-    var endpoint = "https://formsubmit.co/ajax/enterprise@teachy.app";
+    var endpoint = "https://formsubmit.co/ajax/ved.06.soni@gmail.com";
 
     document.querySelectorAll("[data-waitlist-intent]").forEach(function (link) {
       link.addEventListener("click", function () {
@@ -335,7 +335,7 @@
         .catch(function () {
           form.classList.remove("is-sending");
           if (submitBtn) submitBtn.disabled = false;
-          setStatus("hmm, that didn’t go through. email enterprise@teachy.app and we’ll add you.", "error");
+          setStatus("hmm, that didn’t go through. email ved.06.soni@gmail.com and we’ll add you.", "error");
         });
     });
 
