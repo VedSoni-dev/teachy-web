@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Teachy Courses — free course store</title>
-  <meta name="description" content="Browse and install free Teachy courses. Click Install in Teachy and the course lands directly in your app — one click, like osu! beatmaps." />
+  <meta name="description" content="Browse Teachy courses. App installs are on waitlist — join to get pinged when Teachy opens again." />
   <meta property="og:title" content="Teachy Courses — free course store" />
-  <meta property="og:description" content="Browse free courses built for Teachy. Click Install and they land straight in your app." />
+  <meta property="og:description" content="Browse free courses built for Teachy. Join the waitlist while app installs are paused." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -631,29 +631,24 @@
         <a href="index.html">personal</a>
         <a href="courses.html" aria-current="page">courses</a>
         <a href="enterprise.html">for teams</a>
-        <a class="nav-cta" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">
-          <span>get teachy</span>
+        <a class="nav-cta" href="index.html#waitlist">
+          <span>join waitlist</span>
         </a>
       </nav>
     </div>
   </header>
 
-  <!-- ── "Don't have Teachy" banner ── -->
-  <aside class="teachy-download-banner" aria-label="Download Teachy">
+  <!-- ── Waitlist banner ── -->
+  <aside class="teachy-download-banner" aria-label="Join the Teachy waitlist">
     <p>
-      <strong>New here?</strong> You need the Teachy app to install courses.
-      First open: right-click the .dmg, choose Open (community build — no Apple notarization required).
+      <strong>App installs are paused.</strong> Courses will open again when Teachy ships.
+      Join the waitlist — personal or company — and we’ll email you.
     </p>
     <a
       class="teachy-download-banner-link"
-      href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg"
-      target="_blank"
-      rel="noopener"
+      href="index.html#waitlist"
     >
-      <svg class="teachy-download-banner-apple-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.83.94-2.19 1.66-3.32 1.57a3.78 3.78 0 0 1 1.12-2.9C13.9 2.09 15.32 1.5 16.36 1.43zM20.5 17.02c-.55 1.27-.82 1.84-1.53 2.96-.99 1.57-2.39 3.52-4.12 3.53-1.54.02-1.94-.99-4.03-.98-2.09.01-2.53 1-4.07.97-1.73-.02-3.05-1.79-4.04-3.35C-.36 16.4-.9 11.4 1.05 8.62 2.34 6.77 4.14 5.68 6.05 5.68c1.94 0 3.16 1.06 4.77 1.06 1.56 0 2.51-1.06 4.77-1.06 1.7 0 3.5.92 4.79 2.51-4.2 2.3-3.51 8.28.12 8.83z"/>
-      </svg>
-      Get Teachy free — macOS
+      Join the waitlist
     </a>
   </aside>
 
@@ -664,10 +659,10 @@
         <span class="courses-hero-eyebrow-dot"></span>
         Teachy Academy
       </div>
-      <h1>free courses, <span class="hl">one-click installs</span></h1>
+      <h1>free courses, <span class="hl">coming with the app</span></h1>
       <p>
-        Browse courses below. Hit Install in Teachy — the course lands in the app,
-        ready to run. Like osu! but for learning to build things.
+        Browse what’s planned below. Installs open when Teachy leaves the waitlist —
+        leave your name on the home page so we can ping you.
       </p>
     </section>
 
@@ -735,7 +730,7 @@
     <div class="wrap hey-footer-cols">
       <div class="hey-footer-col">
         <span class="hey-footer-head">product</span>
-        <a href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" target="_blank" rel="noopener">download</a>
+        <a href="index.html#waitlist">waitlist</a>
         <a href="index.html#product">pricing</a>
         <a href="courses.html">courses</a>
       </div>
@@ -765,7 +760,7 @@
     // Fetches the registry, renders cards per state, handles clipboard copy.
 
     const REGISTRY_URL = "https://raw.githubusercontent.com/VedSoni-dev/teachy-releases/main/registry.json";
-    const DMG_DOWNLOAD_URL = "https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg";
+    const WAITLIST_URL = "index.html#waitlist";
 
     // Elements we interact with throughout
     const statusRegion = document.getElementById("courses-status-region");
@@ -962,35 +957,27 @@
       if (isBundledWithApp) {
         return `
           <div class="course-card-actions">
-            <p class="course-bundled-note">&#10003; Already in your Teachy app — open Courses to start</p>
+            <p class="course-bundled-note">Ships with Teachy — join the waitlist to get the app</p>
+            <a class="course-install-button course-install-button-primary" href="${WAITLIST_URL}">
+              Join waitlist
+            </a>
           </div>
         `;
       }
 
-      // Installable course: primary install button + copy URL + deeplink fallback
-      const installHref = `teachy://install?url=${encodeURIComponent(courseData.installURL)}`;
+      // Installs paused during waitlist — point people to signup instead of deeplinks
       return `
         <div class="course-card-actions">
           <a
             class="course-install-button course-install-button-primary"
-            href="${escapeHTML(installHref)}"
-            aria-label="Install ${escapeHTML(courseData.title)} in Teachy"
+            href="${WAITLIST_URL}"
+            aria-label="Join waitlist for ${escapeHTML(courseData.title)}"
           >
-            Install in Teachy
+            Join waitlist
           </a>
-          <div class="course-secondary-actions">
-            <button
-              type="button"
-              class="course-copy-url-button"
-              aria-label="Copy course URL for ${escapeHTML(courseData.title)} to clipboard"
-            >
-              Copy course URL
-            </button>
-            <p class="course-deeplink-fallback">
-              Nothing happened?
-              <a href="${DMG_DOWNLOAD_URL}" target="_blank" rel="noopener">Get Teachy first</a>
-            </p>
-          </div>
+          <p class="course-deeplink-fallback">
+            App installs are paused until Teachy opens again.
+          </p>
         </div>
       `;
     }

@@ -246,4 +246,102 @@
 
     surfaces.forEach(animateSurface);
   })();
+
+  // —— Waitlist form (FormSubmit → email, no database) ——
+  (function initWaitlist() {
+    var form = document.getElementById("waitlist-form");
+    if (!form) return;
+
+    var statusEl = document.getElementById("waitlist-status");
+    var submitBtn = document.getElementById("waitlist-submit");
+    var companyRadio = document.getElementById("waitlist-intent-company");
+    var endpoint = "https://formsubmit.co/ajax/enterprise@teachy.app";
+
+    document.querySelectorAll("[data-waitlist-intent]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        var intent = link.getAttribute("data-waitlist-intent");
+        if (!intent) return;
+        var radio = form.querySelector('input[name="intent"][value="' + intent + '"]');
+        if (radio) radio.checked = true;
+      });
+    });
+
+    function setStatus(message, kind) {
+      if (!statusEl) return;
+      statusEl.hidden = !message;
+      statusEl.textContent = message || "";
+      statusEl.classList.remove("is-success", "is-error");
+      if (kind) statusEl.classList.add("is-" + kind);
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (form.classList.contains("is-done") || form.classList.contains("is-sending")) return;
+
+      var nameInput = form.querySelector('input[name="name"]');
+      var emailInput = form.querySelector('input[name="email"]');
+      var intentInput = form.querySelector('input[name="intent"]:checked');
+      var honeypot = form.querySelector('input[name="_gotcha"]');
+
+      if (honeypot && honeypot.value) return;
+
+      if (!nameInput || !nameInput.value.trim()) {
+        setStatus("drop your name in first.", "error");
+        if (nameInput) nameInput.focus();
+        return;
+      }
+      if (!emailInput || !emailInput.value.trim()) {
+        setStatus("we need an email to ping you.", "error");
+        if (emailInput) emailInput.focus();
+        return;
+      }
+
+      form.classList.add("is-sending");
+      if (submitBtn) submitBtn.disabled = true;
+      setStatus("sending…", null);
+
+      var payload = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        intent: intentInput ? intentInput.value : "personal",
+        intent_label:
+          intentInput && intentInput.value === "company"
+            ? "Company would love to use Teachy"
+            : "Just wants to use Teachy personally",
+        _subject: "Teachy waitlist signup",
+        _template: "table",
+        _captcha: "false"
+      };
+
+      fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error("submit failed");
+          return response.json().catch(function () {
+            return {};
+          });
+        })
+        .then(function () {
+          form.classList.remove("is-sending");
+          form.classList.add("is-done");
+          setStatus("thank you! you’re on the list — we’ll be in touch.", "success");
+        })
+        .catch(function () {
+          form.classList.remove("is-sending");
+          if (submitBtn) submitBtn.disabled = false;
+          setStatus("hmm, that didn’t go through. email enterprise@teachy.app and we’ll add you.", "error");
+        });
+    });
+
+    // Deep-link support: #waitlist?intent=company
+    if (companyRadio && /[?&#]intent=company\b/i.test(window.location.href)) {
+      companyRadio.checked = true;
+    }
+  })();
 })();
