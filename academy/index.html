@@ -3,392 +3,209 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Teachy: get actually fluent in AI</title>
-  <meta name="description" content="Teachy is a 1:1 AI-fluency tutor for your Mac. It watches your screen, guides your cursor, and coaches you through real work in Claude, ChatGPT, and the tools around them. Free." />
-  <meta property="og:title" content="Teachy: get actually fluent in AI" />
-  <meta property="og:description" content="A 1:1 AI-fluency tutor that lives on your Mac. Get fluent in AI by actually using it — coached live, not by watching videos." />
+  <title>Teachy · the open-source Clicky</title>
+  <meta name="description" content="Teachy is an open-source AI buddy that lives next to your cursor. It sees your screen, talks you through it, points, draws, and does the job. Every line is on GitHub, and it keeps shipping." />
+  <meta property="og:title" content="Teachy · the open-source Clicky" />
+  <meta property="og:description" content="An AI buddy next to your cursor. Open source, and it keeps shipping." />
   <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#4ea4dc" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=waitlist1" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=2" />
+  <script>document.documentElement.classList.add("js");</script>
 </head>
-<body class="hey-page comic-page">
-  <div id="clicky-guide" class="clicky-guide" hidden aria-hidden="true">
-    <div class="clicky-cursor" aria-hidden="true"></div>
+<body class="home">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="tri-fill" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#6aa8ff" />
+        <stop offset=".55" stop-color="#3380ff" />
+        <stop offset="1" stop-color="#1a5fe0" />
+      </linearGradient>
+    </defs>
+    <symbol id="tri" viewBox="0 0 100 100">
+      <path d="M50 4 L79 92 Q81 97 76 96 L50 88 L24 96 Q19 97 21 92 Z" />
+    </symbol>
+    <symbol id="gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0a8 8 0 00-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 014 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 008 0z"/></symbol>
+    <symbol id="apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.65.8-3.33.8-.7 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.55 2.68-.4 6.64 1.1 8.82.74 1.06 1.61 2.25 2.75 2.21 1.11-.05 1.53-.71 2.87-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.66-2.15.85-1.23 1.19-2.43 1.21-2.49-.03-.01-2.32-.89-2.35-3.56zM14.2 6.12c.6-.74 1.01-1.75.9-2.77-.87.04-1.94.59-2.56 1.32-.56.64-1.05 1.68-.92 2.67.97.08 1.97-.49 2.58-1.22z"/></symbol>
+    <symbol id="copy" viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 014.5 2H11" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  </svg>
+
+  <!-- the cursor that flies in, then becomes the logo -->
+  <div class="flyer" id="flyer" aria-hidden="true"><svg><use href="#tri" fill="url(#tri-fill)" /></svg></div>
+  <!-- the little buddy that follows your cursor around the page -->
+  <div class="buddy" id="buddy" aria-hidden="true">
+    <svg class="buddy-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>
+    <div class="buddy-bubble" id="buddy-bubble"></div>
   </div>
 
-  <!-- VHS film grain + scanline wash over the whole page -->
-  <div class="hey-grain" aria-hidden="true"></div>
-
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="logo" href="#top">
-        <span class="logo-mark"></span>
-        teachy
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" data-say="that's me">
+      <svg class="brand-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>teachy
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#open" data-say="why we're open">open source</a>
+      <a href="#desk" data-say="try me out">what it does</a>
+      <a href="changelog.html" data-say="we ship a lot">changelog</a>
+      <a class="nav-gh" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" data-say="read every line">
+        <svg><use href="#gh" /></svg><span>GitHub</span><span class="star-count" data-stars hidden></span>
       </a>
-      <nav class="nav">
-        <a href="#how">how it works</a>
-        <a href="#product">pricing</a>
-        <a href="enterprise.html">enterprise</a>
-        <a href="#faq">faq</a>
-        <a class="nav-cta" href="#waitlist">
-          <span>join waitlist</span>
-        </a>
-      </nav>
-    </div>
+    </nav>
   </header>
 
-  <main>
-    <!-- —— Hero —— -->
-    <section class="hey-hero" id="top">
-      <div class="hey-hero-bg" aria-hidden="true">
-        <span class="hey-hero-orb hey-hero-orb-a"></span>
-        <span class="hey-hero-orb hey-hero-orb-b"></span>
-        <span class="hey-hero-orb hey-hero-orb-c"></span>
-        <span class="hey-hero-paper"></span>
-        <div class="hey-hero-doodles">
-          <img class="hey-edu hey-edu-book" src="assets/edu/edu-book.png" alt="" />
-          <img class="hey-edu hey-edu-bulb" src="assets/edu/edu-bulb.png" alt="" />
-          <img class="hey-edu hey-edu-pencil" src="assets/edu/edu-pencil.png" alt="" />
-          <img class="hey-edu hey-edu-cursor" src="assets/edu/edu-cursor.png" alt="" />
-          <img class="hey-edu hey-edu-board" src="assets/edu/edu-board.png" alt="" />
-          <img class="hey-edu hey-edu-notes" src="assets/edu/edu-notes.png" alt="" />
-          <img class="hey-edu hey-edu-book-2" src="assets/edu/edu-book.png" alt="" />
-          <img class="hey-edu hey-edu-bulb-2" src="assets/edu/edu-bulb.png" alt="" />
-          <img class="hey-edu hey-edu-pencil-2" src="assets/edu/edu-pencil.png" alt="" />
-          <img class="hey-edu hey-edu-notes-2" src="assets/edu/edu-notes.png" alt="" />
-        </div>
-      </div>
-
-      <div class="hey-hero-center">
-        <h1 class="hey-wordmark comic-wordmark" data-text="teachy" aria-label="teachy">teachy</h1>
-        <p class="hey-tagline">an ai buddy that helps you get <span class="hl">fluent in ai &amp; building</span></p>
+  <main id="top">
+    <!-- HERO: a live sky; move through it and the wind follows you -->
+    <section class="hero" id="hero">
+      <div class="sky" id="sky"></div>
+      <div class="hero-inner">
+        <div class="hero-mark" id="hero-mark" aria-hidden="true"></div>
+        <a class="pill" href="changelog.html" data-say="fresh off main">
+          <span class="pill-dot"></span><span class="mono">open source</span><span class="pill-sep">·</span><span data-latest>always shipping</span>
+        </a>
+        <h1 class="hero-title">
+          <span class="line">Clicky, but</span>
+          <span class="line"><em>open source.</em></span>
+        </h1>
+        <p class="hero-sub">Teachy is an AI buddy that lives next to your cursor. It sees your screen, talks you through it, points, draws, and does the job for you. Every line is on GitHub, and we never stop shipping.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#waitlist">
-            <span class="btn-label">join the waitlist</span>
+          <a class="btn btn-glass" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" data-say="free. go on.">
+            <svg class="i"><use href="#apple" /></svg>Download for Mac
           </a>
-          <a class="btn btn-secondary" id="free-learning" href="quick-github-lesson.html">
-            <span class="btn-label">try a free lesson</span>
+          <a class="btn btn-ink" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" data-say="a star helps a lot">
+            <svg class="i"><use href="#gh" /></svg>Star on GitHub
           </a>
         </div>
-        <p class="hey-fineprint">coming soon · leave your name &amp; we’ll ping you</p>
-      </div>
-
-      <div class="hey-hero-media">
-        <div class="hey-frame hey-hero-video-frame">
-          <div class="hey-window hey-hero-video-window" aria-label="Demo video: Teachy’s blue cursor coaching inside ChatGPT">
-            <div class="hey-window-bar">
-              <i></i><i></i><i></i>
-              <span>teachy — live coaching</span>
-            </div>
-            <video
-              class="hey-hero-video"
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              poster="assets/hero-demo/teachy-hero-poster.jpg?v=buddy1"
-              width="1280"
-              height="720"
-            >
-              <source src="assets/hero-demo/teachy-hero.webm?v=buddy1" type="video/webm" />
-              <source src="assets/hero-demo/teachy-hero.mp4?v=buddy1" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <div class="hey-rule" aria-hidden="true"><span></span></div>
-
-    <!-- —— How it works: three beats —— -->
-    <section class="hey-how wrap" id="how">
-      <div class="hey-section-head">
-        <h2>how it works</h2>
-        <p>you act. teachy reacts. no video to pause.</p>
-      </div>
-      <ol class="hey-how-beats">
-        <li class="hey-how-beat">
-          <span class="hey-how-num" aria-hidden="true">1</span>
-          <h3>ask out loud</h3>
-          <p>hold <kbd>ctrl</kbd> + <kbd>option</kbd> and talk. teachy answers in speech and walks you through the real app — not a tutorial tab.</p>
-        </li>
-        <li class="hey-how-beat">
-          <span class="hey-how-num" aria-hidden="true">2</span>
-          <h3>it points &amp; waits</h3>
-          <p>the blue cursor points at the next move, waits for you to click or type, then coaches the next step — the reaction loop you see in the window above.</p>
-        </li>
-        <li class="hey-how-beat">
-          <span class="hey-how-num" aria-hidden="true">3</span>
-          <h3>checks &amp; remembers</h3>
-          <p>it verifies the outcome before moving on, and keeps a model of what you already know — so it stops re-explaining git and reviews what you’re about to forget.</p>
-        </li>
-      </ol>
-    </section>
-
-    <div class="hey-rule" aria-hidden="true"><span></span></div>
-
-    <!-- —— Logos + chats: logos behind headline, chats below —— -->
-    <section class="hey-proof" id="proof">
-      <div class="hey-proof-banner">
-        <div class="hey-apps-wall" aria-hidden="true">
-          <img class="hey-apps-logo" src="logos/claude.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/chatgpt.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/figma.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/excel.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/vscode.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/apple.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/github.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/notion.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/terminal.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/canva.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/blender.svg" alt="" />
-          <img class="hey-apps-logo" src="logos/photoshop.svg" alt="" />
-        </div>
-        <div class="hey-section-head hey-proof-copy">
-          <h2>like texting a friend who knows <span class="hl">all of it</span></h2>
-          <p>claude, chatgpt, figma, spreadsheets, the terminal — teachy coaches inside whichever app you just opened.</p>
-        </div>
-      </div>
-
-      <div class="chat-gallery" aria-label="Example Teachy conversations">
-
-        <div class="chat-surface" data-chat-delay="0" aria-label="Photo edit">
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>cut the background out of this photo</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>open Preview. i’ll point at the wand.</p></div></div></div>
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>ohh got it!</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>clean cut. drop it in the poster?</p></div></div></div>
-          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
-        </div>
-
-        <div class="chat-surface" data-chat-delay="350" aria-label="Git">
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>how do i commit this</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>stage the files first. click here.</p></div></div></div>
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>ok… message?</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>“fix login redirect”. then commit.</p></div></div></div>
-          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
-        </div>
-
-        <div class="chat-surface" data-chat-delay="700" aria-label="Spreadsheet">
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>sum this column for me</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>click B4. type =SUM(</p></div></div></div>
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>then drag?</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>yep. B1 to B3. enter. 883.</p></div></div></div>
-          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
-        </div>
-
-        <div class="chat-surface" data-chat-delay="1050" aria-label="Figma">
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>never opened figma. help</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>drop a rectangle for the bg.</p></div></div></div>
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>title’s too small</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>grab the corner. pull. bigger.</p></div></div></div>
-          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
-        </div>
-
-        <div class="chat-surface" data-chat-delay="1400" aria-label="Terminal">
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>how do i deploy this</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>open terminal. i’ll type with you.</p></div></div></div>
-          <div class="chat-row chat-right chat-blue"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>npm run build… done</p></div></div></div>
-          <div class="chat-row chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p>nice. now push. you’re live.</p></div></div></div>
-          <div class="chat-typing chat-left chat-orange"><div class="chat-bubble"><span class="chat-tail-fill" aria-hidden="true"></span><span class="chat-tail-mask" aria-hidden="true"></span><div class="chat-bubble-body"><span class="chat-sheen" aria-hidden="true"></span><p class="chat-typing-dots"><span></span><span></span><span></span></p></div></div></div>
-        </div>
-
-      </div>
-
-      <p class="hey-apps-foot">…and whatever you open next. <strong>teachy figures it out live.</strong></p>
-    </section>
-
-    <!-- —— Pricing sky band —— -->
-    <section class="hey-sky" id="product">
-      <div class="wrap">
-        <div class="hey-sky-head">
-          <h2>teachy, your way</h2>
-          <p>free for people. bespoke for teams.</p>
-        </div>
-        <div class="hey-price-grid">
-          <article class="hey-price-card">
-            <span class="hey-price-tag">personal</span>
-            <h3>free</h3>
-            <p class="hey-price-amount">$0</p>
-            <p class="hey-price-note">everything. actually everything.</p>
-            <ul>
-              <li>voice tutor on any app or tool</li>
-              <li>courses with real, verified outcomes</li>
-              <li>live coaching inside the real app</li>
-              <li>remembers what you know</li>
-              <li>free forever · no account needed</li>
-            </ul>
-            <a class="btn btn-primary" href="#waitlist" data-waitlist-intent="personal">
-              <span class="btn-label">join waitlist</span>
-            </a>
-          </article>
-
-          <article class="hey-price-card hey-price-card-ent">
-            <span class="hey-price-tag hey-price-tag-ent">enterprise</span>
-            <h3>teachy enterprise</h3>
-            <p class="hey-price-amount">bespoke</p>
-            <p class="hey-price-note">teach your whole company.</p>
-            <ul>
-              <li>custom learning paths for your org</li>
-              <li>trained on your stack, SOPs, internal tools</li>
-              <li>steers people to the right AI for each task</li>
-              <li>keeps sensitive data out of the wrong places</li>
-              <li>coaches best practices live, not via policy PDFs</li>
-              <li>1:1 coaching at scale, not slide decks</li>
-              <li>verified skills, not "watched training"</li>
-            </ul>
-            <a class="btn btn-secondary" href="#waitlist" data-waitlist-intent="company">
-              <span class="btn-label">join waitlist</span>
-              <span class="btn-arrow" aria-hidden="true">→</span>
-            </a>
-          </article>
-        </div>
-
-        <div class="hey-terminal">
-          <p><span class="hey-term-prompt">~ %</span> teachy enterprise --pilot</p>
-          <p class="hey-terminal-copy">we build custom curriculum around the tools your team actually uses.</p>
-          <a class="hey-terminal-btn" href="#waitlist" data-waitlist-intent="company">reach out ↗</a>
-        </div>
-      </div>
-    </section>
-
-    <div class="hey-rule" aria-hidden="true"><span></span></div>
-
-    <!-- —— Waitlist —— -->
-    <section class="hey-waitlist wrap" id="waitlist">
-      <div class="hey-section-head">
-        <h2>join the waitlist</h2>
-        <p>we’re not shipping downloads yet. leave your name — we’ll email you when it’s ready.</p>
-      </div>
-
-      <form class="waitlist-form" id="waitlist-form" novalidate>
-        <input type="hidden" name="_subject" value="Teachy waitlist signup" />
-        <input type="text" name="_gotcha" value="" tabindex="-1" autocomplete="off" class="waitlist-honeypot" aria-hidden="true" />
-
-        <div class="waitlist-fields">
-          <label class="waitlist-field">
-            <span>name</span>
-            <input type="text" name="name" id="waitlist-name" required autocomplete="name" placeholder="your name" />
-          </label>
-          <label class="waitlist-field">
-            <span>email</span>
-            <input type="email" name="email" id="waitlist-email" required autocomplete="email" placeholder="you@email.com" />
-          </label>
-        </div>
-
-        <fieldset class="waitlist-intent">
-          <legend>which sounds like you?</legend>
-          <div class="waitlist-intent-row" role="radiogroup" aria-label="How you want to use Teachy">
-            <label class="waitlist-choice">
-              <input type="radio" name="intent" value="personal" checked />
-              <span class="waitlist-choice-card">
-                <strong>just me</strong>
-                <em>i want to use teachy myself</em>
-              </span>
-            </label>
-            <label class="waitlist-choice">
-              <input type="radio" name="intent" value="company" id="waitlist-intent-company" />
-              <span class="waitlist-choice-card">
-                <strong>my company</strong>
-                <em>we’d love to use this at work</em>
-              </span>
-            </label>
-          </div>
-        </fieldset>
-
-        <button type="submit" class="btn btn-primary waitlist-submit" id="waitlist-submit">
-          <span class="btn-label">join waitlist</span>
+        <button class="clone" type="button" data-copy="git clone https://github.com/VedSoni-dev/teachy" data-say="click to copy">
+          <span class="clone-prompt">$</span><span class="clone-cmd">git clone github.com/VedSoni-dev/teachy</span><svg class="i"><use href="#copy" /></svg>
         </button>
-        <p class="waitlist-status" id="waitlist-status" role="status" aria-live="polite" hidden></p>
-      </form>
+        <p class="fine">free · macOS 14.2 or later · bring your own key</p>
+      </div>
+      <p class="hero-hint mono" aria-hidden="true">move through the sky ↗ or hold <kbd>control</kbd> + <kbd>option</kbd></p>
     </section>
 
-    <!-- —— FAQ —— -->
-    <section class="faq wrap" id="faq">
-      <div class="hey-section-head">
-        <h2>frequently asked questions</h2>
-        <p>what to know about teachy, privacy, and getting started.</p>
-      </div>
-      <div class="faq-list">
-        <details class="faq-item" open>
-          <summary>what is teachy?</summary>
-          <p>a free menu-bar app for mac. it watches your screen, sits next to your cursor, and coaches you 1:1 through AI tools, software, code, and real work on your own machine.</p>
-        </details>
-        <details class="faq-item">
-          <summary>can i download it now?</summary>
-          <p>not yet — we’re on a waitlist. join above and we’ll email you when personal and company access opens.</p>
-        </details>
-        <details class="faq-item">
-          <summary>is it free?</summary>
-          <p>yes. teachy for individuals is planned to be free. teachy for teams is a separate, bespoke offering for companies.</p>
-        </details>
-        <details class="faq-item">
-          <summary>is my screen being watched all the time?</summary>
-          <p>no. teachy only looks at your screen during an active coaching session or push-to-talk moment. all API calls route through the teachy proxy; no keys or screen data are baked into the app itself.</p>
-        </details>
-        <details class="faq-item">
-          <summary>what can teachy actually teach me?</summary>
-          <p>anything you can do on your mac. AI tools like claude and chatgpt, software like VS Code and figma, how to build a website, write code, ship a workflow, and more.</p>
-        </details>
-        <details class="faq-item">
-          <summary>which mac do i need?</summary>
-          <p>macOS 14.2 or later, for the screen-capture APIs teachy relies on to see what you're doing.</p>
-        </details>
-        <details class="faq-item">
-          <summary>what's the difference between teachy and teachy enterprise?</summary>
-          <p>teachy is free and built for individuals. teachy enterprise adds bespoke AI systems plus custom curriculum built around your company's tools, SOPs, and roles, priced per engagement.</p>
-        </details>
+    <!-- shipping ticker: real commits -->
+    <section class="ticker" aria-label="Recent commits">
+      <div class="ticker-label mono"><span class="live"></span>git log</div>
+      <div class="ticker-track"><div class="ticker-run" id="ticker"></div></div>
+    </section>
+
+    <!-- OPEN SOURCE story with a git graph -->
+    <section class="open" id="open">
+      <div class="wrap open-grid">
+        <div class="open-copy">
+          <p class="eyebrow mono">// why teachy exists</p>
+          <h2>The original went private.<br /><em>We stayed open.</em></h2>
+          <p>Clicky showed what an AI next to your cursor feels like. Its first codebase stays open, but the new work went private in April. Teachy picks up the open line and keeps building in public: every feature, fix and late-night commit lands on GitHub where you can read it, fork it, and make it yours.</p>
+          <ul class="facts">
+            <li><span class="mono">01</span><div><strong>Read every line.</strong> The app, the proxy, the prompts. No black box watching your screen.</div></li>
+            <li><span class="mono">02</span><div><strong>Maintained, not abandoned.</strong> Dated releases, a real changelog, and commits you can watch land.</div></li>
+            <li><span class="mono">03</span><div><strong>Your key, your bill.</strong> Bring your own AI key. Nothing to subscribe to.</div></li>
+          </ul>
+        </div>
+        <figure class="graph" aria-label="A git graph: Clicky's open code, its private continuation, and Teachy branching off and continuing in the open">
+          <svg viewBox="0 0 520 420" id="gitgraph" role="img">
+            <title>Clicky to Teachy, as a git graph</title>
+            <!-- clicky open line -->
+            <path class="g-line g-clicky" d="M60 30 V180" />
+            <!-- heyclicky private branch -->
+            <path class="g-line g-private" d="M60 180 C60 215 150 215 150 250 V390" />
+            <!-- clicky open stops -->
+            <path class="g-line g-clicky g-frozen" d="M60 180 V390" />
+            <!-- teachy branch -->
+            <path class="g-line g-teachy" id="teachy-line" d="M60 120 C60 150 300 140 300 190 V400" />
+            <g class="g-dots">
+              <circle cx="60" cy="40" r="7" class="d-clicky" /><circle cx="60" cy="80" r="7" class="d-clicky" />
+              <circle cx="60" cy="120" r="7" class="d-clicky" /><circle cx="60" cy="160" r="7" class="d-clicky" />
+              <circle cx="150" cy="270" r="7" class="d-private" /><circle cx="150" cy="320" r="7" class="d-private" /><circle cx="150" cy="370" r="7" class="d-private" />
+            </g>
+            <g id="teachy-dots"></g>
+            <g class="g-labels mono">
+              <text x="78" y="44">clicky · open source</text>
+              <text x="78" y="184">apr 27 · new work goes private</text>
+              <text x="168" y="274">heyclicky</text><text x="168" y="290" class="dim">closed</text>
+              <text x="40" y="408" class="dim">open repo, frozen</text>
+              <text x="318" y="200">teachy · jul 13</text>
+              <text x="318" y="216" class="dim">forked in the open</text>
+            </g>
+            <g class="g-head" id="g-head" transform="translate(300 400)">
+              <rect x="14" y="-14" rx="11" width="150" height="24" />
+              <text x="26" y="3" class="mono" data-head>HEAD · still shipping</text>
+            </g>
+          </svg>
+          <figcaption class="mono">based on Clicky by Farza (MIT). Not affiliated with HeyClicky.</figcaption>
+        </figure>
       </div>
     </section>
 
+    <!-- THE DESK: an interactive demo of what Teachy does -->
+    <section class="desk" id="desk">
+      <div class="wrap">
+        <p class="eyebrow mono">// what it does</p>
+        <h2>Ask about your screen.<br /><em>It shows you, or does it.</em></h2>
+        <div class="desk-grid">
+          <div class="desk-tabs" role="tablist" aria-label="Teachy features">
+            <button role="tab" aria-selected="true" data-scene="point" data-say="watch me point"><span class="mono">01</span>points the way<small>Finds the button you need and flies right to it.</small></button>
+            <button role="tab" aria-selected="false" data-scene="draw" data-say="i draw too"><span class="mono">02</span>draws to explain<small>Sketches in 2D and builds 3D scenes on your screen.</small></button>
+            <button role="tab" aria-selected="false" data-scene="job" data-say="i'll handle it"><span class="mono">03</span>does the job<small>Runs jobs in the background. Asks before it touches anything.</small></button>
+            <button role="tab" aria-selected="false" data-scene="dictate" data-say="just talk"><span class="mono">04</span>types what you say<small>Hold fn + control in any text field and talk.</small></button>
+            <button role="tab" aria-selected="false" data-scene="memory" data-say="i remember"><span class="mono">05</span>remembers you<small>Its memory is a plain file you can open and edit.</small></button>
+          </div>
+          <div class="mac" aria-live="polite">
+            <div class="mac-bar"><i></i><i></i><i></i><span class="mac-title mono" id="mac-title">Figma</span></div>
+            <div class="mac-body" id="stage">
+              <!-- scenes are built by site.js -->
+            </div>
+            <div class="mac-voice" id="mac-voice"><span class="wave"><b></b><b></b><b></b><b></b><b></b></span><span id="voice-text">teachy, where's the export button?</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHANGELOG teaser -->
+    <section class="latest" id="latest">
+      <div class="wrap latest-grid">
+        <div>
+          <p class="eyebrow mono">// changelog</p>
+          <h2>Shipped, <em>dated,</em><br />written down.</h2>
+          <p class="muted">Every release gets a plain-English entry: what changed for you, not a wall of commit hashes. Released builds and work that's merged on main, kept separate so you always know what's in your download.</p>
+          <a class="btn btn-ink" href="changelog.html" data-say="the full story">Read the changelog →</a>
+        </div>
+        <article class="cl-card" id="cl-card"></article>
+      </div>
+    </section>
+
+    <!-- CTA with a dusk sky -->
+    <section class="cta" id="cta">
+      <div class="sky sky-dusk" id="sky-dusk"></div>
+      <div class="cta-inner">
+        <svg class="cta-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>
+        <h2>Say hi to <em>teachy.</em></h2>
+        <div class="hero-actions">
+          <a class="btn btn-glass" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" data-say="see you on your desktop"><svg class="i"><use href="#apple" /></svg>Download for Mac</a>
+          <a class="btn btn-ink" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" data-say="fork me"><svg class="i"><use href="#gh" /></svg>Fork on GitHub</a>
+        </div>
+        <p class="fine light">free · macOS 14.2 or later · Windows build in the repo</p>
+      </div>
+    </section>
   </main>
 
-  <footer class="hey-footer comic-footer">
-    <div class="wrap comic-footer-inner">
-      <div class="comic-footer-brand">
-        <a class="logo" href="#top">
-          <span class="logo-mark"></span>
-          teachy
-        </a>
-        <p>an ai buddy that coaches you live — join the waitlist.</p>
-      </div>
-      <div class="hey-footer-cols">
-        <div class="hey-footer-col">
-          <span class="hey-footer-head">product</span>
-          <a href="#waitlist">waitlist</a>
-          <a href="quick-github-lesson.html">free lesson</a>
-          <a href="#product">pricing</a>
-        </div>
-        <div class="hey-footer-col">
-          <span class="hey-footer-head">learn</span>
-          <a href="quick-github-lesson.html">free lesson</a>
-          <a href="#how">how it works</a>
-          <a href="#faq">faq</a>
-        </div>
-        <div class="hey-footer-col">
-          <span class="hey-footer-head">contact</span>
-          <a href="enterprise.html">for teams</a>
-          <a href="mailto:enterprise@teachy.app?subject=Teachy%20for%20Teams">email us</a>
-        </div>
-        <div class="hey-footer-col hey-footer-disclaimer">
-          <span class="hey-footer-head">privacy</span>
-          <p>teachy only sees your screen when you press the hotkey. screenshots go through your own proxy — never stored, never sold.</p>
-        </div>
-      </div>
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <a class="brand" href="#top"><svg class="brand-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>teachy</a>
+      <nav aria-label="Footer">
+        <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="https://github.com/VedSoni-dev/teachy-releases/releases" target="_blank" rel="noopener">Releases</a>
+        <a href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Report a bug</a>
+      </nav>
     </div>
-    <div class="comic-footer-end" aria-hidden="true">
-      <span class="comic-footer-stamp">the end?</span>
-      <span class="comic-footer-cont">…nah. go make something.</span>
-    </div>
+    <p class="wrap foot-note">Teachy only sees your screen when you press the hotkey. Built on the open-source Clicky codebase by Farza; not affiliated with HeyClicky. Sky by <a href="https://frontend.vedantsoni.com/sky" target="_blank" rel="noopener">cirrus</a>.</p>
+    <div class="foot-word" aria-hidden="true">teachy</div>
   </footer>
 
-  <script src="app.js?v=waitlist2" defer></script>
+  <script src="changelog.js?v=2"></script>
+  <script type="module" src="site.js?v=2"></script>
 </body>
 </html>

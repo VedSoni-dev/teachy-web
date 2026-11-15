@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Changelog · Teachy</title>
+  <meta name="description" content="Everything that changed in Teachy, newest first: released builds and work merged on main." />
+  <meta property="og:title" content="Teachy · the open-source Clicky" />
+  <meta property="og:description" content="An AI buddy next to your cursor. Open source, and it keeps shipping." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#4ea4dc" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=2" />
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body class="page-cl">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="tri-fill" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#6aa8ff" />
+        <stop offset=".55" stop-color="#3380ff" />
+        <stop offset="1" stop-color="#1a5fe0" />
+      </linearGradient>
+    </defs>
+    <symbol id="tri" viewBox="0 0 100 100">
+      <path d="M50 4 L79 92 Q81 97 76 96 L50 88 L24 96 Q19 97 21 92 Z" />
+    </symbol>
+    <symbol id="gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0a8 8 0 00-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 014 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 008 0z"/></symbol>
+    <symbol id="apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.65.8-3.33.8-.7 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.55 2.68-.4 6.64 1.1 8.82.74 1.06 1.61 2.25 2.75 2.21 1.11-.05 1.53-.71 2.87-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.66-2.15.85-1.23 1.19-2.43 1.21-2.49-.03-.01-2.32-.89-2.35-3.56zM14.2 6.12c.6-.74 1.01-1.75.9-2.77-.87.04-1.94.59-2.56 1.32-.56.64-1.05 1.68-.92 2.67.97.08 1.97-.49 2.58-1.22z"/></symbol>
+    <symbol id="copy" viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 014.5 2H11" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  </svg>
+
+  <!-- the little buddy that follows your cursor around the page -->
+  <div class="buddy" id="buddy" aria-hidden="true">
+    <svg class="buddy-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>
+    <div class="buddy-bubble" id="buddy-bubble"></div>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="index.html" data-say="that's me">
+      <svg class="brand-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>teachy
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="index.html#open" data-say="why we're open">open source</a>
+      <a href="index.html#desk" data-say="try me out">what it does</a>
+      <a href="changelog.html" data-say="we ship a lot">changelog</a>
+      <a class="nav-gh" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" data-say="read every line">
+        <svg><use href="#gh" /></svg><span>GitHub</span><span class="star-count" data-stars hidden></span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="cl-hero" id="cl-hero">
+      <div class="sky" id="sky"></div>
+      <div class="cl-hero-inner">
+        <h1>what's <em>new.</em></h1>
+        <p class="mono">every change, dated · newest first · <a href="https://github.com/VedSoni-dev/teachy/commits" target="_blank" rel="noopener" style="pointer-events:auto">raw commits ↗</a></p>
+      </div>
+    </section>
+    <div class="cl-toolbar" role="group" aria-label="Filter releases" id="filters"></div>
+    <div class="wrap"><div class="cl-list" id="cl-list"></div></div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <a class="brand" href="index.html"><svg class="brand-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>teachy</a>
+      <nav aria-label="Footer">
+        <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="https://github.com/VedSoni-dev/teachy-releases/releases" target="_blank" rel="noopener">Releases</a>
+        <a href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Report a bug</a>
+      </nav>
+    </div>
+    <p class="wrap foot-note">Teachy only sees your screen when you press the hotkey. Built on the open-source Clicky codebase by Farza; not affiliated with HeyClicky. Sky by <a href="https://frontend.vedantsoni.com/sky" target="_blank" rel="noopener">cirrus</a>.</p>
+    <div class="foot-word" aria-hidden="true">teachy</div>
+  </footer>
+
+  <script src="changelog.js?v=2"></script>
+  <script type="module">
+    import { skyFor, metaHTML, sectionsHTML, fmtDate, ago, slug, stars } from "./cl.js";
+    const CL = window.TEACHY_CHANGELOG;
+    skyFor(document.getElementById("cl-hero"), document.getElementById("sky"), { time: "noon", cover: 0.4, cell: 10, fade: true });
+    const TRI = '<svg viewBox="0 0 100 100"><use href="#tri" fill="url(#tri-fill)"/></svg>';
+    document.getElementById("cl-list").innerHTML = CL.map((r) => `
+      <article class="cl-entry" id="${slug(r)}" data-status="${r.status}" data-platforms="${r.platforms.join(" ")}">
+        <div class="cl-side"><time datetime="${r.date}">${fmtDate(r.date)}</time><span class="ago">${ago(r.date)}</span></div>
+        <span class="node" aria-hidden="true">${TRI}</span>
+        ${metaHTML(r)}
+        <h2>${r.title}<a class="anchor" href="#${slug(r)}" aria-label="Link to this release">#</a></h2>
+        <p class="cl-sum">${r.summary}</p>
+        ${sectionsHTML(r)}
+      </article>`).join("");
+    const filters = [["all", "All"], ["released", "Released builds"], ["on main", "On main"], ["mac", "macOS"], ["windows", "Windows"]];
+    const bar = document.getElementById("filters");
+    bar.innerHTML = filters.map(([v, l], i) => `<button type="button" data-f="${v}" aria-pressed="${i === 0}">${l}</button>`).join("");
+    bar.addEventListener("click", (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      bar.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      const f = b.dataset.f;
+      document.querySelectorAll(".cl-entry").forEach((el) => {
+        el.hidden = !(f === "all" || el.dataset.status === f || el.dataset.platforms.split(" ").includes(f));
+      });
+    });
+    // the buddy follows here too
+    const buddy = document.getElementById("buddy"), bubble = document.getElementById("buddy-bubble");
+    if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      let mx = 0, my = 0, bx = 0, by = 0, on = false;
+      addEventListener("pointermove", (e) => { mx = e.clientX; my = e.clientY; if (!on) { on = true; bx = mx; by = my; buddy.classList.add("on"); } }, { passive: true });
+      (function f() { bx += (mx + 16 - bx) * .16; by += (my + 18 - by) * .16; buddy.style.transform = `translate(${bx}px,${by}px)`; requestAnimationFrame(f); })();
+      document.addEventListener("pointerover", (e) => { const el = e.target.closest("[data-say]"); if (el) { bubble.textContent = el.dataset.say; buddy.classList.add("talking"); } });
+      document.addEventListener("pointerout", (e) => { const el = e.target.closest("[data-say]"); if (el && !el.contains(e.relatedTarget)) buddy.classList.remove("talking"); });
+    }
+    if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
+    stars();
+  </script>
+</body>
+</html>

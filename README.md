@@ -8,20 +8,26 @@ Live at [https://teachy-ashy-two.vercel.app](https://teachy-ashy-two.vercel.app/
 
 ## Layout
 
+Rebuilt from scratch in Nov 2026 around one idea: Teachy is the open-source Clicky, and it keeps shipping.
+
 | Path | What |
 |------|------|
-| `academy/` | the whole site — HTML, CSS, JS, logos, hero video |
-| `academy/registry.json` | the course registry the app installs from |
-| `academy/assets/hero-demo/` | the hero video and the script that records it |
+| `academy/index.html` | Landing page: live ASCII sky hero (move through it, the wind follows), the Teachy cursor flies in on load and becomes the logo, a buddy cursor follows you and talks on hover (hold control + option for a surprise), a commit ticker, the open-source story as a git graph, an interactive demo desk, the latest changelog entry, a night-sky CTA. |
+| `academy/changelog.html` | Full changelog with filters (released builds / on main / macOS / Windows) and anchor links. |
+| `academy/changelog.js` | **The data.** Every release, newest first, plus the commits shown in the ticker. Add a release by putting a new object at the top. |
+| `academy/site.js`, `academy/cl.js` | Page behavior (ES modules, no build). |
+| `academy/site.css` | All styles. |
+| `academy/cirrus.js` | The sky engine, vendored from [frontend.vedantsoni.com/sky](https://frontend.vedantsoni.com/sky) (MIT). |
+| `academy/registry.json` | Course registry the app and release tooling may still read. Not linked from the site. |
 | `vercel.json` | Vercel build config (`outputDirectory: academy`) |
 | `scripts/publish-academy.sh` | publishes `academy/` to the `gh-pages` branch |
 
 ## Running it
 
-Static — no build step. Open `academy/index.html`, or serve the folder:
+Static, no build step. Serve the folder (ES modules need http, not file://):
 
 ```bash
-python -m http.server 8000 --directory academy
+python3 -m http.server 8000 --directory academy
 ```
 
 ## The one cross-repo dependency
