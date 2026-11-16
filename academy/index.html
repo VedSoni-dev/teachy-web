@@ -40,16 +40,12 @@
 }
 </style>
 <link rel="stylesheet" href="assets/ui/base.css">
-<link rel="stylesheet" href="assets/ui/window/fragment.css">
-<link rel="stylesheet" href="assets/ui/chat/fragment.css">
-<link rel="stylesheet" href="assets/ui/toggles/fragment.css">
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-intro');setTimeout(()=>document.documentElement.classList.remove('js-intro'),4500)}</script>
 <script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
 <script src="assets/backgrounds/backgrounds.js"></script>
 <script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
 <link rel="modulepreload" href="assets/moments/moments.js">
 <link rel="modulepreload" href="assets/moments/lib.js">
-<link rel="modulepreload" href="assets/moments/iris-opens/moment.js">
 <!-- page CSS: only what sits inside a visual -->
 <style>
   /* Clicky's cursor: an equilateral triangle in #3380FF, tilted -35 degrees, glowing in its own blue */
@@ -200,32 +196,8 @@
     <a class="skip-link" href="#top">Skip to content</a>
     <a class="nav__logo" href="#top"><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span>Teachy</a>
     <nav class="nav__links" aria-label="Main">
-      <div class="nav__item">
-        <a class="nav__link" href="#features">Features <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <div class="nav__menu">
-          <div class="wrap grid">
-            <a class="menu-card span-4" href="#features">
-              <div class="panel"><div class="ft-point"><div class="ft-point__bar"><span>File</span><span class="is-target">Export</span><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span></div></div></div>
-              <span class="t-card">Points the way</span>
-              <span class="t-small muted">Flies to the button you asked about</span>
-            </a>
-            <a class="menu-card span-4" href="#jobs">
-              <div class="panel"><div class="ft-point"><div class="ft-point__bar"><span>Allow once</span><span>Not now</span></div></div></div>
-              <span class="t-card">Does the job</span>
-              <span class="t-small muted">Runs tasks and asks before it acts</span>
-            </a>
-            <a class="menu-card span-4" href="#features">
-              <div class="panel"><div class="ft-point"><div class="ft-point__bar"><span>PROFILE.md</span></div></div></div>
-              <span class="t-card">Remembers you</span>
-              <span class="t-small muted">Its memory is a file you can edit</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="nav__item"><a class="nav__link" href="#jobs">Jobs</a></div>
-      <div class="nav__item"><a class="nav__link" href="#open">Source</a></div>
       <div class="nav__item"><a class="nav__link" href="changelog.html">Changelog</a></div>
-      <div class="nav__item"><a class="nav__link" href="#faq">Questions</a></div>
+      <div class="nav__item"><a class="nav__link" href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Help</a></div>
     </nav>
     <div class="nav__actions">
       <a class="nav__link" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
@@ -340,227 +312,11 @@
         <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
         <a class="btn btn--secondary" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">Read the code</a>
       </div>
-      <p class="hero-apps__fine">Free for macOS 14.2 or later</p>
+      <p class="hero-apps__fine">Free and open source · Mac with Apple silicon, macOS 14.2 or later · Built on Clicky by Farza, not affiliated with HeyClicky</p>
     </div></div>
-  </section>
-
-  <section class="section" id="jobs" aria-labelledby="jobs-h">
-    <div class="wrap">
-      <div class="grid">
-        <h2 class="span-5" id="jobs-h">Background jobs while you keep working</h2>
-        <p class="span-6 start-7 t-lead">Ask for something bigger and Teachy makes a plan, works through it in the background and stops to ask before it touches your files. <a class="link" href="#faq">What it may touch</a></p>
-      </div>
-      <div class="ui app fill" role="img" aria-label="Teachy's jobs window: a list of finished and running jobs beside the open job's conversation" data-ui-pause-host>
-        <div class="app__pane app__pane--list">
-          <div class="ui ui-panel ui-win" data-ui="window" data-open="Running" data-work="Working" data-done="Done">
-            <div class="ui-win__bar">
-              <span class="ui-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="ui-win__crumb">Teachy <i>/</i> <b>Jobs</b></span>
-              <span class="ui-spacer"></span>
-              <span class="ui-win__search" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span class="ui-win__ph">Search</span><span class="ui-kbd">/</span></span>
-            </div>
-            <div class="ui-win__body">
-              <nav class="ui-win__side" aria-hidden="true">
-                <span class="ui-win__nav is-on"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>Running<em>2</em></span>
-                <span class="ui-win__nav"><svg class="ui-icon" viewBox="0 0 16 16"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg>Done<em>31</em></span>
-                <span class="ui-win__nav"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg>Needs you<em>1</em></span>
-                <span class="ui-win__label">Agents</span>
-                <span class="ui-win__nav"><span class="ui-win__hash">#</span>Inbox</span>
-                <span class="ui-win__nav"><span class="ui-win__hash">#</span>Research</span>
-              </nav>
-              <div class="ui-win__main">
-                <div class="ui-win__cols" aria-hidden="true"><span>App</span><span>Job</span><span>Status</span><span>Age</span></div>
-                <ul class="ui-win__rows">
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">Fi</span><span class="ui-win__who">Finder</span><span class="ui-win__sub">Rename 42 screenshots</span><span class="ui-win__st" data-st>Running</span><span class="ui-win__age">now</span></li>
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">Ma</span><span class="ui-win__who">Mail</span><span class="ui-win__sub">Draft replies to 6 emails</span><span class="ui-win__st is-you" data-st>Needs you</span><span class="ui-win__age">4m</span></li>
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">Sa</span><span class="ui-win__who">Safari</span><span class="ui-win__sub">Compare three standing desks</span><span class="ui-win__st" data-st>Running</span><span class="ui-win__age">9m</span></li>
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="2">Nu</span><span class="ui-win__who">Numbers</span><span class="ui-win__sub">Total last month's receipts</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">22m</span></li>
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="5">Pr</span><span class="ui-win__who">Preview</span><span class="ui-win__sub">Summarise a 40-page PDF</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">1h</span></li>
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">Ca</span><span class="ui-win__who">Calendar</span><span class="ui-win__sub">Find a free hour on Friday</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">2h</span></li>
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">Te</span><span class="ui-win__who">Terminal</span><span class="ui-win__sub">Explain a failing build</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">3h</span></li>
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">No</span><span class="ui-win__who">Notes</span><span class="ui-win__sub">Turn a meeting into to-dos</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">5h</span></li>
-                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="2">Fi</span><span class="ui-win__who">Finder</span><span class="ui-win__sub">Sort downloads into folders</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">1d</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="app__pane app__pane--open" data-ui-loop>
-          <div class="ui ui-panel ui-chat" data-ui="chat">
-            <div class="ui-head">
-              <span class="ui-agent" aria-hidden="true"></span>
-              <div class="ui-title">Rename screenshots</div>
-              <span class="ui-chat__online">Running</span>
-              <span class="ui-spacer"></span>
-            </div>
-            <div class="ui-chat__body">
-              <div class="ui-chat__day">Today, 9:41</div>
-              <div class="ui-msg ui-msg--me" data-chat-q><span class="ui-msg__text">Rename my screenshots by what's in them</span></div>
-              <div class="ui-msg ui-msg--bot" data-chat-a>
-                <span class="ui-agent ui-msg__av" aria-hidden="true"></span>
-                <span class="ui-msg__col">
-                  <span class="ui-chat__typing" aria-hidden="true"><i></i><i></i><i></i></span>
-                  <span class="ui-chat__answer">31 of 42 renamed, like <b>stripe-invoice-october.png</b>. Three are blank, so I'm leaving those.</span>
-                  <span class="ui-chat__srcs"><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M2.5 4.5h4l1.5 1.5h5.5v7h-11z"/></svg>Desktop › Screenshots</span><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg>Allowed once</span></span>
-                </span>
-              </div>
-              <div class="ui-msg ui-msg--me"><span class="ui-msg__text">Put the receipts in their own folder too</span></div>
-            </div>
-            <div class="ui-chat__input"><span class="ui-chat__ph">Ask Teachy</span><span class="ui-chat__send" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 13V3.5M3.8 7.5 8 3.3l4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section g2" id="features" aria-labelledby="features-h">
-    <div class="wrap">
-      <div class="group">
-        <div class="section-head">
-          <h2 id="features-h">Four things Teachy does on your screen</h2>
-        </div>
-        <div class="grid">
-          <article class="card card--row card--open span-6">
-            <h3>Points at buttons in any of your apps</h3>
-            <p>Ask where something is and the blue triangle flies across your screen and stops on it.</p>
-            <div class="panel" role="img" aria-label="Teachy's triangle stopped on an Export button in a toolbar">
-              <div class="ft-point"><div class="ft-point__bar"><span>File</span><span>Edit</span><span>Share</span><span class="is-target">Export</span><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span></div><div class="ft-point__say">It's Export, top right.</div></div>
-            </div>
-          </article>
-          <article class="card card--row card--open span-6">
-            <h3>Draws examples right on your screen</h3>
-            <p>Diagrams, arrows and 3D scenes appear right on your screen, and it talks you through them.</p>
-            <div class="panel" role="img" aria-label="A hand-drawn blue diagram of how a fraction splits a pizza into eighths">
-              <div class="ft-draw"><svg viewBox="0 0 560 300" preserveAspectRatio="xMidYMid meet">
-                <circle class="chalk" cx="180" cy="150" r="96"/>
-                <path class="chalk" d="M180 54 V246 M84 150 H276 M112 82 L248 218 M248 82 L112 218"/>
-                <path class="chalk" d="M180 150 L180 54 A96 96 0 0 1 248 82 Z" style="fill: rgb(51 128 255 / .18)"/>
-                <path class="chalk" d="M300 96 C 330 84, 352 86, 372 98"/><path class="chalk" d="M362 88 l12 10 -15 4"/>
-                <text x="390" y="104">3/8 is three</text><text x="390" y="126">of these slices</text>
-              </svg></div>
-            </div>
-          </article>
-        </div>
-      </div>
-      <div class="grid">
-        <article class="card card--row card--open span-6">
-          <h3>Security: it asks before it acts</h3>
-          <p>Reading the screen is free. Clicking, typing and running commands each need your yes.</p>
-          <div class="panel">
-            <div class="stage stage--fade-b"><div class="at-right to-edge" style="--ax:32px;--ay:40px" data-ui-loop>
-              <div class="ui ui-panel ui-toggles" data-ui="toggles">
-                <div class="ui-head">
-                  <svg class="ui-icon ui-toggles__ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.8 13 4v3.6c0 3-2.1 5.4-5 6.6-2.9-1.2-5-3.6-5-6.6V4z"/><path d="m5.8 8 1.6 1.6 3-3.2"/></svg>
-                  <div class="ui-title">What Teachy may do</div>
-                  <span class="ui-spacer"></span>
-                  <div class="ui-meta" data-tg-count>3 of 5 on</div>
-                </div>
-                <ul class="ui-toggles__list">
-                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">See the screen</span><span class="ui-tg__sub">Only while you hold the keys</span></span><button class="ui-switch is-on" type="button" role="switch" aria-checked="true" aria-label="See the screen"><i></i></button></li>
-                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Click and type in Finder</span><span class="ui-tg__sub">Asks once per job</span></span><button class="ui-switch is-on" type="button" role="switch" aria-checked="true" aria-label="Click and type in Finder"><i></i></button></li>
-                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Run shell commands</span><span class="ui-tg__sub">Always asks first</span></span><button class="ui-switch" type="button" role="switch" aria-checked="false" aria-label="Run shell commands"><i></i></button></li>
-                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Remember what you tell it</span><span class="ui-tg__sub">In a file you can edit</span></span><button class="ui-switch is-on" type="button" role="switch" aria-checked="true" aria-label="Remember what you tell it"><i></i></button></li>
-                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Use browser sign-ins</span><span class="ui-tg__sub">Off unless you turn it on</span></span><button class="ui-switch" type="button" role="switch" aria-checked="false" aria-label="Use browser sign-ins"><i></i></button></li>
-                </ul>
-              </div>
-            </div></div>
-          </div>
-        </article>
-        <article class="card card--row card--open span-6">
-          <h3>Your assistant’s memory, in one file</h3>
-          <p>What it learns about you lives in two Markdown files on your Mac. Open them and edit anything.</p>
-          <div class="panel" role="img" aria-label="Teachy's memory file, PROFILE.md, with a few lines about the person">
-            <div class="ft-file"><div class="ft-file__doc">
-              <small>~/.teachy/brain/PROFILE.md</small>
-              <b>## About me</b><br>
-              <span class="ft-more">- Name: Sam<br></span>
-              - Works in: Figma, Notion, Xcode<br>
-              <span class="is-new">- Prefers: short answers, metric units</span><br>
-              <span class="ft-more"><b>## Mistakes I make</b><br>
-              - Forgets to export at 2x (x3)</span>
-            </div></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section ground-surface" id="open" data-moment="iris-opens" aria-labelledby="open-h">
-    <div class="wrap">
-      <div class="grid">
-        <div class="span-5 stack-6">
-          <h2 id="open-h">Teachy is open source. <span class="muted">Clicky’s new work went private.</span></h2>
-          <p class="t-lead">Teachy started from Clicky's open code in July and has been built in public since: the app, the prompts and every fix are on GitHub to read, fork and change.</p>
-          <p>Licensed MIT, like the code it grew from. Not affiliated with HeyClicky.</p>
-          <a class="link" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">Read the code on GitHub</a>
-        </div>
-        <div class="frame frame--split span-6 start-7" role="img" aria-label="A git graph: Clicky's open line stops in April when new work goes private, while Teachy branches off in July and keeps going">
-          <svg class="gitgraph" viewBox="0 0 520 420" preserveAspectRatio="xMidYMid meet">
-            <path class="ln c-open" d="M70 40 V190"/>
-            <path class="ln c-closed" d="M70 190 C70 225 160 225 160 260 V390"/>
-            <path class="ln c-teachy" d="M70 130 C70 160 300 150 300 200 V400"/>
-            <circle class="d-open" cx="70" cy="50" r="8"/><circle class="d-open" cx="70" cy="90" r="8"/><circle class="d-open" cx="70" cy="130" r="8"/><circle class="d-open" cx="70" cy="170" r="8"/>
-            <circle class="d-closed" cx="160" cy="280" r="8"/><circle class="d-closed" cx="160" cy="330" r="8"/>
-            <circle class="d-teachy" cx="300" cy="220" r="8"/><circle class="d-teachy" cx="300" cy="265" r="8"/><circle class="d-teachy" cx="300" cy="310" r="8"/><circle class="d-teachy" cx="300" cy="355" r="8"/>
-            <text x="90" y="55">clicky, open</text>
-            <text x="180" y="285" class="dim">April: new work</text>
-            <text x="180" y="305" class="dim">goes private</text>
-            <text x="320" y="225">teachy, July</text>
-            <text x="320" y="245" class="dim">still shipping</text>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="faq" style="--hm: 2" aria-labelledby="faq-h">
-    <div class="wrap">
-      <div class="grid">
-        <div class="span-5 stack-4">
-          <h2 id="faq-h">Questions</h2>
-          <p class="muted">Anything else, open an issue on GitHub.</p>
-          <a class="link" href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Ask on GitHub</a>
-          <div class="keys" role="img" aria-label="The shortcut: hold control and option, then ask"><kbd>control</kbd><span>+</span><kbd>option</kbd><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span></div>
-        </div>
-        <div class="faq span-6 start-7">
-          <div class="faq__item"><h3>Is Teachy made by HeyClicky?</h3><p>No. Teachy grew from Clicky’s open-source code and is built separately, in the open. It isn’t affiliated with HeyClicky.</p></div>
-          <div class="faq__item"><h3>Is Teachy free?</h3><p>Yes. The app is free to download and the code is free to read and change.</p></div>
-          <div class="faq__item"><h3>Does Teachy watch my screen all the time?</h3><p>No. It only sees your screen while you hold the shortcut, or when you turn on hands-free.</p></div>
-          <div class="faq__item"><h3>Can Teachy change things without asking?</h3><p>No. Reading is free, but clicking, typing and commands each ask you first. Press Escape or move the mouse to stop a job.</p></div>
-          <div class="faq__item"><h3>Which Mac does Teachy need?</h3><p>A Mac with Apple silicon (M1 or later) on macOS 14.2 Sonoma or later.</p></div>
-          <div class="faq__item"><h3>Why does macOS warn me about Teachy?</h3><p>The free build is not notarised by Apple yet. Right-click the app, choose Open, and macOS remembers your choice.</p></div>
-        </div>
-      </div>
-    </div>
   </section>
 </main>
 
-<footer class="footer closing footer--dark ground-inverse" id="contact" aria-labelledby="close-h">
-  <div class="wrap">
-    <div class="closing__cta close--word">
-      <div class="section-head--split">
-        <div><h2 id="close-h">Get Teachy on your Mac</h2><p class="t-lead">Free and open source, for macOS 14.2 or later.</p></div>
-        <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
-      </div>
-      <p class="close__word" aria-hidden="true">teachy</p>
-    </div>
-    <div class="closing__links">
-      <div class="grid">
-        <div class="span-4 stack-4">
-          <a class="nav__logo" href="#top"><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span>Teachy</a>
-        </div>
-        <div class="span-2 footer__col"><h3>Features</h3><ul><li><a href="#features">What it does</a></li><li><a href="#jobs">Jobs</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Source</h3><ul><li><a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a></li><li><a href="#open">Why it's open</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Changelog</h3><ul><li><a href="changelog.html">What's new</a></li><li><a href="https://github.com/VedSoni-dev/teachy-releases/releases" target="_blank" rel="noopener">Releases</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Questions</h3><ul><li><a href="#faq">Common questions</a></li><li><a href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Report a bug</a></li></ul></div>
-      </div>
-      <div class="footer__legal">
-        <span>&copy; 2026 Teachy. Built on Clicky by Farza, MIT licence.</span>
-        <div class="socials"></div>
-      </div>
-    </div>
-  </div>
-</footer>
 
 <nav class="actionbar" aria-label="Quick actions">
   <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac</a>
