@@ -10,8 +10,9 @@
 // changelog.html shows them all.
 window.TEACHY_CHANGELOG = [
   {
-    date: "2026-11-14",
-    status: "on main",
+    date: "2026-11-16",
+    status: "released",
+    version: "2.0",
     platforms: ["mac"],
     title: "Teachy grows up: from course app to assistant",
     summary:
