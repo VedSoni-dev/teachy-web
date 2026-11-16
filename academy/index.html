@@ -1,211 +1,737 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-type="software" data-radius="soft" data-ground="sky" data-buttons="arrow" data-motion>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Teachy · the open-source Clicky</title>
-  <meta name="description" content="Teachy is an open-source AI buddy that lives next to your cursor. It sees your screen, talks you through it, points, draws, and does the job. Every line is on GitHub, and it keeps shipping." />
-  <meta property="og:title" content="Teachy · the open-source Clicky" />
-  <meta property="og:description" content="An AI buddy next to your cursor. Open source, and it keeps shipping." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#4ea4dc" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css?v=2" />
-  <script>document.documentElement.classList.add("js");</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teachy: an AI helper next to your cursor on the Mac</title>
+<meta name="description" content="Hold two keys and ask about anything on your screen. Teachy answers out loud, points at the button, draws to explain, or does the job. Free and open source.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teachy: an AI helper next to your cursor on the Mac">
+<meta property="og:description" content="Ask about your screen. Teachy points, draws, or does it for you. Free and open source.">
+<meta property="og:image" content="share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#f7f8fa">
+<!-- <link rel="canonical" href="https://www.tryteachy.com/"> -->
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/backgrounds/backgrounds.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<link rel="stylesheet" href="assets/icons/icon.css">
+<style>
+:root {
+  --p-bg: #f7f8fa; --p-surface: #ffffff; --p-ink: #0b1220; --p-muted: #696f7a;
+  --p-accent: #3380ff; --p-accent-ink: #111111; --p-action: #3380ff; --p-action-ink: #111111;
+  --p-inv-bg: #0b1220; --p-inv-surface: #181f2d; --p-inv-ink: #f7f8fa; --p-inv-muted: #9397a0;
+  --p-inv-accent: #f7f8fa; --p-inv-accent-ink: #0b1220; --p-inv-action: #f7f8fa; --p-inv-action-ink: #0b1220;
+  --font-display: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-text: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-weight: 400;
+  --display-tracking: -0.035em;
+  --display-tracking-xl: -0.042em;
+  --ly-scale: 0.98;
+}
+</style>
+<link rel="stylesheet" href="assets/ui/base.css">
+<link rel="stylesheet" href="assets/ui/window/fragment.css">
+<link rel="stylesheet" href="assets/ui/chat/fragment.css">
+<link rel="stylesheet" href="assets/ui/toggles/fragment.css">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-intro');setTimeout(()=>document.documentElement.classList.remove('js-intro'),4500)}</script>
+<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
+<script src="assets/backgrounds/backgrounds.js"></script>
+<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+<link rel="modulepreload" href="assets/moments/moments.js">
+<link rel="modulepreload" href="assets/moments/lib.js">
+<link rel="modulepreload" href="assets/moments/iris-opens/moment.js">
+<!-- page CSS: only what sits inside a visual -->
+<style>
+  /* Clicky's cursor: an equilateral triangle in #3380FF, tilted -35 degrees, glowing in its own blue */
+  .tri { display: inline-block; width: 1em; height: 1em; color: #3380ff; filter: drop-shadow(0 0 .35em rgb(51 128 255 / .75)); flex: none; }
+  .tri svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .nav__logo .tri { width: 20px; height: 20px; filter: drop-shadow(0 0 5px rgb(51 128 255 / .6)); }
+  .footer--dark .nav__logo .tri { width: 40px; height: 40px; }
+
+  .ui { --ui-font: var(--font-text); }
+  .close__word { font-size: min(22vw, 300px); line-height: 1.15; }
+  .hero--triptych .hero__cta .btn { height: var(--btn-h, 44px); padding-inline: var(--s-6); font-size: var(--t-body); }
+  #open .frame--split { aspect-ratio: 628 / 690; }
+  .keys { display: flex; align-items: center; gap: 12px; margin-top: var(--s-6); padding: 32px; border-radius: var(--r-lg); background: var(--p-surface); border: 1px solid rgb(11 18 32 / .08); }
+  .keys kbd { font: 500 16px/1 var(--font-text); color: var(--p-ink); padding: 14px 18px; border-radius: 10px; background: #fff; border: 1px solid #d6dbe3; border-bottom-width: 3px; }
+  .keys .tri { font-size: 22px; margin-left: 8px; }
+  .keys span:not(.tri) { color: var(--p-muted); }
+
+  /* HERO: 30 apps spread round the words, each with a Clicky pointer in one of the app's four colours */
+  .hero--apps { position: relative; overflow: hidden; --tile-w: clamp(86px, 5vw + 34px, 112px); }
+  .hero--apps .wrap { position: relative; height: 100%; pointer-events: none; }
+  .hero--apps .wrap a { pointer-events: auto; }
+  .hero-apps__text { position: relative; z-index: 2; height: 100%; justify-content: safe center; display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 640px; margin-inline: auto; }
+  .hero--apps h1 { font-size: clamp(40px, 2.4vw + 30px, 68px); line-height: 1.02; margin: 0; }
+  .hero--apps .hero__lead { max-width: 46ch; margin: var(--s-5) auto 0; }
+  .hero--apps .btn-row { justify-content: center; margin-top: var(--s-6); }
+  .hero-apps__fine { margin: var(--s-4) 0 0; font-size: 14px; color: var(--p-muted); }
+
+  /* Clicky's bubble: the pointer colour, white 13px medium text, 7px corners, a glow in its own colour,
+     placed right of and below the pointer as the app places it. The colour is a registered property,
+     so moving to another app fades the pointer and the bubble to that app's colour. */
+  @property --pc { syntax: "<color>"; inherits: true; initial-value: #3380ff; }
+  @property --pc-ink { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
+  @property --pc-fill { syntax: "<color>"; inherits: true; initial-value: #1d66e5; }
+  /* --pc is the app's exact pointer colour; --pc-fill sits behind the bubble's text, a shade deeper for blue and red so white text reads at 4.5:1 */
+  [data-colour="blue"] { --pc: #3380ff; --pc-fill: #1d66e5; --pc-ink: #ffffff; }
+  [data-colour="red"] { --pc: #ff4d4d; --pc-fill: #d42c2c; --pc-ink: #ffffff; }
+  [data-colour="yellow"] { --pc: #ffd60a; --pc-fill: #ffd60a; --pc-ink: #1d1d1f; }
+  [data-colour="green"] { --pc: #30d158; --pc-fill: #30d158; --pc-ink: #0b2a14; }
+  .say { position: absolute; z-index: 7; width: max-content; max-width: 240px; padding: 5px 10px; border-radius: 7px; background: var(--pc-fill); color: var(--pc-ink); font: 500 13px/1.35 var(--font-text); text-align: left; box-shadow: 0 0 10px color-mix(in srgb, var(--pc) 55%, transparent); pointer-events: none; transform-origin: top left; transition: --pc .45s, --pc-fill .45s, --pc-ink .45s, scale .35s cubic-bezier(.34, 1.56, .64, 1), opacity .15s; }
+  .say.is-quiet { opacity: 0; scale: .5; }
+
+  .apps { position: absolute; inset: 0; z-index: 1; }
+  .apps .ex { pointer-events: auto; }
+  .ex { all: unset; position: absolute; left: calc((100% - var(--tile-w, 112px)) * var(--x) / 100); top: calc((100% - 104px) * var(--y) / 100); cursor: pointer; }
+  .ex__card { display: grid; justify-items: center; align-content: center; gap: 8px; width: var(--tile-w, 112px); aspect-ratio: 112 / 96; border-radius: 18px; background: #fff; border: 1px solid rgb(11 18 32 / .07); box-shadow: 0 1px 2px rgb(11 18 32 / .05), 0 14px 30px -18px rgb(11 18 32 / .3); transition: transform .25s var(--ease, ease), box-shadow .25s var(--ease, ease); }
+  .ex:hover .ex__card, .ex:focus-visible .ex__card { transform: translateY(-2px); box-shadow: 0 1px 2px rgb(11 18 32 / .05), 0 18px 36px -18px rgb(11 18 32 / .38); }
+  .ex:focus-visible { outline: 2px solid var(--p-action); outline-offset: 4px; border-radius: 20px; }
+  .ex__icon { width: 36px; height: 36px; object-fit: contain; }
+  .ex__sketch { width: 46px; height: 31px; border-radius: 4px; }
+  .ex__glyph { width: 30px; height: 30px; padding: 4px; border-radius: 8px; background: #1d2230; color: #e8ebf0; }
+  .ex__name { font: 500 13px/1 var(--font-text); color: var(--p-ink); white-space: nowrap; }
+  .ex:hover, .ex:focus-visible { z-index: 6; }
+
+  /* the one pointer: it rests above the headline, flies in on load, and flies to whichever app you hover */
+  .flyer { position: relative; height: 0; align-self: center; width: min(100%, 520px); }
+  .flyer__tri { position: absolute; left: 6%; top: -64px; font-size: 22px; color: var(--pc); filter: drop-shadow(0 0 7px color-mix(in srgb, var(--pc) 70%, transparent)); transition: --pc .45s; }
+  .flyer__say { left: calc(6% + 22px); top: -46px; }
+  /* once the script runs, the pointer and its bubble are placed on the hero itself by position */
+  .hero--apps .apps > .flyer__tri, .hero--apps .apps > .flyer__say { position: absolute; left: 0; top: 0; z-index: 7; pointer-events: none; }
+
+  @media (max-width: 1023px) {
+    .apps { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 0 var(--gut); order: 2; }
+    .ex { position: relative; left: auto; top: auto; }
+    .ex:not(.ex--keep) { display: none; }
+    .ex__card { width: 76px; aspect-ratio: 1; gap: 6px; border-radius: 14px; }
+    .ex__icon { width: 28px; height: 28px; } .ex__sketch { width: 36px; height: 24px; } .ex__glyph { width: 26px; height: 26px; }
+    .ex__card { height: auto; min-height: 76px; aspect-ratio: auto; padding: 10px 4px; }
+    .ex__name { font-size: 13px; line-height: 1.15; max-width: 70px; white-space: normal; text-align: center; }
+    .hero--apps .wrap { height: 100%; display: flex; flex-direction: column; justify-content: safe center; gap: var(--s-6); }
+    .hero--apps .wrap > .hero-apps__text { height: auto; flex: 0 0 auto; margin: 0 auto; order: 1; padding-top: 56px; }
+    .hero--apps .wrap > .apps { flex: 0 0 auto; }
+    .apps { position: static; order: 2; padding: 0; }
+    .flyer__tri { left: 2%; } .flyer__say { left: calc(2% + 22px); }
+  }
+  @media (max-width: 639px) {
+    .ex:nth-of-type(n+9) { display: none; }
+    .ex__card { width: 72px; }
+    .hero--apps .btn-row .btn--secondary { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .say, .flyer__tri, .ex__card { transition: none; } }
+
+  /* the jobs window */
+  .app.ui { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); margin-top: var(--s-7); background: var(--u-bg); border: 1px solid var(--u-border); border-radius: var(--u-r); box-shadow: var(--u-shadow); }
+  .app > .app__pane { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+  .app > .app__pane + .app__pane { border-left: 1px solid var(--u-line); }
+  .app > .app__pane > .ui-panel { width: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  .app > .app__pane::after { content: ""; position: absolute; inset: auto 0 0 0; height: 64px; background: linear-gradient(transparent, var(--u-bg)); pointer-events: none; }
+  @media (min-width: 1024px) and (max-width: 1279px) { .app.ui { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
+  @media (max-width: 1023px) {
+    .app.ui { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+    .app > .app__pane--list { max-height: 252px; }
+    .app > .app__pane--list::after { display: none; }
+    .app .ui-win__side { display: none; }
+    .app .ui-win__body { grid-template-columns: minmax(0, 1fr); }
+    .app > .app__pane + .app__pane { border-left: 0; border-top: 1px solid var(--u-line); }
+  }
+  @media (max-width: 639px) {
+    .app.ui { grid-template-rows: minmax(0, 1fr); }
+    .app > .app__pane--list { display: none; }
+    .app > .app__pane + .app__pane { border-top: 0; }
+  }
+
+  /* feature panels */
+  #features .panel { --p-h: 300px; }
+  @media (max-width: 639px) { #features .panel { --p-h: 200px; } .ft-file { padding: 16px; } .ft-file__doc { padding: 12px 16px; font-size: 13px; line-height: 1.6; } .ft-more { display: none; } }
+  .ft-point, .ft-draw, .ft-file { position: absolute; inset: 0; }
+  .ft-point { display: grid; place-items: center; }
+  .ft-point__bar { display: flex; gap: 10px; padding: 10px; background: #fff; border-radius: 12px; border: 1px solid #e3e7ee; box-shadow: 0 18px 40px -24px rgb(11 18 32 / .35); position: relative; font: 500 14px var(--font-text); color: var(--p-ink); }
+  .ft-point__bar > span:not(.tri) { padding: 8px 14px; border-radius: 8px; background: #f1f3f7; }
+  .ft-point__bar > span.is-target { background: #fff; box-shadow: inset 0 0 0 1.5px #3380ff; }
+  .ft-point__bar .tri { position: absolute; right: -6px; bottom: -22px; font-size: 18px; }
+  .ft-point__say { position: absolute; left: 50%; bottom: 40px; translate: -50% 0; white-space: nowrap; color: var(--p-ink); font: 400 14px/1 var(--font-text); }
+  .ft-draw svg { width: 100%; height: 100%; }
+  .ft-draw text { font: 500 14px var(--font-text); fill: var(--p-ink); }
+  .ft-draw .chalk { fill: none; stroke: #3380ff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .ft-draw .box { fill: #fff; stroke: #c9d2df; stroke-width: 1.5; }
+  .ft-file { padding: 28px 32px; }
+  .ft-file__doc { background: #fff; border: 1px solid #e3e7ee; border-radius: 12px; height: calc(100% + 40px); padding: 18px 22px; font: 400 14px/1.75 var(--font-mono); color: #36404f; box-shadow: 0 18px 40px -24px rgb(11 18 32 / .35); }
+  .ft-file__doc small { display: block; color: var(--p-muted); font-size: 13px; margin-bottom: 6px; }
+  .ft-file__doc b { color: var(--p-ink); font-weight: 500; }
+  .ft-file__doc .is-new { background: rgb(51 128 255 / .12); border-radius: 4px; }
+
+  /* the git graph */
+  .gitgraph { width: 100%; height: 100%; }
+  .gitgraph .ln { fill: none; stroke-width: 3; stroke-linecap: round; }
+  .gitgraph .c-open { stroke: #8b94a3; } .gitgraph .c-closed { stroke: #c6ccd6; stroke-dasharray: 2 7; } .gitgraph .c-teachy { stroke: #3380ff; }
+  .gitgraph circle { stroke: #fff; stroke-width: 3; }
+  .gitgraph .d-open { fill: #8b94a3; } .gitgraph .d-closed { fill: #c6ccd6; } .gitgraph .d-teachy { fill: #3380ff; }
+  .gitgraph text { font: 400 14px var(--font-mono); fill: var(--p-ink); }
+  .gitgraph text.dim { fill: #696f7a; }
+</style>
 </head>
-<body class="home">
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="tri-fill" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#6aa8ff" />
-        <stop offset=".55" stop-color="#3380ff" />
-        <stop offset="1" stop-color="#1a5fe0" />
-      </linearGradient>
-    </defs>
-    <symbol id="tri" viewBox="0 0 100 100">
-      <path d="M50 4 L79 92 Q81 97 76 96 L50 88 L24 96 Q19 97 21 92 Z" />
-    </symbol>
-    <symbol id="gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0a8 8 0 00-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 014 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 008 0z"/></symbol>
-    <symbol id="apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.65.8-3.33.8-.7 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.55 2.68-.4 6.64 1.1 8.82.74 1.06 1.61 2.25 2.75 2.21 1.11-.05 1.53-.71 2.87-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.66-2.15.85-1.23 1.19-2.43 1.21-2.49-.03-.01-2.32-.89-2.35-3.56zM14.2 6.12c.6-.74 1.01-1.75.9-2.77-.87.04-1.94.59-2.56 1.32-.56.64-1.05 1.68-.92 2.67.97.08 1.97-.49 2.58-1.22z"/></symbol>
-    <symbol id="copy" viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 014.5 2H11" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
-  </svg>
+<body>
+<!-- type: software (an open-source AI assistant for the Mac)
+     deal: hero triptych, nav nav-cards, close close-word, footer footer-dark, rhythm space, buttons arrow, mark: the client's own (Clicky's triangle), ground sky
+     palette: Teachy's own colours through start.mjs brand (Clicky blue #3380FF on near-white), type schibsted (the dealt geist was rejected by the client)
+     moments: iris-opens on #open -->
 
-  <!-- the cursor that flies in, then becomes the logo -->
-  <div class="flyer" id="flyer" aria-hidden="true"><svg><use href="#tri" fill="url(#tri-fill)" /></svg></div>
-  <!-- the little buddy that follows your cursor around the page -->
-  <div class="buddy" id="buddy" aria-hidden="true">
-    <svg class="buddy-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>
-    <div class="buddy-bubble" id="buddy-bubble"></div>
-  </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="tri" viewBox="-8 -8 116 116"><path transform="rotate(-35 50 50)" d="M50 -7.735 L100 78.868 L0 78.868 Z" fill="currentColor"/></symbol>
+</svg>
 
-  <header class="nav" id="nav">
-    <a class="brand" href="#top" data-say="that's me">
-      <svg class="brand-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>teachy
-    </a>
-    <nav class="nav-links" aria-label="Main">
-      <a href="#open" data-say="why we're open">open source</a>
-      <a href="#desk" data-say="try me out">what it does</a>
-      <a href="changelog.html" data-say="we ship a lot">changelog</a>
-      <a class="nav-gh" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" data-say="read every line">
-        <svg><use href="#gh" /></svg><span>GitHub</span><span class="star-count" data-stars hidden></span>
-      </a>
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#top">Skip to content</a>
+    <a class="nav__logo" href="#top"><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span>Teachy</a>
+    <nav class="nav__links" aria-label="Main">
+      <div class="nav__item">
+        <a class="nav__link" href="#features">Features <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav__menu">
+          <div class="wrap grid">
+            <a class="menu-card span-4" href="#features">
+              <div class="panel"><div class="ft-point"><div class="ft-point__bar"><span>File</span><span class="is-target">Export</span><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span></div></div></div>
+              <span class="t-card">Points the way</span>
+              <span class="t-small muted">Flies to the button you asked about</span>
+            </a>
+            <a class="menu-card span-4" href="#jobs">
+              <div class="panel"><div class="ft-point"><div class="ft-point__bar"><span>Allow once</span><span>Not now</span></div></div></div>
+              <span class="t-card">Does the job</span>
+              <span class="t-small muted">Runs tasks and asks before it acts</span>
+            </a>
+            <a class="menu-card span-4" href="#features">
+              <div class="panel"><div class="ft-point"><div class="ft-point__bar"><span>PROFILE.md</span></div></div></div>
+              <span class="t-card">Remembers you</span>
+              <span class="t-small muted">Its memory is a file you can edit</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__item"><a class="nav__link" href="#jobs">Jobs</a></div>
+      <div class="nav__item"><a class="nav__link" href="#open">Source</a></div>
+      <div class="nav__item"><a class="nav__link" href="changelog.html">Changelog</a></div>
+      <div class="nav__item"><a class="nav__link" href="#faq">Questions</a></div>
     </nav>
-  </header>
-
-  <main id="top">
-    <!-- HERO: a live sky; move through it and the wind follows you -->
-    <section class="hero" id="hero">
-      <div class="sky" id="sky"></div>
-      <div class="hero-inner">
-        <div class="hero-mark" id="hero-mark" aria-hidden="true"></div>
-        <a class="pill" href="changelog.html" data-say="fresh off main">
-          <span class="pill-dot"></span><span class="mono">open source</span><span class="pill-sep">·</span><span data-latest>always shipping</span>
-        </a>
-        <h1 class="hero-title">
-          <span class="line">Clicky, but</span>
-          <span class="line"><em>open source.</em></span>
-        </h1>
-        <p class="hero-sub">Teachy is an AI buddy that lives next to your cursor. It sees your screen, talks you through it, points, draws, and does the job for you. Every line is on GitHub, and we never stop shipping.</p>
-        <div class="hero-actions">
-          <a class="btn btn-glass" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" data-say="free. go on.">
-            <svg class="i"><use href="#apple" /></svg>Download for Mac
-          </a>
-          <a class="btn btn-ink" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" data-say="a star helps a lot">
-            <svg class="i"><use href="#gh" /></svg>Star on GitHub
-          </a>
-        </div>
-        <button class="clone" type="button" data-copy="git clone https://github.com/VedSoni-dev/teachy" data-say="click to copy">
-          <span class="clone-prompt">$</span><span class="clone-cmd">git clone github.com/VedSoni-dev/teachy</span><svg class="i"><use href="#copy" /></svg>
-        </button>
-        <p class="fine">free · macOS 14.2 or later · bring your own key</p>
-      </div>
-      <p class="hero-hint mono" aria-hidden="true">move through the sky ↗ or hold <kbd>control</kbd> + <kbd>option</kbd></p>
-    </section>
-
-    <!-- shipping ticker: real commits -->
-    <section class="ticker" aria-label="Recent commits">
-      <div class="ticker-label mono"><span class="live"></span>git log</div>
-      <div class="ticker-track"><div class="ticker-run" id="ticker"></div></div>
-    </section>
-
-    <!-- OPEN SOURCE story with a git graph -->
-    <section class="open" id="open">
-      <div class="wrap open-grid">
-        <div class="open-copy">
-          <p class="eyebrow mono">// why teachy exists</p>
-          <h2>The original went private.<br /><em>We stayed open.</em></h2>
-          <p>Clicky showed what an AI next to your cursor feels like. Its first codebase stays open, but the new work went private in April. Teachy picks up the open line and keeps building in public: every feature, fix and late-night commit lands on GitHub where you can read it, fork it, and make it yours.</p>
-          <ul class="facts">
-            <li><span class="mono">01</span><div><strong>Read every line.</strong> The app, the proxy, the prompts. No black box watching your screen.</div></li>
-            <li><span class="mono">02</span><div><strong>Maintained, not abandoned.</strong> Dated releases, a real changelog, and commits you can watch land.</div></li>
-            <li><span class="mono">03</span><div><strong>Your key, your bill.</strong> Bring your own AI key. Nothing to subscribe to.</div></li>
-          </ul>
-        </div>
-        <figure class="graph" aria-label="A git graph: Clicky's open code, its private continuation, and Teachy branching off and continuing in the open">
-          <svg viewBox="0 0 520 420" id="gitgraph" role="img">
-            <title>Clicky to Teachy, as a git graph</title>
-            <!-- clicky open line -->
-            <path class="g-line g-clicky" d="M60 30 V180" />
-            <!-- heyclicky private branch -->
-            <path class="g-line g-private" d="M60 180 C60 215 150 215 150 250 V390" />
-            <!-- clicky open stops -->
-            <path class="g-line g-clicky g-frozen" d="M60 180 V390" />
-            <!-- teachy branch -->
-            <path class="g-line g-teachy" id="teachy-line" d="M60 120 C60 150 300 140 300 190 V400" />
-            <g class="g-dots">
-              <circle cx="60" cy="40" r="7" class="d-clicky" /><circle cx="60" cy="80" r="7" class="d-clicky" />
-              <circle cx="60" cy="120" r="7" class="d-clicky" /><circle cx="60" cy="160" r="7" class="d-clicky" />
-              <circle cx="150" cy="270" r="7" class="d-private" /><circle cx="150" cy="320" r="7" class="d-private" /><circle cx="150" cy="370" r="7" class="d-private" />
-            </g>
-            <g id="teachy-dots"></g>
-            <g class="g-labels mono">
-              <text x="78" y="44">clicky · open source</text>
-              <text x="78" y="184">apr 27 · new work goes private</text>
-              <text x="168" y="274">heyclicky</text><text x="168" y="290" class="dim">closed</text>
-              <text x="40" y="408" class="dim">open repo, frozen</text>
-              <text x="318" y="200">teachy · jul 13</text>
-              <text x="318" y="216" class="dim">forked in the open</text>
-            </g>
-            <g class="g-head" id="g-head" transform="translate(300 400)">
-              <rect x="14" y="-14" rx="11" width="150" height="24" />
-              <text x="26" y="3" class="mono" data-head>HEAD · still shipping</text>
-            </g>
-          </svg>
-          <figcaption class="mono">based on Clicky by Farza (MIT). Not affiliated with HeyClicky.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- THE DESK: an interactive demo of what Teachy does -->
-    <section class="desk" id="desk">
-      <div class="wrap">
-        <p class="eyebrow mono">// what it does</p>
-        <h2>Ask about your screen.<br /><em>It shows you, or does it.</em></h2>
-        <div class="desk-grid">
-          <div class="desk-tabs" role="tablist" aria-label="Teachy features">
-            <button role="tab" aria-selected="true" data-scene="point" data-say="watch me point"><span class="mono">01</span>points the way<small>Finds the button you need and flies right to it.</small></button>
-            <button role="tab" aria-selected="false" data-scene="draw" data-say="i draw too"><span class="mono">02</span>draws to explain<small>Sketches in 2D and builds 3D scenes on your screen.</small></button>
-            <button role="tab" aria-selected="false" data-scene="job" data-say="i'll handle it"><span class="mono">03</span>does the job<small>Runs jobs in the background. Asks before it touches anything.</small></button>
-            <button role="tab" aria-selected="false" data-scene="dictate" data-say="just talk"><span class="mono">04</span>types what you say<small>Hold fn + control in any text field and talk.</small></button>
-            <button role="tab" aria-selected="false" data-scene="memory" data-say="i remember"><span class="mono">05</span>remembers you<small>Its memory is a plain file you can open and edit.</small></button>
-          </div>
-          <div class="mac" aria-live="polite">
-            <div class="mac-bar"><i></i><i></i><i></i><span class="mac-title mono" id="mac-title">Figma</span></div>
-            <div class="mac-body" id="stage">
-              <!-- scenes are built by site.js -->
-            </div>
-            <div class="mac-voice" id="mac-voice"><span class="wave"><b></b><b></b><b></b><b></b><b></b></span><span id="voice-text">teachy, where's the export button?</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHANGELOG teaser -->
-    <section class="latest" id="latest">
-      <div class="wrap latest-grid">
-        <div>
-          <p class="eyebrow mono">// changelog</p>
-          <h2>Shipped, <em>dated,</em><br />written down.</h2>
-          <p class="muted">Every release gets a plain-English entry: what changed for you, not a wall of commit hashes. Released builds and work that's merged on main, kept separate so you always know what's in your download.</p>
-          <a class="btn btn-ink" href="changelog.html" data-say="the full story">Read the changelog →</a>
-        </div>
-        <article class="cl-card" id="cl-card"></article>
-      </div>
-    </section>
-
-    <!-- CTA with a dusk sky -->
-    <section class="cta" id="cta">
-      <div class="sky sky-dusk" id="sky-dusk"></div>
-      <div class="cta-inner">
-        <svg class="cta-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>
-        <h2>Say hi to <em>teachy.</em></h2>
-        <div class="hero-actions">
-          <a class="btn btn-glass" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg" data-say="see you on your desktop"><svg class="i"><use href="#apple" /></svg>Download for Mac</a>
-          <a class="btn btn-ink" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" data-say="fork me"><svg class="i"><use href="#gh" /></svg>Fork on GitHub</a>
-        </div>
-        <p class="fine light">free · macOS 14.2 or later · Windows build in the repo</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="foot">
-    <div class="wrap foot-inner">
-      <a class="brand" href="#top"><svg class="brand-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>teachy</a>
-      <nav aria-label="Footer">
-        <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
-        <a href="changelog.html">Changelog</a>
-        <a href="https://github.com/VedSoni-dev/teachy-releases/releases" target="_blank" rel="noopener">Releases</a>
-        <a href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Report a bug</a>
-      </nav>
+    <div class="nav__actions">
+      <a class="nav__link" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac</a>
     </div>
-    <p class="wrap foot-note">Teachy only sees your screen when you press the hotkey. Built on the open-source Clicky codebase by Farza; not affiliated with HeyClicky. Sky by <a href="https://frontend.vedantsoni.com/sky" target="_blank" rel="noopener">cirrus</a>.</p>
-    <div class="foot-word" aria-hidden="true">teachy</div>
-  </footer>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
 
-  <script src="changelog.js?v=2"></script>
-  <script type="module" src="site.js?v=2"></script>
+<main id="top">
+  <section class="hero hero--apps" data-enter aria-labelledby="hero-h">
+    <div class="wrap">
+    <div class="apps" aria-label="Apps Teachy can help with. Hover one to hear how.">
+        <button class="ex ex--keep" type="button" data-colour="blue" data-line="I can help you learn how to make beats in FL Studio!" style="--x: 1.27; --y: 3.47" aria-label="FL Studio: I can help you learn how to make beats in FL Studio!">
+          <span class="ex__card"><svg class="ex__sketch" viewBox="0 0 48 32" aria-hidden="true"><rect x="0" y="0" width="5" height="7" rx="1" fill="#f28c28"/><rect x="6" y="0" width="5" height="7" rx="1" fill="#3a4150"/><rect x="12" y="0" width="5" height="7" rx="1" fill="#3a4150"/><rect x="18" y="0" width="5" height="7" rx="1" fill="#3a4150"/><rect x="24" y="0" width="5" height="7" rx="1" fill="#f28c28"/><rect x="30" y="0" width="5" height="7" rx="1" fill="#3a4150"/><rect x="36" y="0" width="5" height="7" rx="1" fill="#3a4150"/><rect x="42" y="0" width="5" height="7" rx="1" fill="#3a4150"/><rect x="0" y="8" width="5" height="7" rx="1" fill="#3a4150"/><rect x="6" y="8" width="5" height="7" rx="1" fill="#3a4150"/><rect x="12" y="8" width="5" height="7" rx="1" fill="#f28c28"/><rect x="18" y="8" width="5" height="7" rx="1" fill="#3a4150"/><rect x="24" y="8" width="5" height="7" rx="1" fill="#3a4150"/><rect x="30" y="8" width="5" height="7" rx="1" fill="#3a4150"/><rect x="36" y="8" width="5" height="7" rx="1" fill="#f28c28"/><rect x="42" y="8" width="5" height="7" rx="1" fill="#3a4150"/><rect x="0" y="16" width="5" height="7" rx="1" fill="#f28c28"/><rect x="6" y="16" width="5" height="7" rx="1" fill="#3a4150"/><rect x="12" y="16" width="5" height="7" rx="1" fill="#3a4150"/><rect x="18" y="16" width="5" height="7" rx="1" fill="#f28c28"/><rect x="24" y="16" width="5" height="7" rx="1" fill="#3a4150"/><rect x="30" y="16" width="5" height="7" rx="1" fill="#f28c28"/><rect x="36" y="16" width="5" height="7" rx="1" fill="#3a4150"/><rect x="42" y="16" width="5" height="7" rx="1" fill="#3a4150"/><rect x="0" y="24" width="5" height="7" rx="1" fill="#3a4150"/><rect x="6" y="24" width="5" height="7" rx="1" fill="#f28c28"/><rect x="12" y="24" width="5" height="7" rx="1" fill="#f28c28"/><rect x="18" y="24" width="5" height="7" rx="1" fill="#3a4150"/><rect x="24" y="24" width="5" height="7" rx="1" fill="#3a4150"/><rect x="30" y="24" width="5" height="7" rx="1" fill="#f28c28"/><rect x="36" y="24" width="5" height="7" rx="1" fill="#f28c28"/><rect x="42" y="24" width="5" height="7" rx="1" fill="#f28c28"/></svg><span class="ex__name">FL Studio</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="green" data-line="I'll show you where every tool in Figma lives." style="--x: 11.17; --y: 0.00" aria-label="Figma: I'll show you where every tool in Figma lives.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/figma.svg" alt="" width="40" height="40"><span class="ex__name">Figma</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="yellow" data-line="I'll explain that Xcode build error, out loud." style="--x: 25.17; --y: 0.00" aria-label="Xcode: I'll explain that Xcode build error, out loud.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/xcode.svg" alt="" width="40" height="40"><span class="ex__name">Xcode</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="red" data-line="I can queue up music in Spotify while you work." style="--x: 37.12; --y: 1.56" aria-label="Spotify: I can queue up music in Spotify while you work.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/spotify.svg" alt="" width="40" height="40"><span class="ex__name">Spotify</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="red" data-line="Stuck in Blender? I'll point at the button you need." style="--x: 49.86; --y: 2.37" aria-label="Blender: Stuck in Blender? I'll point at the button you need.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/blender.svg" alt="" width="40" height="40"><span class="ex__name">Blender</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="blue" data-line="I'll write that spreadsheet formula with you." style="--x: 62.88; --y: 0.00" aria-label="Excel: I'll write that spreadsheet formula with you.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/xlsx.svg" alt="" width="40" height="40"><span class="ex__name">Excel</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="green" data-line="I'll help you set up your Discord server." style="--x: 74.00; --y: 0.11" aria-label="Discord: I'll help you set up your Discord server.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/discord.svg" alt="" width="40" height="40"><span class="ex__name">Discord</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="yellow" data-line="I can help you record vocals in Logic Pro." style="--x: 86.99; --y: 0.00" aria-label="Logic Pro: I can help you record vocals in Logic Pro.">
+          <span class="ex__card"><svg class="ex__sketch" viewBox="0 0 48 32" aria-hidden="true"><rect width="48" height="32" rx="2" fill="#f4f5f7"/><rect x="0" y="0" width="6.2" height="32" fill="#fff" stroke="#c9ced8" stroke-width=".6"/><rect x="6.86" y="0" width="6.2" height="32" fill="#fff" stroke="#c9ced8" stroke-width=".6"/><rect x="13.72" y="0" width="6.2" height="32" fill="#fff" stroke="#c9ced8" stroke-width=".6"/><rect x="20.580000000000002" y="0" width="6.2" height="32" fill="#fff" stroke="#c9ced8" stroke-width=".6"/><rect x="27.44" y="0" width="6.2" height="32" fill="#fff" stroke="#c9ced8" stroke-width=".6"/><rect x="34.300000000000004" y="0" width="6.2" height="32" fill="#fff" stroke="#c9ced8" stroke-width=".6"/><rect x="41.160000000000004" y="0" width="6.2" height="32" fill="#fff" stroke="#c9ced8" stroke-width=".6"/><rect x="4.4" y="0" width="4" height="19" fill="#1d2230"/><rect x="11.260000000000002" y="0" width="4" height="19" fill="#1d2230"/><rect x="24.980000000000004" y="0" width="4" height="19" fill="#1d2230"/><rect x="31.840000000000003" y="0" width="4" height="19" fill="#1d2230"/><rect x="38.7" y="0" width="4" height="19" fill="#1d2230"/></svg><span class="ex__name">Logic Pro</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="yellow" data-line="I'll walk you through cutting out a photo in Photoshop." style="--x: 100.00; --y: 0.00" aria-label="Photoshop: I'll walk you through cutting out a photo in Photoshop.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/photoshop.svg" alt="" width="40" height="40"><span class="ex__name">Photoshop</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="red" data-line="I'll explain what that pull request changes." style="--x: 1.41; --y: 23.42" aria-label="GitHub: I'll explain what that pull request changes.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/github.svg" alt="" width="40" height="40"><span class="ex__name">GitHub</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="blue" data-line="I can set up your Notion workspace with you." style="--x: 13.46; --y: 21.93" aria-label="Notion: I can set up your Notion workspace with you.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/notion.svg" alt="" width="40" height="40"><span class="ex__name">Notion</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="green" data-line="Let's build your first game in Unity together." style="--x: 86.54; --y: 27.50" aria-label="Unity: Let's build your first game in Unity together.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/unity.svg" alt="" width="40" height="40"><span class="ex__name">Unity</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="green" data-line="I can teach you Python one line at a time." style="--x: 100.00; --y: 25.43" aria-label="Python: I can teach you Python one line at a time.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/python.svg" alt="" width="40" height="40"><span class="ex__name">Python</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="yellow" data-line="I'll show you how to cut your video in Premiere Pro." style="--x: 0.95; --y: 49.24" aria-label="Premiere Pro: I'll show you how to cut your video in Premiere Pro.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/premiere.svg" alt="" width="40" height="40"><span class="ex__name">Premiere Pro</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="red" data-line="I'll draft replies in Gmail. You hit send." style="--x: 12.33; --y: 52.98" aria-label="Gmail: I'll draft replies in Gmail. You hit send.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/gmail.svg" alt="" width="40" height="40"><span class="ex__name">Gmail</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="blue" data-line="I'll show you how to sketch a track in Ableton Live." style="--x: 88.78; --y: 49.80" aria-label="Ableton Live: I'll show you how to sketch a track in Ableton Live.">
+          <span class="ex__card"><svg class="ex__sketch" viewBox="0 0 48 32" aria-hidden="true"><rect x="0" y="0" width="11" height="10" rx="1.5" fill="#ff7a59"/><rect x="0" y="11" width="11" height="10" rx="1.5" fill="#ffd166"/><rect x="0" y="22" width="11" height="10" rx="1.5" fill="#3a4150"/><rect x="12" y="0" width="11" height="10" rx="1.5" fill="#7bd389"/><rect x="12" y="11" width="11" height="10" rx="1.5" fill="#3a4150"/><rect x="12" y="22" width="11" height="10" rx="1.5" fill="#5ec8f2"/><rect x="24" y="0" width="11" height="10" rx="1.5" fill="#ffd166"/><rect x="24" y="11" width="11" height="10" rx="1.5" fill="#ff7a59"/><rect x="24" y="22" width="11" height="10" rx="1.5" fill="#7bd389"/><rect x="36" y="0" width="11" height="10" rx="1.5" fill="#3a4150"/><rect x="36" y="11" width="11" height="10" rx="1.5" fill="#5ec8f2"/><rect x="36" y="22" width="11" height="10" rx="1.5" fill="#ffd166"/></svg><span class="ex__name">Ableton Live</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="blue" data-line="I'll read your code and tell you what broke." style="--x: 99.80; --y: 47.80" aria-label="VS Code: I'll read your code and tell you what broke.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/visual-studio-code.svg" alt="" width="40" height="40"><span class="ex__name">VS Code</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="green" data-line="I'll quiz you on today's Duolingo words." style="--x: 0.43; --y: 73.47" aria-label="Duolingo: I'll quiz you on today's Duolingo words.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/duolingo.svg" alt="" width="40" height="40"><span class="ex__name">Duolingo</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="yellow" data-line="I'll help you draw your logo in Illustrator." style="--x: 11.97; --y: 72.40" aria-label="Illustrator: I'll help you draw your logo in Illustrator.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/illustrator.svg" alt="" width="40" height="40"><span class="ex__name">Illustrator</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="red" data-line="I'll explain any command before you run it." style="--x: 88.28; --y: 72.36" aria-label="Terminal: I'll explain any command before you run it.">
+          <span class="ex__card"><svg class="ex__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19h8M4 17l6-6l-6-6"/></svg><span class="ex__name">Terminal</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="red" data-line="I'll turn your Google Sheets data into a chart." style="--x: 100.00; --y: 71.66" aria-label="Google Sheets: I'll turn your Google Sheets data into a chart.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/google-sheets.svg" alt="" width="40" height="40"><span class="ex__name">Google Sheets</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="blue" data-line="I'll guide you around Unreal Engine's editor." style="--x: 0.48; --y: 100.00" aria-label="Unreal Engine: I'll guide you around Unreal Engine's editor.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/unrealengine.svg" alt="" width="40" height="40"><span class="ex__name">Unreal Engine</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="green" data-line="I'll help you write that tricky Slack reply." style="--x: 12.26; --y: 96.13" aria-label="Slack: I'll help you write that tricky Slack reply.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/slack.svg" alt="" width="40" height="40"><span class="ex__name">Slack</span></span>
+        </button>
+        <button class="ex ex--keep" type="button" data-colour="yellow" data-line="I'll show you how to trim clips in Final Cut Pro." style="--x: 23.91; --y: 96.70" aria-label="Final Cut Pro: I'll show you how to trim clips in Final Cut Pro.">
+          <span class="ex__card"><svg class="ex__sketch" viewBox="0 0 48 32" aria-hidden="true"><rect width="48" height="32" rx="2" fill="#20242e"/><rect x="2" y="4" width="26" height="7" rx="1.5" fill="#5e8cff"/><rect x="29" y="4" width="17" height="7" rx="1.5" fill="#5e8cff"/><rect x="8" y="13" width="22" height="6" rx="1.5" fill="#7bd389"/><rect x="2" y="21" width="40" height="6" rx="1.5" fill="#b48cf2"/><rect x="21" y="1" width="1.5" height="30" fill="#ffd166"/></svg><span class="ex__name">Final Cut Pro</span></span>
+        </button>
+        <button class="ex" type="button" data-colour="yellow" data-line="I'll compare all those open tabs for you." style="--x: 36.99; --y: 96.62" aria-label="Chrome: I'll compare all those open tabs for you.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/chrome.svg" alt="" width="40" height="40"><span class="ex__name">Chrome</span></span>
+        </button>
+        <button class="ex" type="button" data-colour="red" data-line="I can teach you keyframes in After Effects." style="--x: 49.99; --y: 100.00" aria-label="After Effects: I can teach you keyframes in After Effects.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/after-effects.svg" alt="" width="40" height="40"><span class="ex__name">After Effects</span></span>
+        </button>
+        <button class="ex" type="button" data-colour="blue" data-line="I can turn your Obsidian notes into a plan." style="--x: 61.00; --y: 97.93" aria-label="Obsidian: I can turn your Obsidian notes into a plan.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/obsidian.svg" alt="" width="40" height="40"><span class="ex__name">Obsidian</span></span>
+        </button>
+        <button class="ex" type="button" data-colour="green" data-line="I'll get your Docker container running." style="--x: 73.99; --y: 99.10" aria-label="Docker: I'll get your Docker container running.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/docker.svg" alt="" width="40" height="40"><span class="ex__name">Docker</span></span>
+        </button>
+        <button class="ex" type="button" data-colour="green" data-line="I'll teach you colour grading in DaVinci Resolve." style="--x: 87.26; --y: 98.63" aria-label="DaVinci Resolve: I'll teach you colour grading in DaVinci Resolve.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/davinciresolve.svg" alt="" width="40" height="40"><span class="ex__name">DaVinci Resolve</span></span>
+        </button>
+        <button class="ex" type="button" data-colour="yellow" data-line="I'll help you publish your first WordPress post." style="--x: 100.00; --y: 98.94" aria-label="WordPress: I'll help you publish your first WordPress post.">
+          <span class="ex__card"><img class="ex__icon" src="assets/icons/wordpress.svg" alt="" width="40" height="40"><span class="ex__name">WordPress</span></span>
+        </button>
+    </div>
+    <div class="hero-text hero-apps__text">
+      <div class="flyer" aria-hidden="true"><span class="flyer__tri tri" data-colour="blue"><svg><use href="#tri"/></svg></span><span class="flyer__say say" data-colour="blue" data-line="I help you do anything! Hover any icon to find out how">I help you do anything! Hover any icon to find out how</span></div>
+      <h1 id="hero-h">HeyClicky, but open source</h1>
+      <p class="hero__lead">Teachy is an AI that lives next to your cursor on the Mac. Hold control and option, ask about your screen, and it points, draws, explains or does it for you.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+        <a class="btn btn--secondary" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">Read the code</a>
+      </div>
+      <p class="hero-apps__fine">Free for macOS 14.2 or later</p>
+    </div></div>
+  </section>
+
+  <section class="section" id="jobs" aria-labelledby="jobs-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 class="span-5" id="jobs-h">Background jobs while you keep working</h2>
+        <p class="span-6 start-7 t-lead">Ask for something bigger and Teachy makes a plan, works through it in the background and stops to ask before it touches your files. <a class="link" href="#faq">What it may touch</a></p>
+      </div>
+      <div class="ui app fill" role="img" aria-label="Teachy's jobs window: a list of finished and running jobs beside the open job's conversation" data-ui-pause-host>
+        <div class="app__pane app__pane--list">
+          <div class="ui ui-panel ui-win" data-ui="window" data-open="Running" data-work="Working" data-done="Done">
+            <div class="ui-win__bar">
+              <span class="ui-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="ui-win__crumb">Teachy <i>/</i> <b>Jobs</b></span>
+              <span class="ui-spacer"></span>
+              <span class="ui-win__search" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span class="ui-win__ph">Search</span><span class="ui-kbd">/</span></span>
+            </div>
+            <div class="ui-win__body">
+              <nav class="ui-win__side" aria-hidden="true">
+                <span class="ui-win__nav is-on"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>Running<em>2</em></span>
+                <span class="ui-win__nav"><svg class="ui-icon" viewBox="0 0 16 16"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg>Done<em>31</em></span>
+                <span class="ui-win__nav"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5"/></svg>Needs you<em>1</em></span>
+                <span class="ui-win__label">Agents</span>
+                <span class="ui-win__nav"><span class="ui-win__hash">#</span>Inbox</span>
+                <span class="ui-win__nav"><span class="ui-win__hash">#</span>Research</span>
+              </nav>
+              <div class="ui-win__main">
+                <div class="ui-win__cols" aria-hidden="true"><span>App</span><span>Job</span><span>Status</span><span>Age</span></div>
+                <ul class="ui-win__rows">
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">Fi</span><span class="ui-win__who">Finder</span><span class="ui-win__sub">Rename 42 screenshots</span><span class="ui-win__st" data-st>Running</span><span class="ui-win__age">now</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">Ma</span><span class="ui-win__who">Mail</span><span class="ui-win__sub">Draft replies to 6 emails</span><span class="ui-win__st is-you" data-st>Needs you</span><span class="ui-win__age">4m</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">Sa</span><span class="ui-win__who">Safari</span><span class="ui-win__sub">Compare three standing desks</span><span class="ui-win__st" data-st>Running</span><span class="ui-win__age">9m</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="2">Nu</span><span class="ui-win__who">Numbers</span><span class="ui-win__sub">Total last month's receipts</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">22m</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="5">Pr</span><span class="ui-win__who">Preview</span><span class="ui-win__sub">Summarise a 40-page PDF</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">1h</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">Ca</span><span class="ui-win__who">Calendar</span><span class="ui-win__sub">Find a free hour on Friday</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">2h</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">Te</span><span class="ui-win__who">Terminal</span><span class="ui-win__sub">Explain a failing build</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">3h</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">No</span><span class="ui-win__who">Notes</span><span class="ui-win__sub">Turn a meeting into to-dos</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">5h</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="2">Fi</span><span class="ui-win__who">Finder</span><span class="ui-win__sub">Sort downloads into folders</span><span class="ui-win__st is-done" data-st>Done</span><span class="ui-win__age">1d</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="app__pane app__pane--open" data-ui-loop>
+          <div class="ui ui-panel ui-chat" data-ui="chat">
+            <div class="ui-head">
+              <span class="ui-agent" aria-hidden="true"></span>
+              <div class="ui-title">Rename screenshots</div>
+              <span class="ui-chat__online">Running</span>
+              <span class="ui-spacer"></span>
+            </div>
+            <div class="ui-chat__body">
+              <div class="ui-chat__day">Today, 9:41</div>
+              <div class="ui-msg ui-msg--me" data-chat-q><span class="ui-msg__text">Rename my screenshots by what's in them</span></div>
+              <div class="ui-msg ui-msg--bot" data-chat-a>
+                <span class="ui-agent ui-msg__av" aria-hidden="true"></span>
+                <span class="ui-msg__col">
+                  <span class="ui-chat__typing" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <span class="ui-chat__answer">31 of 42 renamed, like <b>stripe-invoice-october.png</b>. Three are blank, so I'm leaving those.</span>
+                  <span class="ui-chat__srcs"><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M2.5 4.5h4l1.5 1.5h5.5v7h-11z"/></svg>Desktop › Screenshots</span><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg>Allowed once</span></span>
+                </span>
+              </div>
+              <div class="ui-msg ui-msg--me"><span class="ui-msg__text">Put the receipts in their own folder too</span></div>
+            </div>
+            <div class="ui-chat__input"><span class="ui-chat__ph">Ask Teachy</span><span class="ui-chat__send" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 13V3.5M3.8 7.5 8 3.3l4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section g2" id="features" aria-labelledby="features-h">
+    <div class="wrap">
+      <div class="group">
+        <div class="section-head">
+          <h2 id="features-h">Four things Teachy does on your screen</h2>
+        </div>
+        <div class="grid">
+          <article class="card card--row card--open span-6">
+            <h3>Points at buttons in any of your apps</h3>
+            <p>Ask where something is and the blue triangle flies across your screen and stops on it.</p>
+            <div class="panel" role="img" aria-label="Teachy's triangle stopped on an Export button in a toolbar">
+              <div class="ft-point"><div class="ft-point__bar"><span>File</span><span>Edit</span><span>Share</span><span class="is-target">Export</span><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span></div><div class="ft-point__say">It's Export, top right.</div></div>
+            </div>
+          </article>
+          <article class="card card--row card--open span-6">
+            <h3>Draws examples right on your screen</h3>
+            <p>Diagrams, arrows and 3D scenes appear right on your screen, and it talks you through them.</p>
+            <div class="panel" role="img" aria-label="A hand-drawn blue diagram of how a fraction splits a pizza into eighths">
+              <div class="ft-draw"><svg viewBox="0 0 560 300" preserveAspectRatio="xMidYMid meet">
+                <circle class="chalk" cx="180" cy="150" r="96"/>
+                <path class="chalk" d="M180 54 V246 M84 150 H276 M112 82 L248 218 M248 82 L112 218"/>
+                <path class="chalk" d="M180 150 L180 54 A96 96 0 0 1 248 82 Z" style="fill: rgb(51 128 255 / .18)"/>
+                <path class="chalk" d="M300 96 C 330 84, 352 86, 372 98"/><path class="chalk" d="M362 88 l12 10 -15 4"/>
+                <text x="390" y="104">3/8 is three</text><text x="390" y="126">of these slices</text>
+              </svg></div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="grid">
+        <article class="card card--row card--open span-6">
+          <h3>Security: it asks before it acts</h3>
+          <p>Reading the screen is free. Clicking, typing and running commands each need your yes.</p>
+          <div class="panel">
+            <div class="stage stage--fade-b"><div class="at-right to-edge" style="--ax:32px;--ay:40px" data-ui-loop>
+              <div class="ui ui-panel ui-toggles" data-ui="toggles">
+                <div class="ui-head">
+                  <svg class="ui-icon ui-toggles__ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.8 13 4v3.6c0 3-2.1 5.4-5 6.6-2.9-1.2-5-3.6-5-6.6V4z"/><path d="m5.8 8 1.6 1.6 3-3.2"/></svg>
+                  <div class="ui-title">What Teachy may do</div>
+                  <span class="ui-spacer"></span>
+                  <div class="ui-meta" data-tg-count>3 of 5 on</div>
+                </div>
+                <ul class="ui-toggles__list">
+                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">See the screen</span><span class="ui-tg__sub">Only while you hold the keys</span></span><button class="ui-switch is-on" type="button" role="switch" aria-checked="true" aria-label="See the screen"><i></i></button></li>
+                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Click and type in Finder</span><span class="ui-tg__sub">Asks once per job</span></span><button class="ui-switch is-on" type="button" role="switch" aria-checked="true" aria-label="Click and type in Finder"><i></i></button></li>
+                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Run shell commands</span><span class="ui-tg__sub">Always asks first</span></span><button class="ui-switch" type="button" role="switch" aria-checked="false" aria-label="Run shell commands"><i></i></button></li>
+                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Remember what you tell it</span><span class="ui-tg__sub">In a file you can edit</span></span><button class="ui-switch is-on" type="button" role="switch" aria-checked="true" aria-label="Remember what you tell it"><i></i></button></li>
+                  <li class="ui-tg"><span class="ui-tg__text"><span class="ui-tg__label">Use browser sign-ins</span><span class="ui-tg__sub">Off unless you turn it on</span></span><button class="ui-switch" type="button" role="switch" aria-checked="false" aria-label="Use browser sign-ins"><i></i></button></li>
+                </ul>
+              </div>
+            </div></div>
+          </div>
+        </article>
+        <article class="card card--row card--open span-6">
+          <h3>Your assistant’s memory, in one file</h3>
+          <p>What it learns about you lives in two Markdown files on your Mac. Open them and edit anything.</p>
+          <div class="panel" role="img" aria-label="Teachy's memory file, PROFILE.md, with a few lines about the person">
+            <div class="ft-file"><div class="ft-file__doc">
+              <small>~/.teachy/brain/PROFILE.md</small>
+              <b>## About me</b><br>
+              <span class="ft-more">- Name: Sam<br></span>
+              - Works in: Figma, Notion, Xcode<br>
+              <span class="is-new">- Prefers: short answers, metric units</span><br>
+              <span class="ft-more"><b>## Mistakes I make</b><br>
+              - Forgets to export at 2x (x3)</span>
+            </div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-surface" id="open" data-moment="iris-opens" aria-labelledby="open-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-6">
+          <h2 id="open-h">Teachy is open source. <span class="muted">Clicky’s new work went private.</span></h2>
+          <p class="t-lead">Teachy started from Clicky's open code in July and has been built in public since: the app, the prompts and every fix are on GitHub to read, fork and change.</p>
+          <p>Licensed MIT, like the code it grew from. Not affiliated with HeyClicky.</p>
+          <a class="link" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">Read the code on GitHub</a>
+        </div>
+        <div class="frame frame--split span-6 start-7" role="img" aria-label="A git graph: Clicky's open line stops in April when new work goes private, while Teachy branches off in July and keeps going">
+          <svg class="gitgraph" viewBox="0 0 520 420" preserveAspectRatio="xMidYMid meet">
+            <path class="ln c-open" d="M70 40 V190"/>
+            <path class="ln c-closed" d="M70 190 C70 225 160 225 160 260 V390"/>
+            <path class="ln c-teachy" d="M70 130 C70 160 300 150 300 200 V400"/>
+            <circle class="d-open" cx="70" cy="50" r="8"/><circle class="d-open" cx="70" cy="90" r="8"/><circle class="d-open" cx="70" cy="130" r="8"/><circle class="d-open" cx="70" cy="170" r="8"/>
+            <circle class="d-closed" cx="160" cy="280" r="8"/><circle class="d-closed" cx="160" cy="330" r="8"/>
+            <circle class="d-teachy" cx="300" cy="220" r="8"/><circle class="d-teachy" cx="300" cy="265" r="8"/><circle class="d-teachy" cx="300" cy="310" r="8"/><circle class="d-teachy" cx="300" cy="355" r="8"/>
+            <text x="90" y="55">clicky, open</text>
+            <text x="180" y="285" class="dim">April: new work</text>
+            <text x="180" y="305" class="dim">goes private</text>
+            <text x="320" y="225">teachy, July</text>
+            <text x="320" y="245" class="dim">still shipping</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" style="--hm: 2" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-4">
+          <h2 id="faq-h">Questions</h2>
+          <p class="muted">Anything else, open an issue on GitHub.</p>
+          <a class="link" href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Ask on GitHub</a>
+          <div class="keys" role="img" aria-label="The shortcut: hold control and option, then ask"><kbd>control</kbd><span>+</span><kbd>option</kbd><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span></div>
+        </div>
+        <div class="faq span-6 start-7">
+          <div class="faq__item"><h3>Is Teachy made by HeyClicky?</h3><p>No. Teachy grew from Clicky’s open-source code and is built separately, in the open. It isn’t affiliated with HeyClicky.</p></div>
+          <div class="faq__item"><h3>Is Teachy free?</h3><p>Yes. The app is free to download and the code is free to read and change.</p></div>
+          <div class="faq__item"><h3>Does Teachy watch my screen all the time?</h3><p>No. It only sees your screen while you hold the shortcut, or when you turn on hands-free.</p></div>
+          <div class="faq__item"><h3>Can Teachy change things without asking?</h3><p>No. Reading is free, but clicking, typing and commands each ask you first. Press Escape or move the mouse to stop a job.</p></div>
+          <div class="faq__item"><h3>Which Mac does Teachy need?</h3><p>Any Mac on macOS 14.2 Sonoma or later.</p></div>
+          <div class="faq__item"><h3>Why does macOS warn me about Teachy?</h3><p>The free build is not notarised by Apple yet. Right-click the app, choose Open, and macOS remembers your choice.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing footer--dark ground-inverse" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--word">
+      <div class="section-head--split">
+        <div><h2 id="close-h">Get Teachy on your Mac</h2><p class="t-lead">Free and open source, for macOS 14.2 or later.</p></div>
+        <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+      </div>
+      <p class="close__word" aria-hidden="true">teachy</p>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-4 stack-4">
+          <a class="nav__logo" href="#top"><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span>Teachy</a>
+        </div>
+        <div class="span-2 footer__col"><h3>Features</h3><ul><li><a href="#features">What it does</a></li><li><a href="#jobs">Jobs</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Source</h3><ul><li><a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a></li><li><a href="#open">Why it's open</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Changelog</h3><ul><li><a href="changelog.html">What's new</a></li><li><a href="https://github.com/VedSoni-dev/teachy-releases/releases" target="_blank" rel="noopener">Releases</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Questions</h3><ul><li><a href="#faq">Common questions</a></li><li><a href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Report a bug</a></li></ul></div>
+      </div>
+      <div class="footer__legal">
+        <span>&copy; 2026 Teachy. Built on Clicky by Farza, MIT licence.</span>
+        <div class="socials"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<nav class="actionbar" aria-label="Quick actions">
+  <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac</a>
+</nav>
+
+<script>
+  // The hero's one Clicky pointer, moved as the app moves it: it flies in on an arc on load, turning to face
+  // where it is going and swelling mid-flight, then types its greeting. Hover (or focus, or tap) an app and it
+  // flies to that app's card, fades to the app's colour on the way, and types what it can help with there.
+  (function () {
+    const hero = document.querySelector(".hero--apps");
+    if (!hero) return;
+    const flyer = hero.querySelector(".flyer");
+    const pointer = flyer.querySelector(".flyer__tri");
+    const bubble = flyer.querySelector(".flyer__say");
+    const greeting = bubble.dataset.line;
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const playIntro = document.documentElement.classList.contains("js-intro");
+
+    // a hidden copy stays where the pointer rests, so "home" follows the headline at any width
+    const homeMarker = pointer.cloneNode(true);
+    homeMarker.style.visibility = "hidden";
+    flyer.appendChild(homeMarker);
+    // the pointer and its bubble move within the page's content box (the hero's .wrap)
+    const stage = hero.querySelector(".wrap");
+    // they live in the tiles layer, which covers the same box as the .wrap (or, on smaller screens, leaves the .wrap as their box)
+    const appsLayer = hero.querySelector(".apps");
+    appsLayer.appendChild(pointer);
+    appsLayer.appendChild(bubble);
+
+    const pointerSize = 22;
+    let pointerPosition = { x: 0, y: 0 };
+    let currentTile = null;
+    let flightFrame = 0;
+    let typingTimer = 0;
+    let returnHomeTimer = 0;
+    // hovering does nothing until Clicky has flown in and finished its greeting
+    let readyForHover = false;
+
+    function positionInHero(rect) {
+      const stageRect = stage.getBoundingClientRect();
+      return { x: rect.left - stageRect.left, y: rect.top - stageRect.top };
+    }
+    function homePosition() { return positionInHero(homeMarker.getBoundingClientRect()); }
+    function tilePosition(tile) {
+      const cardRect = tile.querySelector(".ex__card").getBoundingClientRect();
+      const corner = positionInHero(cardRect);
+      // the pointer sits on the card's lower right corner, its tip leaning in toward the icon
+      return { x: corner.x + cardRect.width - pointerSize + 6, y: corner.y + cardRect.height - pointerSize + 8 };
+    }
+    function placePointer(position, rotationDegrees, scale) {
+      pointer.style.translate = position.x + "px " + position.y + "px";
+      pointer.style.rotate = (rotationDegrees || 0) + "deg";
+      pointer.style.scale = String(scale || 1);
+      pointerPosition = position;
+    }
+
+    function say(line, millisecondsPerCharacter, onDone) {
+      clearInterval(typingTimer);
+      // measure the whole line first, so the bubble can be kept inside the hero before it types
+      bubble.style.width = "";
+      bubble.textContent = line;
+      const bubbleWidth = bubble.offsetWidth, bubbleHeight = bubble.offsetHeight;
+      const heroWidth = stage.clientWidth, heroHeight = stage.clientHeight;
+      let left = pointerPosition.x + pointerSize;
+      let top = pointerPosition.y + 18;
+      if (left + bubbleWidth > heroWidth) left = pointerPosition.x - bubbleWidth - 4;
+      left = Math.min(Math.max(0, left), heroWidth - bubbleWidth);
+      if (top + bubbleHeight > heroHeight - 8) top = pointerPosition.y - bubbleHeight - 6;
+      bubble.style.translate = left + "px " + top + "px";
+      bubble.style.width = bubbleWidth + "px";
+      bubble.textContent = "";
+      bubble.classList.remove("is-quiet");
+      let charactersShown = 0;
+      typingTimer = setInterval(() => {
+        charactersShown += 1;
+        bubble.textContent = line.slice(0, charactersShown);
+        if (charactersShown >= line.length) { clearInterval(typingTimer); if (onDone) onDone(); }
+      }, millisecondsPerCharacter);
+    }
+
+    function flyTo(target, durationMilliseconds, onArrive) {
+      cancelAnimationFrame(flightFrame);
+      clearInterval(typingTimer);
+      bubble.classList.add("is-quiet");
+      if (reduceMotion || durationMilliseconds === 0) { placePointer(target); onArrive(); return; }
+      const start = { ...pointerPosition };
+      const distance = Math.hypot(target.x - start.x, target.y - start.y);
+      // the arc bows upward by a quarter of the distance, as the app's pointer does
+      // never higher than just under the nav bar, which covers the top of the hero
+      // the stage starts below the nav bar, so its top edge is the highest the arc may go
+      const highestArcPoint = 4;
+      const control = { x: (start.x + target.x) / 2, y: Math.max(highestArcPoint, Math.min(start.y, target.y) - distance * 0.25) };
+      const pointAt = (t, a, b, c) => (1 - t) * (1 - t) * a + 2 * (1 - t) * t * b + t * t * c;
+      const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+      let flightStart = null;
+      function step(now) {
+        if (flightStart === null) flightStart = now;
+        const progress = Math.min(1, (now - flightStart) / durationMilliseconds);
+        const t = easeInOut(progress);
+        const directionX = 2 * (1 - t) * (control.x - start.x) + 2 * t * (target.x - control.x);
+        const directionY = 2 * (1 - t) * (control.y - start.y) + 2 * t * (target.y - control.y);
+        // the drawn triangle already leans -35 degrees; in flight its tip turns to the way it is going,
+        // and over the last fifth it settles back to its resting lean
+        const headingDegrees = Math.atan2(directionY, directionX) * 180 / Math.PI + 90 + 35;
+        const settle = Math.max(0, (progress - 0.8) / 0.2);
+        placePointer(
+          { x: pointAt(t, start.x, control.x, target.x), y: pointAt(t, start.y, control.y, target.y) },
+          headingDegrees * (1 - settle),
+          1 + 0.35 * Math.sin(Math.PI * progress)
+        );
+        if (progress < 1) { flightFrame = requestAnimationFrame(step); return; }
+        placePointer(target);
+        onArrive();
+      }
+      flightFrame = requestAnimationFrame(step);
+    }
+
+    function setColour(colourName) {
+      pointer.dataset.colour = colourName;
+      bubble.dataset.colour = colourName;
+    }
+    function goToTile(tile) {
+      if (!readyForHover) return;
+      clearTimeout(returnHomeTimer);
+      if (tile === currentTile) return;
+      currentTile = tile;
+      setColour(tile.dataset.colour);
+      const target = tilePosition(tile);
+      const duration = Math.min(650, 260 + Math.hypot(target.x - pointerPosition.x, target.y - pointerPosition.y) * 0.45);
+      flyTo(target, duration, () => say(tile.dataset.line, 16));
+    }
+    function goHome() {
+      currentTile = null;
+      setColour("blue");
+      flyTo(homePosition(), 600, () => say(greeting, 24));
+    }
+
+    hero.querySelectorAll(".ex").forEach((tile) => {
+      tile.addEventListener("pointerenter", () => goToTile(tile));
+      tile.addEventListener("focus", () => goToTile(tile));
+    });
+    // after the pointer has left every app for a moment, Clicky goes back to its spot and says hello again
+    hero.querySelector(".apps").addEventListener("pointerleave", () => {
+      if (!readyForHover) return;
+      clearTimeout(returnHomeTimer);
+      returnHomeTimer = setTimeout(goHome, 1600);
+    });
+    addEventListener("resize", () => {
+      cancelAnimationFrame(flightFrame);
+      placePointer(currentTile ? tilePosition(currentTile) : homePosition());
+      say(currentTile ? currentTile.dataset.line : greeting, 0);
+    });
+
+    if (playIntro && !reduceMotion) {
+      const home = homePosition();
+      const stageRect = stage.getBoundingClientRect(), heroRect = hero.getBoundingClientRect();
+      placePointer({ x: heroRect.left - stageRect.left - 60, y: heroRect.bottom - stageRect.top + 60 });
+      flyTo(home, 1100, () => say(greeting, 40, () => setTimeout(becomeReady, 300)));
+    } else {
+      placePointer(homePosition());
+      say(greeting, 0);
+      becomeReady();
+    }
+    function becomeReady() {
+      readyForHover = true;
+      // someone already resting on an app when the greeting ends gets its line straight away
+      const tileUnderPointer = hero.querySelector(".ex:hover");
+      if (tileUnderPointer) goToTile(tileUnderPointer);
+    }
+  })();
+</script>
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
+<script type="module" src="assets/layout/layout.js"></script>
 </body>
 </html>

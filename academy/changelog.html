@@ -1,121 +1,205 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-type="software" data-radius="soft" data-ground="sky" data-buttons="arrow" data-motion>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Changelog · Teachy</title>
-  <meta name="description" content="Everything that changed in Teachy, newest first: released builds and work merged on main." />
-  <meta property="og:title" content="Teachy · the open-source Clicky" />
-  <meta property="og:description" content="An AI buddy next to your cursor. Open source, and it keeps shipping." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#4ea4dc" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css?v=2" />
-  <script>document.documentElement.classList.add("js");</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teachy changelog: every release, newest first</title>
+<meta name="description" content="What changed in Teachy, dated and in plain words: released builds and work merged on main, newest first.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teachy changelog: every release, newest first">
+<meta property="og:description" content="Every Teachy release in plain words, newest first.">
+<meta property="og:image" content="share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#f7f8fa">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<style>
+:root {
+  --p-bg: #f7f8fa; --p-surface: #ffffff; --p-ink: #0b1220; --p-muted: #696f7a;
+  --p-accent: #3380ff; --p-accent-ink: #111111; --p-action: #3380ff; --p-action-ink: #111111;
+  --p-inv-bg: #0b1220; --p-inv-surface: #181f2d; --p-inv-ink: #f7f8fa; --p-inv-muted: #9397a0;
+  --p-inv-accent: #f7f8fa; --p-inv-accent-ink: #0b1220; --p-inv-action: #f7f8fa; --p-inv-action-ink: #0b1220;
+  --font-display: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-text: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-weight: 400;
+  --display-tracking: -0.035em;
+  --display-tracking-xl: -0.042em;
+  --ly-scale: 0.98;
+}
+</style>
+<style>
+  /* Clicky's cursor: an equilateral triangle in #3380FF, tilted -35 degrees, glowing in its own blue */
+  .tri { display: inline-block; width: 1em; height: 1em; color: #3380ff; filter: drop-shadow(0 0 .35em rgb(51 128 255 / .75)); flex: none; }
+  .tri svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .nav__logo .tri { width: 20px; height: 20px; filter: drop-shadow(0 0 5px rgb(51 128 255 / .6)); }
+  .footer--dark .nav__logo .tri { width: 40px; height: 40px; }
+  .close__word { font-size: min(22vw, 300px); line-height: 1.15; }
+
+  /* a document page: sections grow with their content instead of filling screens */
+  main.cl-page > section.cl-head, main.cl-page > section.cl-list { height: auto; min-height: 0; }
+  main.cl-page > section.cl-head { padding: calc(var(--nav) + var(--s-8)) 0 var(--s-7); border-bottom: 1px solid rgb(11 18 32 / .1); }
+  .cl-head h1 { font: var(--display-weight) clamp(44px, 4vw + 24px, 80px)/1 var(--font-display); letter-spacing: var(--display-tracking-xl); margin: 0 0 var(--s-5); }
+  .cl-head .t-lead { max-width: 52ch; margin: 0; }
+  .cl-head .cl-raw { margin: var(--s-5) 0 0; }
+  .cl-filters { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-7); }
+  .cl-filters button { font: 500 14px/1 var(--font-text); color: var(--p-ink); padding: 12px 16px; min-height: 44px; border-radius: 99px; border: 1px solid rgb(11 18 32 / .14); background: var(--p-surface); cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+  .cl-filters button:hover { border-color: rgb(11 18 32 / .35); }
+  .cl-filters button[aria-pressed="true"] { background: var(--p-ink); color: #fff; border-color: var(--p-ink); }
+
+  main.cl-page > section.cl-list { padding: var(--s-8) 0 var(--s-9); }
+  .cl-entry { padding: var(--s-8) 0; border-bottom: 1px solid rgb(11 18 32 / .1); scroll-margin-top: calc(var(--nav) + var(--s-5)); }
+  .cl-entry:first-child { padding-top: 0; }
+  .cl-entry[hidden] { display: none; }
+  .cl-side { display: grid; align-content: start; gap: var(--s-3); }
+  .cl-side time { font: 500 16px/1.2 var(--font-text); color: var(--p-ink); }
+  .cl-side .ago { font: 400 13px/1.2 var(--font-mono); color: var(--p-muted); }
+  .cl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--s-2); }
+  .tag { display: inline-flex; align-items: center; gap: 6px; font: 500 13px/1 var(--font-text); padding: 6px 10px; border-radius: 99px; background: #eceff4; color: #3a4352; }
+  .tag.released { background: #e5f4ea; color: #17663a; }
+  .tag.main { background: #e6efff; color: #1f4fb0; }
+  .tag.ver { background: var(--p-ink); color: #fff; font-family: var(--font-mono); }
+  .tag .d { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .cl-body h2 { font: var(--display-weight) var(--t-h3, 28px)/1.15 var(--font-display); letter-spacing: var(--display-tracking); margin: 0 0 var(--s-4); }
+  .cl-body h2 a { color: inherit; text-decoration: none; }
+  .cl-body h2 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+  .cl-sum { font-size: var(--t-lead); line-height: 1.5; margin: 0 0 var(--s-6); max-width: 62ch; }
+  .cl-sec + .cl-sec { margin-top: var(--s-6); }
+  .cl-sec h3 { font: 500 13px/1 var(--font-text); color: var(--p-muted); margin: 0 0 var(--s-4); }
+  .cl-items { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5) var(--s-7); }
+  .cl-items li { display: grid; grid-template-columns: 14px 1fr; gap: 12px; font-size: 16px; line-height: 1.55; }
+  .cl-items li .tri { font-size: 11px; margin-top: 6px; filter: drop-shadow(0 0 3px rgb(51 128 255 / .55)); }
+  .cl-items strong { display: block; font-weight: 500; }
+  @media (max-width: 1023px) { .cl-items { grid-template-columns: 1fr; } }
+  @media (max-width: 639px) { .cl-side { grid-template-columns: auto auto; justify-content: start; align-items: baseline; column-gap: var(--s-4); margin-bottom: var(--s-5); } .cl-tags { grid-column: 1 / -1; } }
+</style>
 </head>
-<body class="page-cl">
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="tri-fill" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#6aa8ff" />
-        <stop offset=".55" stop-color="#3380ff" />
-        <stop offset="1" stop-color="#1a5fe0" />
-      </linearGradient>
-    </defs>
-    <symbol id="tri" viewBox="0 0 100 100">
-      <path d="M50 4 L79 92 Q81 97 76 96 L50 88 L24 96 Q19 97 21 92 Z" />
-    </symbol>
-    <symbol id="gh" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0a8 8 0 00-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 014 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 008 0z"/></symbol>
-    <symbol id="apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.65.8-3.33.8-.7 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.55 2.68-.4 6.64 1.1 8.82.74 1.06 1.61 2.25 2.75 2.21 1.11-.05 1.53-.71 2.87-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.66-2.15.85-1.23 1.19-2.43 1.21-2.49-.03-.01-2.32-.89-2.35-3.56zM14.2 6.12c.6-.74 1.01-1.75.9-2.77-.87.04-1.94.59-2.56 1.32-.56.64-1.05 1.68-.92 2.67.97.08 1.97-.49 2.58-1.22z"/></symbol>
-    <symbol id="copy" viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 014.5 2H11" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
-  </svg>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="tri" viewBox="-8 -8 116 116"><path transform="rotate(-35 50 50)" d="M50 -7.735 L100 78.868 L0 78.868 Z" fill="currentColor"/></symbol>
+</svg>
 
-  <!-- the little buddy that follows your cursor around the page -->
-  <div class="buddy" id="buddy" aria-hidden="true">
-    <svg class="buddy-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>
-    <div class="buddy-bubble" id="buddy-bubble"></div>
-  </div>
-
-  <header class="nav" id="nav">
-    <a class="brand" href="index.html" data-say="that's me">
-      <svg class="brand-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>teachy
-    </a>
-    <nav class="nav-links" aria-label="Main">
-      <a href="index.html#open" data-say="why we're open">open source</a>
-      <a href="index.html#desk" data-say="try me out">what it does</a>
-      <a href="changelog.html" data-say="we ship a lot">changelog</a>
-      <a class="nav-gh" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener" data-say="read every line">
-        <svg><use href="#gh" /></svg><span>GitHub</span><span class="star-count" data-stars hidden></span>
-      </a>
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#top">Skip to content</a>
+    <a class="nav__logo" href="index.html"><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span>Teachy</a>
+    <nav class="nav__links" aria-label="Main">
+      <div class="nav__item"><a class="nav__link" href="index.html#features">Features</a></div>
+      <div class="nav__item"><a class="nav__link" href="index.html#jobs">Jobs</a></div>
+      <div class="nav__item"><a class="nav__link" href="index.html#open">Source</a></div>
+      <div class="nav__item"><a class="nav__link" href="changelog.html" aria-current="page">Changelog</a></div>
+      <div class="nav__item"><a class="nav__link" href="index.html#faq">Questions</a></div>
     </nav>
-  </header>
-
-  <main>
-    <section class="cl-hero" id="cl-hero">
-      <div class="sky" id="sky"></div>
-      <div class="cl-hero-inner">
-        <h1>what's <em>new.</em></h1>
-        <p class="mono">every change, dated · newest first · <a href="https://github.com/VedSoni-dev/teachy/commits" target="_blank" rel="noopener" style="pointer-events:auto">raw commits ↗</a></p>
-      </div>
-    </section>
-    <div class="cl-toolbar" role="group" aria-label="Filter releases" id="filters"></div>
-    <div class="wrap"><div class="cl-list" id="cl-list"></div></div>
-  </main>
-
-  <footer class="foot">
-    <div class="wrap foot-inner">
-      <a class="brand" href="index.html"><svg class="brand-tri"><use href="#tri" fill="url(#tri-fill)" /></svg>teachy</a>
-      <nav aria-label="Footer">
-        <a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
-        <a href="changelog.html">Changelog</a>
-        <a href="https://github.com/VedSoni-dev/teachy-releases/releases" target="_blank" rel="noopener">Releases</a>
-        <a href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Report a bug</a>
-      </nav>
+    <div class="nav__actions">
+      <a class="nav__link" href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac</a>
     </div>
-    <p class="wrap foot-note">Teachy only sees your screen when you press the hotkey. Built on the open-source Clicky codebase by Farza; not affiliated with HeyClicky. Sky by <a href="https://frontend.vedantsoni.com/sky" target="_blank" rel="noopener">cirrus</a>.</p>
-    <div class="foot-word" aria-hidden="true">teachy</div>
-  </footer>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
 
-  <script src="changelog.js?v=2"></script>
-  <script type="module">
-    import { skyFor, metaHTML, sectionsHTML, fmtDate, ago, slug, stars } from "./cl.js";
-    const CL = window.TEACHY_CHANGELOG;
-    skyFor(document.getElementById("cl-hero"), document.getElementById("sky"), { time: "noon", cover: 0.4, cell: 10, fade: true });
-    const TRI = '<svg viewBox="0 0 100 100"><use href="#tri" fill="url(#tri-fill)"/></svg>';
-    document.getElementById("cl-list").innerHTML = CL.map((r) => `
-      <article class="cl-entry" id="${slug(r)}" data-status="${r.status}" data-platforms="${r.platforms.join(" ")}">
-        <div class="cl-side"><time datetime="${r.date}">${fmtDate(r.date)}</time><span class="ago">${ago(r.date)}</span></div>
-        <span class="node" aria-hidden="true">${TRI}</span>
-        ${metaHTML(r)}
-        <h2>${r.title}<a class="anchor" href="#${slug(r)}" aria-label="Link to this release">#</a></h2>
-        <p class="cl-sum">${r.summary}</p>
-        ${sectionsHTML(r)}
-      </article>`).join("");
-    const filters = [["all", "All"], ["released", "Released builds"], ["on main", "On main"], ["mac", "macOS"], ["windows", "Windows"]];
-    const bar = document.getElementById("filters");
-    bar.innerHTML = filters.map(([v, l], i) => `<button type="button" data-f="${v}" aria-pressed="${i === 0}">${l}</button>`).join("");
-    bar.addEventListener("click", (e) => {
-      const b = e.target.closest("button"); if (!b) return;
-      bar.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-      const f = b.dataset.f;
-      document.querySelectorAll(".cl-entry").forEach((el) => {
-        el.hidden = !(f === "all" || el.dataset.status === f || el.dataset.platforms.split(" ").includes(f));
+<main id="top" class="cl-page">
+  <section class="cl-head" aria-labelledby="cl-h">
+    <div class="wrap">
+      <h1 id="cl-h">Changelog</h1>
+      <p class="t-lead">Every Teachy release in plain words, newest first. Released builds are in the download; work on main lands in the next one.</p>
+      <p class="cl-raw"><a class="link" href="https://github.com/VedSoni-dev/teachy/commits" target="_blank" rel="noopener">See the raw commits on GitHub</a></p>
+      <div class="cl-filters" role="group" aria-label="Filter releases" id="filters"></div>
+    </div>
+  </section>
+  <section class="cl-list" aria-label="Releases">
+    <div class="wrap" id="cl-list"></div>
+  </section>
+</main>
+
+<footer class="footer closing footer--dark ground-inverse" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--word">
+      <div class="section-head--split">
+        <div><h2 id="close-h">Get Teachy on your Mac</h2><p class="t-lead">Free and open source, for macOS 14.2 or later.</p></div>
+        <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+      </div>
+      <p class="close__word" aria-hidden="true">teachy</p>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-4 stack-4">
+          <a class="nav__logo" href="index.html"><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span>Teachy</a>
+        </div>
+        <div class="span-2 footer__col"><h3>Features</h3><ul><li><a href="index.html#features">What it does</a></li><li><a href="index.html#jobs">Jobs</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Source</h3><ul><li><a href="https://github.com/VedSoni-dev/teachy" target="_blank" rel="noopener">GitHub</a></li><li><a href="index.html#open">Why it's open</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Changelog</h3><ul><li><a href="changelog.html">What's new</a></li><li><a href="https://github.com/VedSoni-dev/teachy-releases/releases" target="_blank" rel="noopener">Releases</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Questions</h3><ul><li><a href="index.html#faq">Common questions</a></li><li><a href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Report a bug</a></li></ul></div>
+      </div>
+      <div class="footer__legal">
+        <span>&copy; 2026 Teachy. Built on Clicky by Farza, MIT licence.</span>
+        <div class="socials"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="changelog.js?v=3"></script>
+<script>
+  // Renders window.TEACHY_CHANGELOG (changelog.js) as a dated list with filters.
+  (function () {
+    const releases = window.TEACHY_CHANGELOG || [];
+    const escapeHtml = (text) => String(text).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
+    const platformNames = { mac: "macOS", windows: "Windows", site: "Website" };
+    const triangle = '<span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span>';
+    const formatDate = (isoDate) => new Date(isoDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    const timeAgo = (isoDate) => {
+      const days = Math.round((Date.now() - new Date(isoDate + "T12:00:00")) / 864e5);
+      if (days <= 0) return "today";
+      if (days === 1) return "yesterday";
+      if (days < 14) return days + " days ago";
+      if (days < 60) return Math.round(days / 7) + " weeks ago";
+      return Math.round(days / 30) + " months ago";
+    };
+    const releaseAnchor = (release) => release.version ? "v" + release.version.replace(/\./g, "-") : release.date;
+
+    document.getElementById("cl-list").innerHTML = releases.map((release) => {
+      const statusTag = release.status === "released"
+        ? '<span class="tag released"><span class="d"></span>Released</span>'
+        : '<span class="tag main"><span class="d"></span>On main, next build</span>';
+      const versionTag = release.version ? '<span class="tag ver">v' + escapeHtml(release.version) + '</span>' : "";
+      const platformTags = release.platforms.map((platform) => '<span class="tag">' + (platformNames[platform] || escapeHtml(platform)) + '</span>').join("");
+      const sectionsHtml = release.sections.map((section) =>
+        '<div class="cl-sec"><h3>' + escapeHtml(section.name) + '</h3><ul class="cl-items">' +
+        section.items.map((item) => '<li>' + triangle + '<span><strong>' + escapeHtml(item.title) + '</strong>' + escapeHtml(item.text) + '</span></li>').join("") +
+        '</ul></div>').join("");
+      return '<article class="cl-entry grid" id="' + releaseAnchor(release) + '" data-status="' + release.status + '" data-platforms="' + release.platforms.join(" ") + '">' +
+        '<div class="cl-side span-3"><time datetime="' + release.date + '">' + formatDate(release.date) + '</time><span class="ago">' + timeAgo(release.date) + '</span><div class="cl-tags">' + versionTag + statusTag + platformTags + '</div></div>' +
+        '<div class="cl-body span-8 start-5"><h2><a href="#' + releaseAnchor(release) + '">' + escapeHtml(release.title) + '</a></h2><p class="cl-sum">' + escapeHtml(release.summary) + '</p>' + sectionsHtml + '</div>' +
+        '</article>';
+    }).join("");
+
+    const filterOptions = [["all", "All"], ["released", "Released builds"], ["on main", "On main"], ["mac", "macOS"], ["windows", "Windows"]];
+    const filterBar = document.getElementById("filters");
+    filterBar.innerHTML = filterOptions.map(([value, label], index) => '<button type="button" data-filter="' + value + '" aria-pressed="' + (index === 0) + '">' + label + '</button>').join("");
+    filterBar.addEventListener("click", (event) => {
+      const pressedButton = event.target.closest("button");
+      if (!pressedButton) return;
+      filterBar.querySelectorAll("button").forEach((button) => button.setAttribute("aria-pressed", String(button === pressedButton)));
+      const filterValue = pressedButton.dataset.filter;
+      document.querySelectorAll(".cl-entry").forEach((entry) => {
+        entry.hidden = !(filterValue === "all" || entry.dataset.status === filterValue || entry.dataset.platforms.split(" ").includes(filterValue));
       });
     });
-    // the buddy follows here too
-    const buddy = document.getElementById("buddy"), bubble = document.getElementById("buddy-bubble");
-    if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      let mx = 0, my = 0, bx = 0, by = 0, on = false;
-      addEventListener("pointermove", (e) => { mx = e.clientX; my = e.clientY; if (!on) { on = true; bx = mx; by = my; buddy.classList.add("on"); } }, { passive: true });
-      (function f() { bx += (mx + 16 - bx) * .16; by += (my + 18 - by) * .16; buddy.style.transform = `translate(${bx}px,${by}px)`; requestAnimationFrame(f); })();
-      document.addEventListener("pointerover", (e) => { const el = e.target.closest("[data-say]"); if (el) { bubble.textContent = el.dataset.say; buddy.classList.add("talking"); } });
-      document.addEventListener("pointerout", (e) => { const el = e.target.closest("[data-say]"); if (el && !el.contains(e.relatedTarget)) buddy.classList.remove("talking"); });
-    }
     if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
-    stars();
-  </script>
+  })();
+</script>
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
 </body>
 </html>

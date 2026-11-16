@@ -3,3 +3,6 @@ graphify-out/
 
 .vercel
 .env*
+
+# taste-skill build state and screenshots
+.taste-skill/
