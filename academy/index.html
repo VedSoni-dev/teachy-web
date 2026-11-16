@@ -73,6 +73,36 @@
   .hero--apps .btn-row { justify-content: center; margin-top: var(--s-6); }
   .hero-apps__fine { margin: var(--s-4) 0 0; font-size: 14px; color: var(--p-muted); }
 
+  .h1-aside { display: block; color: var(--p-muted); font-size: .56em; letter-spacing: -0.02em; margin-top: .18em; }
+
+  /* the lineage: a quiet git graph behind the hero */
+  .lineage { position: absolute; inset: var(--nav) 0 0 0; z-index: 0; pointer-events: none; }
+  .lineage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .lineage path { fill: none; stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .lineage__open { stroke: #a9b1be; }
+  .lineage__closed { stroke: #d3d8e0; }
+  .lineage__teachy { stroke: #3380ff; opacity: .7; }
+  .lineage__dot, .lineage__head, .lineage__lock { position: absolute; translate: -50% -50%; border-radius: 50%; }
+  .lineage__dot { width: 13px; height: 13px; border: 3px solid var(--p-bg); }
+  .lineage__dot--open { background: #a9b1be; }
+  .lineage__dot--closed { background: #ccd2db; }
+  .lineage__dot--teachy { background: #3380ff; }
+  .lineage__head { width: 15px; height: 15px; background: #3380ff; box-shadow: 0 0 0 0 rgb(51 128 255 / .45); animation: lineage-live 2.4s ease-out infinite; }
+  @keyframes lineage-live { 0% { box-shadow: 0 0 0 0 rgb(51 128 255 / .45); } 100% { box-shadow: 0 0 0 14px rgb(51 128 255 / 0); } }
+  .lineage__lock { width: 26px; height: 26px; display: grid; place-items: center; background: var(--p-bg); border-radius: 8px; }
+  .lineage__lock svg { position: static; width: 16px; height: 16px; fill: none; stroke: #a9b1be; stroke-width: 1.6; }
+  .lineage__label { position: absolute; translate: 0 calc(-100% - 12px); font: 400 13px/1 var(--font-mono); color: #8a919d; white-space: nowrap; }
+  .lineage__label--split { translate: calc(-100% - 8px) 14px; }
+  .lineage__label--closed { translate: 6px -50%; }
+  .lineage__label--teachy { translate: 0 14px; color: #2f6fe0; }
+  .lineage__label--head { translate: -100% calc(-100% - 12px); color: #2f6fe0; }
+  /* the graph wipes in from left to right once, as the pointer flies in */
+  .js-intro .lineage { animation: lineage-draw 1.6s .15s cubic-bezier(.65, 0, .35, 1) both; }
+  @keyframes lineage-draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  /* below 1024 the words take the middle of the screen and the apps sit under them: no room for the graph */
+  @media (max-width: 1023px) { .lineage { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .lineage, .lineage__head { animation: none !important; } }
+
   /* Clicky's bubble: the pointer colour, white 13px medium text, 7px corners, a glow in its own colour,
      placed right of and below the pointer as the app places it. The colour is a registered property,
      so moving to another app fades the pointer and the bubble to that app's colour. */
@@ -211,6 +241,31 @@
 
 <main id="top">
   <section class="hero hero--apps" data-enter aria-labelledby="hero-h">
+    <!-- Clicky's open code comes in from the left and splits: HeyClicky's new work goes closed (grey, dashed, a lock),
+         Teachy carries the open line to the right edge and keeps shipping. Drawn in % of the hero so it fits any screen. -->
+    <div class="lineage" aria-hidden="true">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path class="lineage__open" d="M -2 52 L 18 52"/>
+        <path class="lineage__closed" d="M 18 52 C 23.5 52, 22.5 17, 28 17 L 79 17"/>
+        <path class="lineage__teachy" d="M 18 52 C 23.5 52, 22.5 88, 28 88 L 102 88"/>
+      </svg>
+      <span class="lineage__dot lineage__dot--open" style="left: 6%; top: 52%"></span>
+      <span class="lineage__dot lineage__dot--open" style="left: 10.5%; top: 52%"></span>
+      <span class="lineage__dot lineage__dot--open" style="left: 16%; top: 52%"></span>
+      <span class="lineage__dot lineage__dot--closed" style="left: 50%; top: 17%"></span>
+      <span class="lineage__dot lineage__dot--closed" style="left: 64%; top: 17%"></span>
+      <span class="lineage__lock" style="left: 79%; top: 17%"><svg viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg></span>
+      <span class="lineage__dot lineage__dot--teachy" style="left: 46%; top: 88%"></span>
+      <span class="lineage__dot lineage__dot--teachy" style="left: 58%; top: 88%"></span>
+      <span class="lineage__dot lineage__dot--teachy" style="left: 70%; top: 88%"></span>
+      <span class="lineage__dot lineage__dot--teachy" style="left: 82%; top: 88%"></span>
+      <span class="lineage__head" style="left: 94%; top: 88%"></span>
+      <span class="lineage__label" style="left: 3%; top: 52%">clicky · open source</span>
+      <span class="lineage__label lineage__label--split" style="left: 18%; top: 52%">april · new work goes private</span>
+      <span class="lineage__label lineage__label--closed" style="left: 81%; top: 17%">heyclicky · closed</span>
+      <span class="lineage__label lineage__label--teachy" style="left: 40%; top: 88%">teachy · july · forked in the open</span>
+      <span class="lineage__label lineage__label--head" style="left: 94%; top: 88%">still shipping</span>
+    </div>
     <div class="wrap">
     <div class="apps" aria-label="Apps Teachy can help with. Hover one to hear how.">
         <button class="ex ex--keep" type="button" data-colour="blue" data-line="I can help you learn how to make beats in FL Studio!" style="--x: 1.27; --y: 3.47" aria-label="FL Studio: I can help you learn how to make beats in FL Studio!">
@@ -306,7 +361,7 @@
     </div>
     <div class="hero-text hero-apps__text">
       <div class="flyer" aria-hidden="true"><span class="flyer__tri tri" data-colour="blue"><svg><use href="#tri"/></svg></span><span class="flyer__say say" data-colour="blue" data-line="I help you do anything! Hover any icon to find out how">I help you do anything! Hover any icon to find out how</span></div>
-      <h1 id="hero-h">HeyClicky, but open source</h1>
+      <h1 id="hero-h">HeyClicky, but open source <span class="h1-aside">(and maintained!)</span></h1>
       <p class="hero__lead">Teachy is an AI that lives next to your cursor on the Mac. Hold control and option, ask about your screen, and it points, draws, explains or does it for you.</p>
       <div class="btn-row">
         <a class="btn btn--primary" href="https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg">Download for Mac<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
@@ -506,6 +561,11 @@
       // spots that fit, it takes the one farthest from the apps already down, so the throw covers the whole hero
       // without clumping. Corners may overlap a little; nothing lands on the words. The seed comes from the
       // screen size, so a page looks the same each visit and reshuffles only when the window changes.
+      // the lineage graph's words and marks stay readable: no app lands on them
+      const graphMarks = [...hero.querySelectorAll(".lineage__label, .lineage__lock, .lineage__head")].map((mark) => {
+        const markRect = mark.getBoundingClientRect();
+        return { left: markRect.left - layerRect.left - 12, top: markRect.top - layerRect.top - 10, right: markRect.right - layerRect.left + 12, bottom: markRect.bottom - layerRect.top + 10 };
+      });
       const random = seededRandom(Math.round(layerWidth) * 7919 + Math.round(layerHeight));
       const freeArea = layerWidth * layerHeight - clearArea;
       let baseWidth = Math.min(132, Math.max(84, Math.sqrt(freeArea / tiles.length) * 0.6));
@@ -524,6 +584,8 @@
             const y = edge + random() * (layerHeight - 2 * edge - height);
             const onWords = x < keepClear.right && x + width > keepClear.left && y < keepClear.bottom && y + height > keepClear.top;
             if (onWords) continue;
+            const onGraphLabel = graphMarks.some((mark) => x < mark.right && x + width > mark.left && y < mark.bottom && y + height > mark.top);
+            if (onGraphLabel) continue;
             // a small inset lets corners overlap a touch, the way thrown cards do, while names stay readable
             const inset = width * 0.08;
             const hitsAnother = placed.some((other) => x + inset < other.x + other.width && x + width - inset > other.x && y + inset < other.y + other.height && y + height - inset > other.y);
