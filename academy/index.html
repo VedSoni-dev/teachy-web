@@ -92,19 +92,22 @@
   .say.is-quiet { opacity: 0; scale: .5; }
 
   .apps { position: absolute; inset: 0; z-index: 1; }
+  /* from 1024 the tiles fill the whole hero under the nav, edge to edge, laid out by the script below for each screen */
+  @media (min-width: 1024px) { main > section.hero--apps > .wrap { position: static; } .hero--apps .apps { inset: var(--nav) 0 0 0; } }
   .apps .ex { pointer-events: auto; }
   .ex { all: unset; position: absolute; left: calc((100% - var(--tile-w, 112px)) * var(--x) / 100); top: calc((100% - 104px) * var(--y) / 100); cursor: pointer; }
-  .ex__card { display: grid; justify-items: center; align-content: center; gap: 8px; width: var(--tile-w, 112px); aspect-ratio: 112 / 96; border-radius: 18px; background: #fff; border: 1px solid rgb(11 18 32 / .07); box-shadow: 0 1px 2px rgb(11 18 32 / .05), 0 14px 30px -18px rgb(11 18 32 / .3); transition: transform .25s var(--ease, ease), box-shadow .25s var(--ease, ease); }
-  .ex:hover .ex__card, .ex:focus-visible .ex__card { transform: translateY(-2px); box-shadow: 0 1px 2px rgb(11 18 32 / .05), 0 18px 36px -18px rgb(11 18 32 / .38); }
+  .ex__card { display: grid; justify-items: center; align-content: center; gap: 8px; width: var(--tile-w, 112px); aspect-ratio: 112 / 96; border-radius: 18px; background: #fff; border: 1px solid rgb(11 18 32 / .07); box-shadow: 0 1px 2px rgb(11 18 32 / .05), 0 14px 30px -18px rgb(11 18 32 / .3); transform: rotate(var(--tilt, 0deg)); transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s var(--ease, ease); }
+  /* hovered, a thrown card straightens up and lifts toward you */
+  .ex:hover .ex__card, .ex:focus-visible .ex__card { transform: rotate(0deg) translateY(-4px) scale(1.06); box-shadow: 0 1px 2px rgb(11 18 32 / .05), 0 18px 36px -18px rgb(11 18 32 / .38); }
   .ex:focus-visible { outline: 2px solid var(--p-action); outline-offset: 4px; border-radius: 20px; }
-  .ex__icon { width: 36px; height: 36px; object-fit: contain; }
-  .ex__sketch { width: 46px; height: 31px; border-radius: 4px; }
-  .ex__glyph { width: 30px; height: 30px; padding: 4px; border-radius: 8px; background: #1d2230; color: #e8ebf0; }
+  .ex__icon { width: calc(var(--tile-w, 112px) * .32); height: calc(var(--tile-w, 112px) * .32); object-fit: contain; }
+  .ex__sketch { width: calc(var(--tile-w, 112px) * .41); height: calc(var(--tile-w, 112px) * .28); border-radius: 4px; }
+  .ex__glyph { width: calc(var(--tile-w, 112px) * .27); height: calc(var(--tile-w, 112px) * .27); padding: 4px; border-radius: 8px; background: #1d2230; color: #e8ebf0; }
   .ex__name { font: 500 13px/1 var(--font-text); color: var(--p-ink); white-space: nowrap; }
   .ex:hover, .ex:focus-visible { z-index: 6; }
 
   /* the one pointer: it rests above the headline, flies in on load, and flies to whichever app you hover */
-  .flyer { position: relative; height: 0; align-self: center; width: min(100%, 520px); }
+  .flyer { position: relative; height: 0; margin-bottom: 18px; align-self: center; width: min(100%, 520px); }
   .flyer__tri { position: absolute; left: 6%; top: -64px; font-size: 22px; color: var(--pc); filter: drop-shadow(0 0 7px color-mix(in srgb, var(--pc) 70%, transparent)); transition: --pc .45s; }
   .flyer__say { left: calc(6% + 22px); top: -46px; }
   /* once the script runs, the pointer and its bubble are placed on the hero itself by position */
@@ -581,9 +584,9 @@
     const homeMarker = pointer.cloneNode(true);
     homeMarker.style.visibility = "hidden";
     flyer.appendChild(homeMarker);
-    // the pointer and its bubble move within the page's content box (the hero's .wrap)
-    const stage = hero.querySelector(".wrap");
-    // they live in the tiles layer, which covers the same box as the .wrap (or, on smaller screens, leaves the .wrap as their box)
+    // the pointer and its bubble live in the tiles layer; their box is whatever that layer is placed in
+    // (the whole hero from 1024 wide, the .wrap below that), so every position is measured against it
+    const stageBox = () => pointer.offsetParent || hero.querySelector(".wrap");
     const appsLayer = hero.querySelector(".apps");
     appsLayer.appendChild(pointer);
     appsLayer.appendChild(bubble);
@@ -592,13 +595,14 @@
     let pointerPosition = { x: 0, y: 0 };
     let currentTile = null;
     let flightFrame = 0;
+    let flying = false;
     let typingTimer = 0;
     let returnHomeTimer = 0;
     // hovering does nothing until Clicky has flown in and finished its greeting
     let readyForHover = false;
 
     function positionInHero(rect) {
-      const stageRect = stage.getBoundingClientRect();
+      const stageRect = stageBox().getBoundingClientRect();
       return { x: rect.left - stageRect.left, y: rect.top - stageRect.top };
     }
     function homePosition() { return positionInHero(homeMarker.getBoundingClientRect()); }
@@ -615,20 +619,28 @@
       pointerPosition = position;
     }
 
-    function say(line, millisecondsPerCharacter, onDone) {
-      clearInterval(typingTimer);
-      // measure the whole line first, so the bubble can be kept inside the hero before it types
+    // places the bubble beside the pointer, measured with the whole line so it stays inside the hero
+    function placeBubble(line) {
+      const shownText = bubble.textContent;
       bubble.style.width = "";
       bubble.textContent = line;
       const bubbleWidth = bubble.offsetWidth, bubbleHeight = bubble.offsetHeight;
-      const heroWidth = stage.clientWidth, heroHeight = stage.clientHeight;
+      const heroWidth = stageBox().clientWidth, heroHeight = stageBox().clientHeight;
       let left = pointerPosition.x + pointerSize;
       let top = pointerPosition.y + 18;
       if (left + bubbleWidth > heroWidth) left = pointerPosition.x - bubbleWidth - 4;
       left = Math.min(Math.max(0, left), heroWidth - bubbleWidth);
-      if (top + bubbleHeight > heroHeight - 8) top = pointerPosition.y - bubbleHeight - 6;
+      if (top + bubbleHeight > heroHeight - 8) {
+        // no room below: sit above the app's card, so the card being described stays visible
+        top = currentTile ? positionInHero(currentTile.querySelector(".ex__card").getBoundingClientRect()).y - bubbleHeight - 8 : pointerPosition.y - bubbleHeight - 6;
+      }
       bubble.style.translate = left + "px " + top + "px";
       bubble.style.width = bubbleWidth + "px";
+      bubble.textContent = shownText;
+    }
+    function say(line, millisecondsPerCharacter, onDone) {
+      clearInterval(typingTimer);
+      placeBubble(line);
       bubble.textContent = "";
       bubble.classList.remove("is-quiet");
       let charactersShown = 0;
@@ -644,6 +656,7 @@
       clearInterval(typingTimer);
       bubble.classList.add("is-quiet");
       if (reduceMotion || durationMilliseconds === 0) { placePointer(target); onArrive(); return; }
+      flying = true;
       const start = { ...pointerPosition };
       const distance = Math.hypot(target.x - start.x, target.y - start.y);
       // the arc bows upward by a quarter of the distance, as the app's pointer does
@@ -671,6 +684,7 @@
         );
         if (progress < 1) { flightFrame = requestAnimationFrame(step); return; }
         placePointer(target);
+        flying = false;
         onArrive();
       }
       flightFrame = requestAnimationFrame(step);
@@ -706,7 +720,105 @@
       clearTimeout(returnHomeTimer);
       returnHomeTimer = setTimeout(goHome, 1600);
     });
+    // ---- the tiles: thrown across this screen, so the apps fill the hero to its edges at any size ----
+    const tiles = [...appsLayer.querySelectorAll(".ex")];
+    const jitter = (seed) => { const x = Math.sin(seed * 12.9898) * 43758.5453; return x - Math.floor(x); };
+    function layoutTiles() {
+      // below 1024 the tiles are a plain grid under the words (CSS), so the script's positions are cleared
+      if (innerWidth < 1024) {
+        tiles.forEach((tile, index) => {
+          tile.style.left = ""; tile.style.top = ""; tile.hidden = false;
+          tile.style.removeProperty("--tile-w");
+          tile.style.setProperty("--tilt", ((jitter(index + 7) - 0.5) * 8).toFixed(1) + "deg");
+        });
+        return;
+      }
+      const layerRect = appsLayer.getBoundingClientRect();
+      const layerWidth = layerRect.width, layerHeight = layerRect.height, edge = 20;
+      // the words' box, from the greeting bubble above the headline to the fine print, kept clear with a margin
+      let wordsLeft = Infinity, wordsTop = Infinity, wordsRight = -Infinity, wordsBottom = -Infinity;
+      for (const part of [hero.querySelector("h1"), hero.querySelector(".hero__lead"), hero.querySelector(".btn-row"), hero.querySelector(".hero-apps__fine"), homeMarker]) {
+        const partRect = part.getBoundingClientRect();
+        wordsLeft = Math.min(wordsLeft, partRect.left); wordsTop = Math.min(wordsTop, partRect.top);
+        wordsRight = Math.max(wordsRight, partRect.right); wordsBottom = Math.max(wordsBottom, partRect.bottom);
+      }
+      const markerRect = homeMarker.getBoundingClientRect();
+      wordsRight = Math.max(wordsRight, markerRect.left + 290); // the greeting bubble reaches this far right
+      const keepClear = { left: wordsLeft - layerRect.left - 40, top: wordsTop - layerRect.top - 24, right: wordsRight - layerRect.left + 40, bottom: wordsBottom - layerRect.top + 40 };
+      const clearArea = Math.max(0, keepClear.right - keepClear.left) * Math.max(0, keepClear.bottom - keepClear.top);
+      // thrown on, not gridded: each app gets its own size and tilt, then lands at a random spot. Of a few random
+      // spots that fit, it takes the one farthest from the apps already down, so the throw covers the whole hero
+      // without clumping. Corners may overlap a little; nothing lands on the words. The seed comes from the
+      // screen size, so a page looks the same each visit and reshuffles only when the window changes.
+      const random = seededRandom(Math.round(layerWidth) * 7919 + Math.round(layerHeight));
+      const freeArea = layerWidth * layerHeight - clearArea;
+      let baseWidth = Math.min(132, Math.max(84, Math.sqrt(freeArea / tiles.length) * 0.6));
+      let placed = [];
+      for (let attempt = 0; attempt < 8; attempt++) {
+        placed = [];
+        let everyAppFits = true;
+        for (const tile of tiles) {
+          const size = 0.82 + random() * 0.36;
+          // never narrower than the app's name: 13px text runs about 7.4px a letter, plus the card's padding
+          const nameWidth = tile.querySelector(".ex__name").textContent.length * 7.4 + 22;
+          const width = Math.max(baseWidth * size, nameWidth), height = width * 96 / 112;
+          let best = null, bestDistance = -1, candidatesTried = 0;
+          for (let tries = 0; tries < 300 && candidatesTried < 24; tries++) {
+            const x = edge + random() * (layerWidth - 2 * edge - width);
+            const y = edge + random() * (layerHeight - 2 * edge - height);
+            const onWords = x < keepClear.right && x + width > keepClear.left && y < keepClear.bottom && y + height > keepClear.top;
+            if (onWords) continue;
+            // a small inset lets corners overlap a touch, the way thrown cards do, while names stay readable
+            const inset = width * 0.08;
+            const hitsAnother = placed.some((other) => x + inset < other.x + other.width && x + width - inset > other.x && y + inset < other.y + other.height && y + height - inset > other.y);
+            if (hitsAnother) continue;
+            candidatesTried += 1;
+            const centreX = x + width / 2, centreY = y + height / 2;
+            const nearest = placed.reduce((closest, other) => Math.min(closest, Math.hypot(centreX - (other.x + other.width / 2), centreY - (other.y + other.height / 2))), Infinity);
+            if (nearest > bestDistance) { bestDistance = nearest; best = { tile, x, y, width, height, tilt: (random() - 0.5) * 16 }; }
+          }
+          if (!best) { everyAppFits = false; break; }
+          placed.push(best);
+        }
+        if (everyAppFits || baseWidth <= 84) break;
+        baseWidth = Math.max(84, baseWidth * 0.92);
+      }
+      tiles.forEach((tile) => { tile.hidden = true; });
+      for (const spot of placed) {
+        spot.tile.hidden = false;
+        spot.tile.style.left = Math.round(spot.x) + "px";
+        spot.tile.style.top = Math.round(spot.y) + "px";
+        spot.tile.style.setProperty("--tile-w", spot.width.toFixed(1) + "px");
+        spot.tile.style.setProperty("--tilt", spot.tilt.toFixed(1) + "deg");
+      }
+    }
+    function seededRandom(seed) {
+      // mulberry32: a small, fast seeded random number generator
+      let state = seed >>> 0;
+      return () => {
+        state = (state + 0x6d2b79f5) >>> 0;
+        let t = state;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    layoutTiles();
+    // the web font and the hero's entrance both move the words a little after load
+    // the web font and the hero's entrance move the words a little after load: lay the tiles out again and
+    // put the resting pointer and its bubble back where they belong, without retyping
+    function relayoutAfterLoad() {
+      layoutTiles();
+      if (flying) return;
+      placePointer(currentTile ? tilePosition(currentTile) : homePosition());
+      placeBubble(currentTile ? currentTile.dataset.line : greeting);
+    }
+    if (document.fonts) document.fonts.ready.then(relayoutAfterLoad);
+    setTimeout(relayoutAfterLoad, 900);
+    setTimeout(relayoutAfterLoad, 2400);
+
     addEventListener("resize", () => {
+      layoutTiles();
       cancelAnimationFrame(flightFrame);
       placePointer(currentTile ? tilePosition(currentTile) : homePosition());
       say(currentTile ? currentTile.dataset.line : greeting, 0);
@@ -714,7 +826,7 @@
 
     if (playIntro && !reduceMotion) {
       const home = homePosition();
-      const stageRect = stage.getBoundingClientRect(), heroRect = hero.getBoundingClientRect();
+      const stageRect = stageBox().getBoundingClientRect(), heroRect = hero.getBoundingClientRect();
       placePointer({ x: heroRect.left - stageRect.left - 60, y: heroRect.bottom - stageRect.top + 60 });
       flyTo(home, 1100, () => say(greeting, 40, () => setTimeout(becomeReady, 300)));
     } else {
