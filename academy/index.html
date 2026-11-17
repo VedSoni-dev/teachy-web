@@ -3,16 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Teachy: an AI helper next to your cursor on the Mac</title>
-<meta name="description" content="Hold two keys and ask about anything on your screen. Teachy answers out loud, points at the button, draws to explain, or does the job. Free and open source.">
+<title>Teachy: Clicky, but free and open source (AI buddy for Mac)</title>
+<meta name="description" content="Teachy is the free, open-source Clicky: an AI buddy next to your Mac cursor that sees your screen, talks, points, draws and does tasks. MIT, still maintained.">
+<link rel="canonical" href="https://www.tryteachy.com/">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Teachy: an AI helper next to your cursor on the Mac">
-<meta property="og:description" content="Ask about your screen. Teachy points, draws, or does it for you. Free and open source.">
-<meta property="og:image" content="share.jpg">
+<meta property="og:site_name" content="Teachy">
+<meta property="og:url" content="https://www.tryteachy.com/">
+<meta property="og:title" content="Teachy: Clicky, but free and open source">
+<meta property="og:description" content="An AI buddy next to your Mac cursor. It sees your screen, talks you through it, points, draws and does the job. MIT-licensed and still shipping.">
+<meta property="og:image" content="https://www.tryteachy.com/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Teachy's home page: HeyClicky, but open source (and maintained!), with app icons around the headline">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Teachy: Clicky, but free and open source">
+<meta name="twitter:description" content="An AI buddy next to your Mac cursor that sees your screen, talks, points, draws and does the job. MIT-licensed.">
+<meta name="twitter:image" content="https://www.tryteachy.com/share.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="text/plain" title="LLM summary" href="https://www.tryteachy.com/llms.txt">
 <meta name="theme-color" content="#f7f8fa">
-<!-- <link rel="canonical" href="https://www.tryteachy.com/"> -->
+<!-- what Teachy is, for search engines and AI answer engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://www.tryteachy.com/#app",
+      "name": "Teachy",
+      "alternateName": ["Open-source Clicky", "Clicky, but free and open source"],
+      "description": "Teachy is a free, open-source AI buddy that lives next to your cursor on the Mac. Hold control and option, ask about anything on your screen, and it answers out loud, points at the button you need, draws to explain, or does the task for you. It is built on Farza's open-source Clicky and keeps that line open and maintained.",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "macOS 14.2 or later (Apple silicon)",
+      "url": "https://www.tryteachy.com/",
+      "downloadUrl": "https://github.com/VedSoni-dev/teachy-releases/releases/latest/download/Teachy.dmg",
+      "softwareVersion": "2.0",
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "isBasedOn": { "@type": "SoftwareSourceCode", "name": "Clicky", "codeRepository": "https://github.com/farzaa/clicky", "author": { "@type": "Person", "name": "Farza" } },
+      "sameAs": ["https://github.com/VedSoni-dev/teachy"]
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://github.com/VedSoni-dev/teachy#code",
+      "name": "Teachy source code",
+      "codeRepository": "https://github.com/VedSoni-dev/teachy",
+      "programmingLanguage": "Swift",
+      "license": "https://opensource.org/licenses/MIT",
+      "targetProduct": { "@id": "https://www.tryteachy.com/#app" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.tryteachy.com/#site",
+      "name": "Teachy",
+      "url": "https://www.tryteachy.com/",
+      "description": "Clicky, but free and open source: Teachy, the AI buddy next to your Mac cursor."
+    }
+  ]
+}
+</script>
 <meta name="site-kind" content="software">
 <meta name="page-type" content="software">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,7 +151,7 @@
   .js-intro .lineage { animation: lineage-draw 1.6s .15s cubic-bezier(.65, 0, .35, 1) both; }
   @keyframes lineage-draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
   /* below 1024 the words take the middle of the screen and the apps sit under them: no room for the graph */
-  @media (max-width: 1023px) { .lineage { display: none; } }
+  @media (max-width: 1023px), (max-height: 700px) { .lineage { display: none; } }
   @media (prefers-reduced-motion: reduce) { .lineage, .lineage__head { animation: none !important; } }
 
   /* Clicky's bubble: the pointer colour, white 13px medium text, 7px corners, a glow in its own colour,
@@ -226,6 +277,7 @@
     <a class="skip-link" href="#top">Skip to content</a>
     <a class="nav__logo" href="#top"><span class="tri" aria-hidden="true"><svg><use href="#tri"/></svg></span>Teachy</a>
     <nav class="nav__links" aria-label="Main">
+      <div class="nav__item"><a class="nav__link" href="open-source-clicky.html">Open-source Clicky</a></div>
       <div class="nav__item"><a class="nav__link" href="changelog.html">Changelog</a></div>
       <div class="nav__item"><a class="nav__link" href="https://github.com/VedSoni-dev/teachy/issues" target="_blank" rel="noopener">Help</a></div>
     </nav>
