@@ -10,6 +10,42 @@
 // changelog.html shows them all.
 window.TEACHY_CHANGELOG = [
   {
+    date: "2026-11-18",
+    status: "released",
+    version: "2.1",
+    platforms: ["mac"],
+    title: "Teachy takes the wheel",
+    summary:
+      "Agent jobs can now use your Mac like you do, drawings stay live while Teachy talks, and every chat is saved. Existing installs get it through the in-app updater.",
+    sections: [
+      {
+        name: "New",
+        items: [
+          { title: "Real computer use", text: "Agent jobs can click, type and scroll with the real pointer, and drive a built-in browser. Risky clicks like send, buy or delete still ask first." },
+          { title: "Borrow the mouse", text: "Nudge the mouse mid-job and Teachy hands it back, counts down, then takes another look before carrying on. Escape still stops it." },
+          { title: "Projects and a live rail", text: "Agent jobs and drawings are grouped into projects, with a rail at the side of your desktop showing what is running." },
+          { title: "Live drawings", text: "Pause, scrub and replay a drawing while it narrates. Marks follow the thing they point at, and Teachy can adjust a drawing that is already on screen." },
+          { title: "Saved chats", text: "Every conversation is kept, searchable, and summarised as it grows. A daily journal lets Teachy remember what you worked on yesterday." },
+          { title: "Coding help in jobs", text: "Point a job at a project folder and it can read, search and edit code, asking before it changes anything." },
+          { title: "Tap the screen to talk", text: "On Apple silicon MacBooks, tap beside the camera to start and stop talking. Off by default, in Settings, Touch and Eyes." },
+          { title: "Eye tracking (experimental)", text: "Calibrate your webcam and Teachy knows roughly where you were looking when you said \"this\". Nothing leaves your Mac." },
+          { title: "A notch on every Mac", text: "Macs without a notch get one too, and the on-screen pointer stays hidden until Teachy needs it." },
+          { title: "Sharper screen marks", text: "Circles and highlights land on the exact words you asked about." },
+          { title: "Easier Chrome setup", text: "Get the Chrome extension from Settings and Teachy walks you through installing it." },
+          { title: "Bolder voice", text: "Teachy takes the next step without being asked, and can open the links it mentions." },
+        ],
+      },
+      {
+        name: "Fixes",
+        items: [
+          { title: "Push-to-talk never goes silent", text: "Fixed a case where holding the keys recorded nothing." },
+          { title: "Microphone switching", text: "Changing mics mid-session no longer breaks the next question." },
+          { title: "Lighter on the battery", text: "3D drawings render at 30 fps and agent jobs use far fewer tokens." },
+        ],
+      },
+    ],
+  },
+  {
     date: "2026-11-16",
     status: "released",
     version: "2.0",
