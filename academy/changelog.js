@@ -12,6 +12,23 @@ window.TEACHY_CHANGELOG = [
   {
     date: "2026-11-18",
     status: "released",
+    version: "2.2",
+    platforms: ["mac"],
+    title: "Opens like any other app",
+    summary:
+      "Teachy is now signed and notarised by Apple, so a fresh download opens with a double-click. No trip to Privacy & Security.",
+    sections: [
+      {
+        name: "Improved",
+        items: [
+          { title: "Notarised by Apple", text: "macOS checks Teachy with Apple and opens it straight away. Updates arrive through the in-app updater as before." },
+        ],
+      },
+    ],
+  },
+  {
+    date: "2026-11-18",
+    status: "released",
     version: "2.1",
     platforms: ["mac"],
     title: "Teachy takes the wheel",
