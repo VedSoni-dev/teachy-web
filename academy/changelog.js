@@ -10,6 +10,33 @@
 // changelog.html shows them all.
 window.TEACHY_CHANGELOG = [
   {
+    date: "2026-11-22",
+    status: "released",
+    version: "2.3",
+    platforms: ["mac"],
+    title: "Quicker drawings, your own keys, skills and smarter memory",
+    summary:
+      "Follow-ups about a 3D drawing are understood almost instantly, Teachy learns from every chat, and it can pick up new skills.",
+    sections: [
+      {
+        name: "New",
+        items: [
+          { title: "Faster 3D drawings", text: "Say \"get a bit nearer\" or \"what's that bean-shaped thing?\" and Teachy reacts in a fraction of a second, without a screenshot or a full AI turn." },
+          { title: "Add your own keys", text: "Settings → General → Keys takes a Gemini, OpenRouter or Vercel AI Gateway key to turn that on." },
+          { title: "Skills Library", text: "Add skills from the library or your own files so Teachy knows how your apps work." },
+          { title: "Memory that learns", text: "After each chat Teachy keeps what it learned about you and drops what is no longer true." },
+          { title: "You choose how Teachy acts", text: "Pick how it opens websites and whether it may move your mouse and type." },
+        ],
+      },
+      {
+        name: "Improved",
+        items: [
+          { title: "Smoother sign-in", text: "Signing in with publik no longer stops on a payment screen." },
+        ],
+      },
+    ],
+  },
+  {
     date: "2026-11-18",
     status: "released",
     version: "2.2",
