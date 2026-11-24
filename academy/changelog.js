@@ -10,6 +10,26 @@
 // changelog.html shows them all.
 window.TEACHY_CHANGELOG = [
   {
+    date: "2026-11-23",
+    status: "released",
+    version: "2.5",
+    platforms: ["mac"],
+    title: "Teachy offers to take things off your plate",
+    summary:
+      "Each day Teachy suggests a few jobs it can do for you and shows the plan first. Answers end with next steps, and it can blur private details before you share a screenshot.",
+    sections: [
+      {
+        name: "New",
+        items: [
+          { title: "Suggestions from the notch", text: "Once a day, a few things Teachy could do for you, each with its plan. Do it, adjust it, or toss it. Results always stay as drafts." },
+          { title: "Next steps after every answer", text: "Buttons for the obvious next thing. After Teachy types something for you, make it shorter or warmer in place." },
+          { title: "Blur before you share", text: "Ask Teachy to blur a client's face or details in a screenshot. It works on a copy, on your Mac." },
+          { title: "Circle it, then hand it off", text: "What you circle while asking is saved for the job, so it can edit, attach or upload it." },
+        ],
+      },
+    ],
+  },
+  {
     date: "2026-11-22",
     status: "released",
     version: "2.3",
